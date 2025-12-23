@@ -25,9 +25,10 @@ jobs:
       - name: Run RSS Monitor
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: python scripts/rss_monitor.py
       
-        - name: Commit changes
+      - name: Commit changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
