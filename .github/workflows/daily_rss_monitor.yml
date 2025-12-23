@@ -27,10 +27,13 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python scripts/rss_monitor.py
       
-      - name: Commit changes
+        - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
-          git commit -m "Auto-update from RSS feed" || true
+          git add data/
+          git commit -m "Auto-update from RSS feed $(date)" || true
           git push
+      
