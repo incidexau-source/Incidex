@@ -36,4 +36,8 @@ jobs:
           git commit -m "Update incident data" || true
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/incidexau-source/Incidex.git
 
-      
+            - name: Run Discord hate crime alerts
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python hate_crime_alerts.py
+
