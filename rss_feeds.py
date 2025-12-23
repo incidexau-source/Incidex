@@ -63,12 +63,6 @@ NATIONAL_FEEDS = [
     #     notes="Breaking news feed - may contain urgent hate crime reports. URL returns 404 - commented out."
     # ),
     RSSFeed(
-        name="SBS News Australia",
-        url="https://www.sbs.com.au/news/rss",
-        region=FeedRegion.NATIONAL,
-        notes="SBS comprehensive news feed with focus on diversity and inclusion."
-    ),
-    RSSFeed(
         name="The Guardian Australia",
         url="https://www.theguardian.com/australia-news/rss",
         region=FeedRegion.NATIONAL,
@@ -89,20 +83,8 @@ NATIONAL_FEEDS = [
 
 STATE_FEEDS = [
     # New South Wales
-    RSSFeed(
-        name="ABC News - NSW",
-        url="https://www.abc.net.au/news/feed/45916/rss.xml",
-        region=FeedRegion.STATE,
-        state="NSW",
-        notes="NSW-specific stories from ABC."
-    ),
-    RSSFeed(
-        name="Brisbane Times",
-        url="https://www.brisbanetimes.com.au/rss.xml",
-        region=FeedRegion.STATE,
-        state="QLD",
-        notes="Queensland news, though name suggests Brisbane focus."
-    ),
+    # (ABC News - NSW removed - broken feed)
+    # (Brisbane Times removed - broken feed)
     
     # Victoria
     RSSFeed(
@@ -228,12 +210,7 @@ QUEER_FEEDS = [
         region=FeedRegion.QUEER,
         notes="Major Australian LGBTIQ+ news outlet.",
     ),
-    RSSFeed(
-        name="Q News",
-        url="https://www.qnews.com.au/feed/",
-        region=FeedRegion.QUEER,
-        notes="Queensland-focused LGBTIQ+ news.",
-    ),
+    # (Q News removed - broken feed)
 ]
 
 
@@ -248,12 +225,7 @@ REGIONAL_FEEDS = [
         region=FeedRegion.REGIONAL,
         state="NSW",
     ),
-    RSSFeed(
-        name="Geelong Advertiser",
-        url="https://www.geelongadvertiser.com.au/rss.xml",
-        region=FeedRegion.REGIONAL,
-        state="VIC",
-    ),
+    # (Geelong Advertiser removed - broken feed)
     RSSFeed(
         name="Gold Coast Bulletin",
         url="https://www.goldcoastbulletin.com.au/rss.xml",
