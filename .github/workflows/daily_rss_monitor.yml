@@ -28,13 +28,12 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: python scripts/rss_monitor.py
       
-      - name: Commit changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/
-          git commit -m "Auto-update from RSS feed $(date)" || true
-          git push
+          git add data/*.csv
+          git commit -m "Update incident data" || true
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/incidexau-source/Incidex.git
+
       
