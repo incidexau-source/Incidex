@@ -56,15 +56,15 @@ NATIONAL_FEEDS = [
         region=FeedRegion.NATIONAL,
         notes="ABC's main national RSS feed. Includes all major stories."
     ),
+    # RSSFeed(
+    #     name="ABC News Australia - Breaking News",
+    #     url="https://www.abc.net.au/news/feed/52278/rss.xml",
+    #     region=FeedRegion.NATIONAL,
+    #     notes="Breaking news feed - may contain urgent hate crime reports. URL returns 404 - commented out."
+    # ),
     RSSFeed(
-        name="ABC News Australia - Breaking News",
-        url="https://www.abc.net.au/news/feed/52278/rss.xml",
-        region=FeedRegion.NATIONAL,
-        notes="Breaking news feed - may contain urgent hate crime reports."
-    ),
-    RSSFeed(
-        name="SBS News - Australia",
-        url="https://www.sbs.com.au/news/feed/rss/news/complete",
+        name="SBS News Australia",
+        url="https://www.sbs.com.au/news/rss",
         region=FeedRegion.NATIONAL,
         notes="SBS comprehensive news feed with focus on diversity and inclusion."
     ),
@@ -74,12 +74,12 @@ NATIONAL_FEEDS = [
         region=FeedRegion.NATIONAL,
         notes="Guardian Australia main RSS feed. High-quality journalism."
     ),
-    RSSFeed(
-        name="The Guardian Australia - Society",
-        url="https://www.theguardian.com/australia-news/society/rss",
-        region=FeedRegion.NATIONAL,
-        notes="Society section often covers discrimination and hate crimes."
-    ),
+    # RSSFeed(
+    #     name="The Guardian Australia - Society",
+    #     url="https://www.theguardian.com/australia-news/society/rss",
+    #     region=FeedRegion.NATIONAL,
+    #     notes="Society section often covers discrimination and hate crimes. URL returns 404 - commented out."
+    # ),
 ]
 
 
@@ -207,10 +207,10 @@ STATE_FEEDS = [
 
 QUEER_FEEDS = [
     RSSFeed(
-        name="Pink News Australia",
-        url="https://www.pinknews.co.uk/category/world/australia/feed/",
+        name="PinkNews - LGBTIQ+ News",
+        url="https://www.thepinknews.com/feed/",
         region=FeedRegion.QUEER,
-        notes="UK-based Pink News with Australia section. May have better LGBTIQ+ coverage.",
+        notes="PinkNews RSS feed for LGBTIQ+ news coverage.",
         keywords_filter=["lgbt", "lgbtq", "lgbti", "lgbtiq", "queer", "gay", "lesbian", 
                         "trans", "transgender", "bisexual", "hate", "attack", "assault", 
                         "discrimination"]
