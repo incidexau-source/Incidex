@@ -1,0 +1,41 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/visualizations/home.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/visualizations/home.html"
+    },
+    {
+      "source": "/home.html",
+      "destination": "/visualizations/home.html"
+    },
+    {
+      "source": "/map",
+      "destination": "/visualizations/index.html"
+    },
+    {
+      "source": "/map.html",
+      "destination": "/visualizations/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/visualizations/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ]
+}
+
+

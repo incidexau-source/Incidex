@@ -1,0 +1,2 @@
+title,url,source_date,incident_type,date,location,victim_identity,description,severity,perpetrator_info,latitude,longitude,notes,verification_status
+Example: Homophobic assault in Melbourne CBD,https://www.abc.net.au/news/example,20251115T000000Z,assault,2025-11-15,"Melbourne CBD, Victoria",gay,Brief description of the incident...,high,Unknown,-37.8136,144.9631,Found via ABC News search,pending

@@ -1,0 +1,74 @@
+================================================================================
+OVERNIGHT COMPREHENSIVE SEARCH REPORT
+Generated: 2025-12-03 13:05:54
+================================================================================
+
+SUMMARY
+----------------------------------------
+Total search queries executed: 45
+Total articles found: 8892
+Articles processed with AI: 8891
+New hate crime incidents identified: 55
+Duplicate articles skipped: 2728
+Run duration: 8:12:58
+
+TOP PERFORMING QUERIES
+----------------------------------------
+  1750 results: (gay bar OR gay club OR LGBTIQ venue) AND (attack OR assault OR violen...
+  1750 results: (pride event OR pride march OR mardi gras) AND (attack OR violence OR ...
+  1700 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+   793 results: (LGBTIQ OR gay OR lesbian OR transgender) AND (attack OR assault OR vi...
+   692 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+   415 results: (LGBTIQ OR gay OR lesbian OR transgender) AND (attack OR assault OR vi...
+   309 results: "hate crime" AND (LGBTIQ OR LGBT OR gay OR lesbian OR transgender) AND...
+   299 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+   288 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+   283 results: "transgender" AND "attacked" AND Australia...
+   237 results: "transgender" AND "murdered" AND Australia...
+   220 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+   198 results: "transgender" AND "beaten" AND Australia...
+   193 results: "transgender" AND "assaulted" AND Australia...
+   187 results: "anti-gay" AND (attack OR assault OR violence) AND Australia...
+   144 results: (LGBTIQ OR gay OR lesbian OR transgender) AND (attack OR assault OR vi...
+   137 results: (LGBTIQ OR LGBT OR gay OR transgender) AND (hate crime OR attack OR as...
+    68 results: (LGBTIQ OR gay OR lesbian OR transgender) AND (attack OR assault OR vi...
+    56 results: "gay man" AND "attacked" AND Australia...
+    56 results: (LGBTIQ OR gay OR lesbian OR transgender) AND (attack OR assault OR vi...
+
+NEW INCIDENTS BY TYPE
+----------------------------------------
+  assault: 34
+  murder: 15
+  vandalism: 3
+  arson: 1
+  raid: 1
+  hate_speech: 1
+
+NEW INCIDENTS BY LOCATION
+----------------------------------------
+  Sydney: 6
+  unknown: 5
+  Melbourne: 4
+  Sydney CBD: 3
+  Perth: 2
+  Adelaide: 2
+  Manly: 2
+  New York: 2
+  Uganda: 2
+  Melbourne CBD: 2
+  Riverina region: 2
+  Belfast: 2
+  outside synagogue: 1
+  London bus stop: 1
+  united kingdom: 1
+
+NEW INCIDENTS BY SEVERITY
+----------------------------------------
+  critical: 15
+  high: 20
+  medium: 19
+  low: 1
+
+================================================================================
+END OF REPORT
+================================================================================

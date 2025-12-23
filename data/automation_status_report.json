@@ -1,0 +1,128 @@
+{
+  "workflows": {
+    "daily_rss_monitor.yml": {
+      "file": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\daily_rss_monitor.yml",
+      "exists": true,
+      "valid_yaml": false,
+      "has_schedule": true,
+      "has_manual_trigger": true,
+      "has_openai_key": true,
+      "errors": [
+        "PyYAML not installed, cannot validate YAML syntax"
+      ]
+    },
+    "rss_monitor.yml": {
+      "file": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\rss_monitor.yml",
+      "exists": true,
+      "valid_yaml": false,
+      "has_schedule": true,
+      "has_manual_trigger": true,
+      "has_openai_key": true,
+      "errors": [
+        "PyYAML not installed, cannot validate YAML syntax"
+      ]
+    }
+  },
+  "scripts": {
+    "rss_monitor.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\scripts\\rss_monitor.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": true,
+      "missing_modules": [],
+      "errors": []
+    },
+    "daily_scraper.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\scripts\\daily_scraper.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": true,
+      "missing_modules": [],
+      "errors": []
+    },
+    "monitor.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\monitor.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": true,
+      "missing_modules": [],
+      "errors": []
+    },
+    "article_fetcher.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\article_fetcher.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": false,
+      "missing_modules": [
+        "feedparser"
+      ],
+      "errors": []
+    },
+    "incident_extractor.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\incident_extractor.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": true,
+      "missing_modules": [],
+      "errors": []
+    },
+    "geocoder.py": {
+      "script": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\geocoder.py",
+      "exists": true,
+      "syntax_valid": true,
+      "imports_ok": true,
+      "missing_modules": [],
+      "errors": []
+    }
+  },
+  "environment": {
+    "required": {
+      "OPENAI_API_KEY": {
+        "present": false,
+        "length": 0,
+        "preview": "N/A"
+      }
+    },
+    "optional": {
+      "GITHUB_TOKEN": {
+        "present": false,
+        "length": 0
+      },
+      "GEOCODING_API_KEY": {
+        "present": false,
+        "length": 0
+      }
+    },
+    "all_required_present": false
+  },
+  "data_files": {
+    "data_dir_exists": true,
+    "files": {
+      "incidents_in_progress.csv": {
+        "exists": true,
+        "size": 127048,
+        "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\data\\incidents_in_progress.csv"
+      },
+      "incidents_extracted.csv": {
+        "exists": true,
+        "size": 23572,
+        "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\data\\incidents_extracted.csv"
+      },
+      "incidents_2015_2025_complete.csv": {
+        "exists": true,
+        "size": 42615,
+        "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\data\\incidents_2015_2025_complete.csv"
+      }
+    }
+  },
+  "python_modules": {
+    "pandas": true,
+    "requests": true,
+    "bs4": true,
+    "selenium": false,
+    "openai": true,
+    "feedparser": false,
+    "geopy": true,
+    "yaml": false
+  }
+}

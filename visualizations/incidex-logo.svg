@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <!-- Rainbow gradient -->
+    <linearGradient id="rainbowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e06055"/>
+      <stop offset="20%" stop-color="#e8985e"/>
+      <stop offset="40%" stop-color="#f0c05a"/>
+      <stop offset="60%" stop-color="#2d9d6f"/>
+      <stop offset="80%" stop-color="#1a5f7a"/>
+      <stop offset="100%" stop-color="#d4a5d4"/>
+    </linearGradient>
+    
+    <!-- Glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Connection lines (geometric mesh) -->
+  <g stroke="url(#rainbowGradient)" stroke-width="0.5" fill="none" opacity="0.6" filter="url(#glow)">
+    <!-- Main structural lines forming Australia shape -->
+    <path d="M8,20 L14,16 L22,14 L30,15 L38,18"/>
+    <path d="M38,18 L40,24 L38,32 L34,36"/>
+    <path d="M34,36 L26,38 L18,36 L12,30"/>
+    <path d="M12,30 L8,24 L8,20"/>
+    
+    <!-- Internal mesh lines -->
+    <path d="M14,16 L16,22 L22,24"/>
+    <path d="M22,14 L22,24 L30,26"/>
+    <path d="M30,15 L30,26 L38,24"/>
+    <path d="M16,22 L18,30 L26,32"/>
+    <path d="M22,24 L26,32 L34,30"/>
+    <path d="M30,26 L34,30 L38,32"/>
+    <path d="M12,30 L18,30"/>
+    <path d="M18,36 L26,32"/>
+    <path d="M26,38 L26,32"/>
+    
+    <!-- Cross connections for mesh density -->
+    <path d="M14,16 L22,24"/>
+    <path d="M22,14 L30,26"/>
+    <path d="M30,15 L38,24"/>
+    <path d="M8,20 L16,22"/>
+    <path d="M40,24 L34,30"/>
+    <path d="M8,24 L18,30"/>
+    <path d="M34,36 L26,32"/>
+  </g>
+  
+  <!-- Data points (nodes) -->
+  <g fill="url(#rainbowGradient)" filter="url(#glow)">
+    <!-- Outer boundary points - Australia outline -->
+    <circle cx="8" cy="20" r="2"/>
+    <circle cx="14" cy="16" r="2"/>
+    <circle cx="22" cy="14" r="2.5"/>
+    <circle cx="30" cy="15" r="2"/>
+    <circle cx="38" cy="18" r="2"/>
+    <circle cx="40" cy="24" r="2"/>
+    <circle cx="38" cy="32" r="2"/>
+    <circle cx="34" cy="36" r="2"/>
+    <circle cx="26" cy="38" r="2"/>
+    <circle cx="18" cy="36" r="2"/>
+    <circle cx="12" cy="30" r="2"/>
+    <circle cx="8" cy="24" r="2"/>
+    
+    <!-- Internal data points -->
+    <circle cx="16" cy="22" r="1.5"/>
+    <circle cx="22" cy="24" r="2"/>
+    <circle cx="30" cy="26" r="1.5"/>
+    <circle cx="18" cy="30" r="1.5"/>
+    <circle cx="26" cy="32" r="2"/>
+    <circle cx="34" cy="30" r="1.5"/>
+  </g>
+</svg>
+
+
+
+
+
+

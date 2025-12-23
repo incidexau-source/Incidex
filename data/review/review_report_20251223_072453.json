@@ -1,0 +1,520 @@
+{
+  "missing_coordinates": [],
+  "vague_locations": [
+    {
+      "index": 0,
+      "title": "Australia | Incendios forestales | Steven Anderson | Pastor ",
+      "location": "Australia-wide (banned speaker)",
+      "url": "https://larepublica.pe/mundo/2020/01/07/australia-incendios-forestales-steven-anderson-pastor-anti-gay-afirma-que-desastres-naturales-es-castigo-de-dios-porque-fue-expulsado-del-pais-homosexualidad-lgbti-rddr/"
+    },
+    {
+      "index": 9,
+      "title": "Perth Grindr attack - victim tasered and teeth knocked out",
+      "location": "Perth, Western Australia",
+      "url": "https://www.fusemagazine.com.au/lgbtiq-news/australia/1148-five-teenagers-jailed-for-grindr-assault-scheme.html"
+    },
+    {
+      "index": 10,
+      "title": "Perth Grindr scheme - multiple victims robbed and assaulted",
+      "location": "Perth, Western Australia",
+      "url": "https://www.abc.net.au/news/2025-09-23/teenagers-detention-grindr-attacks-men-perth/105807670"
+    },
+    {
+      "index": 34,
+      "title": "Mathematician killed because he was gay : Australia inquest",
+      "location": "Australia inquest did not specify a specific location",
+      "url": "http://www.enca.com/world/mathematician-killed-because-he-was-gay-australia-inquest"
+    },
+    {
+      "index": 122,
+      "title": "Festivales estadounidenses cancelan al dúo sudafricano Die A",
+      "location": "Adelaida, Australia",
+      "url": "https://www.elmundo.es/cultura/musica/2019/08/21/5d5c3166fdddff023b8b4601.html"
+    },
+    {
+      "index": 134,
+      "title": "Rainbow walk in Adelaide , Australia vandalised with  Jesus ",
+      "location": "Adelaide, Australia",
+      "url": "https://www.pinknews.co.uk/2019/10/28/adelaide-rainbow-walk-graffiti-jesus-loves-you-australia/"
+    },
+    {
+      "index": 154,
+      "title": "Arrest Made In 1988 Hate Crime Killing Of Gay American At Au",
+      "location": "Australian Cliff",
+      "url": "https://www.huffpost.com/entry/arrest-scott-johnson-cliff-killing_n_5ebac4d4c5b63c0fa177cd63"
+    },
+    {
+      "index": 164,
+      "title": "Man found guilty twice of  gay panic  murder wins right to a",
+      "location": "Adelaide, South Australia",
+      "url": "https://www.adelaidenow.com.au/news/south-australia/man-found-guilty-twice-of-gay-panic-murder-wins-right-to-appeal-fresh-conviction/news-story/c5cadc77b71b1a06eba6bbbf2bbb4b66?nk=a56fd86f11bc0886826d1fca3bdf6a81-1593552741"
+    },
+    {
+      "index": 178,
+      "title": "Far - right Hate Attack Shows Extremists Emboldened",
+      "location": "Perth, Western Australia",
+      "url": "https://www.miragenews.com/far-right-hate-attack-shows-extremists-518559/"
+    },
+    {
+      "index": 207,
+      "title": "Australian man pleads guilty to anti - gay hate crime in mur",
+      "location": "cliff in Australia",
+      "url": "https://www.cbsnews.com/news/scott-johnson-murder-scott-white-guilty-plea-gay-hate-crime-fall-australia-cliff-1988/"
+    },
+    {
+      "index": 250,
+      "title": "Murder of Indigenous Teenager in Western Australia Brings De",
+      "location": "Geraldton, Western Australia",
+      "url": "https://thediplomat.com/2022/10/murder-of-indigenous-teenager-in-western-australia-brings-despair-deja-vu/"
+    },
+    {
+      "index": 266,
+      "title": "Voices of Viatris : For Nathan Wilson , Family Is a Change W",
+      "location": "New South Wales, Australia",
+      "url": "https://www.finanznachrichten.de/nachrichten-2023-01/58192720-voices-of-viatris-for-nathan-wilson-family-is-a-change-worth-fighting-for-200.htm"
+    }
+  ],
+  "non_australian": [
+    {
+      "index": 0,
+      "title": "Australia | Incendios forestales | Steven Anderson | Pastor ",
+      "location": "Australia-wide (banned speaker)",
+      "url": "https://larepublica.pe/mundo/2020/01/07/australia-incendios-forestales-steven-anderson-pastor-anti-gay-afirma-que-desastres-naturales-es-castigo-de-dios-porque-fue-expulsado-del-pais-homosexualidad-lgbti-rddr/"
+    },
+    {
+      "index": 9,
+      "title": "Perth Grindr attack - victim tasered and teeth knocked out",
+      "location": "Perth, Western Australia",
+      "url": "https://www.fusemagazine.com.au/lgbtiq-news/australia/1148-five-teenagers-jailed-for-grindr-assault-scheme.html"
+    },
+    {
+      "index": 10,
+      "title": "Perth Grindr scheme - multiple victims robbed and assaulted",
+      "location": "Perth, Western Australia",
+      "url": "https://www.abc.net.au/news/2025-09-23/teenagers-detention-grindr-attacks-men-perth/105807670"
+    },
+    {
+      "index": 24,
+      "title": "Court finds Anti - trans campaigner Kirralie Smith unlawfull",
+      "location": "New South Wales Civil and Administrative Tribunal, Sydney",
+      "url": "https://www.outinperth.com/court-finds-anti-trans-campaigner-kirralie-smith-unlawfully-vilified-two-trans-women/"
+    },
+    {
+      "index": 29,
+      "title": "Australia coroner : American mathematician died in hate crim",
+      "location": "Fair Day festival, Rushcutters Bay",
+      "url": "https://www.upi.com/Top_News/World-News/2017/11/30/Australian-coroner-says-student-died-of-hate-crime-not-suicide-in-1988/9461512058149/"
+    },
+    {
+      "index": 34,
+      "title": "Mathematician killed because he was gay : Australia inquest",
+      "location": "Australia inquest did not specify a specific location",
+      "url": "http://www.enca.com/world/mathematician-killed-because-he-was-gay-australia-inquest"
+    },
+    {
+      "index": 65,
+      "title": "Neo - Nazis Attack Gay Bar In Ukraine",
+      "location": "Ukraine",
+      "url": "https://www.starobserver.com.au/news/neo-nazis-attack-gay-bar-in-ukraine/207538"
+    },
+    {
+      "index": 75,
+      "title": "Trans woman flees Malaysia after wearing hijab and being  as",
+      "location": "Malaysia",
+      "url": "https://english.alaraby.co.uk/news/trans-woman-flees-malaysia-after-charge-wearing-hijab"
+    },
+    {
+      "index": 96,
+      "title": "Together » Blog Archive » Australian neo - Nazis deface elde",
+      "location": "elderly care facility housing Holocaust survivors",
+      "url": "http://amgathering.org/2019/01/15110/australian-neo-nazis-deface-elderly-care-facility-housing-holocaust-survivors/"
+    },
+    {
+      "index": 104,
+      "title": "The two brothers arrested in connection with the alleged att",
+      "location": "Chicago",
+      "url": "https://home.nzcity.co.nz/news/article.aspx?id=285026&fm=psp,tst"
+    },
+    {
+      "index": 108,
+      "title": "Muslim mother horror after racist vandals graffiti a swastik",
+      "location": "Muslim mother's home in Bankstown",
+      "url": "https://www.dailymail.co.uk/news/article-6828557/Muslim-mothers-horror-racist-vandals-graffiti-swastika-word-dog-white-BMW.html"
+    },
+    {
+      "index": 116,
+      "title": "Man slashed with machete in  homophobic attack  in London",
+      "location": "London",
+      "url": "https://www.independent.co.uk/news/uk/crime/machete-attack-london-homophobic-hate-crime-lgbt-southwark-met-police-a9018251.html"
+    },
+    {
+      "index": 117,
+      "title": "  Suspiciou noose found hanging near student housing in poss",
+      "location": "student housing",
+      "url": "https://www.independent.co.uk/news/world/americas/noose-stanford-university-california-racist-student-housing-hate-crime-a9008431.html"
+    },
+    {
+      "index": 119,
+      "title": "Woman punched unconscious after telling man who followed her",
+      "location": "London",
+      "url": "https://www.independent.co.uk/news/uk/crime/woman-man-turn-down-beaten-unconscious-manchester-not-interested-a9005661.html"
+    },
+    {
+      "index": 122,
+      "title": "Festivales estadounidenses cancelan al dúo sudafricano Die A",
+      "location": "Adelaida, Australia",
+      "url": "https://www.elmundo.es/cultura/musica/2019/08/21/5d5c3166fdddff023b8b4601.html"
+    },
+    {
+      "index": 123,
+      "title": "Owen Jones : Left - wing commentator attacked in  blatant pr",
+      "location": "London pub",
+      "url": "https://www.independent.co.uk/news/uk/crime/owen-jones-attack-pub-far-right-assault-a9063816.html"
+    },
+    {
+      "index": 134,
+      "title": "Rainbow walk in Adelaide , Australia vandalised with  Jesus ",
+      "location": "Adelaide, Australia",
+      "url": "https://www.pinknews.co.uk/2019/10/28/adelaide-rainbow-walk-graffiti-jesus-loves-you-australia/"
+    },
+    {
+      "index": 154,
+      "title": "Arrest Made In 1988 Hate Crime Killing Of Gay American At Au",
+      "location": "Australian Cliff",
+      "url": "https://www.huffpost.com/entry/arrest-scott-johnson-cliff-killing_n_5ebac4d4c5b63c0fa177cd63"
+    },
+    {
+      "index": 164,
+      "title": "Man found guilty twice of  gay panic  murder wins right to a",
+      "location": "Adelaide, South Australia",
+      "url": "https://www.adelaidenow.com.au/news/south-australia/man-found-guilty-twice-of-gay-panic-murder-wins-right-to-appeal-fresh-conviction/news-story/c5cadc77b71b1a06eba6bbbf2bbb4b66?nk=a56fd86f11bc0886826d1fca3bdf6a81-1593552741"
+    },
+    {
+      "index": 166,
+      "title": "Murdered pharmacist Jessica Patel died after sad string of c",
+      "location": "Maitland, New South Wales",
+      "url": "https://www.yorkshirepost.co.uk/news/crime/murdered-pharmacist-jessica-patel-died-after-sad-string-callous-and-cruel-abuse-review-her-death-reveals-2917932"
+    },
+    {
+      "index": 178,
+      "title": "Far - right Hate Attack Shows Extremists Emboldened",
+      "location": "Perth, Western Australia",
+      "url": "https://www.miragenews.com/far-right-hate-attack-shows-extremists-518559/"
+    },
+    {
+      "index": 189,
+      "title": "George Floyd statue vandalised police investigating Brooklyn",
+      "location": "Brooklyn",
+      "url": "https://www.9news.com.au/world/george-floyd-statue-vandalised-police-investigating-brooklyn-hate-crime/9a5bd3a0-1a27-4258-b317-6e24e038c22f"
+    },
+    {
+      "index": 207,
+      "title": "Australian man pleads guilty to anti - gay hate crime in mur",
+      "location": "cliff in Australia",
+      "url": "https://www.cbsnews.com/news/scott-johnson-murder-scott-white-guilty-plea-gay-hate-crime-fall-australia-cliff-1988/"
+    },
+    {
+      "index": 213,
+      "title": "Homophobic Attack On Student Outside Gay Nightclub Shocks Lo",
+      "location": "London",
+      "url": "https://www.starobserver.com.au/news/homophobic-attack-on-student-outside-gay-nightclub-shocks-london/210126"
+    },
+    {
+      "index": 227,
+      "title": "Out Gay Australian MP Tim Wilson House Attacked By Vandals",
+      "location": "Tim Wilson's house",
+      "url": "https://www.starobserver.com.au/news/out-gay-australian-mp-tim-wilsons-house-attacked-by-vandals/212421"
+    },
+    {
+      "index": 250,
+      "title": "Murder of Indigenous Teenager in Western Australia Brings De",
+      "location": "Geraldton, Western Australia",
+      "url": "https://thediplomat.com/2022/10/murder-of-indigenous-teenager-in-western-australia-brings-despair-deja-vu/"
+    },
+    {
+      "index": 266,
+      "title": "Voices of Viatris : For Nathan Wilson , Family Is a Change W",
+      "location": "New South Wales, Australia",
+      "url": "https://www.finanznachrichten.de/nachrichten-2023-01/58192720-voices-of-viatris-for-nathan-wilson-family-is-a-change-worth-fighting-for-200.htm"
+    },
+    {
+      "index": 273,
+      "title": "Australian man pleads guilty to the 1988 murder of a Califor",
+      "location": "California",
+      "url": "https://www.foxnews.com/world/australian-man-pleads-guilty-1988-murder-california-man-gay-meeting-place"
+    },
+    {
+      "index": 279,
+      "title": "Australia news live : NSW premier calls Mark Latham a  bigot",
+      "location": "New South Wales Parliament House, Sydney",
+      "url": "https://www.msn.com/en-gb/news/uknews/australia-news-live-inquiry-calls-for-changes-to-how-government-sends-troops-to-war/ar-AA19hDxN"
+    },
+    {
+      "index": 283,
+      "title": "Mark Latham Investigated By NSW Police Over Vile Alex Greenw",
+      "location": "NSW Parliament House, Sydney",
+      "url": "https://www.pedestrian.tv/news/mark-latham-tweet-alex-greenwich/"
+    }
+  ],
+  "possible_duplicates": [
+    {
+      "index": 161,
+      "title": "Australian charged for killing gay student 32 years ago",
+      "location": "Sydney",
+      "url": "https://www.prokerala.com/news/articles/a1040216.html",
+      "duplicate_of": 156
+    },
+    {
+      "index": 176,
+      "title": "Nazi hikers claim theyve  suffered  ",
+      "location": "Grampians",
+      "url": "https://www.gladstoneobserver.com.au/news/nazi-hikers-claim-theyve-suffered/4188930/",
+      "duplicate_of": 175
+    },
+    {
+      "index": 269,
+      "title": "Australian pleads guilty to killing gay American in 1988",
+      "location": "Sydney",
+      "url": "https://www.courthousenews.com/australian-pleads-guilty-to-killing-gay-american-in-1988/",
+      "duplicate_of": 268
+    }
+  ],
+  "missing_fields": [],
+  "date_issues": [],
+  "non_lgbtiq": [
+    {
+      "index": 4,
+      "title": "Neo - Nazi leaders admit hiker attack but claim innocence",
+      "description": "Neo-Nazi leaders have admitted to attacking a hiker in Blue Mountains National Park, but they claim ",
+      "url": "https://www.examiner.com.au/story/8402974/neo-nazi-leaders-admit-hiker-attack-but-claim-innocence/"
+    },
+    {
+      "index": 31,
+      "title": "Thirty Years Later , Australia Judge Rules Fatal Fall Off Sy",
+      "description": "A judge in Australia ruled that a fatal fall off a Sydney cliff 30 years ago was a hate crime. The v",
+      "url": "https://article.wn.com/view/2017/11/30/Thirty_Years_Later_Australia_Judge_Rules_Fatal_Fall_Off_Sydn/"
+    },
+    {
+      "index": 53,
+      "title": "Group of men spat alcohol on teenage boy and told him he had",
+      "description": "A group of men spat alcohol on a teenage boy and made racist remarks about his skin color on a train",
+      "url": "https://www.independent.co.uk/news/uk/crime/group-spit-alcohol-teenage-boy-hate-crime-racial-abuse-preston-park-hassocks-sussex-a8649006.html"
+    },
+    {
+      "index": 57,
+      "title": "Teenager throws acid on boyfriend  because he refused to mar",
+      "description": "A teenager threw acid on their boyfriend after he refused to marry her in Sydney.",
+      "url": "https://www.independent.co.uk/news/world/asia/acid-attack-india-teenager-girl-boyfriend-aligarh-uttar-pradesh-police-a9172411.html"
+    },
+    {
+      "index": 77,
+      "title": "Community in mourning after sistergirl stabbed to death",
+      "description": "A sistergirl was stabbed to death, leading to the community mourning the loss.",
+      "url": "https://www.katherinetimes.com.au/story/8785653/community-in-mourning-after-sistergirl-stabbed-to-death/?cs=1459"
+    },
+    {
+      "index": 93,
+      "title": "Melbourne Neo - Nazis Target Drag Performer At Family - Frie",
+      "description": "A drag performer was targeted by Melbourne Neo-Nazis at a family-friendly youth festival, facing har",
+      "url": "https://www.starobserver.com.au/news/melbourne-neo-nazis-target-drag-performer-at-family-friendly-youth-fest/217074"
+    },
+    {
+      "index": 105,
+      "title": "Le numéro 3 du Vatican , le cardinal australien George Pell ",
+      "description": "Le cardinal australien George Pell a été condamné pour agression sexuelle",
+      "url": "https://www.lavenir.net/cnt/dmf20190226_01302108/le-numero-3-du-vatican-le-cardinal-australien-george-pell-condamne-pour-agression-sexuelle"
+    },
+    {
+      "index": 106,
+      "title": "St Kilda cop bashing : Kayla Potts , Jack Houghcroft charged",
+      "description": "Kayla Potts and Jack Houldcroft have been charged in connection with a cop bashing incident in St Ki",
+      "url": "https://www.news.com.au/national/victoria/courts-law/five-people-charged-over-bashing-of-two-police-officers-in-st-kilda/news-story/490c74f31bef143ca3525c6a535067e7"
+    },
+    {
+      "index": 108,
+      "title": "Muslim mother horror after racist vandals graffiti a swastik",
+      "description": "A Muslim mother was horrified after racist vandals graffitied a swastika and the word 'dog' on her w",
+      "url": "https://www.dailymail.co.uk/news/article-6828557/Muslim-mothers-horror-racist-vandals-graffiti-swastika-word-dog-white-BMW.html"
+    },
+    {
+      "index": 111,
+      "title": "Fraser Anning supporter arrested after attack on journalist ",
+      "description": "A supporter of Fraser Anning was arrested after attacking a journalist and photographer at Cairns Ce",
+      "url": "https://www.cairnspost.com.au/news-corp-journalist-eliza-barrs-question-that-fraser-anning-wouldnt-answer/news-story/79045c28f0be4785cbc163134e211631?nk=de1fd2a442ebbfb426bd83a6c298a9a7-1556679749"
+    },
+    {
+      "index": 112,
+      "title": "Police Search Sydney Synagogue Following Threat",
+      "description": "Police searched a Sydney Synagogue following a threat made against the establishment.",
+      "url": "http://www.kiis1065.com.au/newsroom/nsw-police-search-sydney-central-synagogue-bondi-junction-threat-online"
+    },
+    {
+      "index": 113,
+      "title": "  Chao : Journo question before boilover | Ballina Shire Adv",
+      "description": "A Fraser Anning supporter was arrested after attacking a journalist and photographer in Ballina Shir",
+      "url": "https://www.ballinaadvocate.com.au/news/news-corp-journalist-eliza-barrs-question-that-fra/3712764/"
+    },
+    {
+      "index": 114,
+      "title": "  Chao : Journo question before boilover",
+      "description": "A supporter of Fraser Anning was arrested after attacking a journalist and photographer at an event ",
+      "url": "https://www.cqnews.com.au/news/news-corp-journalist-eliza-barrs-question-that-fra/3712764/"
+    },
+    {
+      "index": 117,
+      "title": "  Suspiciou noose found hanging near student housing in poss",
+      "description": "A 'suspicious' noose was found hanging near student housing, which is recognized as a symbol of viol",
+      "url": "https://www.independent.co.uk/news/world/americas/noose-stanford-university-california-racist-student-housing-hate-crime-a9008431.html"
+    },
+    {
+      "index": 118,
+      "title": "Racists climb on to South African man bonnet , smash windscr",
+      "description": "Racists climbed onto a South African man's bonnet, smashed his windscreen, and ordered him to 'go ba",
+      "url": "https://www.independent.co.uk/news/uk/crime/racist-attack-go-back-poland-south-african-man-car-somerset-a9020401.html"
+    },
+    {
+      "index": 119,
+      "title": "Woman punched unconscious after telling man who followed her",
+      "description": "A woman was punched unconscious after telling a man who followed her from a nightclub that she was n",
+      "url": "https://www.independent.co.uk/news/uk/crime/woman-man-turn-down-beaten-unconscious-manchester-not-interested-a9005661.html"
+    },
+    {
+      "index": 123,
+      "title": "Owen Jones : Left - wing commentator attacked in  blatant pr",
+      "description": "Left-wing commentator Owen Jones was attacked in a blatant premeditated assault outside a London pub",
+      "url": "https://www.independent.co.uk/news/uk/crime/owen-jones-attack-pub-far-right-assault-a9063816.html"
+    },
+    {
+      "index": 124,
+      "title": "the dog on the tucker box ... | Your Democracy",
+      "description": "The much-loved Dog on the Tuckerbox statue in Gundagai was vandalised last month, causing damage to ",
+      "url": "http://www.yourdemocracy.net.au/drupal/node/37247"
+    },
+    {
+      "index": 127,
+      "title": "Brisbane Holland Park mosque vandalised with swastika , accu",
+      "description": "The Holland Park mosque in Brisbane was vandalised with spray-painted right-wing symbols and a refer",
+      "url": "https://www.abc.net.au/news/2019-09-11/brisbane-mosque-vandalised-with-christchurch-references/11501684"
+    },
+    {
+      "index": 128,
+      "title": "Eggs thrown at baby and mother in  racially aggravated  atta",
+      "description": "A racially aggravated attack where eggs were thrown at a baby and mother outside a retail park. Poli",
+      "url": "https://www.independent.co.uk/news/uk/crime/eggs-baby-mother-racist-attack-worcester-west-mercia-police-a9091141.html"
+    },
+    {
+      "index": 136,
+      "title": "Driver who ran over girl she thought was  a Mexican  charged",
+      "description": "An Iowa woman was charged with a hate crime after running over a girl she thought was 'a Mexican' an",
+      "url": "https://www.independent.co.uk/news/world/americas/hit-run-teenage-girl-mexican-hate-crime-iowa-a9258916.html"
+    },
+    {
+      "index": 137,
+      "title": "News von heute : Neonazis drohen Berliner Staatssekretärin C",
+      "description": "Neonazis threatened Berlin State Secretary Chebli with murder",
+      "url": "https://www.stern.de/panorama/weltgeschehen/news-von-heute--neonazis-drohen-berliner-staatssekretaerin-chebli-mit-ermordung-9029148.html"
+    },
+    {
+      "index": 145,
+      "title": "After 30 Years , Arrest Is Made In Alleged Australian Hate C",
+      "description": "After 30 years, an arrest has been made in an alleged hate crime killing that was initially ruled a ",
+      "url": "https://www.wgbh.org/news/local-news/2020/05/21/after-30-years-arrest-is-made-in-alleged-australian-hate-crime-killing-initially-ruled-a-suicide"
+    },
+    {
+      "index": 166,
+      "title": "Murdered pharmacist Jessica Patel died after sad string of c",
+      "description": "The murdered pharmacist Jessica Patel died after a sad string of callous and cruel abuse, as reveale",
+      "url": "https://www.yorkshirepost.co.uk/news/crime/murdered-pharmacist-jessica-patel-died-after-sad-string-callous-and-cruel-abuse-review-her-death-reveals-2917932"
+    },
+    {
+      "index": 178,
+      "title": "Far - right Hate Attack Shows Extremists Emboldened",
+      "description": "The Greens have responded to sickening reports of a violent assault by a man with a swastika on a Fi",
+      "url": "https://www.miragenews.com/far-right-hate-attack-shows-extremists-518559/"
+    },
+    {
+      "index": 179,
+      "title": "Fears of escalating violence as online  hate factorie sow di",
+      "description": "Sikh students attacked in Sydney as tensions over ongoing farmers protests in India spread to Austra",
+      "url": "https://www.theguardian.com/australia-news/2021/mar/19/fears-of-escalating-violence-as-online-hate-factories-sow-division-within-australias-indian-community"
+    },
+    {
+      "index": 181,
+      "title": "Sikhs Attacked In Australia Over Alleged Support To Farmer P",
+      "description": "A group of Sikh men were attacked in Sydney, Australia, over alleged support for farmers' protests. ",
+      "url": "https://www.indiatimes.com/news/india/sikhs-attacked-in-australia-over-alleged-support-to-farmers-protests-heres-what-happened-535631.html"
+    },
+    {
+      "index": 182,
+      "title": "Tensions over Indian farm laws in Australia , Sikhs attacked",
+      "description": "A group of Sikhs was attacked in Sydney in an apparent hate crime related to tensions over Indian fa",
+      "url": "https://www.indiatoday.in/world/story/tensions-over-indian-farm-laws-in-australia-sikhs-attacked-in-sydney-1775593-2021-03-04"
+    },
+    {
+      "index": 184,
+      "title": "Socialite charged over spraying  Roxy is a c ** t  on the PR",
+      "description": "A socialite has been charged for spraying derogatory language on the office of a PR queen in Sydney ",
+      "url": "https://www.dailymail.co.uk/news/article-9421539/Socialite-charged-spraying-Roxy-c-t-PR-queens-office.html"
+    },
+    {
+      "index": 189,
+      "title": "George Floyd statue vandalised police investigating Brooklyn",
+      "description": "A statue of George Floyd was vandalized in Brooklyn, with police investigating it as a hate crime.",
+      "url": "https://www.9news.com.au/world/george-floyd-statue-vandalised-police-investigating-brooklyn-hate-crime/9a5bd3a0-1a27-4258-b317-6e24e038c22f"
+    },
+    {
+      "index": 194,
+      "title": "Jewish man faces attack in Australia while walking with son ",
+      "description": "A 48-year-old Jewish man was attacked in Australia while walking with his son to synagogue. The vict",
+      "url": "https://www.clevelandjewishnews.com/jns/jewish-man-faces-attack-in-australia-while-walking-with-son-to-synagogue/article_c7966eb0-d009-522b-9f7b-03d981678a07.html"
+    },
+    {
+      "index": 195,
+      "title": "Sydney Hairdresser Pleads Guilty To Slapping Stonewall Hotel",
+      "description": "A Sydney hairdresser pleaded guilty to slapping a security guard at Stonewall Hotel and was sentence",
+      "url": "https://www.starobserver.com.au/news/sydney-hairdresser-pleads-guilty-to-slapping-stonewall-hotel-security-guard/205952"
+    },
+    {
+      "index": 197,
+      "title": "Indian deported from Australia for assault on Sikhs gets her",
+      "description": "Vishal Jood was arrested by New South Wales police in April after an investigation revealed his alle",
+      "url": "https://www.telegraphindia.com/india/indian-deported-from-australia-for-assault-on-sikhs-gets-heros-welcome/cid/1835079"
+    },
+    {
+      "index": 222,
+      "title": "  Obscene : Josh Frydenberg election signs defaced with Nazi",
+      "description": "Josh Frydenberg's election signs were defaced with Nazi symbols in the Kooyong electorate in Melbour",
+      "url": "https://www.brisbanetimes.com.au/politics/federal/obscene-josh-frydenberg-election-signs-defaced-with-nazi-symbols-20220404-p5aarz.html"
+    },
+    {
+      "index": 236,
+      "title": "19 Murdered Children",
+      "description": "The article discusses the tragic murder of 19 children in Newtown. The specific details of the incid",
+      "url": "https://www.nytimes.com/2022/05/25/briefing/texas-elementary-school-shooting-uvalde.html"
+    },
+    {
+      "index": 250,
+      "title": "Murder of Indigenous Teenager in Western Australia Brings De",
+      "description": "The murder of an Indigenous teenager in Western Australia has brought despair and a sense of deja vu",
+      "url": "https://thediplomat.com/2022/10/murder-of-indigenous-teenager-in-western-australia-brings-despair-deja-vu/"
+    },
+    {
+      "index": 263,
+      "title": "Sydney Man Found Guilty Over Threats To Release Photos Of Ne",
+      "description": "A 60-year old man threatened to post images of his neighbour's Grindr hookup in every 'letterbox and",
+      "url": "https://www.starobserver.com.au/news/sydney-man-found-guilty-of-threatening-to-release-photos-from-neighbours-grindr-hookup/218264"
+    },
+    {
+      "index": 266,
+      "title": "Voices of Viatris : For Nathan Wilson , Family Is a Change W",
+      "description": "Nathan Wilson was violently attacked by strangers one evening while walking in a town in New South W",
+      "url": "https://www.finanznachrichten.de/nachrichten-2023-01/58192720-voices-of-viatris-for-nathan-wilson-family-is-a-change-worth-fighting-for-200.htm"
+    },
+    {
+      "index": 267,
+      "title": "Miss Universe Australia Maria Thattil says men spat at her b",
+      "description": "Miss Universe Australia Maria Thattil reported that men spat at her brother after Mardi Gras in Sydn",
+      "url": "https://www.dailymail.co.uk/news/article-11805131/Miss-Universe-Australia-Maria-Thattil-says-men-spat-brother-Mardi-Gras-Sydney.html"
+    }
+  ]
+}

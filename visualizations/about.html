@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about Incidex - our mission, methodology, and how you can contribute to LGBTIQ+ advocacy and awareness in Australia.">
+  <title>About | Incidex Australia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incidex.au/about.html">
+  <meta property="og:title" content="About | Incidex Australia">
+  <meta property="og:description" content="Learn about Incidex - our mission, methodology, and how you can contribute to LGBTIQ+ advocacy and awareness in Australia.">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://incidex.au/about.html">
+  <meta property="twitter:title" content="About | Incidex Australia">
+  <meta property="twitter:description" content="Learn about Incidex - our mission, methodology, and how you can contribute to LGBTIQ+ advocacy and awareness in Australia.">
+  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page-specific styles */
+    .about-hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--space-16) var(--space-6);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    .about-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-hero h1 {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-4);
+      color: inherit;
+    }
+
+    .about-hero p {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Content Sections */
+    .about-content {
+      max-width: var(--container-lg);
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6);
+    }
+
+    .about-section {
+      margin-bottom: var(--space-16);
+    }
+
+    .about-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .section-header h2 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-rainbow);
+      border-radius: var(--radius-full);
+    }
+
+    .section-header p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-lg);
+      max-width: 600px;
+      margin: var(--space-4) auto 0;
+    }
+
+    /* Mission Grid */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .mission-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      transition: all var(--transition-base);
+    }
+
+    .mission-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .mission-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      background: var(--color-primary-50);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .mission-card:nth-child(2) .mission-icon {
+      background: var(--color-secondary-50);
+    }
+
+    .mission-card:nth-child(3) .mission-icon {
+      background: var(--color-accent-50);
+    }
+
+    .mission-card h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .mission-card p {
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Data Methodology */
+    .methodology-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .methodology-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .methodology-text h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-4);
+      color: var(--color-primary);
+    }
+
+    .methodology-text p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+      line-height: var(--leading-relaxed);
+    }
+
+    .methodology-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .methodology-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+    }
+
+    .methodology-list li svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-success);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .methodology-visual {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+    }
+
+    .data-flow {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .flow-number {
+      width: 36px;
+      height: 36px;
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-bold);
+      flex-shrink: 0;
+    }
+
+    .flow-content {
+      flex: 1;
+    }
+
+    .flow-content strong {
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .flow-content span {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .flow-arrow {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--text-xl);
+    }
+
+    /* Team Section */
+    .team-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-10);
+    }
+
+    .team-intro p {
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .value-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .value-card svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .value-card h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+
+    .value-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    /* Partners Section */
+    .partners-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    .partner-placeholder {
+      background: var(--color-bg);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6) var(--space-8);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      text-align: center;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--color-bg-dark) 0%, #1a1a1a 100%);
+      color: var(--color-text-inverse);
+      padding: var(--space-16) var(--space-6);
+      text-align: center;
+    }
+
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-4);
+      color: inherit;
+    }
+
+    .cta-content p {
+      font-size: var(--text-lg);
+      opacity: 0.8;
+      margin-bottom: var(--space-8);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn {
+      min-width: 180px;
+    }
+
+    /* Acknowledgement */
+    .acknowledgement {
+      background: var(--color-bg);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-16);
+      text-align: center;
+    }
+
+    .acknowledgement h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+    }
+
+    .acknowledgement p {
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      font-size: var(--text-sm);
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-large" style="margin-bottom: var(--space-6); max-width: 350px; width: 100%; height: auto;" loading="eager">
+      <h1>About This Project</h1>
+      <p>Documenting hate crimes against LGBTIQ+ Australians to support advocacy, raise awareness, and build a safer future for our community.</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main">
+    <div class="about-content">
+      <!-- Mission Section -->
+      <section class="about-section">
+        <div class="section-header">
+          <h2>Our Mission</h2>
+          <p>We believe that visibility creates change. By documenting incidents, we empower advocacy.</p>
+        </div>
+
+        <div class="mission-grid">
+          <div class="mission-card">
+            <div class="mission-icon">📊</div>
+            <h3>Document & Track</h3>
+            <p>We systematically collect and verify reports of hate crimes and discrimination incidents targeting LGBTIQ+ individuals across Australia, creating a comprehensive record.</p>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-icon">🔊</div>
+            <h3>Amplify Awareness</h3>
+            <p>Our interactive maps and statistics make the reality of anti-LGBTIQ+ hate visible to the public, media, and policymakers who can drive change.</p>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-icon">🤝</div>
+            <h3>Support Community</h3>
+            <p>We connect those affected with support resources and contribute data to organizations working to protect LGBTIQ+ rights and safety.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Methodology Section -->
+      <section class="about-section">
+        <div class="section-header">
+          <h2>Our Data & Methodology</h2>
+          <p>Rigorous collection, careful verification, and transparent reporting</p>
+        </div>
+
+        <div class="methodology-content">
+          <div class="methodology-text">
+            <h3>How We Collect Data</h3>
+            <p>Our database is compiled from multiple sources including news reports, police data, community reports, and court records. Every incident is reviewed for accuracy before inclusion.</p>
+            
+            <ul class="methodology-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Media reports from verified news sources across Australia</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Court records and legal case documentation</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Community organization reports and referrals</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Direct submissions (verified before inclusion)</span>
+              </li>
+            </ul>
+
+            <h3 style="margin-top: var(--space-6);">Data Limitations</h3>
+            <p>We acknowledge that our data represents only reported and documented incidents. Many hate crimes go unreported due to fear, stigma, or lack of trust in authorities. Our statistics are a minimum count, not a complete picture.</p>
+          </div>
+
+          <div class="methodology-visual">
+            <h4 style="margin-bottom: var(--space-4); font-size: var(--text-lg);">Our Data Pipeline</h4>
+            <div class="data-flow">
+              <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div class="flow-content">
+                  <strong>Collection</strong>
+                  <span>Automated and manual gathering from trusted sources</span>
+                </div>
+              </div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div class="flow-content">
+                  <strong>Verification</strong>
+                  <span>Cross-referencing and fact-checking each incident</span>
+                </div>
+              </div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div class="flow-content">
+                  <strong>Classification</strong>
+                  <span>Categorizing by type, severity, and location</span>
+                </div>
+              </div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div class="flow-content">
+                  <strong>Publication</strong>
+                  <span>Adding to our map and statistics dashboards</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Values Section -->
+      <section class="about-section">
+        <div class="section-header">
+          <h2>Our Values</h2>
+          <p>The principles that guide our work</p>
+        </div>
+
+        <div class="team-intro">
+          <p>This project is maintained by a dedicated team of volunteers who believe in the power of data to drive social change. We work closely with LGBTIQ+ community organizations, legal advocates, and researchers.</p>
+        </div>
+
+        <div class="values-grid">
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <div>
+              <h4>Accuracy</h4>
+              <p>Every data point is verified before publication</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <div>
+              <h4>Transparency</h4>
+              <p>Our methodology and sources are openly documented</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <div>
+              <h4>Community-Led</h4>
+              <p>We center LGBTIQ+ voices and experiences</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <div>
+              <h4>Privacy-First</h4>
+              <p>We protect victim identities and sensitive details</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <div>
+              <h4>Advocacy-Focused</h4>
+              <p>Data is used to support policy change and safety</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <div>
+              <h4>Open Access</h4>
+              <p>Free for researchers, journalists, and advocates</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partners Section -->
+      <section class="about-section">
+        <div class="section-header">
+          <h2>Our Partners</h2>
+          <p>Working together for a safer community</p>
+        </div>
+
+        <div class="partners-logos">
+          <div class="partner-placeholder">Partner Organization 1</div>
+          <div class="partner-placeholder">Partner Organization 2</div>
+          <div class="partner-placeholder">Partner Organization 3</div>
+          <div class="partner-placeholder">Partner Organization 4</div>
+        </div>
+
+        <p style="text-align: center; color: var(--color-text-muted); margin-top: var(--space-6); font-size: var(--text-sm);">Interested in partnering with us? <a href="contact.html">Get in touch</a></p>
+      </section>
+
+      <!-- Acknowledgement -->
+      <div class="acknowledgement">
+        <h3>Acknowledgement of Country</h3>
+        <p>We acknowledge the Traditional Owners of Country throughout Australia and their continuing connection to land, sea and community. We pay our respects to Aboriginal and Torres Strait Islander cultures and to Elders both past and present. We acknowledge that LGBTIQ+ Aboriginal and Torres Strait Islander people face unique challenges and hold distinct cultural perspectives that enrich our community.</p>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Get Involved</h2>
+        <p>Whether you want to report an incident, contribute data, volunteer, or support our work, there are many ways to help build a safer Australia for LGBTIQ+ people.</p>
+        <div class="cta-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg">Contact Us</a>
+          <a href="resources.html" class="btn btn-secondary btn-lg" style="border-color: white; color: white;">Find Resources</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+            </a>
+          </div>
+          <h4>About</h4>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="resources.html">Support Resources</a></li>
+            <li><a href="about.html">About This Project</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Get Help</h4>
+          <ul>
+            <li><a href="tel:1800184527">QLife: 1800 184 527</a></li>
+            <li><a href="tel:131114">Lifeline: 13 11 14</a></li>
+            <li><a href="tel:000">Emergency: 000</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Subscribe for updates on new data and resources.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 Incidex Australia. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
+
+
+

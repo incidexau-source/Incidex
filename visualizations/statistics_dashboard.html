@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Incidex | Statistics Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://incidex.au/statistics_dashboard.html">
+    <meta property="og:title" content="Incidex | Statistics Dashboard">
+    <meta property="og:description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+    <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://incidex.au/statistics_dashboard.html">
+    <meta property="twitter:title" content="Incidex | Statistics Dashboard">
+    <meta property="twitter:description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+    <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+      :root {
+        --bg-primary: #f8fafc;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --border-color: #e2e8f0;
+        --accent-primary: #6366f1;
+        --accent-secondary: #8b5cf6;
+        --accent-success: #22c55e;
+        --accent-warning: #f97316;
+        --accent-danger: #ef4444;
+        --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+        --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+        --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #64748b;
+        --border-color: #334155;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 1.5rem clamp(1rem, 3vw, 2.5rem);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .header-content h1 {
+        margin: 0 0 0.35rem;
+        font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+        background: linear-gradient(90deg, #f1f5f9, #a5b4fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .header-content .intro {
+        margin: 0;
+        color: #cbd5f5;
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        color: #f1f5f9;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background 0.2s;
+      }
+
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .theme-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 999px;
+        color: #f1f5f9;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background 0.2s;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      main {
+        padding: clamp(1rem, 3vw, 2rem);
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      /* Filter Bar */
+      .filter-bar {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        min-width: 140px;
+      }
+
+      .filter-group label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      select, input[type="date"] {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        font-family: inherit;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        cursor: pointer;
+      }
+
+      select:focus, input[type="date"]:focus {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.6rem 1.25rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .btn-primary {
+        background: var(--accent-primary);
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        background: #4f46e5;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--border-color);
+      }
+
+      .btn-success {
+        background: var(--accent-success);
+        color: #ffffff;
+      }
+
+      .btn-success:hover {
+        background: #16a34a;
+      }
+
+      /* Statistics Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-card {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        box-shadow: var(--shadow-md);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+      }
+
+      .stat-card.purple::before { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+      .stat-card.green::before { background: linear-gradient(90deg, #22c55e, #10b981); }
+      .stat-card.orange::before { background: linear-gradient(90deg, #f97316, #fb923c); }
+      .stat-card.red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+      .stat-card.blue::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+      .stat-card .label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-card .value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.1;
+      }
+
+      .stat-card .detail {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.35rem;
+      }
+
+      .stat-card .trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        margin-top: 0.5rem;
+      }
+
+      .trend.up {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+
+      .trend.down {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+      }
+
+      .trend.neutral {
+        background: rgba(100, 116, 139, 0.15);
+        color: var(--text-muted);
+      }
+
+      /* Charts Grid */
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .chart-card {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .chart-card.full { grid-column: span 12; }
+      .chart-card.half { grid-column: span 6; }
+      .chart-card.third { grid-column: span 4; }
+      .chart-card.two-thirds { grid-column: span 8; }
+
+      @media (max-width: 1200px) {
+        .chart-card.third { grid-column: span 6; }
+        .chart-card.two-thirds { grid-column: span 12; }
+      }
+
+      @media (max-width: 768px) {
+        .chart-card.half,
+        .chart-card.third,
+        .chart-card.two-thirds {
+          grid-column: span 12;
+        }
+      }
+
+      .chart-card h3 {
+        margin: 0 0 1rem;
+        font-size: 1rem;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chart-card h3 .badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        background: var(--accent-primary);
+        color: white;
+        font-weight: 600;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 300px;
+      }
+
+      .chart-container.tall {
+        height: 400px;
+      }
+
+      .chart-container.short {
+        height: 250px;
+      }
+
+      /* Heat Map */
+      #heatmap {
+        height: 350px;
+        border-radius: var(--radius-sm);
+        background: var(--bg-tertiary);
+      }
+
+      /* Data Table */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .data-table th {
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .data-table tr:hover {
+        background: var(--bg-tertiary);
+      }
+
+      .outcome-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .outcome-badge.won {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+      }
+
+      .outcome-badge.lost {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+
+      .outcome-badge.ongoing {
+        background: rgba(99, 102, 241, 0.15);
+        color: #6366f1;
+      }
+
+      .issue-tag {
+        display: inline-block;
+        padding: 0.15rem 0.45rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+        margin: 0.1rem;
+      }
+
+      .case-link {
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .case-link:hover {
+        text-decoration: underline;
+      }
+
+      .case-significance {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+        max-width: 300px;
+      }
+
+      .progress-bar {
+        height: 8px;
+        background: var(--bg-tertiary);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress-bar .fill {
+        height: 100%;
+        border-radius: 999px;
+        transition: width 0.3s ease;
+      }
+
+      /* Loading State */
+      .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        color: var(--text-muted);
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--border-color);
+        border-top-color: var(--accent-primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Insights Panel */
+      .insights-panel {
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        color: white;
+        margin-bottom: 1.5rem;
+      }
+
+      .insights-panel h3 {
+        margin: 0 0 1rem;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .insights-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .insights-list li {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .insights-list li::before {
+        content: '📊';
+        flex-shrink: 0;
+      }
+
+      /* Footer */
+      footer {
+        padding: 1.5rem clamp(1rem, 3vw, 2.5rem);
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      /* Print Styles */
+      @media print {
+        header, .filter-bar, .header-actions, footer {
+          display: none !important;
+        }
+        body {
+          background: white;
+        }
+        .chart-card {
+          break-inside: avoid;
+          box-shadow: none;
+          border: 1px solid #e2e8f0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>📊 LGBTIQ+ Hate Crime Statistics</h1>
+        <p class="intro">Interactive dashboard analyzing hate crime incident patterns across Australia</p>
+      </div>
+      <div class="header-actions">
+        <a href="map.html" class="nav-link">🗺️ Map</a>
+        <a href="policy_landscape.html" class="nav-link">📋 Policy</a>
+        <a href="statistics.html" class="nav-link">📊 Statistics</a>
+        <a href="resources.html" class="nav-link">📚 Resources</a>
+        <a href="report_incident.html" class="nav-link">📝 Report</a>
+        <a href="about.html" class="nav-link">ℹ️ About</a>
+        <a href="contact.html" class="nav-link">✉️ Contact</a>
+        <button id="exportPdf" class="btn btn-success">
+          📥 Download Report
+        </button>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <main id="dashboardContent">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label>Incident Type</label>
+          <select id="filterType">
+            <option value="all">All Types</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Severity</label>
+          <select id="filterSeverity">
+            <option value="all">All Severities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Victim Identity</label>
+          <select id="filterIdentity">
+            <option value="all">All Groups</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Start Date</label>
+          <input type="date" id="filterStartDate" />
+        </div>
+        <div class="filter-group">
+          <label>End Date</label>
+          <input type="date" id="filterEndDate" />
+        </div>
+        <div class="filter-group" style="justify-content: flex-end;">
+          <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+        </div>
+        <div class="filter-group" style="justify-content: flex-end;">
+          <button class="btn btn-secondary" id="resetFilters">Reset</button>
+        </div>
+      </div>
+
+      <!-- Key Statistics Cards -->
+      <div class="stats-grid" id="statsCards">
+        <div class="stat-card purple">
+          <div class="label">Total Incidents</div>
+          <div class="value" id="totalIncidents">-</div>
+          <div class="detail">All recorded incidents</div>
+        </div>
+        <div class="stat-card green">
+          <div class="label">Last 30 Days</div>
+          <div class="value" id="last30Days">-</div>
+          <div class="trend neutral" id="monthlyTrend">
+            <span>↔</span> Calculating...
+          </div>
+        </div>
+        <div class="stat-card orange">
+          <div class="label">Most Common Type</div>
+          <div class="value" id="commonType">-</div>
+          <div class="detail" id="commonTypeCount">-</div>
+        </div>
+        <div class="stat-card red">
+          <div class="label">Highest Risk Area</div>
+          <div class="value" id="riskArea">-</div>
+          <div class="detail" id="riskAreaCount">-</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="label">Most Targeted Group</div>
+          <div class="value" id="targetedGroup">-</div>
+          <div class="detail" id="targetedGroupCount">-</div>
+        </div>
+      </div>
+
+      <!-- Key Insights -->
+      <div class="insights-panel" id="insightsPanel">
+        <h3>🔍 Key Insights</h3>
+        <ul class="insights-list" id="insightsList">
+          <li>Loading analysis...</li>
+        </ul>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="charts-grid">
+        <!-- Temporal Trends -->
+        <div class="chart-card full">
+          <h3>
+            📈 Incidents Over Time
+            <span class="badge" id="trendBadge">Loading...</span>
+          </h3>
+          <div class="chart-container tall">
+            <canvas id="temporalChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Geographic Distribution -->
+        <div class="chart-card two-thirds">
+          <h3>🏙️ Top 15 Locations by Incident Count</h3>
+          <div class="chart-container tall">
+            <canvas id="locationChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card third">
+          <h3>🗺️ Distribution by State</h3>
+          <div class="chart-container">
+            <canvas id="stateChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Heat Map -->
+        <div class="chart-card full">
+          <h3>🔥 Incident Density Heat Map</h3>
+          <div id="heatmap"></div>
+        </div>
+
+        <!-- Incident Types -->
+        <div class="chart-card half">
+          <h3>📋 Incident Types Breakdown</h3>
+          <div class="chart-container">
+            <canvas id="typeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Victim Demographics -->
+        <div class="chart-card half">
+          <h3>👥 Victim Demographics</h3>
+          <div class="chart-container">
+            <canvas id="demographicsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Severity Distribution -->
+        <div class="chart-card third">
+          <h3>⚠️ Severity Distribution</h3>
+          <div class="chart-container short">
+            <canvas id="severityChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Severity Over Time -->
+        <div class="chart-card two-thirds">
+          <h3>📊 Severity Trends Over Time</h3>
+          <div class="chart-container">
+            <canvas id="severityTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Top Locations by Severity -->
+        <div class="chart-card half">
+          <h3>🚨 Highest Severity Locations</h3>
+          <div class="chart-container">
+            <canvas id="severityLocationChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Incident Types by Year -->
+        <div class="chart-card half">
+          <h3>📅 Incident Types by Year</h3>
+          <div class="chart-container">
+            <canvas id="typeYearChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ INCIDENT RATES SECTION ============ -->
+      <div class="section-divider" style="margin: 2rem 0; text-align: center;" id="incidentRatesSection">
+        <h2 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">📊 Incident Rates by State/Territory</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Per capita analysis based on LGBTI+ population estimates from ABS December 2024 Household Survey</p>
+      </div>
+
+      <!-- Caveat Banner -->
+      <div class="insights-panel" id="populationCaveat" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+        <h3>⚠️ Important Note on Population Estimates</h3>
+        <ul class="insights-list">
+          <li style="background: rgba(255,255,255,0.2);">Population figures based on <strong>ABS December 2024 Household Survey estimates</strong> (45,000+ respondents). These are estimates with confidence intervals, not exact counts.</li>
+          <li style="background: rgba(255,255,255,0.2);">Official 2026 Census data including sexual orientation and gender identity will be released in <strong>June 2027</strong>. At that time, all incident rates will be recalculated with official Census figures.</li>
+          <li style="background: rgba(255,255,255,0.2);">Current data allows for state-by-state comparison but should be considered preliminary pending Census release.</li>
+          <li style="background: rgba(255,255,255,0.2);">Source: <a href="https://www.abs.gov.au/statistics/people/people-and-communities/estimates-and-characteristics-lgbti-populations-australia" target="_blank" rel="noopener" style="color: white; text-decoration: underline;">Australian Bureau of Statistics - Estimates and Characteristics of LGBTI+ Populations in Australia (December 2024)</a></li>
+        </ul>
+      </div>
+
+      <!-- Risk Summary Cards -->
+      <div class="stats-grid" id="riskCardsGrid">
+        <div class="stat-card red" id="highestRiskCard">
+          <div class="label">🚨 Highest Risk State</div>
+          <div class="value" id="highestRiskState">Loading...</div>
+          <div class="detail"><span id="highestRiskRate">-</span> per 1,000 LGBTI+</div>
+        </div>
+        <div class="stat-card green" id="lowestRiskCard">
+          <div class="label">🛡️ Lowest Risk State</div>
+          <div class="value" id="lowestRiskState">Loading...</div>
+          <div class="detail"><span id="lowestRiskRate">-</span> per 1,000 LGBTI+</div>
+        </div>
+        <div class="stat-card orange" id="riskMultiplierCard">
+          <div class="label">⚡ Risk Multiplier</div>
+          <div class="value" id="riskMultiplier">-</div>
+          <div class="detail" id="riskMultiplierLabel">-</div>
+        </div>
+        <div class="stat-card blue" id="nationalAverageCard">
+          <div class="label">🇦🇺 National Average</div>
+          <div class="value" id="nationalAvgRate">-</div>
+          <div class="detail">incidents per 1,000 LGBTI+</div>
+        </div>
+      </div>
+
+      <!-- State Comparison Charts -->
+      <div class="charts-grid">
+        <!-- Incident Rate Bar Chart -->
+        <div class="chart-card full">
+          <h3>
+            📈 Incident Rates per 1,000 LGBTI+ Population by State
+            <span class="badge" id="rateSortBadge">Sorted by Rate</span>
+          </h3>
+          <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="sortRateChart('rate')" id="sortRateBtn">Sort by Rate</button>
+            <button class="btn btn-secondary" onclick="sortRateChart('incidents')" id="sortIncidentsBtn">Sort by Incidents</button>
+            <button class="btn btn-secondary" onclick="sortRateChart('population')" id="sortPopBtn">Sort by Population</button>
+            <button class="btn btn-secondary" onclick="sortRateChart('alphabetical')" id="sortAlphaBtn">Alphabetical</button>
+          </div>
+          <div class="chart-container tall">
+            <canvas id="incidentRateChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Vulnerability Heat Map -->
+        <div class="chart-card half">
+          <h3>🔥 Vulnerability Index by State</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Composite score (0-100) based on: incident rate, severity distribution, trend direction, and policy strength
+          </p>
+          <div class="chart-container">
+            <canvas id="vulnerabilityChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Population vs Incidents Scatter -->
+        <div class="chart-card half">
+          <h3>👥 LGBTI+ Population vs Incident Count</h3>
+          <div class="chart-container">
+            <canvas id="populationVsIncidentsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Detailed State Rates Table -->
+        <div class="chart-card full">
+          <h3>📋 State-by-State Incident Rate Analysis <span class="badge" id="stateCountBadge">8 states</span></h3>
+          
+          <!-- Table -->
+          <div style="overflow-x: auto; max-height: 500px; overflow-y: auto;">
+            <table class="data-table" id="stateRatesTable">
+              <thead>
+                <tr>
+                  <th onclick="sortTable('state')" style="cursor: pointer;">State ↕</th>
+                  <th onclick="sortTable('incidents')" style="cursor: pointer;">Total Incidents ↕</th>
+                  <th onclick="sortTable('population')" style="cursor: pointer;">LGBTI+ Population ↕</th>
+                  <th onclick="sortTable('rate')" style="cursor: pointer;">Rate per 1,000 ↕</th>
+                  <th onclick="sortTable('rate100k')" style="cursor: pointer;">Rate per 100,000 ↕</th>
+                  <th onclick="sortTable('comparison')" style="cursor: pointer;">vs National Avg ↕</th>
+                  <th onclick="sortTable('pctIncidents')" style="cursor: pointer;">% of Incidents ↕</th>
+                  <th onclick="sortTable('pctPopulation')" style="cursor: pointer;">% of LGBTI+ Pop ↕</th>
+                  <th onclick="sortTable('vulnerability')" style="cursor: pointer;">Vulnerability ↕</th>
+                </tr>
+              </thead>
+              <tbody id="stateRatesBody">
+                <tr><td colspan="9" style="text-align: center; padding: 2rem; color: var(--text-muted);">Loading data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Incident Rate Trends -->
+        <div class="chart-card full">
+          <h3>📅 Incident Rate Trends by State (2020-2025)</h3>
+          <div class="chart-container tall">
+            <canvas id="rateTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Trend Analysis Grid -->
+        <div class="chart-card full">
+          <h3>🔮 State Trend Analysis & Projections</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Year-over-year changes and projected rates for 2026 based on current trends
+          </p>
+          <div id="trendGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ END INCIDENT RATES SECTION ============ -->
+
+      <!-- Legal Cases Section -->
+      <div class="section-divider" style="margin: 2rem 0; text-align: center;">
+        <h2 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">⚖️ Landmark Legal Cases <span id="totalCasesHeader" style="font-size: 1rem; background: var(--accent-primary); color: white; padding: 0.2rem 0.6rem; border-radius: 999px; vertical-align: middle;">0</span></h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Key court decisions shaping LGBTIQ+ rights in Australia (1994-2024)</p>
+      </div>
+
+      <!-- Legal Cases Filter Bar -->
+      <div class="filter-bar" id="legalFilterBar">
+        <div class="filter-group">
+          <label>Court Level</label>
+          <select id="filterCourtLevel">
+            <option value="all">All Courts</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Outcome</label>
+          <select id="filterOutcome">
+            <option value="all">All Outcomes</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+            <option value="ongoing">Ongoing</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Key Issue</label>
+          <select id="filterKeyIssue">
+            <option value="all">All Issues</option>
+          </select>
+        </div>
+        <div class="filter-group" style="justify-content: flex-end;">
+          <button class="btn btn-primary" id="applyLegalFilters">Apply</button>
+        </div>
+        <div class="filter-group" style="justify-content: flex-end;">
+          <button class="btn btn-secondary" id="resetLegalFilters">Reset</button>
+        </div>
+      </div>
+
+      <!-- Legal Cases Stats -->
+      <div class="stats-grid" id="legalStatsCards">
+        <div class="stat-card purple">
+          <div class="label">Total Cases</div>
+          <div class="value" id="totalCases">-</div>
+          <div class="detail">Landmark decisions</div>
+        </div>
+        <div class="stat-card green">
+          <div class="label">Cases Won</div>
+          <div class="value" id="casesWon">-</div>
+          <div class="detail" id="winRate">-</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="label">Highest Court</div>
+          <div class="value" id="highestCourt">-</div>
+          <div class="detail" id="highestCourtCount">-</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="label">Most Common Issue</div>
+          <div class="value" id="commonIssue">-</div>
+          <div class="detail" id="commonIssueCount">-</div>
+        </div>
+      </div>
+
+      <!-- Legal Cases Charts -->
+      <div class="charts-grid">
+        <!-- Outcomes by Court -->
+        <div class="chart-card half">
+          <h3>🏛️ Outcomes by Court Level</h3>
+          <div class="chart-container">
+            <canvas id="courtOutcomeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Cases Over Time -->
+        <div class="chart-card half">
+          <h3>📅 Cases Timeline</h3>
+          <div class="chart-container">
+            <canvas id="casesTimelineChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Key Issues Breakdown -->
+        <div class="chart-card half">
+          <h3>🏷️ Key Issues Breakdown</h3>
+          <div class="chart-container">
+            <canvas id="keyIssuesChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Win Rate by Decade -->
+        <div class="chart-card half">
+          <h3>📈 Win Rate by Decade</h3>
+          <div class="chart-container">
+            <canvas id="winRateDecadeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Legal Cases Table -->
+        <div class="chart-card full">
+          <h3>📋 Legal Cases Database <span class="badge" id="caseCountBadge">0 cases</span></h3>
+          <div style="overflow-x: auto; max-height: 500px; overflow-y: auto;">
+            <table class="data-table" id="legalCasesTable">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Case Name</th>
+                  <th>Court</th>
+                  <th>Key Issues</th>
+                  <th>Outcome</th>
+                  <th>Significance</th>
+                </tr>
+              </thead>
+              <tbody id="legalCasesBody">
+                <tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted);">Loading cases...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>LGBTIQ+ Hate Crime Statistics Dashboard • Data: <code>incidents_in_progress.csv</code> & <code>landmark_cases.csv</code> • Last updated: <span id="lastUpdated">-</span></p>
+    </footer>
+
+    <script>
+      // Constants
+      const DATA_PATH = '/data/incidents_in_progress.csv?v=' + Date.now();
+      const LEGAL_CASES_PATH = '/data/landmark_cases.csv?v=' + Date.now();
+      const COLORS = {
+        primary: '#6366f1',
+        secondary: '#8b5cf6',
+        success: '#22c55e',
+        warning: '#f97316',
+        danger: '#ef4444',
+        blue: '#3b82f6',
+        pink: '#ec4899',
+        cyan: '#06b6d4',
+        amber: '#f59e0b',
+        emerald: '#10b981',
+        rose: '#f43f5e',
+        indigo: '#4f46e5'
+      };
+
+      const CHART_COLORS = [
+        COLORS.primary, COLORS.danger, COLORS.warning, COLORS.success,
+        COLORS.pink, COLORS.blue, COLORS.cyan, COLORS.amber,
+        COLORS.emerald, COLORS.rose, COLORS.indigo, COLORS.secondary
+      ];
+
+      const SEVERITY_COLORS = {
+        low: COLORS.success,
+        medium: COLORS.warning,
+        high: COLORS.danger,
+        unknown: '#94a3b8'
+      };
+
+      const AUSTRALIAN_STATES = {
+        'NSW': ['Sydney', 'Newcastle', 'Wollongong', 'New South Wales'],
+        'VIC': ['Melbourne', 'Victoria', 'Geelong'],
+        'QLD': ['Brisbane', 'Queensland', 'Gold Coast', 'Cairns'],
+        'WA': ['Perth', 'Western Australia'],
+        'SA': ['Adelaide', 'South Australia'],
+        'TAS': ['Hobart', 'Tasmania', 'Launceston'],
+        'ACT': ['Canberra', 'ACT', 'Australian Capital Territory'],
+        'NT': ['Darwin', 'Northern Territory', 'Alice Springs']
+      };
+
+      // State
+      let allIncidents = [];
+      let filteredIncidents = [];
+      let allLegalCases = [];
+      let filteredLegalCases = [];
+      let charts = {};
+      let heatmapLayer = null;
+      let heatmap = null;
+
+      // DOM Elements
+      const filterType = document.getElementById('filterType');
+      const filterSeverity = document.getElementById('filterSeverity');
+      const filterIdentity = document.getElementById('filterIdentity');
+      const filterStartDate = document.getElementById('filterStartDate');
+      const filterEndDate = document.getElementById('filterEndDate');
+      const applyFiltersBtn = document.getElementById('applyFilters');
+      const resetFiltersBtn = document.getElementById('resetFilters');
+      const themeToggle = document.getElementById('themeToggle');
+      const exportPdfBtn = document.getElementById('exportPdf');
+
+      // Theme Management
+      function initTheme() {
+        const savedTheme = localStorage.getItem('dashboard-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+      }
+
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('dashboard-theme', newTheme);
+        updateThemeIcon(newTheme);
+        updateChartsTheme();
+      }
+
+      function updateThemeIcon(theme) {
+        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+      }
+
+      function getThemeColors() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        return {
+          text: isDark ? '#f1f5f9' : '#0f172a',
+          grid: isDark ? '#334155' : '#e2e8f0',
+          bg: isDark ? '#1e293b' : '#ffffff'
+        };
+      }
+
+      // Data Loading
+      function parseDate(value) {
+        if (!value) return null;
+        // Handle format like "20200107T153000Z"
+        if (/^\d{8}T\d{6}Z$/.test(value)) {
+          const year = value.slice(0, 4);
+          const month = value.slice(4, 6);
+          const day = value.slice(6, 8);
+          return new Date(`${year}-${month}-${day}`);
+        }
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+      }
+
+      function normalizeIncident(row) {
+        const latStr = (row.latitude || '').toString().trim();
+        const lonStr = (row.longitude || '').toString().trim();
+        const lat = latStr ? parseFloat(latStr) : NaN;
+        const lon = lonStr ? parseFloat(lonStr) : NaN;
+
+        const incidentDate = row.date || row.source_date;
+        const parsedDate = parseDate(incidentDate);
+
+        return {
+          title: row.title || 'Untitled',
+          url: row.url,
+          source_date: row.source_date,
+          incident_type: (row.incident_type || 'unknown').trim().toLowerCase(),
+          date: incidentDate,
+          parsedDate: parsedDate,
+          year: parsedDate ? parsedDate.getFullYear() : null,
+          month: parsedDate ? `${parsedDate.getFullYear()}-${String(parsedDate.getMonth() + 1).padStart(2, '0')}` : null,
+          location: row.location || 'Unknown',
+          victim_identity: (row.victim_identity || 'unknown').trim().toLowerCase(),
+          description: row.description || '',
+          severity: (row.severity || 'unknown').trim().toLowerCase(),
+          perpetrator_info: row.perpetrator_info,
+          latitude: Number.isFinite(lat) ? lat : null,
+          longitude: Number.isFinite(lon) ? lon : null
+        };
+      }
+
+      function detectState(location) {
+        if (!location) return 'Unknown';
+        const loc = location.toLowerCase();
+        
+        for (const [state, keywords] of Object.entries(AUSTRALIAN_STATES)) {
+          for (const keyword of keywords) {
+            if (loc.includes(keyword.toLowerCase())) {
+              return state;
+            }
+          }
+        }
+        
+        if (loc.includes('australia') && !loc.includes(',')) {
+          return 'National';
+        }
+        
+        return 'Other';
+      }
+
+      function extractSuburb(location) {
+        if (!location) return 'Unknown';
+        // Clean and simplify location
+        let suburb = location
+          .replace(/[,;]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        
+        // Remove common suffixes
+        suburb = suburb.split(' ').slice(0, 3).join(' ');
+        return suburb.length > 30 ? suburb.slice(0, 30) + '...' : suburb;
+      }
+
+      function loadData() {
+        Papa.parse(DATA_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            console.log('CSV loaded, total rows:', results.data.length);
+            allIncidents = results.data
+              .filter(row => row.title && row.title.trim())
+              .map(normalizeIncident);
+            
+            console.log('Incidents after filtering:', allIncidents.length);
+            filteredIncidents = [...allIncidents];
+            
+            populateFilters();
+            updateDashboard();
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+            console.log('Dashboard updated with', allIncidents.length, 'incidents');
+          },
+          error: (err) => {
+            console.error('Failed to load CSV:', err);
+            alert('Failed to load incident data. Make sure the server is running.');
+          }
+        });
+      }
+
+      function populateFilters() {
+        // Incident types
+        const types = [...new Set(allIncidents.map(i => i.incident_type))].filter(t => t && t !== 'unknown').sort();
+        types.forEach(type => {
+          const option = document.createElement('option');
+          option.value = type;
+          option.textContent = type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
+          filterType.appendChild(option);
+        });
+
+        // Victim identities
+        const identities = [...new Set(allIncidents.map(i => i.victim_identity))].filter(v => v && v !== 'unknown').sort();
+        identities.forEach(identity => {
+          const option = document.createElement('option');
+          option.value = identity;
+          option.textContent = identity.charAt(0).toUpperCase() + identity.slice(1).replace(/_/g, ' ');
+          filterIdentity.appendChild(option);
+        });
+
+        // Set date range
+        const dates = allIncidents.filter(i => i.parsedDate).map(i => i.parsedDate);
+        if (dates.length) {
+          const minDate = new Date(Math.min(...dates));
+          const maxDate = new Date(Math.max(...dates));
+          filterStartDate.min = minDate.toISOString().split('T')[0];
+          filterStartDate.max = maxDate.toISOString().split('T')[0];
+          filterEndDate.min = minDate.toISOString().split('T')[0];
+          filterEndDate.max = maxDate.toISOString().split('T')[0];
+        }
+      }
+
+      function applyFilters() {
+        const type = filterType.value;
+        const severity = filterSeverity.value;
+        const identity = filterIdentity.value;
+        const startDate = filterStartDate.value ? new Date(filterStartDate.value) : null;
+        const endDate = filterEndDate.value ? new Date(filterEndDate.value) : null;
+
+        filteredIncidents = allIncidents.filter(incident => {
+          if (type !== 'all' && incident.incident_type !== type) return false;
+          if (severity !== 'all' && incident.severity !== severity) return false;
+          if (identity !== 'all' && incident.victim_identity !== identity) return false;
+          if (startDate && incident.parsedDate && incident.parsedDate < startDate) return false;
+          if (endDate && incident.parsedDate && incident.parsedDate > endDate) return false;
+          return true;
+        });
+
+        updateDashboard();
+      }
+
+      function resetFilters() {
+        filterType.value = 'all';
+        filterSeverity.value = 'all';
+        filterIdentity.value = 'all';
+        filterStartDate.value = '';
+        filterEndDate.value = '';
+        filteredIncidents = [...allIncidents];
+        updateDashboard();
+      }
+
+      // Dashboard Update
+      function updateDashboard() {
+        updateStatCards();
+        updateInsights();
+        updateTemporalChart();
+        updateLocationChart();
+        updateStateChart();
+        updateTypeChart();
+        updateDemographicsChart();
+        updateSeverityChart();
+        updateSeverityTrendChart();
+        updateSeverityLocationChart();
+        updateTypeYearChart();
+        updateHeatmap();
+      }
+
+      // Stat Cards
+      function updateStatCards() {
+        const total = filteredIncidents.length;
+        document.getElementById('totalIncidents').textContent = total.toLocaleString();
+
+        // Last 30 days
+        const now = new Date();
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+        
+        const last30 = filteredIncidents.filter(i => i.parsedDate && i.parsedDate >= thirtyDaysAgo).length;
+        const prev30 = filteredIncidents.filter(i => i.parsedDate && i.parsedDate >= sixtyDaysAgo && i.parsedDate < thirtyDaysAgo).length;
+        
+        document.getElementById('last30Days').textContent = last30.toLocaleString();
+        
+        const trendEl = document.getElementById('monthlyTrend');
+        if (prev30 === 0) {
+          trendEl.className = 'trend neutral';
+          trendEl.innerHTML = '<span>↔</span> No comparison data';
+        } else {
+          const change = ((last30 - prev30) / prev30 * 100).toFixed(0);
+          if (change > 0) {
+            trendEl.className = 'trend up';
+            trendEl.innerHTML = `<span>↑</span> ${change}% from prev month`;
+          } else if (change < 0) {
+            trendEl.className = 'trend down';
+            trendEl.innerHTML = `<span>↓</span> ${Math.abs(change)}% from prev month`;
+          } else {
+            trendEl.className = 'trend neutral';
+            trendEl.innerHTML = '<span>↔</span> No change';
+          }
+        }
+
+        // Most common type
+        const typeCounts = {};
+        filteredIncidents.forEach(i => {
+          const type = i.incident_type || 'unknown';
+          typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+        const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
+        if (topType) {
+          document.getElementById('commonType').textContent = topType[0].charAt(0).toUpperCase() + topType[0].slice(1).replace(/_/g, ' ');
+          document.getElementById('commonTypeCount').textContent = `${topType[1]} incidents (${(topType[1]/total*100).toFixed(1)}%)`;
+        }
+
+        // Highest risk area
+        const locationCounts = {};
+        filteredIncidents.forEach(i => {
+          const loc = extractSuburb(i.location);
+          if (loc !== 'Unknown') {
+            locationCounts[loc] = (locationCounts[loc] || 0) + 1;
+          }
+        });
+        const topLocation = Object.entries(locationCounts).sort((a, b) => b[1] - a[1])[0];
+        if (topLocation) {
+          document.getElementById('riskArea').textContent = topLocation[0];
+          document.getElementById('riskAreaCount').textContent = `${topLocation[1]} incidents`;
+        }
+
+        // Most targeted group
+        const identityCounts = {};
+        filteredIncidents.forEach(i => {
+          const identity = i.victim_identity || 'unknown';
+          identityCounts[identity] = (identityCounts[identity] || 0) + 1;
+        });
+        const topIdentity = Object.entries(identityCounts).filter(([k]) => k !== 'unknown').sort((a, b) => b[1] - a[1])[0];
+        if (topIdentity) {
+          document.getElementById('targetedGroup').textContent = topIdentity[0].charAt(0).toUpperCase() + topIdentity[0].slice(1).replace(/_/g, ' ');
+          document.getElementById('targetedGroupCount').textContent = `${topIdentity[1]} incidents (${(topIdentity[1]/total*100).toFixed(1)}%)`;
+        }
+      }
+
+      // Insights
+      function updateInsights() {
+        const insights = [];
+        const total = filteredIncidents.length;
+        
+        if (total === 0) {
+          document.getElementById('insightsList').innerHTML = '<li>No data available for the selected filters.</li>';
+          return;
+        }
+
+        // Severity insight
+        const highSeverity = filteredIncidents.filter(i => i.severity === 'high').length;
+        const highPct = (highSeverity / total * 100).toFixed(1);
+        insights.push(`<strong>${highPct}%</strong> of incidents are classified as high severity (${highSeverity} cases)`);
+
+        // Trend insight
+        const byYear = {};
+        filteredIncidents.forEach(i => {
+          if (i.year) {
+            byYear[i.year] = (byYear[i.year] || 0) + 1;
+          }
+        });
+        const years = Object.keys(byYear).sort();
+        if (years.length >= 2) {
+          const lastYear = byYear[years[years.length - 1]] || 0;
+          const prevYear = byYear[years[years.length - 2]] || 0;
+          if (prevYear > 0) {
+            const change = ((lastYear - prevYear) / prevYear * 100).toFixed(0);
+            if (change > 10) {
+              insights.push(`Incidents <strong>increased by ${change}%</strong> from ${years[years.length - 2]} to ${years[years.length - 1]}`);
+            } else if (change < -10) {
+              insights.push(`Incidents <strong>decreased by ${Math.abs(change)}%</strong> from ${years[years.length - 2]} to ${years[years.length - 1]}`);
+            }
+          }
+        }
+
+        // Geographic insight
+        const stateCounts = {};
+        filteredIncidents.forEach(i => {
+          const state = detectState(i.location);
+          stateCounts[state] = (stateCounts[state] || 0) + 1;
+        });
+        const topStates = Object.entries(stateCounts).filter(([k]) => !['Unknown', 'Other', 'National'].includes(k)).sort((a, b) => b[1] - a[1]).slice(0, 2);
+        if (topStates.length >= 2) {
+          insights.push(`<strong>${topStates[0][0]}</strong> and <strong>${topStates[1][0]}</strong> have the highest concentration of incidents`);
+        }
+
+        // Type insight
+        const typeCounts = {};
+        filteredIncidents.forEach(i => {
+          const type = i.incident_type;
+          if (type && type !== 'unknown') {
+            typeCounts[type] = (typeCounts[type] || 0) + 1;
+          }
+        });
+        const assault = typeCounts['assault'] || 0;
+        const nonViolent = (typeCounts['hate_speech'] || 0) + (typeCounts['vandalism'] || 0) + (typeCounts['threat'] || 0);
+        if (assault > 0 && nonViolent > 0) {
+          const violentPct = (assault / (assault + nonViolent) * 100).toFixed(0);
+          insights.push(`Physical assaults make up <strong>${violentPct}%</strong> of categorized incidents`);
+        }
+
+        // Identity insight
+        const identityCounts = {};
+        filteredIncidents.forEach(i => {
+          const identity = i.victim_identity;
+          if (identity && identity !== 'unknown') {
+            identityCounts[identity] = (identityCounts[identity] || 0) + 1;
+          }
+        });
+        const transgender = identityCounts['transgender'] || 0;
+        if (transgender > 0) {
+          const transPct = (transgender / total * 100).toFixed(1);
+          insights.push(`Transgender individuals are targeted in <strong>${transPct}%</strong> of incidents`);
+        }
+
+        document.getElementById('insightsList').innerHTML = insights.map(i => `<li>${i}</li>`).join('');
+      }
+
+      // Chart Helper
+      function getChartOptions(title, type = 'bar') {
+        const themeColors = getThemeColors();
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: type !== 'bar',
+              labels: {
+                color: themeColors.text,
+                font: { family: "'Segoe UI', system-ui, sans-serif" }
+              }
+            },
+            tooltip: {
+              backgroundColor: themeColors.bg,
+              titleColor: themeColors.text,
+              bodyColor: themeColors.text,
+              borderColor: themeColors.grid,
+              borderWidth: 1
+            }
+          },
+          scales: type === 'bar' || type === 'line' ? {
+            x: {
+              ticks: { color: themeColors.text },
+              grid: { color: themeColors.grid }
+            },
+            y: {
+              ticks: { color: themeColors.text },
+              grid: { color: themeColors.grid },
+              beginAtZero: true
+            }
+          } : undefined
+        };
+      }
+
+      function updateChartsTheme() {
+        Object.values(charts).forEach(chart => {
+          if (chart && chart.options) {
+            const themeColors = getThemeColors();
+            if (chart.options.plugins && chart.options.plugins.legend) {
+              chart.options.plugins.legend.labels.color = themeColors.text;
+            }
+            if (chart.options.scales) {
+              if (chart.options.scales.x) {
+                chart.options.scales.x.ticks.color = themeColors.text;
+                chart.options.scales.x.grid.color = themeColors.grid;
+              }
+              if (chart.options.scales.y) {
+                chart.options.scales.y.ticks.color = themeColors.text;
+                chart.options.scales.y.grid.color = themeColors.grid;
+              }
+            }
+            chart.update();
+          }
+        });
+      }
+
+      // Temporal Chart
+      function updateTemporalChart() {
+        const monthCounts = {};
+        filteredIncidents.forEach(i => {
+          if (i.month) {
+            monthCounts[i.month] = (monthCounts[i.month] || 0) + 1;
+          }
+        });
+
+        const sortedMonths = Object.keys(monthCounts).sort();
+        const labels = sortedMonths.map(m => {
+          const [year, month] = m.split('-');
+          return `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(month)-1]} ${year}`;
+        });
+        const data = sortedMonths.map(m => monthCounts[m]);
+
+        // Calculate trend
+        let trendText = 'No data';
+        let trendClass = 'neutral';
+        if (data.length >= 3) {
+          const recent = data.slice(-3).reduce((a,b) => a+b, 0) / 3;
+          const earlier = data.slice(0, 3).reduce((a,b) => a+b, 0) / 3;
+          if (earlier > 0) {
+            const change = ((recent - earlier) / earlier * 100).toFixed(0);
+            if (change > 10) {
+              trendText = `↑ ${change}% increase`;
+              trendClass = 'danger';
+            } else if (change < -10) {
+              trendText = `↓ ${Math.abs(change)}% decrease`;
+              trendClass = 'success';
+            } else {
+              trendText = 'Stable trend';
+            }
+          }
+        }
+        
+        const badge = document.getElementById('trendBadge');
+        badge.textContent = trendText;
+        badge.style.background = trendClass === 'danger' ? COLORS.danger : trendClass === 'success' ? COLORS.success : COLORS.primary;
+
+        const ctx = document.getElementById('temporalChart').getContext('2d');
+        if (charts.temporal) charts.temporal.destroy();
+
+        charts.temporal = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Incidents',
+              data: data,
+              borderColor: COLORS.primary,
+              backgroundColor: COLORS.primary + '20',
+              fill: true,
+              tension: 0.3,
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'line'),
+            interaction: {
+              intersect: false,
+              mode: 'index'
+            }
+          }
+        });
+      }
+
+      // Location Chart
+      function updateLocationChart() {
+        const locationCounts = {};
+        filteredIncidents.forEach(i => {
+          const loc = extractSuburb(i.location);
+          if (loc !== 'Unknown') {
+            locationCounts[loc] = (locationCounts[loc] || 0) + 1;
+          }
+        });
+
+        const sorted = Object.entries(locationCounts).sort((a, b) => b[1] - a[1]).slice(0, 15);
+        const labels = sorted.map(([loc]) => loc);
+        const data = sorted.map(([, count]) => count);
+        const total = filteredIncidents.length;
+
+        const ctx = document.getElementById('locationChart').getContext('2d');
+        if (charts.location) charts.location.destroy();
+
+        charts.location = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Incidents',
+              data: data,
+              backgroundColor: CHART_COLORS.map(c => c + 'cc'),
+              borderColor: CHART_COLORS,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            indexAxis: 'y',
+            plugins: {
+              ...getChartOptions('', 'bar').plugins,
+              tooltip: {
+                ...getChartOptions('', 'bar').plugins.tooltip,
+                callbacks: {
+                  afterLabel: (ctx) => `${(ctx.raw / total * 100).toFixed(1)}% of total`
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // State Chart
+      function updateStateChart() {
+        const stateCounts = {};
+        filteredIncidents.forEach(i => {
+          const state = detectState(i.location);
+          stateCounts[state] = (stateCounts[state] || 0) + 1;
+        });
+
+        const sorted = Object.entries(stateCounts).sort((a, b) => b[1] - a[1]);
+        const labels = sorted.map(([state]) => state);
+        const data = sorted.map(([, count]) => count);
+
+        const ctx = document.getElementById('stateChart').getContext('2d');
+        if (charts.state) charts.state.destroy();
+
+        charts.state = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: CHART_COLORS.slice(0, labels.length),
+              borderWidth: 2,
+              borderColor: getThemeColors().bg
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'doughnut'),
+            cutout: '50%',
+            plugins: {
+              ...getChartOptions('', 'doughnut').plugins,
+              legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                  color: getThemeColors().text,
+                  font: { size: 11 },
+                  generateLabels: (chart) => {
+                    const data = chart.data;
+                    const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                    return data.labels.map((label, i) => ({
+                      text: `${label}: ${data.datasets[0].data[i]} (${(data.datasets[0].data[i]/total*100).toFixed(1)}%)`,
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      strokeStyle: data.datasets[0].backgroundColor[i],
+                      index: i
+                    }));
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Type Chart
+      function updateTypeChart() {
+        const typeCounts = {};
+        filteredIncidents.forEach(i => {
+          const type = i.incident_type || 'unknown';
+          typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+
+        const sorted = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]);
+        const labels = sorted.map(([type]) => type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' '));
+        const data = sorted.map(([, count]) => count);
+        const total = filteredIncidents.length;
+
+        const ctx = document.getElementById('typeChart').getContext('2d');
+        if (charts.type) charts.type.destroy();
+
+        charts.type = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: [COLORS.danger, COLORS.warning, COLORS.primary, COLORS.success, COLORS.pink, COLORS.cyan],
+              borderWidth: 2,
+              borderColor: getThemeColors().bg
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'pie'),
+            plugins: {
+              ...getChartOptions('', 'pie').plugins,
+              legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                  color: getThemeColors().text,
+                  font: { size: 11 },
+                  generateLabels: (chart) => {
+                    const data = chart.data;
+                    return data.labels.map((label, i) => ({
+                      text: `${label}: ${data.datasets[0].data[i]} (${(data.datasets[0].data[i]/total*100).toFixed(1)}%)`,
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      strokeStyle: data.datasets[0].backgroundColor[i],
+                      index: i
+                    }));
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Demographics Chart
+      function updateDemographicsChart() {
+        const identityCounts = {};
+        filteredIncidents.forEach(i => {
+          let identity = i.victim_identity || 'unknown';
+          // Normalize identity labels
+          if (identity === 'general_lgbtiq' || identity === 'lgbti') identity = 'LGBTIQ+ (General)';
+          else if (identity === 'gay') identity = 'Gay';
+          else if (identity === 'lesbian') identity = 'Lesbian';
+          else if (identity === 'transgender') identity = 'Transgender';
+          else if (identity === 'bisexual') identity = 'Bisexual';
+          else if (identity === 'queer') identity = 'Queer';
+          else if (identity === 'unknown') identity = 'Unknown';
+          else identity = identity.charAt(0).toUpperCase() + identity.slice(1);
+          
+          identityCounts[identity] = (identityCounts[identity] || 0) + 1;
+        });
+
+        const sorted = Object.entries(identityCounts).sort((a, b) => b[1] - a[1]);
+        const labels = sorted.map(([id]) => id);
+        const data = sorted.map(([, count]) => count);
+        const total = filteredIncidents.length;
+
+        const ctx = document.getElementById('demographicsChart').getContext('2d');
+        if (charts.demographics) charts.demographics.destroy();
+
+        charts.demographics = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: [COLORS.pink, COLORS.blue, COLORS.secondary, COLORS.cyan, COLORS.emerald, COLORS.amber, '#94a3b8'],
+              borderWidth: 2,
+              borderColor: getThemeColors().bg
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'doughnut'),
+            cutout: '40%',
+            plugins: {
+              ...getChartOptions('', 'doughnut').plugins,
+              legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                  color: getThemeColors().text,
+                  font: { size: 11 },
+                  generateLabels: (chart) => {
+                    const data = chart.data;
+                    return data.labels.map((label, i) => ({
+                      text: `${label}: ${data.datasets[0].data[i]} (${(data.datasets[0].data[i]/total*100).toFixed(1)}%)`,
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      strokeStyle: data.datasets[0].backgroundColor[i],
+                      index: i
+                    }));
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Severity Chart
+      function updateSeverityChart() {
+        const severityCounts = { low: 0, medium: 0, high: 0, unknown: 0 };
+        filteredIncidents.forEach(i => {
+          const sev = i.severity || 'unknown';
+          severityCounts[sev] = (severityCounts[sev] || 0) + 1;
+        });
+
+        const labels = ['Low', 'Medium', 'High', 'Unknown'];
+        const data = [severityCounts.low, severityCounts.medium, severityCounts.high, severityCounts.unknown];
+
+        const ctx = document.getElementById('severityChart').getContext('2d');
+        if (charts.severity) charts.severity.destroy();
+
+        charts.severity = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: [SEVERITY_COLORS.low, SEVERITY_COLORS.medium, SEVERITY_COLORS.high, SEVERITY_COLORS.unknown],
+              borderWidth: 2,
+              borderColor: getThemeColors().bg
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'doughnut'),
+            cutout: '60%'
+          }
+        });
+      }
+
+      // Severity Trend Chart
+      function updateSeverityTrendChart() {
+        const yearSeverity = {};
+        filteredIncidents.forEach(i => {
+          if (i.year && i.severity) {
+            if (!yearSeverity[i.year]) {
+              yearSeverity[i.year] = { low: 0, medium: 0, high: 0 };
+            }
+            if (['low', 'medium', 'high'].includes(i.severity)) {
+              yearSeverity[i.year][i.severity]++;
+            }
+          }
+        });
+
+        const years = Object.keys(yearSeverity).sort();
+        
+        const ctx = document.getElementById('severityTrendChart').getContext('2d');
+        if (charts.severityTrend) charts.severityTrend.destroy();
+
+        charts.severityTrend = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: years,
+            datasets: [
+              {
+                label: 'High',
+                data: years.map(y => yearSeverity[y]?.high || 0),
+                backgroundColor: SEVERITY_COLORS.high + 'cc',
+                borderColor: SEVERITY_COLORS.high,
+                borderWidth: 1
+              },
+              {
+                label: 'Medium',
+                data: years.map(y => yearSeverity[y]?.medium || 0),
+                backgroundColor: SEVERITY_COLORS.medium + 'cc',
+                borderColor: SEVERITY_COLORS.medium,
+                borderWidth: 1
+              },
+              {
+                label: 'Low',
+                data: years.map(y => yearSeverity[y]?.low || 0),
+                backgroundColor: SEVERITY_COLORS.low + 'cc',
+                borderColor: SEVERITY_COLORS.low,
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            scales: {
+              ...getChartOptions('', 'bar').scales,
+              x: { ...getChartOptions('', 'bar').scales.x, stacked: true },
+              y: { ...getChartOptions('', 'bar').scales.y, stacked: true }
+            }
+          }
+        });
+      }
+
+      // Severity Location Chart
+      function updateSeverityLocationChart() {
+        const locationSeverity = {};
+        filteredIncidents.forEach(i => {
+          const loc = extractSuburb(i.location);
+          if (loc !== 'Unknown' && i.severity === 'high') {
+            locationSeverity[loc] = (locationSeverity[loc] || 0) + 1;
+          }
+        });
+
+        const sorted = Object.entries(locationSeverity).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        const labels = sorted.map(([loc]) => loc);
+        const data = sorted.map(([, count]) => count);
+
+        const ctx = document.getElementById('severityLocationChart').getContext('2d');
+        if (charts.severityLocation) charts.severityLocation.destroy();
+
+        charts.severityLocation = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'High Severity Incidents',
+              data: data,
+              backgroundColor: COLORS.danger + 'cc',
+              borderColor: COLORS.danger,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            indexAxis: 'y'
+          }
+        });
+      }
+
+      // Type Year Chart
+      function updateTypeYearChart() {
+        const yearType = {};
+        const allTypes = new Set();
+        
+        filteredIncidents.forEach(i => {
+          if (i.year && i.incident_type && i.incident_type !== 'unknown') {
+            if (!yearType[i.year]) yearType[i.year] = {};
+            yearType[i.year][i.incident_type] = (yearType[i.year][i.incident_type] || 0) + 1;
+            allTypes.add(i.incident_type);
+          }
+        });
+
+        const years = Object.keys(yearType).sort();
+        const types = Array.from(allTypes);
+        const typeColors = {
+          assault: COLORS.danger,
+          threat: COLORS.warning,
+          vandalism: COLORS.primary,
+          hate_speech: COLORS.pink,
+          harassment: COLORS.secondary
+        };
+
+        const ctx = document.getElementById('typeYearChart').getContext('2d');
+        if (charts.typeYear) charts.typeYear.destroy();
+
+        charts.typeYear = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: years,
+            datasets: types.map((type, i) => ({
+              label: type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' '),
+              data: years.map(y => yearType[y]?.[type] || 0),
+              borderColor: typeColors[type] || CHART_COLORS[i],
+              backgroundColor: (typeColors[type] || CHART_COLORS[i]) + '20',
+              fill: false,
+              tension: 0.3
+            }))
+          },
+          options: getChartOptions('', 'line')
+        });
+      }
+
+      // Heat Map
+      function updateHeatmap() {
+        const heatmapEl = document.getElementById('heatmap');
+        
+        if (!heatmap) {
+          heatmap = L.map('heatmap').setView([-25.2744, 133.7751], 4);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+          }).addTo(heatmap);
+        }
+
+        if (heatmapLayer) {
+          heatmap.removeLayer(heatmapLayer);
+        }
+
+        const heatData = filteredIncidents
+          .filter(i => i.latitude && i.longitude)
+          .map(i => [i.latitude, i.longitude, i.severity === 'high' ? 1 : i.severity === 'medium' ? 0.6 : 0.3]);
+
+        if (heatData.length > 0) {
+          heatmapLayer = L.heatLayer(heatData, {
+            radius: 25,
+            blur: 15,
+            maxZoom: 10,
+            gradient: {
+              0.2: '#22c55e',
+              0.5: '#f97316',
+              0.8: '#ef4444',
+              1: '#dc2626'
+            }
+          }).addTo(heatmap);
+        }
+
+        setTimeout(() => heatmap.invalidateSize(), 100);
+      }
+
+      // PDF Export
+      async function exportToPdf() {
+        const btn = exportPdfBtn;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '⏳ Generating...';
+        btn.disabled = true;
+
+        try {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const margin = 15;
+          let yPos = margin;
+
+          // Title
+          pdf.setFontSize(20);
+          pdf.setTextColor(99, 102, 241);
+          pdf.text('LGBTIQ+ Hate Crime Statistics Report', margin, yPos);
+          yPos += 10;
+
+          // Date
+          pdf.setFontSize(10);
+          pdf.setTextColor(100);
+          pdf.text(`Generated: ${new Date().toLocaleString()}`, margin, yPos);
+          yPos += 15;
+
+          // Summary Stats
+          pdf.setFontSize(14);
+          pdf.setTextColor(15, 23, 42);
+          pdf.text('Key Statistics', margin, yPos);
+          yPos += 8;
+
+          pdf.setFontSize(10);
+          pdf.setTextColor(71, 85, 105);
+          
+          const stats = [
+            `Total Incidents: ${document.getElementById('totalIncidents').textContent}`,
+            `Last 30 Days: ${document.getElementById('last30Days').textContent}`,
+            `Most Common Type: ${document.getElementById('commonType').textContent}`,
+            `Highest Risk Area: ${document.getElementById('riskArea').textContent}`,
+            `Most Targeted Group: ${document.getElementById('targetedGroup').textContent}`
+          ];
+
+          stats.forEach(stat => {
+            pdf.text(`• ${stat}`, margin + 5, yPos);
+            yPos += 6;
+          });
+          yPos += 10;
+
+          // Insights
+          pdf.setFontSize(14);
+          pdf.setTextColor(15, 23, 42);
+          pdf.text('Key Insights', margin, yPos);
+          yPos += 8;
+
+          pdf.setFontSize(9);
+          pdf.setTextColor(71, 85, 105);
+          
+          const insightsEl = document.getElementById('insightsList');
+          const insights = Array.from(insightsEl.querySelectorAll('li')).map(li => li.textContent.replace(/📊\s*/, ''));
+          
+          insights.forEach(insight => {
+            const lines = pdf.splitTextToSize(`• ${insight}`, pageWidth - margin * 2 - 10);
+            lines.forEach(line => {
+              if (yPos > pageHeight - 20) {
+                pdf.addPage();
+                yPos = margin;
+              }
+              pdf.text(line, margin + 5, yPos);
+              yPos += 5;
+            });
+            yPos += 2;
+          });
+
+          // Add charts as images
+          const chartIds = ['temporalChart', 'typeChart', 'demographicsChart', 'severityChart'];
+          
+          for (const chartId of chartIds) {
+            const canvas = document.getElementById(chartId);
+            if (canvas) {
+              if (yPos > pageHeight - 80) {
+                pdf.addPage();
+                yPos = margin;
+              }
+
+              const chartTitle = canvas.closest('.chart-card')?.querySelector('h3')?.textContent?.replace(/📈|📋|👥|⚠️/g, '').trim() || chartId;
+              
+              pdf.setFontSize(12);
+              pdf.setTextColor(15, 23, 42);
+              pdf.text(chartTitle, margin, yPos);
+              yPos += 5;
+
+              const imgData = canvas.toDataURL('image/png');
+              const imgWidth = pageWidth - margin * 2;
+              const imgHeight = 60;
+              
+              pdf.addImage(imgData, 'PNG', margin, yPos, imgWidth, imgHeight);
+              yPos += imgHeight + 15;
+            }
+          }
+
+          // Footer
+          pdf.setFontSize(8);
+          pdf.setTextColor(150);
+          const totalPages = pdf.internal.getNumberOfPages();
+          for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            pdf.text(`LGBTIQ+ Hate Crime Map Project - Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+          }
+
+          pdf.save('lgbtiq-hate-crime-statistics.pdf');
+        } catch (error) {
+          console.error('PDF export failed:', error);
+          alert('Failed to generate PDF. Please try again.');
+        }
+
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+
+      // ============ LEGAL CASES ============
+      
+      // Legal Cases DOM Elements
+      const filterCourtLevel = document.getElementById('filterCourtLevel');
+      const filterOutcome = document.getElementById('filterOutcome');
+      const filterKeyIssue = document.getElementById('filterKeyIssue');
+      const applyLegalFiltersBtn = document.getElementById('applyLegalFilters');
+      const resetLegalFiltersBtn = document.getElementById('resetLegalFilters');
+
+      function loadLegalCases() {
+        Papa.parse(LEGAL_CASES_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            allLegalCases = results.data
+              .filter(row => row.case_name && row.case_name.trim())
+              .map(row => ({
+                name: row.case_name || 'Unknown Case',
+                court: row.court_level || 'Unknown',
+                year: parseInt(row.year_decided) || null,
+                location: row.location || 'Unknown',
+                latitude: parseFloat(row.latitude) || null,
+                longitude: parseFloat(row.longitude) || null,
+                keyIssues: (row.key_issues || '').split(',').map(s => s.trim()).filter(s => s),
+                summary: row.summary || '',
+                significance: row.significance || '',
+                judgmentUrl: row.judgment_url || '',
+                outcome: (row.outcome || 'unknown').toLowerCase()
+              }));
+            
+            filteredLegalCases = [...allLegalCases];
+            
+            console.log(`Loaded ${allLegalCases.length} total legal cases`);
+            console.log('Courts found:', [...new Set(allLegalCases.map(c => c.court))]);
+            console.log('Cases with coords:', allLegalCases.filter(c => c.latitude && c.longitude).length);
+            
+            populateLegalFilters();
+            updateLegalDashboard();
+          },
+          error: (err) => {
+            console.error('Failed to load legal cases:', err);
+          }
+        });
+      }
+
+      function populateLegalFilters() {
+        // Court levels
+        const courts = [...new Set(allLegalCases.map(c => c.court))].filter(c => c).sort();
+        courts.forEach(court => {
+          const option = document.createElement('option');
+          option.value = court;
+          option.textContent = court;
+          filterCourtLevel.appendChild(option);
+        });
+
+        // Key issues
+        const allIssues = new Set();
+        allLegalCases.forEach(c => c.keyIssues.forEach(i => allIssues.add(i)));
+        Array.from(allIssues).sort().forEach(issue => {
+          const option = document.createElement('option');
+          option.value = issue;
+          option.textContent = issue.charAt(0).toUpperCase() + issue.slice(1).replace(/_/g, ' ');
+          filterKeyIssue.appendChild(option);
+        });
+      }
+
+      function applyLegalFilters() {
+        const court = filterCourtLevel.value;
+        const outcome = filterOutcome.value;
+        const issue = filterKeyIssue.value;
+
+        filteredLegalCases = allLegalCases.filter(c => {
+          if (court !== 'all' && c.court !== court) return false;
+          if (outcome !== 'all' && c.outcome !== outcome) return false;
+          if (issue !== 'all' && !c.keyIssues.includes(issue)) return false;
+          return true;
+        });
+
+        updateLegalDashboard();
+      }
+
+      function resetLegalFilters() {
+        filterCourtLevel.value = 'all';
+        filterOutcome.value = 'all';
+        filterKeyIssue.value = 'all';
+        filteredLegalCases = [...allLegalCases];
+        updateLegalDashboard();
+      }
+
+      function updateLegalDashboard() {
+        updateLegalStatCards();
+        updateCourtOutcomeChart();
+        updateCasesTimelineChart();
+        updateKeyIssuesChart();
+        updateWinRateDecadeChart();
+        updateLegalCasesTable();
+      }
+
+      function updateLegalStatCards() {
+        const total = filteredLegalCases.length;
+        const won = filteredLegalCases.filter(c => c.outcome === 'won').length;
+        
+        document.getElementById('totalCases').textContent = total;
+        document.getElementById('totalCasesHeader').textContent = allLegalCases.length;
+        document.getElementById('casesWon').textContent = won;
+        document.getElementById('winRate').textContent = total > 0 ? `${((won/total)*100).toFixed(0)}% win rate` : '-';
+
+        // Highest court
+        const courtCounts = {};
+        filteredLegalCases.forEach(c => {
+          courtCounts[c.court] = (courtCounts[c.court] || 0) + 1;
+        });
+        const highCourts = ['High Court', 'Federal Court', 'Supreme Court'];
+        let highestCourt = null;
+        for (const hc of highCourts) {
+          const match = Object.keys(courtCounts).find(k => k.includes(hc));
+          if (match) {
+            highestCourt = [match, courtCounts[match]];
+            break;
+          }
+        }
+        if (highestCourt) {
+          document.getElementById('highestCourt').textContent = highestCourt[0].replace(' Court', '');
+          document.getElementById('highestCourtCount').textContent = `${highestCourt[1]} cases`;
+        }
+
+        // Most common issue
+        const issueCounts = {};
+        filteredLegalCases.forEach(c => {
+          c.keyIssues.forEach(i => {
+            issueCounts[i] = (issueCounts[i] || 0) + 1;
+          });
+        });
+        const topIssue = Object.entries(issueCounts).sort((a, b) => b[1] - a[1])[0];
+        if (topIssue) {
+          document.getElementById('commonIssue').textContent = topIssue[0].charAt(0).toUpperCase() + topIssue[0].slice(1).replace(/_/g, ' ');
+          document.getElementById('commonIssueCount').textContent = `${topIssue[1]} cases`;
+        }
+      }
+
+      function updateCourtOutcomeChart() {
+        const courtOutcomes = {};
+        filteredLegalCases.forEach(c => {
+          if (!courtOutcomes[c.court]) {
+            courtOutcomes[c.court] = { won: 0, lost: 0, ongoing: 0 };
+          }
+          if (c.outcome === 'won') courtOutcomes[c.court].won++;
+          else if (c.outcome === 'lost') courtOutcomes[c.court].lost++;
+          else courtOutcomes[c.court].ongoing++;
+        });
+
+        const courts = Object.keys(courtOutcomes).sort((a, b) => {
+          const order = ['High Court', 'Federal Court', 'Full Family Court', 'Family Court', 'Victorian Supreme Court', 'NSW Supreme Court', 'Queensland Supreme Court'];
+          return order.indexOf(a) - order.indexOf(b);
+        });
+
+        const ctx = document.getElementById('courtOutcomeChart').getContext('2d');
+        if (charts.courtOutcome) charts.courtOutcome.destroy();
+
+        charts.courtOutcome = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: courts.map(c => c.replace(' Court', '').replace('Supreme', 'Sup.')),
+            datasets: [
+              {
+                label: 'Won',
+                data: courts.map(c => courtOutcomes[c].won),
+                backgroundColor: COLORS.success + 'cc',
+                borderColor: COLORS.success,
+                borderWidth: 1
+              },
+              {
+                label: 'Lost',
+                data: courts.map(c => courtOutcomes[c].lost),
+                backgroundColor: COLORS.danger + 'cc',
+                borderColor: COLORS.danger,
+                borderWidth: 1
+              },
+              {
+                label: 'Ongoing',
+                data: courts.map(c => courtOutcomes[c].ongoing),
+                backgroundColor: COLORS.primary + 'cc',
+                borderColor: COLORS.primary,
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            scales: {
+              ...getChartOptions('', 'bar').scales,
+              x: { ...getChartOptions('', 'bar').scales.x, stacked: true },
+              y: { ...getChartOptions('', 'bar').scales.y, stacked: true }
+            }
+          }
+        });
+      }
+
+      function updateCasesTimelineChart() {
+        const yearCounts = {};
+        filteredLegalCases.forEach(c => {
+          if (c.year) {
+            yearCounts[c.year] = (yearCounts[c.year] || 0) + 1;
+          }
+        });
+
+        const years = Object.keys(yearCounts).sort();
+        
+        const ctx = document.getElementById('casesTimelineChart').getContext('2d');
+        if (charts.casesTimeline) charts.casesTimeline.destroy();
+
+        charts.casesTimeline = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: years,
+            datasets: [{
+              label: 'Cases Decided',
+              data: years.map(y => yearCounts[y]),
+              backgroundColor: COLORS.secondary + 'cc',
+              borderColor: COLORS.secondary,
+              borderWidth: 1
+            }]
+          },
+          options: getChartOptions('', 'bar')
+        });
+      }
+
+      function updateKeyIssuesChart() {
+        const issueCounts = {};
+        filteredLegalCases.forEach(c => {
+          c.keyIssues.forEach(i => {
+            issueCounts[i] = (issueCounts[i] || 0) + 1;
+          });
+        });
+
+        const sorted = Object.entries(issueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        const labels = sorted.map(([issue]) => issue.charAt(0).toUpperCase() + issue.slice(1).replace(/_/g, ' '));
+        const data = sorted.map(([, count]) => count);
+
+        const ctx = document.getElementById('keyIssuesChart').getContext('2d');
+        if (charts.keyIssues) charts.keyIssues.destroy();
+
+        charts.keyIssues = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: CHART_COLORS.slice(0, labels.length),
+              borderWidth: 2,
+              borderColor: getThemeColors().bg
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'doughnut'),
+            cutout: '40%'
+          }
+        });
+      }
+
+      function updateWinRateDecadeChart() {
+        const decadeStats = {};
+        filteredLegalCases.forEach(c => {
+          if (c.year) {
+            const decade = Math.floor(c.year / 10) * 10;
+            if (!decadeStats[decade]) {
+              decadeStats[decade] = { won: 0, total: 0 };
+            }
+            decadeStats[decade].total++;
+            if (c.outcome === 'won') decadeStats[decade].won++;
+          }
+        });
+
+        const decades = Object.keys(decadeStats).sort();
+        const winRates = decades.map(d => decadeStats[d].total > 0 ? (decadeStats[d].won / decadeStats[d].total * 100).toFixed(0) : 0);
+
+        const ctx = document.getElementById('winRateDecadeChart').getContext('2d');
+        if (charts.winRateDecade) charts.winRateDecade.destroy();
+
+        charts.winRateDecade = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: decades.map(d => `${d}s`),
+            datasets: [{
+              label: 'Win Rate %',
+              data: winRates,
+              borderColor: COLORS.success,
+              backgroundColor: COLORS.success + '20',
+              fill: true,
+              tension: 0.3,
+              pointRadius: 6,
+              pointHoverRadius: 8
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'line'),
+            scales: {
+              ...getChartOptions('', 'line').scales,
+              y: {
+                ...getChartOptions('', 'line').scales.y,
+                max: 100,
+                ticks: {
+                  ...getChartOptions('', 'line').scales.y.ticks,
+                  callback: (value) => value + '%'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function updateLegalCasesTable() {
+        const tbody = document.getElementById('legalCasesBody');
+        document.getElementById('caseCountBadge').textContent = `${filteredLegalCases.length} cases`;
+
+        if (filteredLegalCases.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted);">No cases match filters</td></tr>';
+          return;
+        }
+
+        const sortedCases = [...filteredLegalCases].sort((a, b) => (b.year || 0) - (a.year || 0));
+
+        tbody.innerHTML = sortedCases.map(c => `
+          <tr>
+            <td style="font-weight: 600; color: var(--accent-primary);">${c.year || '-'}</td>
+            <td>
+              ${c.judgmentUrl 
+                ? `<a href="${c.judgmentUrl}" target="_blank" rel="noopener" class="case-link">${c.name}</a>`
+                : c.name
+              }
+            </td>
+            <td>${c.court}</td>
+            <td>${c.keyIssues.map(i => `<span class="issue-tag">${i}</span>`).join('')}</td>
+            <td>
+              <span class="outcome-badge ${c.outcome}">
+                ${c.outcome === 'won' ? '✓ Won' : c.outcome === 'lost' ? '✗ Lost' : '⏳ Ongoing'}
+              </span>
+            </td>
+            <td><div class="case-significance">${c.significance ? c.significance.slice(0, 150) + (c.significance.length > 150 ? '...' : '') : '-'}</div></td>
+          </tr>
+        `).join('');
+      }
+
+      // Event Listeners
+      themeToggle.addEventListener('click', toggleTheme);
+      applyFiltersBtn.addEventListener('click', applyFilters);
+      resetFiltersBtn.addEventListener('click', resetFilters);
+      exportPdfBtn.addEventListener('click', exportToPdf);
+      applyLegalFiltersBtn.addEventListener('click', applyLegalFilters);
+      resetLegalFiltersBtn.addEventListener('click', resetLegalFilters);
+
+      // ============ INCIDENT RATES & POPULATION DATA ============
+      
+      const POPULATION_DATA_PATH = '/data/lgbti_population.csv';
+      const POLICY_DATA_PATH = '/data/policy_landscape.csv';
+      
+      let populationData = [];
+      let policyData = [];
+      let stateIncidentRates = [];
+      let currentRateSortField = 'rate';
+      let currentRateSortDirection = 'desc';
+      
+      // State name mapping for consistency
+      const STATE_FULL_NAMES = {
+        'NSW': 'New South Wales',
+        'VIC': 'Victoria',
+        'QLD': 'Queensland',
+        'WA': 'Western Australia',
+        'SA': 'South Australia',
+        'TAS': 'Tasmania',
+        'ACT': 'Australian Capital Territory',
+        'NT': 'Northern Territory'
+      };
+
+      function loadPopulationData() {
+        Promise.all([
+          new Promise((resolve, reject) => {
+            Papa.parse(POPULATION_DATA_PATH, {
+              header: true,
+              download: true,
+              skipEmptyLines: true,
+              complete: (results) => resolve(results.data),
+              error: reject
+            });
+          }),
+          new Promise((resolve, reject) => {
+            Papa.parse(POLICY_DATA_PATH, {
+              header: true,
+              download: true,
+              skipEmptyLines: true,
+              complete: (results) => resolve(results.data),
+              error: reject
+            });
+          })
+        ]).then(([popData, polData]) => {
+          populationData = popData.filter(row => row.state_territory && row.state_territory.trim());
+          policyData = polData;
+          console.log('Population data loaded:', populationData.length, 'records');
+          console.log('Policy data loaded:', policyData.length, 'records');
+          
+          // Wait for incident data to be ready before calculating rates
+          if (allIncidents.length > 0) {
+            calculateIncidentRates();
+          }
+        }).catch(err => {
+          console.error('Failed to load population/policy data:', err);
+        });
+      }
+
+      function getStateFromLocation(location) {
+        if (!location) return null;
+        const loc = location.toLowerCase();
+        
+        for (const [state, keywords] of Object.entries(AUSTRALIAN_STATES)) {
+          for (const keyword of keywords) {
+            if (loc.includes(keyword.toLowerCase())) {
+              return state;
+            }
+          }
+        }
+        return null;
+      }
+
+      function calculatePolicyScore(state) {
+        // Calculate policy strength (lower score = weaker policies = higher vulnerability)
+        const statePolicy = policyData.filter(p => p.jurisdiction === state || p.jurisdiction === 'Federal');
+        
+        let score = 0;
+        const weights = {
+          'hate_crime_law': 20,
+          'vilification_law': 15,
+          'conversion_practices_ban': 20,
+          'discrimination_protection_employment': 15,
+          'gender_recognition': 15,
+          'religious_exemptions': 15
+        };
+
+        for (const policy of statePolicy) {
+          const weight = weights[policy.policy_category] || 10;
+          if (policy.status === 'present') {
+            score += weight;
+          } else if (policy.status === 'limited' || policy.status === 'moderate') {
+            score += weight * 0.5;
+          } else if (policy.status === 'easy') {
+            score += weight;
+          } else if (policy.status === 'hard') {
+            score += weight * 0.2;
+          }
+          // Reverse score for religious exemptions (present = less protection)
+          if (policy.policy_category === 'religious_exemptions') {
+            if (policy.status === 'present') {
+              score -= weight * 0.5;
+            } else if (policy.status === 'limited') {
+              score -= weight * 0.2;
+            }
+          }
+        }
+        
+        // Normalize to 0-100 scale (higher = better protection)
+        return Math.min(100, Math.max(0, score));
+      }
+
+      function calculateIncidentRates() {
+        if (populationData.length === 0 || filteredIncidents.length === 0) {
+          console.log('Waiting for data...', populationData.length, filteredIncidents.length);
+          return;
+        }
+
+        // Count incidents by state
+        const stateCounts = {};
+        const stateYearCounts = {};
+        const stateSeverity = {};
+        
+        filteredIncidents.forEach(incident => {
+          const state = getStateFromLocation(incident.location);
+          if (state) {
+            stateCounts[state] = (stateCounts[state] || 0) + 1;
+            
+            // Year tracking for trends
+            if (incident.year) {
+              if (!stateYearCounts[state]) stateYearCounts[state] = {};
+              stateYearCounts[state][incident.year] = (stateYearCounts[state][incident.year] || 0) + 1;
+            }
+            
+            // Severity tracking
+            if (!stateSeverity[state]) stateSeverity[state] = { low: 0, medium: 0, high: 0 };
+            if (incident.severity && stateSeverity[state][incident.severity] !== undefined) {
+              stateSeverity[state][incident.severity]++;
+            }
+          }
+        });
+
+        // Calculate total incidents (for % calculations)
+        const totalIncidents = Object.values(stateCounts).reduce((a, b) => a + b, 0);
+        
+        // Get national population data
+        const nationalPop = populationData.find(p => p.state_territory === 'National');
+        const totalLgbtiPop = nationalPop ? parseInt(nationalPop.lgbti_population_estimate) : 910600;
+        
+        // Calculate national average rate
+        const nationalRate = (totalIncidents / totalLgbtiPop) * 1000;
+
+        // Calculate rates for each state
+        stateIncidentRates = [];
+        
+        populationData.forEach(pop => {
+          if (pop.state_territory === 'National') return;
+          
+          const state = pop.state_territory;
+          const incidents = stateCounts[state] || 0;
+          const population = parseInt(pop.lgbti_population_estimate) || 0;
+          
+          if (population === 0) return;
+          
+          const ratePer1000 = (incidents / population) * 1000;
+          const ratePer100k = (incidents / population) * 100000;
+          const pctOfNational = (incidents / totalIncidents) * 100;
+          const pctOfPopulation = (population / totalLgbtiPop) * 100;
+          
+          // Compare to national average
+          const vsNational = ((ratePer1000 - nationalRate) / nationalRate) * 100;
+          
+          // Calculate severity distribution
+          const severity = stateSeverity[state] || { low: 0, medium: 0, high: 0 };
+          const severityTotal = severity.low + severity.medium + severity.high;
+          const highSeverityPct = severityTotal > 0 ? (severity.high / severityTotal) * 100 : 0;
+          
+          // Calculate trend (year-over-year change)
+          const yearCounts = stateYearCounts[state] || {};
+          const years = Object.keys(yearCounts).sort();
+          let trend = 0;
+          let trendDirection = 'stable';
+          
+          if (years.length >= 2) {
+            const lastYear = yearCounts[years[years.length - 1]] || 0;
+            const prevYear = yearCounts[years[years.length - 2]] || 0;
+            if (prevYear > 0) {
+              trend = ((lastYear - prevYear) / prevYear) * 100;
+              trendDirection = trend > 10 ? 'up' : trend < -10 ? 'down' : 'stable';
+            }
+          }
+          
+          // Calculate policy score
+          const policyScore = calculatePolicyScore(state);
+          
+          // Calculate vulnerability index (0-100, higher = more vulnerable)
+          // Components: rate (40%), severity (25%), trend (20%), policy (15%)
+          const maxRate = 5; // Assumed max rate per 1,000
+          const rateScore = Math.min(100, (ratePer1000 / maxRate) * 100);
+          const severityScore = highSeverityPct;
+          const trendScore = Math.min(100, Math.max(0, 50 + trend));
+          const policyVulnerability = 100 - policyScore;
+          
+          const vulnerabilityIndex = Math.round(
+            (rateScore * 0.40) + 
+            (severityScore * 0.25) + 
+            (trendScore * 0.20) + 
+            (policyVulnerability * 0.15)
+          );
+          
+          // Project 2026 rate based on trend
+          let projected2026 = ratePer1000;
+          if (trend !== 0) {
+            projected2026 = ratePer1000 * (1 + (trend / 100));
+          }
+          
+          stateIncidentRates.push({
+            state: state,
+            fullName: STATE_FULL_NAMES[state] || state,
+            incidents: incidents,
+            population: population,
+            percentage: parseFloat(pop.lgbti_percentage),
+            ciLower: parseFloat(pop.confidence_interval_lower),
+            ciUpper: parseFloat(pop.confidence_interval_upper),
+            ratePer1000: ratePer1000,
+            ratePer100k: ratePer100k,
+            pctOfNational: pctOfNational,
+            pctOfPopulation: pctOfPopulation,
+            vsNational: vsNational,
+            highSeverityPct: highSeverityPct,
+            trend: trend,
+            trendDirection: trendDirection,
+            yearCounts: yearCounts,
+            policyScore: policyScore,
+            vulnerabilityIndex: vulnerabilityIndex,
+            projected2026: projected2026
+          });
+        });
+
+        // Sort by rate descending
+        stateIncidentRates.sort((a, b) => b.ratePer1000 - a.ratePer1000);
+        
+        console.log('Calculated incident rates:', stateIncidentRates);
+        
+        // Update all visualizations
+        updateRiskCards(nationalRate);
+        updateIncidentRateChart();
+        updateVulnerabilityChart();
+        updatePopulationVsIncidentsChart();
+        updateStateRatesTable();
+        updateRateTrendChart();
+        updateTrendGrid();
+      }
+
+      function updateRiskCards(nationalRate) {
+        if (stateIncidentRates.length === 0) return;
+        
+        const highest = stateIncidentRates[0];
+        const lowest = stateIncidentRates[stateIncidentRates.length - 1];
+        const multiplier = lowest.ratePer1000 > 0 ? (highest.ratePer1000 / lowest.ratePer1000) : 0;
+        
+        document.getElementById('highestRiskState').textContent = highest.state;
+        document.getElementById('highestRiskRate').textContent = highest.ratePer1000.toFixed(2);
+        
+        document.getElementById('lowestRiskState').textContent = lowest.state;
+        document.getElementById('lowestRiskRate').textContent = lowest.ratePer1000.toFixed(2);
+        
+        document.getElementById('riskMultiplierLabel').textContent = `${highest.state} vs ${lowest.state}`;
+        document.getElementById('riskMultiplier').textContent = multiplier.toFixed(1) + 'x';
+        
+        document.getElementById('nationalAvgRate').textContent = nationalRate.toFixed(2);
+      }
+
+      function updateIncidentRateChart() {
+        const sortedData = [...stateIncidentRates].sort((a, b) => {
+          switch (currentRateSortField) {
+            case 'incidents': return b.incidents - a.incidents;
+            case 'population': return b.population - a.population;
+            case 'alphabetical': return a.state.localeCompare(b.state);
+            default: return b.ratePer1000 - a.ratePer1000;
+          }
+        });
+
+        if (currentRateSortDirection === 'asc') {
+          sortedData.reverse();
+        }
+
+        const labels = sortedData.map(s => s.state);
+        const rates = sortedData.map(s => s.ratePer1000);
+        const nationalPop = populationData.find(p => p.state_territory === 'National');
+        const totalIncidents = filteredIncidents.filter(i => getStateFromLocation(i.location)).length;
+        const nationalRate = (totalIncidents / (parseInt(nationalPop?.lgbti_population_estimate) || 910600)) * 1000;
+        
+        // Color based on comparison to national average
+        const colors = sortedData.map(s => {
+          const diff = ((s.ratePer1000 - nationalRate) / nationalRate) * 100;
+          if (diff > 10) return COLORS.danger + 'cc';
+          if (diff > -10) return COLORS.warning + 'cc';
+          return COLORS.success + 'cc';
+        });
+        
+        const borderColors = sortedData.map(s => {
+          const diff = ((s.ratePer1000 - nationalRate) / nationalRate) * 100;
+          if (diff > 10) return COLORS.danger;
+          if (diff > -10) return COLORS.warning;
+          return COLORS.success;
+        });
+
+        // Calculate error bars from confidence intervals
+        const ciLower = sortedData.map(s => {
+          const ciRateLow = (s.incidents / (s.population * (s.ciUpper / s.percentage))) * 1000;
+          return s.ratePer1000 - ciRateLow;
+        });
+        
+        const ciUpper = sortedData.map(s => {
+          const ciRateHigh = (s.incidents / (s.population * (s.ciLower / s.percentage))) * 1000;
+          return ciRateHigh - s.ratePer1000;
+        });
+
+        const ctx = document.getElementById('incidentRateChart').getContext('2d');
+        if (charts.incidentRate) charts.incidentRate.destroy();
+
+        charts.incidentRate = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Incidents per 1,000 LGBTI+ people',
+              data: rates,
+              backgroundColor: colors,
+              borderColor: borderColors,
+              borderWidth: 2
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            plugins: {
+              ...getChartOptions('', 'bar').plugins,
+              legend: { display: false },
+              annotation: {
+                annotations: {
+                  nationalAvgLine: {
+                    type: 'line',
+                    yMin: nationalRate,
+                    yMax: nationalRate,
+                    borderColor: COLORS.primary,
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    label: {
+                      enabled: true,
+                      content: `National Avg: ${nationalRate.toFixed(2)}`,
+                      position: 'end'
+                    }
+                  }
+                }
+              },
+              tooltip: {
+                ...getChartOptions('', 'bar').plugins.tooltip,
+                callbacks: {
+                  afterLabel: (context) => {
+                    const data = sortedData[context.dataIndex];
+                    return [
+                      `Total incidents: ${data.incidents}`,
+                      `LGBTI+ population: ${data.population.toLocaleString()}`,
+                      `vs National: ${data.vsNational > 0 ? '+' : ''}${data.vsNational.toFixed(1)}%`,
+                      `CI: ${data.ciLower}% - ${data.ciUpper}%`
+                    ];
+                  }
+                }
+              }
+            }
+          }
+        });
+        
+        // Update badge
+        document.getElementById('rateSortBadge').textContent = 
+          `Sorted by ${currentRateSortField === 'rate' ? 'Rate' : 
+            currentRateSortField === 'incidents' ? 'Incidents' : 
+            currentRateSortField === 'population' ? 'Population' : 'Name'}`;
+      }
+
+      function sortRateChart(field) {
+        if (currentRateSortField === field) {
+          currentRateSortDirection = currentRateSortDirection === 'desc' ? 'asc' : 'desc';
+        } else {
+          currentRateSortField = field;
+          currentRateSortDirection = 'desc';
+        }
+        updateIncidentRateChart();
+      }
+
+      function updateVulnerabilityChart() {
+        const sorted = [...stateIncidentRates].sort((a, b) => b.vulnerabilityIndex - a.vulnerabilityIndex);
+        const labels = sorted.map(s => s.state);
+        const scores = sorted.map(s => s.vulnerabilityIndex);
+        
+        const colors = scores.map(score => {
+          if (score >= 70) return COLORS.danger;
+          if (score >= 50) return COLORS.warning;
+          if (score >= 30) return COLORS.amber;
+          return COLORS.success;
+        });
+
+        const ctx = document.getElementById('vulnerabilityChart').getContext('2d');
+        if (charts.vulnerability) charts.vulnerability.destroy();
+
+        charts.vulnerability = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Vulnerability Index',
+              data: scores,
+              backgroundColor: colors.map(c => c + 'cc'),
+              borderColor: colors,
+              borderWidth: 2
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'bar'),
+            indexAxis: 'y',
+            plugins: {
+              ...getChartOptions('', 'bar').plugins,
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  afterLabel: (context) => {
+                    const data = sorted[context.dataIndex];
+                    return [
+                      `Rate component: ${(data.ratePer1000 / 5 * 100 * 0.4).toFixed(0)}/40`,
+                      `Severity component: ${(data.highSeverityPct * 0.25).toFixed(0)}/25`,
+                      `Trend component: ${((50 + data.trend) * 0.2).toFixed(0)}/20`,
+                      `Policy gap: ${((100 - data.policyScore) * 0.15).toFixed(0)}/15`
+                    ];
+                  }
+                }
+              }
+            },
+            scales: {
+              ...getChartOptions('', 'bar').scales,
+              x: {
+                ...getChartOptions('', 'bar').scales.x,
+                max: 100,
+                ticks: {
+                  ...getChartOptions('', 'bar').scales.x.ticks,
+                  callback: (value) => value
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function updatePopulationVsIncidentsChart() {
+        const data = stateIncidentRates.map(s => ({
+          x: s.population,
+          y: s.incidents,
+          label: s.state
+        }));
+
+        const ctx = document.getElementById('populationVsIncidentsChart').getContext('2d');
+        if (charts.popVsIncidents) charts.popVsIncidents.destroy();
+
+        charts.popVsIncidents = new Chart(ctx, {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              label: 'States',
+              data: data,
+              backgroundColor: CHART_COLORS.map(c => c + '99'),
+              borderColor: CHART_COLORS,
+              borderWidth: 2,
+              pointRadius: 10,
+              pointHoverRadius: 14
+            }]
+          },
+          options: {
+            ...getChartOptions('', 'scatter'),
+            plugins: {
+              ...getChartOptions('', 'scatter').plugins,
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const point = context.raw;
+                    const state = stateIncidentRates.find(s => s.population === point.x);
+                    return [
+                      state.fullName,
+                      `Population: ${point.x.toLocaleString()}`,
+                      `Incidents: ${point.y}`,
+                      `Rate: ${state.ratePer1000.toFixed(2)} per 1,000`
+                    ];
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                ...getChartOptions('', 'scatter').scales.x,
+                title: {
+                  display: true,
+                  text: 'LGBTI+ Population',
+                  color: getThemeColors().text
+                }
+              },
+              y: {
+                ...getChartOptions('', 'scatter').scales.y,
+                title: {
+                  display: true,
+                  text: 'Total Incidents',
+                  color: getThemeColors().text
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function updateStateRatesTable() {
+        const tbody = document.getElementById('stateRatesBody');
+        const maxRate = Math.max(...stateIncidentRates.map(s => s.ratePer1000));
+        
+        const nationalPop = populationData.find(p => p.state_territory === 'National');
+        const totalIncidents = filteredIncidents.filter(i => getStateFromLocation(i.location)).length;
+        const nationalRate = (totalIncidents / (parseInt(nationalPop?.lgbti_population_estimate) || 910600)) * 1000;
+        
+        tbody.innerHTML = stateIncidentRates.map(s => {
+          const barWidth = (s.ratePer1000 / maxRate) * 100;
+          const barColor = s.vsNational > 10 ? COLORS.danger : s.vsNational > -10 ? COLORS.warning : COLORS.success;
+          const comparisonText = s.vsNational > 10 ? '↑ Above' : s.vsNational > -10 ? '↔ Near' : '↓ Below';
+          const comparisonBg = s.vsNational > 10 ? 'rgba(239, 68, 68, 0.15)' : s.vsNational > -10 ? 'rgba(249, 115, 22, 0.15)' : 'rgba(34, 197, 94, 0.15)';
+          const comparisonColor = s.vsNational > 10 ? '#ef4444' : s.vsNational > -10 ? '#f97316' : '#22c55e';
+          
+          const vulnColor = s.vulnerabilityIndex >= 70 ? COLORS.danger : 
+                           s.vulnerabilityIndex >= 50 ? COLORS.warning : 
+                           s.vulnerabilityIndex >= 30 ? COLORS.amber : COLORS.success;
+          
+          return `
+            <tr>
+              <td><strong>${s.state}</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">${s.fullName}</span></td>
+              <td>${s.incidents.toLocaleString()}</td>
+              <td>${s.population.toLocaleString()}<br><span style="font-size: 0.7rem; color: var(--text-muted);">${s.percentage}% of pop.</span></td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="width: 60px; height: 8px; background: var(--bg-tertiary); border-radius: 999px; overflow: hidden;">
+                    <div style="width: ${barWidth}%; height: 100%; background: ${barColor}; border-radius: 999px;"></div>
+                  </div>
+                  <strong>${s.ratePer1000.toFixed(2)}</strong>
+                </div>
+              </td>
+              <td>${s.ratePer100k.toFixed(1)}</td>
+              <td>
+                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: ${comparisonBg}; color: ${comparisonColor};">
+                  ${comparisonText} (${s.vsNational > 0 ? '+' : ''}${s.vsNational.toFixed(1)}%)
+                </span>
+              </td>
+              <td>${s.pctOfNational.toFixed(1)}%</td>
+              <td>${s.pctOfPopulation.toFixed(1)}%</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="width: 50px; height: 8px; background: var(--bg-tertiary); border-radius: 999px; overflow: hidden;">
+                    <div style="width: ${s.vulnerabilityIndex}%; height: 100%; background: ${vulnColor}; border-radius: 999px;"></div>
+                  </div>
+                  <span style="font-weight: 700; font-size: 0.85rem; color: ${vulnColor};">${s.vulnerabilityIndex}</span>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+        
+        document.getElementById('stateCountBadge').textContent = `${stateIncidentRates.length} states`;
+      }
+
+      let tableSortField = 'rate';
+      let tableSortDirection = 'desc';
+      
+      function sortTable(field) {
+        if (tableSortField === field) {
+          tableSortDirection = tableSortDirection === 'desc' ? 'asc' : 'desc';
+        } else {
+          tableSortField = field;
+          tableSortDirection = 'desc';
+        }
+        
+        const sortFn = {
+          'state': (a, b) => a.state.localeCompare(b.state),
+          'incidents': (a, b) => b.incidents - a.incidents,
+          'population': (a, b) => b.population - a.population,
+          'rate': (a, b) => b.ratePer1000 - a.ratePer1000,
+          'rate100k': (a, b) => b.ratePer100k - a.ratePer100k,
+          'comparison': (a, b) => b.vsNational - a.vsNational,
+          'pctIncidents': (a, b) => b.pctOfNational - a.pctOfNational,
+          'pctPopulation': (a, b) => b.pctOfPopulation - a.pctOfPopulation,
+          'vulnerability': (a, b) => b.vulnerabilityIndex - a.vulnerabilityIndex
+        };
+        
+        stateIncidentRates.sort(sortFn[field] || sortFn['rate']);
+        if (tableSortDirection === 'asc') {
+          stateIncidentRates.reverse();
+        }
+        
+        updateStateRatesTable();
+      }
+
+      function updateRateTrendChart() {
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
+        const datasets = stateIncidentRates.slice(0, 6).map((state, i) => {
+          const data = years.map(year => {
+            const incidents = state.yearCounts[year] || 0;
+            return incidents > 0 ? (incidents / state.population) * 1000 : null;
+          });
+          
+          return {
+            label: state.state,
+            data: data,
+            borderColor: CHART_COLORS[i],
+            backgroundColor: CHART_COLORS[i] + '20',
+            fill: false,
+            tension: 0.3,
+            spanGaps: true
+          };
+        });
+
+        const ctx = document.getElementById('rateTrendChart').getContext('2d');
+        if (charts.rateTrend) charts.rateTrend.destroy();
+
+        charts.rateTrend = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: years,
+            datasets: datasets
+          },
+          options: {
+            ...getChartOptions('', 'line'),
+            plugins: {
+              ...getChartOptions('', 'line').plugins,
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const value = context.parsed.y;
+                    return value !== null ? `${context.dataset.label}: ${value.toFixed(2)} per 1,000` : null;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function updateTrendGrid() {
+        const grid = document.getElementById('trendGrid');
+        
+        grid.innerHTML = stateIncidentRates.map(s => {
+          const trendArrow = s.trendDirection === 'up' ? '📈' : s.trendDirection === 'down' ? '📉' : '➡️';
+          const trendColor = s.trendDirection === 'up' ? COLORS.danger : s.trendDirection === 'down' ? COLORS.success : 'var(--text-muted)';
+          const changeColor = s.trend > 0 ? COLORS.danger : s.trend < 0 ? COLORS.success : 'var(--text-primary)';
+          
+          // Get recent years data
+          const years = Object.keys(s.yearCounts).sort();
+          const recentYears = years.slice(-3);
+          const yearDisplay = recentYears.map(y => `${y}: ${s.yearCounts[y]}`).join(' → ');
+          
+          return `
+            <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1rem; box-shadow: var(--shadow-sm);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-weight: 700; font-size: 1rem; color: var(--text-primary);">${s.fullName}</span>
+                <span style="font-size: 1.25rem; color: ${trendColor};">${trendArrow}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                <p style="margin: 0.25rem 0;"><strong>Current Rate:</strong> ${s.ratePer1000.toFixed(2)} per 1,000</p>
+                <p style="margin: 0.25rem 0;"><strong>YoY Change:</strong> <span style="font-weight: 700; color: ${changeColor};">${s.trend > 0 ? '+' : ''}${s.trend.toFixed(1)}%</span></p>
+                <p style="margin: 0.25rem 0;"><strong>Recent Trend:</strong> ${yearDisplay || 'Limited data'}</p>
+                <p style="margin: 0.25rem 0;"><strong>2026 Projection:</strong> ${s.projected2026.toFixed(2)} per 1,000</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Override the original updateDashboard to also update rates
+      const originalUpdateDashboard = updateDashboard;
+      updateDashboard = function() {
+        originalUpdateDashboard();
+        if (populationData.length > 0) {
+          calculateIncidentRates();
+        }
+      };
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        loadData();
+        loadLegalCases();
+        loadPopulationData();
+      });
+    </script>
+  </body>
+</html>
+
+
+`

@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Incidex - Australia's comprehensive incident tracking platform. Documenting LGBTIQ+ hate crimes, legal cases, and supporting advocacy through data-driven awareness.">
+  <meta name="keywords" content="Incidex, LGBTIQ+, hate crimes, Australia, advocacy, LGBTI rights, incident tracking, queer safety">
+  <meta property="og:title" content="Incidex | LGBTIQ+ Hate Crime Mapping Australia">
+  <meta property="og:description" content="Documenting incidents against LGBTIQ+ Australians to support advocacy, raise awareness, and build a safer future.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  <title>Incidex | LGBTIQ+ Hate Crime Mapping Australia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* ===== LANDING PAGE SPECIFIC STYLES - 2025 ULTRA-MODERN ===== */
+    
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: calc(var(--header-height) + 16px);
+      right: 32px;
+      z-index: var(--z-fixed);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .theme-toggle:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-text);
+    }
+    
+    .theme-toggle .icon-sun {
+      display: block;
+    }
+    
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+    
+    [data-theme="dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+    
+    [data-theme="dark"] .theme-toggle .icon-moon {
+      display: block;
+    }
+    
+    /* Hero Section - Minimalist Elegance */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - var(--header-height));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg);
+      padding: var(--space-20) var(--space-8);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero-content .logo-large {
+      margin-bottom: var(--space-8);
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.2s forwards;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 12px;
+      background: var(--color-accent-50);
+      border: 1px solid var(--color-border);
+      border-radius: 9999px;
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-accent);
+      margin-bottom: var(--space-8);
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.3s forwards;
+    }
+    
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-accent);
+      border-radius: 50%;
+    }
+    
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 3rem); /* 48px max */
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.4s forwards;
+    }
+    
+    .hero h1 span {
+      color: var(--color-accent);
+    }
+    
+    .hero-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto var(--space-10);
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.5s forwards;
+    }
+    
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.6s forwards;
+    }
+    
+    .hero-actions .btn {
+      min-width: 180px;
+      padding: 10px 16px;
+      font-size: var(--text-base);
+    }
+    
+    .btn-hero-primary {
+      background: var(--color-accent);
+      color: var(--color-text-inverse);
+      border: none;
+      font-weight: var(--font-semibold);
+    }
+    
+    .btn-hero-primary:hover {
+      filter: brightness(1.05);
+    }
+    
+    .btn-hero-secondary {
+      background: transparent;
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+    
+    .btn-hero-secondary:hover {
+      background: var(--color-bg-alt);
+      border-color: var(--color-accent);
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-12);
+      margin-top: var(--space-16);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-border);
+      opacity: 0;
+      animation: fadeInUp 0.6s var(--ease-standard) 0.7s forwards;
+    }
+    
+    .hero-stat {
+      text-align: center;
+    }
+    
+    .hero-stat-value {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1;
+    }
+    
+    .hero-stat-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+      font-weight: 400;
+    }
+    
+    /* Scroll Indicator - Subtle */
+    .scroll-indicator {
+      position: absolute;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    
+    .scroll-indicator svg {
+      width: 20px;
+      height: 20px;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    
+    /* Overview Section - Generous Spacing */
+    .overview {
+      padding: var(--space-24) 0;
+      background: var(--color-bg);
+    }
+    
+    .overview-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-16);
+    }
+    
+    .section-label {
+      display: inline-block;
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      margin-bottom: var(--space-4);
+    }
+    
+    .overview-header h2 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-6);
+      font-weight: 600;
+    }
+
+    .overview-header p {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+    
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-6);
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+    }
+    
+    .feature-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 32px;
+      text-align: left;
+      transition: all var(--transition-slow);
+      position: relative;
+    }
+    
+    .feature-card:hover {
+      box-shadow: var(--shadow-sm);
+      border-color: var(--color-border);
+    }
+    
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      margin-bottom: var(--space-6);
+      background: var(--color-accent-50);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform var(--transition-fast);
+    }
+    
+    .feature-card:hover .feature-icon {
+      transform: scale(1.05);
+    }
+    
+    .feature-card h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-3);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    
+    .feature-card p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+    }
+    
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: var(--font-semibold);
+      color: var(--color-accent);
+      font-size: var(--text-sm);
+      text-decoration: none;
+      position: relative;
+    }
+    
+    .feature-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transition: width var(--transition-fast);
+    }
+    
+    .feature-link:hover::after {
+      width: 100%;
+    }
+    
+    .feature-link svg {
+      transition: transform var(--transition-fast);
+      width: 16px;
+      height: 16px;
+    }
+    
+    .feature-link:hover svg {
+      transform: translateX(4px);
+    }
+    
+    /* Disclaimer Section - Minimal */
+    .disclaimer-section {
+      padding: var(--space-24) 0;
+      background: var(--color-bg-alt);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .disclaimer-content {
+      max-width: var(--container-lg);
+      margin: 0 auto;
+    }
+    
+    .disclaimer-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+    }
+    
+    .disclaimer-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-warning-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-warning-dark);
+      flex-shrink: 0;
+    }
+    
+    .disclaimer-header h2 {
+      font-size: var(--text-2xl);
+      color: var(--color-text);
+      font-weight: 600;
+    }
+    
+    .disclaimer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+    }
+    
+    .disclaimer-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .disclaimer-card h3 {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .disclaimer-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    
+    /* Methodology Section - Asymmetric Layout */
+    .methodology {
+      padding: var(--space-24) 0;
+      background: var(--color-bg);
+    }
+    
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
+    
+    @media (max-width: 900px) {
+      .methodology-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+    }
+    
+    .methodology-content h2 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-6);
+      font-weight: 600;
+    }
+    
+    .methodology-content p {
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-8);
+      font-size: var(--text-base);
+    }
+    
+    .methodology-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    
+    .methodology-step {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      transition: all var(--transition-fast);
+    }
+    
+    .methodology-step:hover {
+      border-color: var(--color-accent);
+    }
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: var(--color-accent);
+      color: var(--color-text-inverse);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-bold);
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+    }
+    
+    .step-content h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+      font-weight: 600;
+    }
+    
+    .step-content p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+    
+    .methodology-visual {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 32px;
+      position: sticky;
+      top: calc(var(--header-height) + 32px);
+    }
+    
+    .data-sources h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 600;
+    }
+
+    .data-sources h3 svg {
+      color: var(--color-accent);
+    }
+
+    .source-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .source-list li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: 6px;
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+      transition: all var(--transition-fast);
+    }
+    
+    .source-list li:hover {
+      border-color: var(--color-accent);
+    }
+
+    .source-list li svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    .source-badge {
+      margin-left: auto;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: var(--color-bg-alt);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    
+    /* Attribution Section */
+    .attribution {
+      padding: var(--space-24) 0;
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .attribution-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+    
+    .attribution-header h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .attribution-header p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+    }
+    
+    .attribution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-8);
+    }
+    
+    .attribution-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .attribution-card h4 {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .attribution-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .attribution-links a {
+      font-size: var(--text-sm);
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .attribution-links a:hover {
+      color: var(--color-accent-dark);
+    }
+    
+    .attribution-links a svg {
+      width: 14px;
+      height: 14px;
+    }
+    
+    /* Contact Section - Clean */
+    .contact-section {
+      padding: var(--space-24) 0;
+      background: var(--color-bg-alt);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
+    
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+    }
+    
+    .contact-info h2 {
+      font-size: var(--text-3xl);
+      color: var(--color-text);
+      margin-bottom: var(--space-6);
+      font-weight: 600;
+    }
+    
+    .contact-info p {
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-10);
+      font-size: var(--text-base);
+    }
+    
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    
+    .contact-method {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    
+    .contact-method-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-accent-50);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+    }
+    
+    .contact-method-text span {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    
+    .contact-method-text strong {
+      display: block;
+      color: var(--color-text);
+      font-weight: var(--font-medium);
+      margin-top: var(--space-1);
+    }
+    
+    .contact-form-wrapper {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 32px;
+    }
+    
+    .contact-form-wrapper h3 {
+      font-size: var(--text-xl);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+      font-weight: 600;
+    }
+    
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .contact-form .form-label {
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+    
+    .contact-form .form-input,
+    .contact-form .form-select,
+    .contact-form .form-textarea {
+      background: var(--color-bg-alt);
+      border-color: var(--color-border);
+      color: var(--color-text);
+    }
+    
+    .contact-form .form-input::placeholder,
+    .contact-form .form-textarea::placeholder {
+      color: var(--color-text-muted);
+    }
+    
+    .contact-form .form-input:focus,
+    .contact-form .form-select:focus,
+    .contact-form .form-textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px var(--color-accent-50);
+    }
+
+    .contact-form .form-textarea {
+      min-height: 120px;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+    
+    .form-checkbox input {
+      margin-top: 2px;
+    }
+    
+    .form-checkbox label {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    
+    .contact-form .btn-primary {
+      padding: 10px 16px;
+    }
+    
+    /* Acknowledgement Section */
+    .acknowledgement-section {
+      padding: var(--space-16) 0;
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .acknowledgement-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .acknowledgement-content h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .acknowledgement-content p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    
+    /* Emergency CTA - Minimal */
+    .emergency-cta {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: var(--z-fixed);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-2);
+    }
+    
+    .emergency-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 10px 16px;
+      background: var(--color-secondary);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-weight: var(--font-semibold);
+      font-size: var(--text-sm);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .emergency-btn:hover {
+      filter: brightness(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .emergency-btn:focus-visible {
+      outline: 2px solid var(--color-secondary);
+      outline-offset: 2px;
+    }
+    
+    .emergency-panel {
+      display: none;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      width: 280px;
+    }
+    
+    .emergency-panel.open {
+      display: block;
+      animation: slideUp 0.3s var(--ease-standard);
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .emergency-panel h4 {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-secondary);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .emergency-panel-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: 6px;
+      margin-bottom: var(--space-2);
+      text-decoration: none;
+      transition: background var(--transition-fast);
+    }
+
+    .emergency-panel-link:last-child {
+      margin-bottom: 0;
+    }
+    
+    .emergency-panel-link:hover {
+      background: var(--color-bg-alt);
+    }
+
+    .emergency-panel-link span {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+    
+    .emergency-panel-link strong {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      color: var(--color-accent);
+    }
+    
+    @media (max-width: 640px) {
+      .emergency-cta {
+        bottom: 16px;
+        right: 16px;
+      }
+      
+      .emergency-panel {
+        width: calc(100vw - 2rem);
+        max-width: 300px;
+      }
+    }
+    
+    /* Animation delays for staggered load - Subtle */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease-standard), transform 0.6s var(--ease-standard);
+    }
+    
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .animate-on-scroll:nth-child(2) { transition-delay: 0.05s; }
+    .animate-on-scroll:nth-child(3) { transition-delay: 0.1s; }
+    .animate-on-scroll:nth-child(4) { transition-delay: 0.15s; }
+    .animate-on-scroll:nth-child(5) { transition-delay: 0.2s; }
+    .animate-on-scroll:nth-child(6) { transition-delay: 0.25s; }
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .theme-toggle {
+        top: calc(var(--header-height) + 12px);
+        right: 16px;
+        width: 40px;
+        height: 40px;
+      }
+      
+      .hero {
+        padding: var(--space-16) var(--space-4);
+      }
+      
+      .overview,
+      .disclaimer-section,
+      .methodology,
+      .attribution,
+      .contact-section {
+        padding: var(--space-16) 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Dark Mode Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report</a>
+    <a href="about.html" class="nav-link">About</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-large" style="max-width: 400px; width: 100%; height: auto; filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));" loading="eager">
+        
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Data updated daily
+      </div>
+
+        <h1>
+          <span>Incidex</span><br>
+          LGBTIQ+ Hate Crime Mapping Australia
+        </h1>
+        
+        <p class="hero-subtitle">
+          Documenting incidents, mapping legal cases, and providing resources to support advocacy, awareness, and community safety across Australia.
+        </p>
+        
+        <div class="hero-actions">
+          <a href="map.html" class="btn btn-hero-primary btn-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            Explore the Map
+          </a>
+          <a href="report_incident.html" class="btn btn-hero-secondary btn-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            Report an Incident
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="incidentCount">—</div>
+            <div class="hero-stat-label">Documented Incidents</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">8</div>
+            <div class="hero-stat-label">States & Territories</div>
+        </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="caseCount">—</div>
+            <div class="hero-stat-label">Landmark Cases</div>
+        </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="resourceCount">—</div>
+            <div class="hero-stat-label">Support Resources</div>
+      </div>
+        </div>
+        </div>
+
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <polyline points="7 13 12 18 17 13"></polyline>
+          <polyline points="7 6 12 11 17 6"></polyline>
+        </svg>
+        Scroll to explore
+          </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="overview">
+      <div class="container">
+        <div class="overview-header">
+          <span class="section-label">What You'll Find</span>
+          <h2>Comprehensive Tools for Advocacy & Awareness</h2>
+          <p>Our platform provides data-driven insights and resources to support LGBTIQ+ rights advocacy across Australia.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">🗺️</div>
+            <h3>Interactive Map</h3>
+            <p>Explore hate crimes and discrimination incidents geographically. Filter by type, severity, date, and location to understand patterns across Australia.</p>
+            <a href="map.html" class="feature-link">
+              View the map
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+          
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">📊</div>
+            <h3>Statistics Dashboard</h3>
+            <p>Comprehensive analytics showing incident trends, geographic distribution, victim demographics, and year-over-year comparisons.</p>
+            <a href="statistics.html" class="feature-link">
+              View statistics
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+          
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">📜</div>
+            <h3>Policy and Legislation</h3>
+            <p>State-by-state comparison of LGBTIQ+ protections, hate crime laws, and religious exemptions. Track parliamentary activity and pending reforms.</p>
+            <a href="policy_landscape.html" class="feature-link">
+              Explore policies
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+          
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">🗳️</div>
+            <h3>MP Voting Records</h3>
+            <p>Search and filter Australian Federal MPs by electorate, party, and voting alignment on LGBTIQ+ issues. Understand how your representatives vote.</p>
+            <a href="voting_records.html" class="feature-link">
+              View voting records
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+          
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">🤝</div>
+            <h3>Support Resources</h3>
+            <p>Find LGBTIQ+ support services, legal aid, mental health resources, and community organizations near you. Searchable by location and service type.</p>
+            <a href="resources.html" class="feature-link">
+              Find resources
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+          
+          <article class="feature-card animate-on-scroll">
+            <div class="feature-icon">📝</div>
+            <h3>Report an Incident</h3>
+            <p>Report an LGBTIQ+ hate crime or discrimination incident anonymously. Your report helps us document incidents for advocacy and awareness purposes.</p>
+            <a href="report_incident.html" class="feature-link">
+              Report incident
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </article>
+      </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section class="disclaimer-section">
+      <div class="container">
+        <div class="disclaimer-content">
+          <div class="disclaimer-header">
+            <div class="disclaimer-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+        </div>
+            <h2>Important Information About Our Data</h2>
+        </div>
+          
+          <div class="disclaimer-grid">
+            <div class="disclaimer-card">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Significant Underreporting
+              </h3>
+              <p>Research consistently shows that hate crimes against LGBTIQ+ individuals are severely underreported. Our data represents only documented incidents—the true number is likely much higher. Fear of discrimination, distrust of authorities, and privacy concerns prevent many from reporting.</p>
+      </div>
+
+            <div class="disclaimer-card">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                Not a Complete Picture
+              </h3>
+              <p>Our database is compiled from news reports, court records, and community submissions. Many incidents never make it to media or official records. This data should be viewed as a minimum count, not a comprehensive census.</p>
+      </div>
+
+            <div class="disclaimer-card">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                Reporting Bias
+              </h3>
+              <p>Jurisdictions with stronger protections may show higher incident counts due to better reporting mechanisms, not necessarily higher crime rates. Researchers should account for this reporting bias when analyzing the data.</p>
+        </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology">
+      <div class="container">
+        <div class="methodology-grid">
+          <div class="methodology-content">
+            <span class="section-label">Our Process</span>
+            <h2>Methodology & Data Collection</h2>
+            <p>We follow a rigorous process to ensure accuracy while acknowledging the inherent limitations of documenting hate crimes. Every incident is verified before inclusion in our database.</p>
+            
+            <div class="methodology-steps">
+              <div class="methodology-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <h4>Collection</h4>
+                  <p>Automated and manual gathering from trusted news sources, court records, and community reports</p>
+            </div>
+          </div>
+              <div class="methodology-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <h4>Verification</h4>
+                  <p>Cross-referencing sources and fact-checking details before any incident is added</p>
+          </div>
+          </div>
+              <div class="methodology-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <h4>Classification</h4>
+                  <p>Categorizing by incident type, severity level, and geographic location</p>
+          </div>
+          </div>
+              <div class="methodology-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <h4>Publication</h4>
+                  <p>Adding verified data to our map, statistics, and public database</p>
+            </div>
+              </div>
+            </div>
+            
+            <a href="about.html" class="btn btn-secondary" style="margin-top: var(--space-6);">
+              Learn more about our methodology
+              </a>
+            </div>
+          
+          <div class="methodology-visual">
+            <div class="data-sources">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Data Sources
+              </h3>
+              
+              <ul class="source-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Australian news outlets & media reports
+                  <span class="source-badge">Daily</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  AustLII court records & legal databases
+                  <span class="source-badge">Public</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  State/Territory legislation databases
+                  <span class="source-badge">Official</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Parliamentary Hansard records
+                  <span class="source-badge">Public</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Community organization reports
+                  <span class="source-badge">Verified</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Direct community submissions
+                  <span class="source-badge">Reviewed</span>
+                </li>
+              </ul>
+          </div>
+          </div>
+            </div>
+          </div>
+    </section>
+
+    <!-- Attribution Section -->
+    <section class="attribution">
+      <div class="container">
+        <div class="attribution-header">
+          <h2>Attribution & Data Sources</h2>
+          <p>We gratefully acknowledge the following sources and maintain full transparency about our data origins.</p>
+          </div>
+          
+        <div class="attribution-grid">
+          <div class="attribution-card">
+            <h4>Legal Information</h4>
+            <div class="attribution-links">
+              <a href="https://www.austlii.edu.au/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                AustLII (Public Domain)
+              </a>
+              <a href="https://www.legislation.gov.au/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Federal Register of Legislation
+              </a>
+            </div>
+        </div>
+          
+          <div class="attribution-card">
+            <h4>Parliamentary Records</h4>
+            <div class="attribution-links">
+              <a href="https://www.aph.gov.au/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Parliament of Australia
+              </a>
+              <a href="#" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                State/Territory Parliaments
+              </a>
+            </div>
+          </div>
+          
+          <div class="attribution-card">
+            <h4>Mapping Technology</h4>
+            <div class="attribution-links">
+              <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                OpenStreetMap Contributors
+              </a>
+              <a href="https://leafletjs.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Leaflet.js
+              </a>
+              <a href="https://carto.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                CARTO Basemaps
+              </a>
+              </div>
+              </div>
+          
+          <div class="attribution-card">
+            <h4>Open Source License</h4>
+            <div class="attribution-links">
+              <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-2);">
+                This project is open source. Data may be used for research, journalism, and advocacy with proper attribution.
+              </p>
+              <a href="about.html">
+                View full terms of use
+              </a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Have questions, feedback, or want to contribute? We'd love to hear from you. Our team reviews all messages and aims to respond within 48 hours.</p>
+            
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+            </div>
+                <div class="contact-method-text">
+                  <span>General Inquiries</span>
+                  <strong>contact@incidex.org.au</strong>
+                </div>
+                  </div>
+              
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                </div>
+                <div class="contact-method-text">
+                  <span>Data & Research</span>
+                  <strong>data@incidex.org.au</strong>
+              </div>
+              </div>
+              
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+              </div>
+                <div class="contact-method-text">
+                  <span>Report an Incident</span>
+                  <strong><a href="report_incident.html" style="color: inherit;">Use our secure form →</a></strong>
+                </div>
+              </div>
+            </div>
+            </div>
+            
+          <div class="contact-form-wrapper">
+            <h3>Send Us a Message</h3>
+            <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="contactName">Your Name</label>
+                  <input type="text" class="form-input" id="contactName" name="name" placeholder="Jane Smith" required>
+            </div>
+                <div class="form-group">
+                  <label class="form-label" for="contactEmail">Email Address</label>
+                  <input type="email" class="form-input" id="contactEmail" name="email" placeholder="jane@example.com" required>
+          </div>
+          </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="contactSubject">Subject</label>
+                <select class="form-select" id="contactSubject" name="subject" required>
+                  <option value="">Select a topic...</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="data">Data Request / Research</option>
+                  <option value="feedback">Feedback / Suggestion</option>
+                  <option value="correction">Data Correction</option>
+                  <option value="partnership">Partnership / Collaboration</option>
+                  <option value="media">Media Inquiry</option>
+                  <option value="other">Other</option>
+                </select>
+          </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="contactMessage">Message</label>
+                <textarea class="form-textarea" id="contactMessage" name="message" placeholder="How can we help you?" required></textarea>
+              </div>
+              
+              <div class="form-checkbox">
+                <input type="checkbox" id="contactPrivacy" name="privacy" required>
+                <label for="contactPrivacy">I understand that this form is for general inquiries only. To report an incident, please use our <a href="report_incident.html" style="color: var(--color-primary-light);">secure reporting form</a>.</label>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Send Message
+          </button>
+            </form>
+              </div>
+              </div>
+            </div>
+    </section>
+
+    <!-- Acknowledgement -->
+    <section class="acknowledgement-section">
+      <div class="container">
+        <div class="acknowledgement-content">
+          <h3>Acknowledgement of Country</h3>
+          <p>We acknowledge the Traditional Owners of Country throughout Australia and their continuing connection to land, sea and community. We pay our respects to Aboriginal and Torres Strait Islander cultures and to Elders both past and present. We acknowledge that LGBTIQ+ Aboriginal and Torres Strait Islander people (Brotherboys and Sistergirls) face unique challenges and hold distinct cultural perspectives that enrich our community.</p>
+            </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+            </a>
+                </div>
+          <h4>About</h4>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+                  </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="statistics_dashboard.html">Statistics</a></li>
+            <li><a href="policy_landscape.html">Policy Landscape</a></li>
+            <li><a href="resources.html">Support Resources</a></li>
+            <li><a href="about.html">About This Project</a></li>
+          </ul>
+                </div>
+        <div class="footer-section">
+          <h4>Get Help</h4>
+          <ul>
+            <li><a href="tel:1800184527">QLife: 1800 184 527</a></li>
+            <li><a href="tel:131114">Lifeline: 13 11 14</a></li>
+            <li><a href="tel:000">Emergency: 000</a></li>
+          </ul>
+              </div>
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Subscribe for updates on new data and resources.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </form>
+              </div>
+                </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 Incidex Australia. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+              </div>
+            </div>
+          </div>
+  </footer>
+
+  <!-- Emergency CTA -->
+  <div class="emergency-cta">
+    <div class="emergency-panel" id="emergencyPanel">
+      <h4>Crisis Support</h4>
+      <a href="tel:1800184527" class="emergency-panel-link">
+        <span>QLife (LGBTIQ+)</span>
+        <strong>1800 184 527</strong>
+      </a>
+      <a href="tel:131114" class="emergency-panel-link">
+        <span>Lifeline</span>
+        <strong>13 11 14</strong>
+      </a>
+      <a href="tel:000" class="emergency-panel-link">
+        <span>Emergency</span>
+        <strong>000</strong>
+      </a>
+          </div>
+    <button class="emergency-btn" id="emergencyBtn" aria-label="Emergency contacts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      Need Help?
+    </button>
+            </div>
+
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+      const isOpen = mobileNav.classList.contains('active');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Emergency panel toggle
+    const emergencyBtn = document.getElementById('emergencyBtn');
+    const emergencyPanel = document.getElementById('emergencyPanel');
+
+    emergencyBtn.addEventListener('click', () => {
+      emergencyPanel.classList.toggle('open');
+    });
+
+    // Close emergency panel when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!emergencyBtn.contains(e.target) && !emergencyPanel.contains(e.target)) {
+        emergencyPanel.classList.remove('open');
+      }
+    });
+
+    // Animate on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Contact form handler
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      
+      // In a real implementation, this would send to a server
+      console.log('Form submitted:', Object.fromEntries(formData));
+      
+      // Show success message
+      alert('Thank you for your message! We\'ll get back to you within 48 hours.');
+      form.reset();
+    }
+
+    // Load incident count dynamically from actual data
+    document.addEventListener('DOMContentLoaded', () => {
+      const incidentCountEl = document.getElementById('incidentCount');
+      const caseCountEl = document.getElementById('caseCount');
+      const resourceCountEl = document.getElementById('resourceCount');
+      
+      // Load actual incident count from CSV
+      fetch('/data/incidents_in_progress.csv')
+        .then(response => response.text())
+        .then(data => {
+          const lines = data.trim().split('\n');
+          const incidentCount = Math.max(0, lines.length - 1); // Subtract header row
+          animateCounter(incidentCountEl, incidentCount);
+        })
+        .catch(() => {
+          incidentCountEl.textContent = '—';
+        });
+      
+      // Load actual case count from CSV
+      fetch('/data/landmark_cases.csv')
+        .then(response => response.text())
+        .then(data => {
+          const lines = data.trim().split('\n');
+          const caseCount = Math.max(0, lines.length - 1);
+          animateCounter(caseCountEl, caseCount);
+        })
+        .catch(() => {
+          caseCountEl.textContent = '50+';
+        });
+      
+      // Load actual resource count from CSV
+      fetch('/data/resources_by_location.csv')
+        .then(response => response.text())
+        .then(data => {
+          const lines = data.trim().split('\n');
+          const resourceCount = Math.max(0, lines.length - 1);
+          animateCounter(resourceCountEl, resourceCount);
+        })
+        .catch(() => {
+          resourceCountEl.textContent = '100+';
+        });
+    });
+    
+    // Animate counter from 0 to target
+    function animateCounter(element, target) {
+      if (!element || target === 0) {
+        if (element) element.textContent = target.toLocaleString();
+        return;
+      }
+
+      let count = 0;
+      const duration = 1500;
+      const steps = 40;
+      const increment = target / steps;
+      const stepDuration = duration / steps;
+
+      const counter = setInterval(() => {
+        count += increment;
+        if (count >= target) {
+          element.textContent = target.toLocaleString();
+          clearInterval(counter);
+        } else {
+          element.textContent = Math.floor(count).toLocaleString();
+        }
+      }, stepDuration);
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

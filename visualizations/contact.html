@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact the Incidex team. Report an incident, ask questions, or get involved in our LGBTIQ+ advocacy work.">
+  <title>Contact Us | Incidex Australia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incidex.au/contact.html">
+  <meta property="og:title" content="Contact Us | Incidex Australia">
+  <meta property="og:description" content="Contact the Incidex team. Report an incident, ask questions, or get involved in our LGBTIQ+ advocacy work.">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://incidex.au/contact.html">
+  <meta property="twitter:title" content="Contact Us | Incidex Australia">
+  <meta property="twitter:description" content="Contact the Incidex team. Report an incident, ask questions, or get involved in our LGBTIQ+ advocacy work.">
+  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page-specific styles */
+    .contact-hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--space-12) var(--space-6);
+      text-align: center;
+    }
+
+    .contact-hero h1 {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-3);
+      color: inherit;
+    }
+
+    .contact-hero p {
+      font-size: var(--text-lg);
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Contact Layout */
+    .contact-layout {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: var(--space-12);
+    }
+
+    @media (max-width: 900px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Contact Form */
+    .contact-form-section {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+    }
+
+    .contact-form-section h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .contact-form-section > p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-6);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Contact Type Selector */
+    .contact-type-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .contact-type-option {
+      position: relative;
+    }
+
+    .contact-type-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .contact-type-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .contact-type-label:hover {
+      border-color: var(--color-primary-100);
+      background: var(--color-primary-50);
+    }
+
+    .contact-type-option input:checked + .contact-type-label {
+      border-color: var(--color-primary);
+      background: var(--color-primary-50);
+    }
+
+    .contact-type-label svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-primary);
+    }
+
+    .contact-type-label span {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+    }
+
+    /* Form Success Message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-10);
+    }
+
+    .form-success.show {
+      display: block;
+    }
+
+    .form-success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-4);
+      background: var(--color-success-light);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-success);
+    }
+
+    .form-success h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .form-success p {
+      color: var(--color-text-secondary);
+    }
+
+    /* Sidebar */
+    .contact-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .sidebar-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .sidebar-card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .sidebar-card h3 svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-primary);
+    }
+
+    /* Contact Methods */
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .method-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary-50);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .method-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-primary);
+    }
+
+    .method-content {
+      flex: 1;
+    }
+
+    .method-content strong {
+      display: block;
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .method-content a {
+      color: var(--color-primary);
+      font-weight: var(--font-medium);
+    }
+
+    .method-content span {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    /* Response Time */
+    .response-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-4);
+    }
+
+    .response-info svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-warning);
+    }
+
+    .response-info span {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* FAQ Section */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-border-light);
+      padding-bottom: var(--space-3);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .faq-question {
+      font-weight: var(--font-medium);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .faq-answer {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Safety Notice */
+    .safety-notice {
+      background: linear-gradient(135deg, var(--color-secondary-50) 0%, var(--color-warning-light) 100%);
+      border: 1px solid rgba(224, 96, 85, 0.2);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .safety-notice h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .safety-notice p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-4);
+    }
+
+    .safety-notice .btn {
+      width: 100%;
+    }
+
+    /* Privacy Notice */
+    .privacy-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-4);
+    }
+
+    .privacy-notice svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-success);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .privacy-notice p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="contact-hero">
+    <h1>Contact Us</h1>
+    <p>Have a question, want to report an incident, or interested in contributing? We'd love to hear from you.</p>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main" class="contact-layout">
+    <!-- Contact Form Section -->
+    <section class="contact-form-section">
+      <h2>Send us a message</h2>
+      <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+
+      <form class="contact-form" id="contactForm">
+        <!-- Contact Type Selection -->
+        <div class="form-group">
+          <label class="form-label">What can we help you with?</label>
+          <div class="contact-type-selector">
+            <label class="contact-type-option">
+              <input type="radio" name="contactType" value="general" checked>
+              <span class="contact-type-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>General Inquiry</span>
+              </span>
+            </label>
+            <label class="contact-type-option">
+              <input type="radio" name="contactType" value="report">
+              <span class="contact-type-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Report Incident</span>
+              </span>
+            </label>
+            <label class="contact-type-option">
+              <input type="radio" name="contactType" value="media">
+              <span class="contact-type-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Media/Press</span>
+              </span>
+            </label>
+            <label class="contact-type-option">
+              <input type="radio" name="contactType" value="volunteer">
+              <span class="contact-type-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span>Volunteer</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Name Fields -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="firstName">First Name</label>
+            <input type="text" class="form-input" id="firstName" name="firstName" placeholder="Your first name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" class="form-input" id="lastName" name="lastName" placeholder="Your last name">
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label required" for="email">Email Address</label>
+          <input type="email" class="form-input" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <!-- Subject -->
+        <div class="form-group">
+          <label class="form-label required" for="subject">Subject</label>
+          <input type="text" class="form-input" id="subject" name="subject" placeholder="What is this about?" required>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label class="form-label required" for="message">Message</label>
+          <textarea class="form-textarea" id="message" name="message" rows="6" placeholder="Tell us more about your inquiry..." required></textarea>
+        </div>
+
+        <!-- Anonymous Option -->
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" name="anonymous">
+            <span class="form-check-label">I wish to remain anonymous (we won't contact you directly)</span>
+          </label>
+        </div>
+
+        <!-- Privacy Notice -->
+        <div class="privacy-notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <p>Your information is secure. We never share personal details without consent. For incident reports, only aggregated, de-identified data is used unless you provide explicit permission.</p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          Send Message
+        </button>
+      </form>
+
+      <!-- Success Message -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3>Message Sent Successfully</h3>
+        <p>Thank you for reaching out. We'll get back to you within 2-3 business days.</p>
+        <button class="btn btn-secondary" onclick="resetForm()" style="margin-top: var(--space-4);">Send Another Message</button>
+      </div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="contact-sidebar">
+      <!-- Direct Contact Methods -->
+      <div class="sidebar-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Other Ways to Reach Us
+        </h3>
+
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="method-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="method-content">
+              <strong>Email</strong>
+              <a href="mailto:info@incidex.org.au">info@incidex.org.au</a>
+              <span>For general inquiries</span>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="method-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </div>
+            <div class="method-content">
+              <strong>Social Media</strong>
+              <a href="#">@IncidexAU</a>
+              <span>For updates and advocacy</span>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="method-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            </div>
+            <div class="method-content">
+              <strong>Media Inquiries</strong>
+              <a href="mailto:media@incidex.org.au">media@incidex.org.au</a>
+              <span>For press and interviews</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="response-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>We typically respond within 2-3 business days</span>
+        </div>
+      </div>
+
+      <!-- Safety Notice -->
+      <div class="safety-notice">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Need Immediate Help?
+        </h3>
+        <p>If you're in danger or experiencing a crisis, please contact emergency services or a crisis support line immediately.</p>
+        <a href="resources.html#emergency" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          View Crisis Contacts
+        </a>
+      </div>
+
+      <!-- FAQ -->
+      <div class="sidebar-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Frequently Asked Questions
+        </h3>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question">How can I report an incident?</div>
+            <div class="faq-answer">Select "Report Incident" above and provide as much detail as you're comfortable sharing. Anonymous reports are accepted.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Will my identity be protected?</div>
+            <div class="faq-answer">Yes. Personal details are never published. You can also choose to submit completely anonymously.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How can I volunteer?</div>
+            <div class="faq-answer">We're always looking for help with data verification, research, and outreach. Select "Volunteer" and tell us about your skills.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Can I use your data for research?</div>
+            <div class="faq-answer">Yes! Our data is available for academic and advocacy purposes. Contact us to discuss your project.</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+            </a>
+          </div>
+          <h4>About</h4>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="resources.html">Support Resources</a></li>
+            <li><a href="about.html">About This Project</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Get Help</h4>
+          <ul>
+            <li><a href="tel:1800184527">QLife: 1800 184 527</a></li>
+            <li><a href="tel:131114">Lifeline: 13 11 14</a></li>
+            <li><a href="tel:000">Emergency: 000</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Subscribe for updates on new data and resources.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 Incidex Australia. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+    });
+
+    // Form handling
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Simulate form submission
+      contactForm.style.display = 'none';
+      formSuccess.classList.add('show');
+      
+      // In production, you would send the form data to your server here
+      console.log('Form submitted:', new FormData(contactForm));
+    });
+
+    function resetForm() {
+      contactForm.reset();
+      contactForm.style.display = 'flex';
+      formSuccess.classList.remove('show');
+    }
+
+    // Update subject based on contact type
+    const contactTypes = document.querySelectorAll('input[name="contactType"]');
+    const subjectInput = document.getElementById('subject');
+
+    const subjectSuggestions = {
+      general: '',
+      report: 'Incident Report: ',
+      media: 'Media Inquiry: ',
+      volunteer: 'Volunteer Application'
+    };
+
+    contactTypes.forEach(radio => {
+      radio.addEventListener('change', () => {
+        subjectInput.value = subjectSuggestions[radio.value] || '';
+        subjectInput.focus();
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,29 @@
+======================================================================
+INCIDENTS REVIEW SUMMARY
+======================================================================
+
+Generated: 2025-12-23 07:36:58
+
+Total Incidents: 286
+
+Issues Found:
+----------------------------------------------------------------------
+  Non-Australian locations: 30
+  Possible duplicates: 3
+  Vague locations: 12
+  Missing coordinates: 0
+  Missing fields: 0
+  Possibly non-LGBTIQ+: 39
+  Clean (no issues): 202
+
+Review Priority:
+----------------------------------------------------------------------
+  1 = Non-Australian (remove)
+  2 = Duplicates (keep best, remove others)
+  3 = Vague locations (find specific location or remove)
+  4 = Missing coordinates (geocode or remove)
+  5 = Possibly non-LGBTIQ+ (verify and remove if not)
+  6 = Missing fields (fill or remove)
+  0 = No issues (keep)
+
+======================================================================

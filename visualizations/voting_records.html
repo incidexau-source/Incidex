@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Australian Federal MP voting records on LGBTIQ+ issues. Search and filter MPs by electorate, party, and voting alignment.">
+  <title>MP Voting Records | Incidex Australia</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page Layout */
+    .page-content {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    .page-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .page-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .page-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 700px;
+    }
+
+    /* Stats Overview */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .stat-card-mini {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+    }
+
+    .stat-card-mini .stat-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+    }
+
+    .stat-card-mini .stat-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* Search and Filters */
+    .controls-section {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .search-row {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-input-wrapper svg {
+      position: absolute;
+      left: var(--space-4);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-muted);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      padding-left: var(--space-12);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-base);
+      background: var(--color-bg);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: var(--focus-ring);
+    }
+
+    .filters-row {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .filter-label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+
+    .filter-select {
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      background: var(--color-bg);
+      min-width: 140px;
+    }
+
+    .filter-actions {
+      margin-left: auto;
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    /* Results Table */
+    .results-section {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+      background: var(--color-bg);
+    }
+
+    .results-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .results-count strong {
+      color: var(--color-text);
+    }
+
+    .results-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .results-table th {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      position: sticky;
+      top: 0;
+    }
+
+    .results-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .results-table th.sortable:hover {
+      color: var(--color-primary);
+    }
+
+    .results-table th .sort-icon {
+      margin-left: var(--space-1);
+      opacity: 0.5;
+    }
+
+    .results-table th.sorted .sort-icon {
+      opacity: 1;
+    }
+
+    .results-table tbody tr {
+      transition: background var(--transition-fast);
+    }
+
+    .results-table tbody tr:hover {
+      background: var(--color-bg);
+    }
+
+    .results-table tbody tr.clickable {
+      cursor: pointer;
+    }
+
+    .mp-name-cell {
+      font-weight: var(--font-semibold);
+      color: var(--color-primary);
+    }
+
+    .party-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+    }
+
+    .party-labor { background: #dc2626; color: white; }
+    .party-liberal { background: #2563eb; color: white; }
+    .party-greens { background: #16a34a; color: white; }
+    .party-national { background: #15803d; color: white; }
+    .party-lnp { background: #1d4ed8; color: white; }
+    .party-independent { background: #6b7280; color: white; }
+    .party-kap { background: #b91c1c; color: white; }
+    .party-other { background: #9ca3af; color: white; }
+
+    .alignment-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+    }
+
+    .alignment-strong-supporter { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .alignment-supporter { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+    .alignment-mixed { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .alignment-opponent { background: rgba(249, 115, 22, 0.15); color: #ea580c; }
+    .alignment-strong-opponent { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+    .alignment-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* MP Detail Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: var(--z-modal-backdrop);
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+      position: sticky;
+      top: 0;
+      background: var(--color-bg-alt);
+      z-index: 1;
+    }
+
+    .modal-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+    }
+
+    .modal-subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      padding: var(--space-2);
+      cursor: pointer;
+      color: var(--color-text-muted);
+      border-radius: var(--radius-md);
+    }
+
+    .modal-close:hover {
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .modal-body {
+      padding: var(--space-6);
+    }
+
+    .mp-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .mp-info-item {
+      background: var(--color-bg);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+    }
+
+    .mp-info-label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+
+    .mp-info-value {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+    }
+
+    .voting-section-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .voting-section-title svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .voting-record-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .voting-record-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .voting-record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-2);
+    }
+
+    .voting-record-bill {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+    }
+
+    .voting-record-year {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .voting-record-vote {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+    }
+
+    .vote-yes { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .vote-no { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+    .vote-abstained { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .vote-na { background: var(--color-bg); color: var(--color-text-muted); }
+
+    .voting-record-outcome {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* Party Summary Section */
+    .party-summary-section {
+      margin-bottom: var(--space-8);
+    }
+
+    .party-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .party-summary-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+    }
+
+    .party-summary-name {
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+    }
+
+    .party-summary-score {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+    }
+
+    .party-summary-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .party-summary-mps {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-1);
+    }
+
+    /* Export Section */
+    .export-section {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-6);
+      border-top: 1px solid var(--color-border-light);
+      background: var(--color-bg);
+    }
+
+    /* Methodology Section */
+    .methodology-section {
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-100);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    .methodology-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-primary-dark);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .methodology-content {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .methodology-content p {
+      margin-bottom: var(--space-3);
+    }
+
+    .methodology-content ul {
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    .methodology-content li {
+      margin-bottom: var(--space-1);
+    }
+
+    /* NGO Toolkit */
+    .ngo-toolkit {
+      background: linear-gradient(135deg, rgba(224, 96, 85, 0.08) 0%, rgba(232, 152, 94, 0.06) 100%);
+      border: 1px solid rgba(224, 96, 85, 0.2);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    .ngo-toolkit-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-secondary);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .ngo-toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .ngo-toolkit-card {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .ngo-toolkit-card h4 {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+    }
+
+    .ngo-toolkit-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .page-content {
+        padding: var(--space-4);
+      }
+
+      .mp-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-actions {
+        margin-left: 0;
+        margin-top: var(--space-3);
+      }
+
+      .results-table th,
+      .results-table td {
+        padding: var(--space-2);
+        font-size: var(--text-sm);
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Print styles */
+    @media print {
+      .site-header, .controls-section, .filter-actions, .modal-overlay {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link active">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content" class="page-content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">MP LGBTIQ+ Voting Records</h1>
+      <p class="page-subtitle" id="pageSubtitle">
+        Search and explore how your federal representative votes on LGBTIQ+ issues. 
+        Data sourced from official parliamentary records (2017-2025).
+      </p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card-mini">
+        <div class="stat-value" id="totalMPs">151</div>
+        <div class="stat-label">Total MPs</div>
+      </div>
+      <div class="stat-card-mini">
+        <div class="stat-value" id="strongSupporters">0</div>
+        <div class="stat-label">Strong Supporters</div>
+      </div>
+      <div class="stat-card-mini">
+        <div class="stat-value" id="mixedVoters">0</div>
+        <div class="stat-label">Mixed Voting</div>
+      </div>
+      <div class="stat-card-mini">
+        <div class="stat-value" id="opponents">0</div>
+        <div class="stat-label">Opponents</div>
+      </div>
+    </div>
+
+    <!-- Party Summary -->
+    <section class="party-summary-section" aria-labelledby="party-summary-title">
+      <h2 id="party-summary-title" class="voting-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Voting Alignment by Party
+      </h2>
+      <div class="party-summary-grid" id="partySummaryGrid">
+        <!-- Populated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <div class="controls-section">
+      <div class="search-row">
+        <div class="search-input-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="search" class="search-input" id="searchInput" placeholder="Search by MP name or division..." aria-label="Search MPs">
+        </div>
+      </div>
+      <div class="filters-row">
+        <div class="filter-group">
+          <label class="filter-label" for="levelFilter">Level</label>
+          <select class="filter-select" id="levelFilter">
+            <option value="federal">Federal MPs</option>
+            <option value="state">State/Territory MPs</option>
+          </select>
+        </div>
+        <div class="filter-group" id="stateFilterGroup">
+          <label class="filter-label" for="stateFilter">State</label>
+          <select class="filter-select" id="stateFilter">
+            <option value="all">All States</option>
+            <option value="NSW">NSW</option>
+            <option value="VIC">Victoria</option>
+            <option value="QLD">Queensland</option>
+            <option value="WA">Western Australia</option>
+            <option value="SA">South Australia</option>
+            <option value="TAS">Tasmania</option>
+            <option value="ACT">ACT</option>
+            <option value="NT">Northern Territory</option>
+          </select>
+        </div>
+        <div class="filter-group" id="stateSelectGroup" style="display: none;">
+          <label class="filter-label" for="stateSelectFilter">Select State/Territory</label>
+          <select class="filter-select" id="stateSelectFilter">
+            <option value="all">All States/Territories</option>
+            <option value="NSW">NSW (46 divisions)</option>
+            <option value="VIC">Victoria (38 divisions)</option>
+            <option value="QLD">Queensland (30 divisions)</option>
+            <option value="WA">Western Australia (16 divisions)</option>
+            <option value="SA">South Australia (10 divisions)</option>
+            <option value="TAS">Tasmania (5 divisions)</option>
+            <option value="ACT">ACT (3 divisions)</option>
+            <option value="NT">Northern Territory (2 divisions)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="partyFilter">Party</label>
+          <select class="filter-select" id="partyFilter">
+            <option value="all">All Parties</option>
+            <option value="Labor">Labor</option>
+            <option value="Liberal">Liberal</option>
+            <option value="Greens">Greens</option>
+            <option value="National">National</option>
+            <option value="LNP">LNP</option>
+            <option value="Independent">Independent</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="alignmentFilter">Alignment</label>
+          <select class="filter-select" id="alignmentFilter">
+            <option value="all">All Alignments</option>
+            <option value="Strong Supporter">Strong Supporter</option>
+            <option value="Supporter">Supporter</option>
+            <option value="Mixed">Mixed</option>
+            <option value="Opponent">Opponent</option>
+            <option value="Strong Opponent">Strong Opponent</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button class="btn btn-tertiary btn-sm" id="resetFilters">Reset</button>
+          <button class="btn btn-primary btn-sm" id="applyFilters">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-section">
+      <div class="results-header">
+        <div class="results-count">
+          Showing <strong id="resultsCount">0</strong> of <strong id="totalCount">151</strong> MPs
+        </div>
+        <div class="results-sort">
+          <label class="filter-label" for="sortSelect">Sort by</label>
+          <select class="filter-select" id="sortSelect" style="min-width: 160px;">
+            <option value="division">Division (A-Z)</option>
+            <option value="mp">MP Name (A-Z)</option>
+            <option value="alignment-desc">Alignment (High-Low)</option>
+            <option value="alignment-asc">Alignment (Low-High)</option>
+            <option value="party">Party</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="results-table-wrapper">
+        <table class="results-table" id="resultsTable" role="grid">
+          <thead>
+            <tr>
+              <th scope="col">Division</th>
+              <th scope="col">MP Name</th>
+              <th scope="col" class="hide-mobile">State</th>
+              <th scope="col">Party</th>
+              <th scope="col">Alignment</th>
+              <th scope="col" class="hide-mobile">Marriage Eq. 2017</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="export-section">
+        <button class="btn btn-secondary btn-sm" id="exportCSV">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export CSV
+        </button>
+        <button class="btn btn-secondary btn-sm" id="exportPDF">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Export PDF Report
+        </button>
+      </div>
+    </div>
+
+    <!-- NGO Toolkit -->
+    <div class="ngo-toolkit">
+      <h2 class="ngo-toolkit-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Advocacy Toolkit
+      </h2>
+      <div class="ngo-toolkit-grid">
+        <div class="ngo-toolkit-card">
+          <h4>Priority Advocacy Targets</h4>
+          <p>Find divisions with high incident rates but low MP support for LGBTIQ+ rights.</p>
+          <button class="btn btn-secondary btn-sm" id="showPriorityTargets">View Priority Targets</button>
+        </div>
+        <div class="ngo-toolkit-card">
+          <h4>Division Report Generator</h4>
+          <p>Generate a briefing report for any electorate including incidents and MP voting.</p>
+          <button class="btn btn-secondary btn-sm" id="generateReport">Generate Report</button>
+        </div>
+        <div class="ngo-toolkit-card">
+          <h4>Compare Parties</h4>
+          <p>See side-by-side comparison of party voting records on LGBTIQ+ issues.</p>
+          <button class="btn btn-secondary btn-sm" id="compareParties">Compare Parties</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="methodology-section">
+      <h2 class="methodology-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        Methodology & Data Sources
+      </h2>
+      <div class="methodology-content">
+        <p><strong>LGBTIQ+ Voting Alignment Score</strong> represents the proportion of pro-LGBTIQ+ votes by each MP on tracked federal legislation.</p>
+        
+        <p><strong>Bills Tracked (2017-2025):</strong></p>
+        <ul>
+          <li>Marriage Amendment (Definition and Religious Freedoms) Act 2017</li>
+          <li>Religious Discrimination Bill 2021 (position on bill)</li>
+          <li>Anti-Discrimination Act amendments</li>
+          <li>Conversion practices ban proposals</li>
+          <li>Gender recognition / Trans rights legislation</li>
+        </ul>
+        
+        <p><strong>Score Calculation:</strong> Base party alignment adjusted by individual voting record. Score ranges: Strong Supporter (85-100%), Supporter (70-84%), Mixed (50-69%), Opponent (30-49%), Strong Opponent (0-29%).</p>
+        
+        <p><strong>Data Sources:</strong> Parliament of Australia (aph.gov.au), They Vote For You (theyvoteforyou.org.au), Australian Electoral Commission, Hansard Records.</p>
+        
+        <p><strong>Last Updated:</strong> <span id="lastUpdated"></span></p>
+        
+        <p style="margin-top: var(--space-4); font-style: italic; color: var(--color-text-muted);">
+          Disclaimer: This tool presents objective voting records from Parliament. We do not endorse any politician or party. Use this data to make informed decisions about who represents you.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- MP Detail Modal -->
+  <div class="modal-overlay" id="mpModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="modalTitle">MP Name</h2>
+          <p class="modal-subtitle" id="modalSubtitle">Division, State</p>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const FEDERAL_MP_DATA_PATH = "/data/mp-lgbtiq-votes.json?v=" + Date.now();
+    const STATE_MP_DATA_PATH = "/data/state-mp-lgbtiq-votes.json?v=" + Date.now();
+    
+    // State
+    let mpData = null;
+    let stateMPData = null;
+    let filteredData = [];
+    let currentLevel = 'federal'; // 'federal' or 'state'
+    let currentStateFilter = 'all'; // For state MPs, which state to show
+    
+    // DOM Elements
+    const searchInput = document.getElementById('searchInput');
+    const levelFilter = document.getElementById('levelFilter');
+    const stateFilter = document.getElementById('stateFilter');
+    const stateSelectFilter = document.getElementById('stateSelectFilter');
+    const stateFilterGroup = document.getElementById('stateFilterGroup');
+    const stateSelectGroup = document.getElementById('stateSelectGroup');
+    const partyFilter = document.getElementById('partyFilter');
+    const alignmentFilter = document.getElementById('alignmentFilter');
+    const sortSelect = document.getElementById('sortSelect');
+    const resultsBody = document.getElementById('resultsBody');
+    const resultsCount = document.getElementById('resultsCount');
+    const totalCount = document.getElementById('totalCount');
+    const mpModal = document.getElementById('mpModal');
+    const modalClose = document.getElementById('modalClose');
+
+    // Load Federal MP Data
+    async function loadFederalMPData() {
+      try {
+        const response = await fetch(FEDERAL_MP_DATA_PATH);
+        if (!response.ok) throw new Error('Failed to load federal data');
+        mpData = await response.json();
+        console.log('Loaded federal MP data:', mpData.divisions.length, 'divisions');
+        return true;
+      } catch (error) {
+        console.error('Failed to load federal MP data:', error);
+        return false;
+      }
+    }
+    
+    // Load State MP Data
+    async function loadStateMPData() {
+      try {
+        const response = await fetch(STATE_MP_DATA_PATH);
+        if (!response.ok) throw new Error('Failed to load state data');
+        stateMPData = await response.json();
+        console.log('Loaded state MP data for', Object.keys(stateMPData.states).length, 'states');
+        return true;
+      } catch (error) {
+        console.error('Failed to load state MP data:', error);
+        return false;
+      }
+    }
+    
+    // Get current MP data based on level
+    function getCurrentMPData() {
+      if (currentLevel === 'federal') {
+        return mpData ? { divisions: mpData.divisions, metadata: mpData.metadata } : null;
+      } else {
+        // For state level, aggregate all state divisions or filter by selected state
+        if (!stateMPData) return null;
+        
+        let allDivisions = [];
+        for (const [stateCode, stateData] of Object.entries(stateMPData.states)) {
+          if (currentStateFilter === 'all' || currentStateFilter === stateCode) {
+            allDivisions = allDivisions.concat(stateData.divisions || []);
+          }
+        }
+        
+        return {
+          divisions: allDivisions,
+          metadata: stateMPData.metadata
+        };
+      }
+    }
+    
+    // Load MP Data (both federal and state)
+    async function loadMPData() {
+      try {
+        // Load both datasets
+        await Promise.all([loadFederalMPData(), loadStateMPData()]);
+        
+        // Load data for current level
+        await loadDataForCurrentLevel();
+        
+      } catch (error) {
+        console.error('Failed to load MP data:', error);
+        resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Failed to load data. Please refresh the page.</td></tr>';
+      }
+    }
+    
+    // Load data for current level and update display
+    async function loadDataForCurrentLevel() {
+      const data = getCurrentMPData();
+      if (!data) {
+        resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">No data available for selected level.</td></tr>';
+        return;
+      }
+      
+      // Update stats
+      updateStats(data);
+      updatePartySummary(data);
+      
+      // Initial render
+      filteredData = [...data.divisions];
+      renderResults();
+      
+      // Update last updated date
+      document.getElementById('lastUpdated').textContent = data.metadata.last_updated || 'N/A';
+    }
+
+    // Update Stats
+    function updateStats(data) {
+      if (!data) data = getCurrentMPData();
+      if (!data) return;
+      
+      const divisions = data.divisions;
+      document.getElementById('totalMPs').textContent = divisions.length;
+      
+      const strongSupporters = divisions.filter(d => d.current_mp.alignment_label === 'Strong Supporter').length;
+      const supporters = divisions.filter(d => d.current_mp.alignment_label === 'Supporter').length;
+      const mixed = divisions.filter(d => ['Mixed', 'Mixed Record'].includes(d.current_mp.alignment_label)).length;
+      const opponents = divisions.filter(d => ['Opponent', 'Strong Opponent'].includes(d.current_mp.alignment_label)).length;
+      
+      document.getElementById('strongSupporters').textContent = strongSupporters + supporters;
+      document.getElementById('mixedVoters').textContent = mixed;
+      document.getElementById('opponents').textContent = opponents;
+    }
+
+    // Update Party Summary
+    function updatePartySummary(data) {
+      if (!data) data = getCurrentMPData();
+      if (!data) return;
+      
+      const grid = document.getElementById('partySummaryGrid');
+      
+      // Calculate party summary from divisions
+      const partyStats = {};
+      data.divisions.forEach(d => {
+        const party = d.current_mp.party;
+        if (!partyStats[party]) {
+          partyStats[party] = { total_score: 0, count: 0 };
+        }
+        partyStats[party].total_score += d.current_mp.alignment_score;
+        partyStats[party].count += 1;
+      });
+      
+      const parties = Object.entries(partyStats).map(([party, stats]) => {
+        const avg = stats.count > 0 ? Math.round(stats.total_score / stats.count) : 0;
+        return [party, {
+          average_score: avg,
+          alignment_label: getAlignmentLabelFromScore(avg),
+          mp_count: stats.count
+        }];
+      });
+      
+      // Sort by average score descending
+      const sortedParties = parties.sort((a, b) => b[1].average_score - a[1].average_score);
+      
+      grid.innerHTML = sortedParties.map(([party, data]) => {
+        const color = getAlignmentColor(data.average_score);
+        return `
+          <div class="party-summary-card">
+            <div class="party-summary-name">${party}</div>
+            <div class="party-summary-score" style="color: ${color}">${data.average_score}%</div>
+            <div class="party-summary-label">${data.alignment_label}</div>
+            <div class="party-summary-mps">${data.mp_count} MPs</div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function getAlignmentLabelFromScore(score) {
+      if (score >= 75) return 'Strong Supporter';
+      if (score >= 50) return 'Supporter';
+      if (score >= 25) return 'Mixed Record';
+      return 'Opponent';
+    }
+
+    // Get alignment color
+    function getAlignmentColor(score) {
+      if (score >= 85) return '#10b981';
+      if (score >= 70) return '#3b82f6';
+      if (score >= 50) return '#f59e0b';
+      if (score >= 30) return '#f97316';
+      return '#ef4444';
+    }
+
+    // Get party class
+    function getPartyClass(party) {
+      const p = party.toLowerCase();
+      if (p.includes('labor')) return 'party-labor';
+      if (p.includes('liberal') && !p.includes('lnp')) return 'party-liberal';
+      if (p.includes('greens')) return 'party-greens';
+      if (p.includes('national') && !p.includes('lnp')) return 'party-national';
+      if (p.includes('lnp')) return 'party-lnp';
+      if (p.includes('independent')) return 'party-independent';
+      if (p.includes('kap') || p.includes('katter')) return 'party-kap';
+      return 'party-other';
+    }
+
+    // Get alignment class
+    function getAlignmentClass(label) {
+      return 'alignment-' + label.toLowerCase().replace(' ', '-');
+    }
+
+    // Filter and Sort Data
+    function applyFiltersAndSort() {
+      const search = searchInput.value.toLowerCase().trim();
+      const state = currentLevel === 'federal' ? stateFilter.value : stateSelectFilter.value;
+      const party = partyFilter.value;
+      const alignment = alignmentFilter.value;
+      const sort = sortSelect.value;
+
+      const data = getCurrentMPData();
+      if (!data) return;
+
+      filteredData = data.divisions.filter(d => {
+        // Search filter
+        if (search && !d.division_name.toLowerCase().includes(search) && 
+            !d.current_mp.name.toLowerCase().includes(search)) {
+          return false;
+        }
+        
+        // State filter
+        if (state !== 'all' && d.state !== state) return false;
+        
+        // Party filter
+        if (party !== 'all') {
+          if (party === 'other') {
+            if (['Labor', 'Liberal', 'Greens', 'National', 'LNP', 'Independent'].includes(d.current_mp.party)) {
+              return false;
+            }
+          } else if (!d.current_mp.party.includes(party)) {
+            return false;
+          }
+        }
+        
+        // Alignment filter
+        if (alignment !== 'all' && d.current_mp.alignment_label !== alignment) return false;
+        
+        return true;
+      });
+
+      // Sort
+      filteredData.sort((a, b) => {
+        switch (sort) {
+          case 'division':
+            return a.division_name.localeCompare(b.division_name);
+          case 'mp':
+            return a.current_mp.name.localeCompare(b.current_mp.name);
+          case 'alignment-desc':
+            return b.current_mp.alignment_score - a.current_mp.alignment_score;
+          case 'alignment-asc':
+            return a.current_mp.alignment_score - b.current_mp.alignment_score;
+          case 'party':
+            return a.current_mp.party.localeCompare(b.current_mp.party);
+          default:
+            return 0;
+        }
+      });
+
+      renderResults();
+    }
+
+    // Render Results
+    function renderResults() {
+      const data = getCurrentMPData();
+      if (!data) return;
+      
+      resultsCount.textContent = filteredData.length;
+      totalCount.textContent = data.divisions.length;
+
+      if (filteredData.length === 0) {
+        resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">No MPs match your filters.</td></tr>';
+        return;
+      }
+
+      resultsBody.innerHTML = filteredData.map(d => {
+        const mp = d.current_mp;
+        // For federal, show Marriage Equality vote; for state, show first tracked bill
+        let keyVote = null;
+        if (currentLevel === 'federal') {
+          keyVote = d.voting_history.find(v => v.bill_id === 'marriage_equality_2017');
+        } else {
+          // For state, show the most recent or most significant bill
+          keyVote = d.voting_history.find(v => v.bill_id && v.bill_id.includes('conversion')) || 
+                   d.voting_history.find(v => v.bill_id && v.bill_id.includes('gender')) ||
+                   d.voting_history[0];
+        }
+        const voteDisplay = keyVote ? (keyVote.vote_display || keyVote.vote || 'N/A') : 'N/A';
+        const voteClass = voteDisplay === 'Yes' ? 'vote-yes' : 
+                         voteDisplay === 'No' ? 'vote-no' : 
+                         voteDisplay === 'Abstained' ? 'vote-abstained' : 'vote-na';
+
+        return `
+          <tr class="clickable" data-division="${d.division_name}" tabindex="0" role="row">
+            <td>${d.division_name}</td>
+            <td class="mp-name-cell">${mp.name}</td>
+            <td class="hide-mobile">${d.state}</td>
+            <td><span class="party-badge ${getPartyClass(mp.party)}">${mp.party}</span></td>
+            <td>
+              <span class="alignment-badge ${getAlignmentClass(mp.alignment_label)}">
+                <span class="alignment-dot" style="background: ${mp.alignment_color}"></span>
+                ${mp.alignment_score}%
+              </span>
+            </td>
+            <td class="hide-mobile"><span class="${voteClass}" style="font-size: 0.85rem;">${voteDisplay}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      // Add click handlers
+      document.querySelectorAll('#resultsBody tr.clickable').forEach(row => {
+        row.addEventListener('click', () => openMPModal(row.dataset.division));
+        row.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') openMPModal(row.dataset.division);
+        });
+      });
+    }
+
+    // Open MP Modal
+    function openMPModal(divisionName) {
+      const data = getCurrentMPData();
+      if (!data) return;
+      
+      const division = data.divisions.find(d => d.division_name === divisionName);
+      if (!division) return;
+
+      const mp = division.current_mp;
+      const seatAlignment = division.seat_alignment || null;
+      const seatColor = seatAlignment ? getAlignmentColor(seatAlignment.score) : mp.alignment_color;
+      const mpColor = getAlignmentColor(mp.alignment_score);
+      
+      // Unique IDs for info buttons and modal
+      const baseId = divisionName.replace(/\s+/g, '-').toLowerCase();
+      const seatInfoButtonId = `info-btn-seat-${baseId}`;
+      const mpInfoButtonId = `info-btn-mp-${baseId}`;
+      const infoModalId = `info-modal-${baseId}`;
+      
+      document.getElementById('modalTitle').textContent = mp.name;
+      document.getElementById('modalSubtitle').textContent = `${divisionName}, ${division.state} · ${mp.party}`;
+      
+      const modalBody = document.getElementById('modalBody');
+      modalBody.innerHTML = `
+        <div class="mp-info-grid">
+          <div class="mp-info-item">
+            <div class="mp-info-label">Division</div>
+            <div class="mp-info-value">${divisionName}</div>
+          </div>
+          <div class="mp-info-item">
+            <div class="mp-info-label">State</div>
+            <div class="mp-info-value">${division.state}</div>
+          </div>
+          <div class="mp-info-item">
+            <div class="mp-info-label">Party</div>
+            <div class="mp-info-value"><span class="party-badge ${getPartyClass(mp.party)}">${mp.party}</span></div>
+          </div>
+          <div class="mp-info-item">
+            <div class="mp-info-label">In Office Since</div>
+            <div class="mp-info-value">${mp.year_elected}</div>
+          </div>
+          <div class="mp-info-item">
+            <div class="mp-info-label">Data Period</div>
+            <div class="mp-info-value">${division.data_period.start_year}-${division.data_period.end_year}</div>
+          </div>
+        </div>
+
+        ${seatAlignment ? `
+          <div style="margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-lg); border-left: 3px solid ${seatColor};">
+            <div style="font-size: var(--text-xs); font-weight: var(--font-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--color-text-muted); margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-1);">
+              <span>Seat Voting Alignment (average since ${currentLevel === 'federal' ? '2013' : '2010'})</span>
+              <button id="${seatInfoButtonId}" style="background: none; border: none; padding: 2px; cursor: help; display: inline-flex; align-items: center;" aria-label="Explain alignment score" title="Click for explanation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--color-text-muted);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <div style="flex: 1; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+                <div style="width: ${seatAlignment.score}%; height: 100%; background: ${seatColor}; border-radius: 4px;"></div>
+              </div>
+              <span style="font-weight: var(--font-bold); font-size: var(--text-lg); color: ${seatColor}; min-width: 50px;">${seatAlignment.score}%</span>
+            </div>
+            <div style="font-size: var(--text-sm); color: ${seatColor}; font-weight: var(--font-semibold);">${seatAlignment.label}</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1);">Weighted average of all MPs who held this seat since ${currentLevel === 'federal' ? '2013' : '2010'}</div>
+          </div>
+        ` : ''}
+
+        <div style="margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-lg);">
+          <div style="font-size: var(--text-xs); font-weight: var(--font-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--color-text-muted); margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-1);">
+            <span>Current MP Alignment</span>
+            <button id="${mpInfoButtonId}" style="background: none; border: none; padding: 2px; cursor: help; display: inline-flex; align-items: center;" aria-label="Explain alignment score" title="Click for explanation">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--color-text-muted);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+            <div style="flex: 1; height: 10px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${mp.alignment_score}%; height: 100%; background: ${mpColor}; border-radius: 4px;"></div>
+            </div>
+            <span style="font-weight: var(--font-bold); font-size: var(--text-lg); color: ${mpColor}; min-width: 50px;">${mp.alignment_score}%</span>
+          </div>
+          <div style="font-size: var(--text-sm); color: ${mpColor}; font-weight: var(--font-semibold);">${mp.alignment_label}</div>
+          <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1);">Current MP's personal voting record on tracked LGBTIQ+ legislation</div>
+        </div>
+
+        <!-- Info Modal -->
+        <div id="${infoModalId}" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10001; align-items: center; justify-content: center; padding: 20px;">
+          <div style="background: var(--color-bg-alt); border-radius: 12px; padding: 20px; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 600; color: var(--color-text); margin: 0;">LGBTIQ+ Voting Alignment Explained</h3>
+              <button onclick="document.getElementById('${infoModalId}').style.display='none'" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-text-muted); padding: 0; width: 24px; height: 24px; line-height: 1;">×</button>
+            </div>
+            <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+              <p style="margin-bottom: 12px;"><strong>Two Different Metrics:</strong></p>
+              <p style="margin-bottom: 8px;"><strong>1. Seat Alignment (${seatAlignment ? seatAlignment.score + '%' : 'N/A'}):</strong> Weighted average of ALL MPs who have held this seat since 2013. Shows the constituency's historical support for LGBTIQ+ rights.</p>
+              <p style="margin-bottom: 12px;"><strong>2. Current MP Alignment (${mp.alignment_score}%):</strong> Only the CURRENT MP's personal voting record on tracked LGBTIQ+ legislation.</p>
+              <p style="margin-bottom: 12px;"><strong>Bills Tracked:</strong></p>
+              <ul style="margin-left: 20px; margin-bottom: 12px;">
+                ${currentLevel === 'federal' ? `
+                <li>Sex Discrimination Act 2013</li>
+                <li>Marriage Equality 2017</li>
+                <li>Religious Discrimination Bill 2021</li>
+                <li>Sex Discrimination Amendments 2022</li>
+                ` : `
+                <li>State/territory specific LGBTIQ+ legislation (2010-2025)</li>
+                <li>Conversion practices bans</li>
+                <li>Gender recognition reforms</li>
+                <li>Anti-discrimination amendments</li>
+                <li>Historical conviction expungement</li>
+                `}
+              </ul>
+              <p style="margin-bottom: 8px;"><strong>Score Ranges:</strong></p>
+              <ul style="margin-left: 20px; margin-bottom: 12px;">
+                <li>85-100%: Strong Supporter</li>
+                <li>70-84%: Supporter</li>
+                <li>50-69%: Mixed</li>
+                <li>30-49%: Opponent</li>
+                <li>0-29%: Strong Opponent</li>
+              </ul>
+              <p style="font-size: 11px; color: var(--color-text-muted); font-style: italic; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--color-border-light);">
+                Calculation: (Pro-LGBTIQ+ votes / Total tracked votes) × 100. Seat alignment weighted by years in office.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="voting-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          Voting Record
+        </h3>
+        <div class="voting-record-list">
+          ${division.voting_history.map(vote => {
+            const voteClass = vote.vote === 'Yes' || vote.vote === 'Opposed' ? 'vote-yes' :
+                             vote.vote === 'No' || vote.vote === 'Supported' ? 'vote-no' :
+                             vote.vote === 'Abstained' ? 'vote-abstained' : 'vote-na';
+            return `
+              <div class="voting-record-item">
+                <div class="voting-record-header">
+                  <div>
+                    <div class="voting-record-bill">${vote.short_name}</div>
+                    <div class="voting-record-year">${vote.year}</div>
+                  </div>
+                  <span class="voting-record-vote ${voteClass}">${vote.vote_display}</span>
+                </div>
+                <div class="voting-record-outcome">Outcome: ${vote.bill_outcome}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        ${division.previous_mps.length > 0 ? `
+          <h3 class="voting-section-title" style="margin-top: var(--space-6);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Previous MP
+          </h3>
+          ${division.previous_mps.map(prev => `
+            <div class="voting-record-item">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div class="voting-record-bill">${prev.name}</div>
+                  <div class="voting-record-year">${prev.party} · ${prev.years_held}</div>
+                </div>
+                <span class="alignment-badge ${getAlignmentClass(prev.alignment_label)}">
+                  <span class="alignment-dot" style="background: ${prev.alignment_color}"></span>
+                  ${prev.alignment_score}%
+                </span>
+              </div>
+            </div>
+          `).join('')}
+        ` : ''}
+
+        <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border-light);">
+          <a href="index.html?division=${encodeURIComponent(divisionName)}" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            View on Map
+          </a>
+          <a href="https://www.aph.gov.au/Senators_and_Members" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-left: var(--space-2);">
+            Parliament Profile
+          </a>
+        </div>
+      `;
+
+      // Attach event listeners to info buttons after modal content is created
+      setTimeout(() => {
+        const seatInfoBtn = document.getElementById(seatInfoButtonId);
+        const mpInfoBtn = document.getElementById(mpInfoButtonId);
+        const infoModal = document.getElementById(infoModalId);
+        
+        // Function to open info modal
+        const openInfoModal = (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          if (infoModal) {
+            infoModal.style.display = 'flex';
+          }
+        };
+        
+        // Attach to seat alignment button
+        if (seatInfoBtn) {
+          seatInfoBtn.addEventListener('click', openInfoModal);
+        }
+        
+        // Attach to current MP alignment button
+        if (mpInfoBtn) {
+          mpInfoBtn.addEventListener('click', openInfoModal);
+        }
+        
+        // Close modal on background click
+        if (infoModal) {
+          infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) {
+              infoModal.style.display = 'none';
+            }
+          });
+          
+          // Close modal on Escape key
+          const escapeHandler = (e) => {
+            if (e.key === 'Escape' && infoModal.style.display === 'flex') {
+              infoModal.style.display = 'none';
+            }
+          };
+          document.addEventListener('keydown', escapeHandler);
+        }
+      }, 50);
+
+      mpModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal
+    function closeMPModal() {
+      mpModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Export CSV
+    function exportCSV() {
+      const keyBillLabel = currentLevel === 'federal' ? 'Marriage Eq 2017' : 'Key Bill';
+      const headers = ['Level', 'Division', 'State', 'MP Name', 'Party', 'Year Elected', 'Alignment Score', 'Alignment Label', keyBillLabel];
+      const rows = filteredData.map(d => {
+        let keyVote = null;
+        if (currentLevel === 'federal') {
+          keyVote = d.voting_history.find(v => v.bill_id === 'marriage_equality_2017');
+        } else {
+          keyVote = d.voting_history.find(v => v.bill_id && v.bill_id.includes('conversion')) || 
+                   d.voting_history.find(v => v.bill_id && v.bill_id.includes('gender')) ||
+                   d.voting_history[0];
+        }
+        const voteDisplay = keyVote ? (keyVote.vote_display || keyVote.vote || 'N/A') : 'N/A';
+        return [
+          currentLevel === 'federal' ? 'Federal' : 'State/Territory',
+          d.division_name,
+          d.state,
+          d.current_mp.name,
+          d.current_mp.party,
+          d.current_mp.year_elected,
+          d.current_mp.alignment_score,
+          d.current_mp.alignment_label,
+          voteDisplay
+        ];
+      });
+
+      const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `mp-lgbtiq-voting-records-${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Handle Level Filter Change
+    levelFilter.addEventListener('change', async (e) => {
+      currentLevel = e.target.value;
+      
+      // Update UI
+      if (currentLevel === 'federal') {
+        stateFilterGroup.style.display = 'block';
+        stateSelectGroup.style.display = 'none';
+        document.getElementById('pageSubtitle').textContent = 
+          'Search and explore how your federal representative votes on LGBTIQ+ issues. Data sourced from official parliamentary records (2017-2025).';
+      } else {
+        stateFilterGroup.style.display = 'none';
+        stateSelectGroup.style.display = 'block';
+        document.getElementById('pageSubtitle').textContent = 
+          'Search and explore how your state/territory representative votes on LGBTIQ+ issues. Data sourced from state parliamentary records (2010-2025).';
+      }
+      
+      // Reload data for new level
+      await loadDataForCurrentLevel();
+      applyFiltersAndSort();
+    });
+    
+    // Handle State Select Filter Change (for state MPs)
+    stateSelectFilter.addEventListener('change', (e) => {
+      currentStateFilter = e.target.value;
+      loadDataForCurrentLevel();
+      applyFiltersAndSort();
+    });
+
+    // Event Listeners
+    searchInput.addEventListener('input', debounce(applyFiltersAndSort, 200));
+    stateFilter.addEventListener('change', applyFiltersAndSort);
+    partyFilter.addEventListener('change', applyFiltersAndSort);
+    alignmentFilter.addEventListener('change', applyFiltersAndSort);
+    sortSelect.addEventListener('change', applyFiltersAndSort);
+
+    document.getElementById('applyFilters').addEventListener('click', applyFiltersAndSort);
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      searchInput.value = '';
+      if (currentLevel === 'federal') {
+        stateFilter.value = 'all';
+      } else {
+        stateSelectFilter.value = 'all';
+        currentStateFilter = 'all';
+      }
+      partyFilter.value = 'all';
+      alignmentFilter.value = 'all';
+      sortSelect.value = 'division';
+      if (currentLevel === 'state') {
+        loadDataForCurrentLevel();
+      }
+      applyFiltersAndSort();
+    });
+
+    modalClose.addEventListener('click', closeMPModal);
+    mpModal.addEventListener('click', (e) => {
+      if (e.target === mpModal) closeMPModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mpModal.classList.contains('active')) {
+        closeMPModal();
+      }
+    });
+
+    document.getElementById('exportCSV').addEventListener('click', exportCSV);
+    document.getElementById('exportPDF').addEventListener('click', () => {
+      alert('PDF export coming soon! For now, use Print (Ctrl+P) to save as PDF.');
+    });
+
+    // NGO Toolkit buttons
+    document.getElementById('showPriorityTargets').addEventListener('click', () => {
+      alignmentFilter.value = 'Opponent';
+      applyFiltersAndSort();
+      alert('Showing MPs with "Opponent" alignment. Cross-reference with incident data on the map for advocacy targets.');
+    });
+
+    document.getElementById('generateReport').addEventListener('click', () => {
+      const division = prompt('Enter division name to generate report:');
+      if (division) {
+        const found = mpData.divisions.find(d => d.division_name.toLowerCase() === division.toLowerCase());
+        if (found) {
+          openMPModal(found.division_name);
+        } else {
+          alert('Division not found. Please check the spelling.');
+        }
+      }
+    });
+
+    document.getElementById('compareParties').addEventListener('click', () => {
+      document.querySelector('.party-summary-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('active');
+    });
+
+    // Utility: Debounce
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Handle URL parameters for deep linking
+    function handleURLParams() {
+      const params = new URLSearchParams(window.location.search);
+      const searchParam = params.get('search') || params.get('division');
+      
+      if (searchParam) {
+        searchInput.value = searchParam;
+        
+        // Wait for data to load then apply search and open modal if exact match
+        const checkData = setInterval(() => {
+          if (mpData && mpData.divisions) {
+            clearInterval(checkData);
+            applyFiltersAndSort();
+            
+            // If exact division match, open the modal
+            const exactMatch = mpData.divisions.find(d => 
+              d.division_name.toLowerCase() === searchParam.toLowerCase()
+            );
+            if (exactMatch) {
+              setTimeout(() => openMPModal(exactMatch.division_name), 300);
+            }
+          }
+        }, 100);
+      }
+    }
+
+    // Initialize
+    loadMPData();
+    
+    // Handle URL params after page loads
+    if (document.readyState === 'complete') {
+      handleURLParams();
+    } else {
+      window.addEventListener('load', handleURLParams);
+    }
+  </script>
+</body>
+</html>
+

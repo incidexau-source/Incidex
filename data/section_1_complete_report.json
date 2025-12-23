@@ -1,0 +1,204 @@
+{
+  "execution_info": {
+    "timestamp": "2025-12-21T20:48:47.071848+00:00",
+    "section_1_1": "Completed",
+    "section_1_2": "Completed"
+  },
+  "section_1_1_results": {
+    "execution_info": {
+      "start_time": "2025-12-21T20:37:14.284281+00:00",
+      "end_time": "2025-12-21T20:48:47.012278+00:00",
+      "duration_seconds": 692.727997,
+      "date_range": {
+        "start": "2025-11-01T00:00:00+00:00",
+        "end": "2025-12-22T23:59:59+00:00",
+        "days": 52
+      }
+    },
+    "summary": {
+      "total_incidents_scraped": 0,
+      "unique_incidents_after_dedup": 0,
+      "added_to_map_high_confidence": 0,
+      "pending_human_review_medium_confidence": 0,
+      "rejected_archived_low_confidence": 0,
+      "geocoding_failures": 0,
+      "geocoding_failure_rate_percent": 0,
+      "medium_confidence_rate_percent": 0
+    },
+    "incidents_by_state": {},
+    "incidents_by_category": {},
+    "statistics": {
+      "feeds_processed": 26,
+      "articles_fetched": 133,
+      "articles_processed": 133,
+      "incidents_extracted": 0,
+      "high_confidence": 0,
+      "medium_confidence": 0,
+      "low_confidence": 0,
+      "geocoded": 0,
+      "geocoding_failures": 0,
+      "duplicates_found": 0,
+      "unique_new": 0,
+      "added_to_map": 0,
+      "pending_review": 0,
+      "rejected": 0,
+      "errors": 60
+    },
+    "alerts": {
+      "geocoding_failure_rate_high": false,
+      "medium_confidence_rate_high": false,
+      "scraper_failed": true
+    },
+    "review_queue_info": {
+      "pending_count": 0,
+      "review_queue_file": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\data\\review_queue_nov_dec_2025.csv",
+      "email_alert_required": false
+    }
+  },
+  "section_1_2_results": {
+    "verification_timestamp": "2025-12-21T20:48:47.026010+00:00",
+    "overall_status": "⚠️ Partial (some components offline)",
+    "components": {
+      "scraper": {
+        "status": "✅",
+        "modules": {
+          "pandas": {
+            "status": "✅",
+            "installed": true
+          },
+          "requests": {
+            "status": "✅",
+            "installed": true
+          },
+          "bs4": {
+            "status": "✅",
+            "installed": true
+          },
+          "openai": {
+            "status": "✅",
+            "installed": true
+          },
+          "feedparser": {
+            "status": "✅",
+            "installed": true
+          },
+          "geopy": {
+            "status": "✅",
+            "installed": true
+          },
+          "scripts/rss_monitor.py": {
+            "status": "✅",
+            "exists": true
+          },
+          "monitor.py": {
+            "status": "✅",
+            "exists": true
+          },
+          "article_fetcher.py": {
+            "status": "✅",
+            "exists": true
+          },
+          "incident_extractor.py": {
+            "status": "✅",
+            "exists": true
+          },
+          "geocoder.py": {
+            "status": "✅",
+            "exists": true
+          },
+          "deduplicator.py": {
+            "status": "✅",
+            "exists": true
+          }
+        },
+        "missing_modules": []
+      },
+      "openai": {
+        "status": "✅",
+        "api_key_present": true,
+        "configured_in_workflow": true,
+        "note": "Cannot verify billing/credits without API call"
+      },
+      "data_pipeline": {
+        "status": "✅",
+        "csv_output_exists": true,
+        "map_csv_exists": true,
+        "csv_has_recent_timestamp": true,
+        "csv_format_valid": true,
+        "csv_last_modified": "2025-12-21T18:55:52.533141+00:00",
+        "csv_days_old": 0,
+        "csv_row_count": 0
+      },
+      "map_sync": {
+        "status": "⚠️",
+        "map_csv_exists": true,
+        "map_csv_recent": false,
+        "map_csv_last_modified": "2025-12-06T04:12:23.222608+00:00",
+        "map_csv_days_old": 15
+      },
+      "review_alerts": {
+        "status": "✅",
+        "alert_script_exists": true,
+        "review_queue_exists": false,
+        "alert_config_exists": false
+      }
+    },
+    "workflows": {
+      "files": {
+        "daily_rss_monitor.yml": {
+          "exists": true,
+          "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\daily_rss_monitor.yml",
+          "status": "✅",
+          "valid_yaml": true
+        },
+        "rss_monitor.yml": {
+          "exists": true,
+          "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\rss_monitor.yml",
+          "status": "✅",
+          "valid_yaml": true
+        }
+      },
+      "configuration": {
+        "daily_rss_monitor.yml": {
+          "has_schedule": true,
+          "has_manual_trigger": true,
+          "has_openai_key": true,
+          "status": "✅"
+        },
+        "rss_monitor.yml": {
+          "has_schedule": true,
+          "has_manual_trigger": true,
+          "has_openai_key": true,
+          "status": "✅"
+        }
+      },
+      "recent_runs": {
+        "status": "skipped",
+        "note": "GitHub token and repository not configured"
+      }
+    },
+    "recommendations": [
+      {
+        "priority": "P1",
+        "issue": "Map CSV not updated recently",
+        "fix": "Check if scraper is running and committing changes",
+        "time_estimate": "30 minutes"
+      }
+    ]
+  },
+  "summary": {
+    "overall_status": "⚠️ Partial (some components offline)",
+    "incidents_scraped": 0,
+    "added_to_map": 0,
+    "pending_review": 0,
+    "automation_status": "⚠️ Partial (some components offline)"
+  },
+  "recommendations": [
+    {
+      "priority": "P1",
+      "issue": "Map CSV not updated recently",
+      "fix": "Check if scraper is running and committing changes",
+      "time_estimate": "30 minutes"
+    }
+  ]
+}

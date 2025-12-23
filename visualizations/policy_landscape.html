@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive LGBTIQ+ policy landscape map of Australia showing state and federal protections, legislation, and parliamentary activity.">
+  <title>LGBTIQ+ Policy Landscape | Incidex Australia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incidex.au/policy_landscape.html">
+  <meta property="og:title" content="LGBTIQ+ Policy Landscape | Incidex Australia">
+  <meta property="og:description" content="Interactive LGBTIQ+ policy landscape map of Australia showing state and federal protections, legislation, and parliamentary activity.">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://incidex.au/policy_landscape.html">
+  <meta property="twitter:title" content="LGBTIQ+ Policy Landscape | Incidex Australia">
+  <meta property="twitter:description" content="Interactive LGBTIQ+ policy landscape map of Australia showing state and federal protections, legislation, and parliamentary activity.">
+  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page-specific styles */
+    :root {
+      --policy-strong: #2d9d6f;
+      --policy-moderate: #e8985e;
+      --policy-weak: #d9534f;
+      --policy-pending: #8a8a8a;
+    }
+
+    .page-layout {
+      display: flex;
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Main content area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Disclaimers Banner */
+    .disclaimers-banner {
+      background: linear-gradient(135deg, rgba(26, 95, 122, 0.08) 0%, rgba(224, 96, 85, 0.05) 100%);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .disclaimers-content {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+    }
+
+    .disclaimers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .disclaimer-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .disclaimer-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-primary);
+      margin-top: 2px;
+    }
+
+    /* View Tabs */
+    .view-tabs {
+      display: flex;
+      gap: var(--space-1);
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .view-tab {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-muted);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .view-tab:hover:not(.active) {
+      color: var(--color-text);
+      background: var(--color-bg);
+    }
+
+    .view-tab.active {
+      color: var(--color-primary);
+      background: var(--color-primary-50);
+    }
+
+    .view-tab svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Map View - Flexbox layout for map + panel */
+    .map-view {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-container {
+      flex: 1;
+      position: relative;
+      transition: flex var(--transition-slow) ease;
+      min-width: 0;
+    }
+
+    .map-view.panel-open .map-container {
+      flex: 0 0 60%;
+    }
+
+    #policyMap {
+      width: 100%;
+      height: 100%;
+      background: var(--color-bg);
+    }
+
+    /* Map Legend */
+    .policy-legend {
+      position: absolute;
+      bottom: var(--space-6);
+      left: var(--space-6);
+      z-index: 100;
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-lg);
+      min-width: 220px;
+      transition: opacity var(--transition-fast);
+    }
+
+    .map-view.panel-open .policy-legend {
+      opacity: 0.7;
+    }
+
+    .policy-legend h4 {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .legend-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .legend-link {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .legend-link a {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+    }
+
+    /* Panel Overlay (for click-outside-to-close on mobile) */
+    .panel-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 199;
+      opacity: 0;
+      transition: opacity var(--transition-slow) ease;
+    }
+
+    .panel-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Jurisdiction Detail Panel - Smooth slide-in from right */
+    .jurisdiction-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      min-width: 380px;
+      max-width: 500px;
+      height: 100%;
+      background: var(--color-bg-alt);
+      border-left: 1px solid var(--color-border);
+      box-shadow: -8px 0 30px rgba(0, 0, 0, 0.12);
+      z-index: 200;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .jurisdiction-panel.open {
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      position: sticky;
+      top: 0;
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: var(--space-5);
+      z-index: 1;
+    }
+
+    .panel-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+      gap: var(--space-3);
+    }
+
+    .panel-back-btn {
+      display: none;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+    }
+
+    .panel-back-btn:hover {
+      background: var(--color-border-light);
+      color: var(--color-text);
+    }
+
+    .panel-back-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .panel-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .panel-close {
+      padding: var(--space-2);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .panel-close:hover {
+      background: var(--color-error-light);
+      border-color: var(--color-error);
+      color: var(--color-error);
+    }
+
+    .panel-close:focus {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .policy-score {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      border-radius: var(--radius-full);
+    }
+
+    .policy-score.strong {
+      background: rgba(45, 157, 111, 0.15);
+      color: var(--policy-strong);
+    }
+
+    .policy-score.moderate {
+      background: rgba(232, 152, 94, 0.15);
+      color: var(--policy-moderate);
+    }
+
+    .policy-score.weak {
+      background: rgba(217, 83, 79, 0.15);
+      color: var(--policy-weak);
+    }
+
+    .panel-body {
+      flex: 1;
+      padding: var(--space-5);
+    }
+
+    /* Policy Section */
+    .policy-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .policy-section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+    }
+
+    .policy-section-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+
+    .policy-section-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--color-primary);
+    }
+
+    .policy-section-toggle {
+      margin-left: auto;
+      width: 18px;
+      height: 18px;
+      color: var(--color-text-muted);
+      transition: transform var(--transition-fast);
+    }
+
+    .policy-section.collapsed .policy-section-toggle {
+      transform: rotate(-90deg);
+    }
+
+    .policy-section-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .policy-section.collapsed .policy-section-content {
+      display: none;
+    }
+
+    /* Policy Item */
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border-left: 3px solid transparent;
+    }
+
+    .policy-item.present {
+      border-left-color: var(--policy-strong);
+    }
+
+    .policy-item.absent {
+      border-left-color: var(--policy-weak);
+    }
+
+    .policy-item.pending {
+      border-left-color: var(--policy-moderate);
+    }
+
+    .policy-item.limited {
+      border-left-color: var(--policy-moderate);
+    }
+
+    .policy-status-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .policy-status-icon.present {
+      color: var(--policy-strong);
+    }
+
+    .policy-status-icon.absent {
+      color: var(--policy-weak);
+    }
+
+    .policy-status-icon.pending {
+      color: var(--policy-moderate);
+    }
+
+    .policy-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .policy-item-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .policy-item-detail {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .policy-item-year {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: var(--color-bg-alt);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-2);
+      display: inline-block;
+    }
+
+    .policy-item-source {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+    }
+
+    .policy-item-source a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .policy-item-source a:hover {
+      text-decoration: underline;
+    }
+
+    /* Parliament Activity View */
+    .parliament-view {
+      display: none;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .parliament-view.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .parliament-header {
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .parliament-filters {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-top: var(--space-4);
+    }
+
+    .parliament-filters .form-select {
+      min-width: 150px;
+    }
+
+    .parliament-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-6);
+    }
+
+    .parliament-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    /* Bill Card */
+    .bill-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: all var(--transition-fast);
+    }
+
+    .bill-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-100);
+    }
+
+    .bill-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    .bill-jurisdiction {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+
+    .bill-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      line-height: var(--leading-tight);
+      margin-top: var(--space-1);
+    }
+
+    .bill-status {
+      flex-shrink: 0;
+    }
+
+    .bill-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .bill-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .bill-meta-item svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .bill-summary {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-3);
+    }
+
+    .bill-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin-bottom: var(--space-3);
+    }
+
+    .bill-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .bill-source {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* State/Territory Comparison View */
+    .comparison-view {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .comparison-view.active {
+      display: block;
+    }
+
+    .comparison-content {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .comparison-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .comparison-header h1 {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .comparison-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+    }
+
+    .comparison-section {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .section-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid;
+    }
+
+    .timeline-item.passed { border-left-color: #10b981; }
+    .timeline-item.pending { border-left-color: #f59e0b; }
+    .timeline-item.none { border-left-color: #ef4444; }
+
+    .timeline-date {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      min-width: 100px;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-state {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .timeline-description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+    }
+
+    .status-passed { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .status-pending { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .status-none { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .state-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .state-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+
+    .state-name {
+      font-weight: var(--font-semibold);
+      font-size: var(--text-lg);
+    }
+
+    .state-stats {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--text-sm);
+    }
+
+    .stat-label {
+      color: var(--color-text-muted);
+    }
+
+    .stat-value {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+    }
+
+    .reform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .reform-item {
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+
+    .reform-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .reform-status {
+      font-weight: var(--font-semibold);
+      font-size: var(--text-sm);
+    }
+
+    .legislation-table-wrapper {
+      overflow-x: auto;
+      margin-top: var(--space-4);
+    }
+
+    .legislation-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .legislation-table th {
+      background: var(--color-bg);
+      padding: var(--space-3);
+      text-align: left;
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      border-bottom: 2px solid var(--color-border);
+      position: sticky;
+      top: 0;
+    }
+
+    .legislation-table td {
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .legislation-table tr:hover {
+      background: var(--color-bg);
+    }
+
+    .legislation-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+    }
+
+    .legislation-status.present {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    .legislation-status.absent {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+    }
+
+    .legislation-status.pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+
+    .legislation-status.limited {
+      background: rgba(232, 152, 94, 0.15);
+      color: #d97706;
+    }
+
+    .legislation-status.easy {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    .legislation-status.moderate {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+
+    .legislation-status.hard {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+    }
+
+    .key-differences-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .difference-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .difference-card h3 {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .difference-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-2);
+    }
+
+    .difference-card a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-size: var(--text-xs);
+    }
+
+    .difference-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Federal Overview View */
+    .federal-view {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .federal-view.active {
+      display: block;
+    }
+
+    .federal-content {
+      max-width: var(--container-lg);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .federal-hero {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .federal-hero h1 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .federal-hero p {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .federal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+
+    /* Methodology Modal */
+    .methodology-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .methodology-modal.active {
+      display: flex;
+    }
+
+    .methodology-content {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      margin: var(--space-4);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .methodology-header {
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .methodology-body {
+      padding: var(--space-6);
+    }
+
+    .methodology-body h3 {
+      font-size: var(--text-lg);
+      margin: var(--space-5) 0 var(--space-3);
+    }
+
+    .methodology-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .methodology-body p,
+    .methodology-body li {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .methodology-body ul {
+      padding-left: var(--space-5);
+      margin: var(--space-3) 0;
+    }
+
+    .methodology-body li {
+      margin-bottom: var(--space-2);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .map-view.panel-open .map-container {
+        flex: 1;
+      }
+
+      .jurisdiction-panel {
+        width: 50%;
+        min-width: 350px;
+      }
+
+      .disclaimers-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Full-screen panel on mobile */
+      .jurisdiction-panel {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        position: fixed;
+        top: var(--header-height);
+        right: 0;
+        height: calc(100vh - var(--header-height));
+        transform: translateX(100%);
+        border-left: none;
+        box-shadow: none;
+      }
+
+      .jurisdiction-panel.open {
+        transform: translateX(0);
+      }
+
+      .map-view.panel-open .map-container {
+        flex: 1;
+      }
+
+      .panel-overlay.active {
+        display: none; /* Don't need overlay when panel is full-screen */
+      }
+
+      /* Add a back button for mobile */
+      .panel-back-btn {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .view-tabs {
+        flex-wrap: wrap;
+        padding: var(--space-3);
+      }
+
+      .view-tab {
+        flex: 1;
+        justify-content: center;
+        min-width: 100px;
+      }
+
+      .policy-legend {
+        left: var(--space-3);
+        right: var(--space-3);
+        bottom: var(--space-3);
+        min-width: auto;
+      }
+
+      .bill-header {
+        flex-direction: column;
+      }
+
+      .bill-status {
+        align-self: flex-start;
+      }
+
+      .comparison-content {
+        padding: var(--space-4);
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .key-differences-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .legislation-table-wrapper {
+        overflow-x: scroll;
+      }
+
+      .legislation-table {
+        font-size: var(--text-xs);
+      }
+
+      .legislation-table th,
+      .legislation-table td {
+        padding: var(--space-2);
+      }
+    }
+
+    /* State marker styles */
+    .state-marker-wrapper {
+      background: transparent !important;
+      border: none !important;
+    }
+
+    .state-marker {
+      cursor: pointer;
+    }
+
+    .state-marker:hover {
+      transform: scale(1.1);
+    }
+
+    /* Leaflet popup overrides - hide default popup since we use panel */
+    .leaflet-popup {
+      display: none;
+    }
+
+    .score-badge.strong {
+      background: rgba(45, 157, 111, 0.15);
+      color: var(--policy-strong);
+    }
+
+    .score-badge.moderate {
+      background: rgba(232, 152, 94, 0.15);
+      color: var(--policy-moderate);
+    }
+
+    .score-badge.weak {
+      background: rgba(217, 83, 79, 0.15);
+      color: var(--policy-weak);
+    }
+
+    /* Instruction tooltip that shows briefly */
+    .map-instruction {
+      position: absolute;
+      top: var(--space-4);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      animation: fadeInOut 4s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link active">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page-layout" id="main-content">
+    <div class="main-content">
+      <!-- Disclaimers Banner -->
+      <div class="disclaimers-banner">
+        <div class="disclaimers-content">
+          <div class="disclaimers-grid">
+            <div class="disclaimer-item">
+              <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span><strong>Reporting Bias:</strong> Policy strength does not determine incident rates. Strong policies may increase reporting; weak policies may decrease visibility of actual incidents.</span>
+            </div>
+            <div class="disclaimer-item">
+              <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span><strong>Official Sources:</strong> All policy information sourced from official government records (legislation.gov.au, parliament websites) and attributed accordingly.</span>
+            </div>
+            <div class="disclaimer-item">
+              <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <span><strong>Not Causal:</strong> This is informational context, not causal analysis. Researchers should not infer policy → incident causation without proper methodology.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Tabs -->
+      <div class="view-tabs">
+        <button class="view-tab active" data-view="map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+          State/Territory Map
+        </button>
+        <button class="view-tab" data-view="comparison">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+          State/Territory Comparison
+        </button>
+        <button class="view-tab" data-view="federal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          Federal Overview
+        </button>
+        <button class="view-tab" data-view="parliament">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          Parliament Activity
+        </button>
+      </div>
+
+      <!-- Map View -->
+      <div class="map-view active" id="mapView">
+        <!-- Map Container -->
+        <div class="map-container">
+          <div id="policyMap" role="application" aria-label="Interactive policy landscape map"></div>
+          
+          <!-- Instruction tooltip -->
+          <div class="map-instruction" id="mapInstruction">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display: inline; vertical-align: middle; margin-right: 6px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Click any state to view policy details
+          </div>
+          
+          <!-- Policy Legend -->
+          <div class="policy-legend">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Policy Strength
+            </h4>
+            <div class="legend-items">
+              <div class="legend-row">
+                <div class="legend-color" style="background: var(--policy-strong);"></div>
+                <span>Strong Protections</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-color" style="background: var(--policy-moderate);"></div>
+                <span>Moderate Protections</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-color" style="background: var(--policy-weak);"></div>
+                <span>Weak/Limited Protections</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-color" style="background: var(--policy-pending);"></div>
+                <span>Data Pending</span>
+              </div>
+            </div>
+            <div class="legend-link">
+              <a href="#" onclick="openMethodology(); return false;">How We Score Policies →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Overlay (for click-outside-to-close) -->
+        <div class="panel-overlay" id="panelOverlay"></div>
+
+        <!-- Jurisdiction Detail Panel -->
+        <div class="jurisdiction-panel" id="jurisdictionPanel">
+          <div class="panel-header">
+            <div class="panel-header-top">
+              <button class="panel-back-btn" id="panelBackBtn" onclick="closePanel()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Back
+              </button>
+              <h2 class="panel-title" id="panelTitle">Jurisdiction</h2>
+              <button class="panel-close" id="panelCloseBtn" aria-label="Close panel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            <div class="policy-score" id="policyScoreBadge">
+              <span id="policyScoreText">Strong Protections</span>
+            </div>
+          </div>
+          <div class="panel-body" id="panelBody">
+            <!-- Dynamic content loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Federal Overview View -->
+      <div class="federal-view" id="federalView">
+        <div class="federal-content">
+          <div class="federal-hero">
+            <h1>Federal/Commonwealth LGBTIQ+ Protections</h1>
+            <p>Overview of federal laws and protections affecting LGBTIQ+ Australians nationwide.</p>
+          </div>
+          
+          <div class="federal-grid" id="federalGrid">
+            <!-- Dynamic content loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- State/Territory Comparison View -->
+      <div class="comparison-view" id="comparisonView">
+        <div class="comparison-content">
+          <div class="comparison-header">
+            <h1>State & Territory Comparison</h1>
+            <p class="comparison-subtitle">
+              Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
+            </p>
+          </div>
+
+          <!-- Conversion Practices Ban Timeline -->
+          <section class="comparison-section" aria-labelledby="conversion-timeline-title">
+            <h2 id="conversion-timeline-title" class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Conversion Practices Ban Timeline
+            </h2>
+            <div class="timeline" id="conversionTimeline">
+              <!-- Populated by JavaScript -->
+            </div>
+          </section>
+
+          <!-- Gender Recognition Progress -->
+          <section class="comparison-section" aria-labelledby="gender-recognition-title">
+            <h2 id="gender-recognition-title" class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Gender Recognition Progressiveness
+            </h2>
+            <div class="comparison-grid" id="genderRecognitionGrid">
+              <!-- Populated by JavaScript -->
+            </div>
+          </section>
+
+          <!-- Comprehensive Legislation Comparison -->
+          <section class="comparison-section" aria-labelledby="legislation-title">
+            <h2 id="legislation-title" class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Comprehensive Legislation Comparison
+            </h2>
+            <div class="legislation-table-wrapper">
+              <table class="legislation-table" id="legislationTable">
+                <thead>
+                  <tr>
+                    <th>State/Territory</th>
+                    <th>Hate Crime Law</th>
+                    <th>Vilification Law</th>
+                    <th>Anti-Discrimination</th>
+                    <th>Gender Recognition</th>
+                    <th>Conversion Practices Ban</th>
+                    <th>Religious Exemptions</th>
+                  </tr>
+                </thead>
+                <tbody id="legislationTableBody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Key Differences -->
+          <section class="comparison-section" aria-labelledby="key-differences-title">
+            <h2 id="key-differences-title" class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Key Differences & Unique Features
+            </h2>
+            <div class="key-differences-grid" id="keyDifferencesGrid">
+              <!-- Populated by JavaScript -->
+            </div>
+          </section>
+
+          <!-- Reform Status Dashboard -->
+          <section class="comparison-section" aria-labelledby="reform-status-title">
+            <h2 id="reform-status-title" class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              Reform Status Dashboard
+            </h2>
+            <div class="reform-grid" id="reformStatusGrid">
+              <!-- Populated by JavaScript -->
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Parliament Activity View -->
+      <div class="parliament-view" id="parliamentView">
+        <div class="parliament-header">
+          <h2>Parliamentary Monitoring Dashboard</h2>
+          <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin-top: var(--space-2);">
+            Tracking bills and inquiries related to LGBTIQ+ issues across Australian parliaments.
+          </p>
+          <div class="parliament-filters">
+            <select class="form-select" id="jurisdictionFilter">
+              <option value="all">All Jurisdictions</option>
+              <option value="Federal">Federal</option>
+              <option value="NSW">New South Wales</option>
+              <option value="VIC">Victoria</option>
+              <option value="QLD">Queensland</option>
+              <option value="SA">South Australia</option>
+              <option value="WA">Western Australia</option>
+              <option value="TAS">Tasmania</option>
+              <option value="ACT">ACT</option>
+              <option value="NT">Northern Territory</option>
+            </select>
+            <select class="form-select" id="statusFilter">
+              <option value="all">All Statuses</option>
+              <option value="In Committee">In Committee</option>
+              <option value="First Reading">First Reading</option>
+              <option value="Second Reading">Second Reading</option>
+              <option value="Passed">Passed</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Lapsed">Lapsed</option>
+            </select>
+          </div>
+        </div>
+        <div class="parliament-content">
+          <div class="parliament-grid" id="parliamentGrid">
+            <!-- Dynamic content loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Methodology Modal -->
+  <div class="methodology-modal" id="methodologyModal">
+    <div class="methodology-content">
+      <div class="methodology-header">
+        <h2>How We Score Policies</h2>
+        <button class="panel-close" onclick="closeMethodology()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="methodology-body">
+        <h3>Scoring Methodology</h3>
+        <p>Policy strength is assessed across six key areas, with jurisdictions scored based on the presence, scope, and effectiveness of protections:</p>
+        
+        <ul>
+          <li><strong>Hate Crime Laws:</strong> Does the jurisdiction have specific laws criminalising hate crimes against LGBTIQ+ people?</li>
+          <li><strong>Vilification Laws:</strong> Are there civil/criminal prohibitions against public vilification on grounds of sexuality, gender identity, and intersex status?</li>
+          <li><strong>Gender Recognition:</strong> How accessible is the legal gender change process? (Easy = self-determination, Moderate = some evidence required, Hard = surgery required)</li>
+          <li><strong>Conversion Practices:</strong> Is there a comprehensive ban on conversion practices?</li>
+          <li><strong>Discrimination Protections:</strong> Are there explicit protections in employment, housing, and services?</li>
+          <li><strong>Religious Exemptions:</strong> How broad are exemptions allowing religious bodies to discriminate?</li>
+        </ul>
+
+        <h3>Scoring Categories</h3>
+        <ul>
+          <li><strong style="color: var(--policy-strong);">Strong (Green):</strong> 5-6 key protections present, limited religious exemptions, self-determination gender recognition</li>
+          <li><strong style="color: var(--policy-moderate);">Moderate (Yellow):</strong> 3-4 key protections present, some gaps or broad exemptions</li>
+          <li><strong style="color: var(--policy-weak);">Weak (Red):</strong> 0-2 key protections, significant gaps, restrictive processes</li>
+        </ul>
+
+        <h3>Data Sources</h3>
+        <p>All information is sourced from official government sources:</p>
+        <ul>
+          <li><a href="https://www.austlii.edu.au/" target="_blank" rel="noopener">AustLII</a> - Australian Legal Information Institute (public domain)</li>
+          <li><a href="https://www.legislation.gov.au/" target="_blank" rel="noopener">Federal Register of Legislation</a> (public domain)</li>
+          <li>State/Territory legislation databases (public domain)</li>
+          <li><a href="https://www.aph.gov.au/" target="_blank" rel="noopener">Parliament of Australia</a> (public domain)</li>
+          <li>State/Territory parliament websites (public domain)</li>
+        </ul>
+
+        <h3>Limitations</h3>
+        <p>This scoring provides a simplified overview and does not capture:</p>
+        <ul>
+          <li>Enforcement effectiveness</li>
+          <li>Judicial interpretation of laws</li>
+          <li>Social and cultural factors affecting safety</li>
+          <li>Local government policies</li>
+        </ul>
+        <p>For comprehensive analysis, consult official sources and legal experts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  
+  <script>
+    // Configuration
+    const POLICY_DATA_PATH = "/data/policy_landscape.csv";
+    const PARLIAMENT_DATA_PATH = "/data/parliament_activity.csv";
+    const DEFAULT_CENTER = [-25.2744, 133.7751];
+    const DEFAULT_ZOOM = 4;
+
+    // State coordinates for markers/polygons
+    const STATE_COORDS = {
+      'NSW': { lat: -32.0, lon: 146.5, name: 'New South Wales' },
+      'VIC': { lat: -37.0, lon: 144.5, name: 'Victoria' },
+      'QLD': { lat: -22.0, lon: 145.0, name: 'Queensland' },
+      'SA': { lat: -30.5, lon: 136.0, name: 'South Australia' },
+      'WA': { lat: -26.0, lon: 122.0, name: 'Western Australia' },
+      'TAS': { lat: -42.0, lon: 146.5, name: 'Tasmania' },
+      'NT': { lat: -19.5, lon: 133.5, name: 'Northern Territory' },
+      'ACT': { lat: -35.5, lon: 149.0, name: 'Australian Capital Territory' },
+      'Federal': { lat: -35.3, lon: 149.1, name: 'Federal (Canberra)' }
+    };
+
+    // Policy categories for display
+    const POLICY_CATEGORIES = {
+      'hate_crime_law': 'Hate Crime Law',
+      'vilification_law': 'Vilification Law',
+      'gender_recognition': 'Gender Recognition',
+      'conversion_practices_ban': 'Conversion Practices Ban',
+      'discrimination_protection_employment': 'Employment Protection',
+      'discrimination_protection_services': 'Services Protection',
+      'religious_exemptions': 'Religious Exemptions',
+      'marriage_equality': 'Marriage Equality',
+      'sex_discrimination_commissioner': 'Sex Discrimination Commissioner'
+    };
+
+    // State
+    let map;
+    let policyData = [];
+    let parliamentData = [];
+    let stateMarkers = {};
+    let currentView = 'map';
+    let panelOpen = false;
+    let currentJurisdiction = null;
+
+    // DOM Elements
+    const viewTabs = document.querySelectorAll('.view-tab');
+    const mapView = document.getElementById('mapView');
+    const comparisonView = document.getElementById('comparisonView');
+    const federalView = document.getElementById('federalView');
+    const parliamentView = document.getElementById('parliamentView');
+    const jurisdictionPanel = document.getElementById('jurisdictionPanel');
+    const panelOverlay = document.getElementById('panelOverlay');
+    const panelTitle = document.getElementById('panelTitle');
+    const panelBody = document.getElementById('panelBody');
+    const policyScoreBadge = document.getElementById('policyScoreBadge');
+    const policyScoreText = document.getElementById('policyScoreText');
+    const panelCloseBtn = document.getElementById('panelCloseBtn');
+    const panelBackBtn = document.getElementById('panelBackBtn');
+
+    // Initialize map
+    function initializeMap() {
+      map = L.map('policyMap', {
+        zoomControl: true
+      }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+
+      // Light map tiles
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: 19
+      }).addTo(map);
+    }
+
+    // Calculate policy score for a jurisdiction
+    function calculatePolicyScore(jurisdiction) {
+      const policies = policyData.filter(p => p.jurisdiction === jurisdiction);
+      if (policies.length === 0) return { score: 'pending', label: 'Data Pending', color: '#8a8a8a' };
+
+      let score = 0;
+      let maxScore = 0;
+
+      policies.forEach(policy => {
+        if (policy.policy_category === 'religious_exemptions') {
+          // Lower is better for religious exemptions
+          if (policy.status === 'limited') score += 2;
+          else if (policy.status === 'absent') score += 3;
+          maxScore += 3;
+        } else if (policy.policy_category === 'gender_recognition') {
+          if (policy.status === 'easy') score += 3;
+          else if (policy.status === 'moderate') score += 2;
+          else if (policy.status === 'hard') score += 1;
+          maxScore += 3;
+        } else {
+          if (policy.status === 'present') score += 3;
+          else if (policy.status === 'pending') score += 1;
+          maxScore += 3;
+        }
+      });
+
+      const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
+
+      if (percentage >= 70) {
+        return { score: 'strong', label: 'Strong Protections', color: '#2d9d6f' };
+      } else if (percentage >= 40) {
+        return { score: 'moderate', label: 'Moderate Protections', color: '#e8985e' };
+      } else {
+        return { score: 'weak', label: 'Weak Protections', color: '#d9534f' };
+      }
+    }
+
+    // Create state markers on map
+    function createStateMarkers() {
+      Object.entries(STATE_COORDS).forEach(([code, coords]) => {
+        if (code === 'Federal') return; // Skip federal on map
+
+        const scoreInfo = calculatePolicyScore(code);
+        const isSmall = code === 'ACT' || code === 'TAS';
+        
+        // Create a custom div icon that combines circle and label
+        const markerSize = isSmall ? 36 : 56;
+        const fontSize = isSmall ? '10px' : '13px';
+        
+        const icon = L.divIcon({
+          className: 'state-marker-wrapper',
+          html: `
+            <div class="state-marker" style="
+              width: ${markerSize}px;
+              height: ${markerSize}px;
+              background: ${scoreInfo.color};
+              border: 3px solid #ffffff;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+            ">
+              <span style="
+                font-family: 'Outfit', sans-serif;
+                font-weight: 700;
+                font-size: ${fontSize};
+                color: white;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+                user-select: none;
+              ">${code}</span>
+            </div>
+          `,
+          iconSize: [markerSize, markerSize],
+          iconAnchor: [markerSize / 2, markerSize / 2]
+        });
+
+        const marker = L.marker([coords.lat, coords.lon], { 
+          icon: icon,
+          riseOnHover: true
+        }).addTo(map);
+        
+        // Direct click to open panel (no popup)
+        marker.on('click', (e) => {
+          L.DomEvent.stopPropagation(e);
+          e.originalEvent.preventDefault();
+          e.originalEvent.stopPropagation();
+          openJurisdictionPanel(code);
+        });
+
+        // Hover effects
+        marker.on('mouseover', function() {
+          const el = this.getElement();
+          if (el) {
+            const inner = el.querySelector('.state-marker');
+            if (inner) {
+              inner.style.transform = 'scale(1.1)';
+              inner.style.boxShadow = '0 6px 20px rgba(0,0,0,0.35)';
+            }
+          }
+        });
+
+        marker.on('mouseout', function() {
+          const el = this.getElement();
+          if (el) {
+            const inner = el.querySelector('.state-marker');
+            if (inner) {
+              inner.style.transform = 'scale(1)';
+              inner.style.boxShadow = '0 3px 12px rgba(0,0,0,0.25)';
+            }
+          }
+        });
+
+        stateMarkers[code] = marker;
+      });
+    }
+
+    // Open jurisdiction detail panel
+    function openJurisdictionPanel(jurisdiction) {
+      // If clicking the same jurisdiction while panel is open, just close it
+      if (panelOpen && currentJurisdiction === jurisdiction) {
+        closePanel();
+        return;
+      }
+
+      currentJurisdiction = jurisdiction;
+      const coords = STATE_COORDS[jurisdiction];
+      const scoreInfo = calculatePolicyScore(jurisdiction);
+      const policies = policyData.filter(p => p.jurisdiction === jurisdiction);
+
+      panelTitle.textContent = coords.name;
+      policyScoreBadge.className = `policy-score ${scoreInfo.score}`;
+      policyScoreText.textContent = scoreInfo.label;
+
+      // Group policies by category type
+      const protections = policies.filter(p => 
+        ['hate_crime_law', 'vilification_law', 'discrimination_protection_employment', 'discrimination_protection_services', 'marriage_equality', 'sex_discrimination_commissioner'].includes(p.policy_category)
+      );
+      
+      const recognition = policies.filter(p => 
+        ['gender_recognition', 'conversion_practices_ban'].includes(p.policy_category)
+      );
+      
+      const exemptions = policies.filter(p => 
+        ['religious_exemptions'].includes(p.policy_category)
+      );
+
+      let html = '';
+
+      // Current Protections Section
+      if (protections.length > 0) {
+        html += `
+          <div class="policy-section" id="protectionsSection">
+            <div class="policy-section-header" onclick="toggleSection('protectionsSection')">
+              <svg class="policy-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span class="policy-section-title">Current Protections</span>
+              <svg class="policy-section-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="policy-section-content">
+              ${protections.map(p => renderPolicyItem(p)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Gender Recognition & Conversion Practices Section
+      if (recognition.length > 0) {
+        html += `
+          <div class="policy-section" id="recognitionSection">
+            <div class="policy-section-header" onclick="toggleSection('recognitionSection')">
+              <svg class="policy-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+              <span class="policy-section-title">Identity Recognition</span>
+              <svg class="policy-section-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="policy-section-content">
+              ${recognition.map(p => renderPolicyItem(p)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Gaps & Exemptions Section
+      const gaps = policies.filter(p => p.status === 'absent');
+      if (gaps.length > 0 || exemptions.length > 0) {
+        html += `
+          <div class="policy-section" id="gapsSection">
+            <div class="policy-section-header" onclick="toggleSection('gapsSection')">
+              <svg class="policy-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <span class="policy-section-title">Gaps & Exemptions</span>
+              <svg class="policy-section-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="policy-section-content">
+              ${gaps.map(p => renderPolicyItem(p)).join('')}
+              ${exemptions.map(p => renderPolicyItem(p)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Pending Legislation Section
+      const pending = policies.filter(p => p.status === 'pending');
+      if (pending.length > 0) {
+        html += `
+          <div class="policy-section" id="pendingSection">
+            <div class="policy-section-header" onclick="toggleSection('pendingSection')">
+              <svg class="policy-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span class="policy-section-title">Pending / Proposed</span>
+              <svg class="policy-section-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="policy-section-content">
+              ${pending.map(p => renderPolicyItem(p)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Parliament activity for this jurisdiction
+      const jurisdictionBills = parliamentData.filter(b => b.jurisdiction === jurisdiction);
+      if (jurisdictionBills.length > 0) {
+        html += `
+          <div class="policy-section" id="parliamentSection">
+            <div class="policy-section-header" onclick="toggleSection('parliamentSection')">
+              <svg class="policy-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              <span class="policy-section-title">Recent Parliament Activity</span>
+              <svg class="policy-section-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="policy-section-content">
+              ${jurisdictionBills.slice(0, 3).map(b => `
+                <div class="policy-item pending">
+                  <svg class="policy-status-icon pending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                  <div class="policy-item-content">
+                    <div class="policy-item-title">${b.bill_title}</div>
+                    <div class="policy-item-detail">Status: ${b.status}</div>
+                    ${b.bill_url ? `
+                      <div class="policy-item-source">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        <a href="${b.bill_url}" target="_blank" rel="noopener">View on ${b.source_attribution}</a>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      panelBody.innerHTML = html;
+      
+      // Open panel with animation
+      if (!panelOpen) {
+        panelOpen = true;
+        mapView.classList.add('panel-open');
+        panelOverlay.classList.add('active');
+        jurisdictionPanel.classList.add('open');
+        
+        // Resize map after transition
+        setTimeout(() => {
+          if (map) map.invalidateSize();
+        }, 400);
+      } else {
+        // Panel already open, just update content (already done above)
+        jurisdictionPanel.classList.add('open');
+      }
+      
+      // Scroll panel to top
+      panelBody.scrollTop = 0;
+    }
+
+    // Render a single policy item
+    function renderPolicyItem(policy) {
+      const categoryLabel = POLICY_CATEGORIES[policy.policy_category] || policy.policy_category;
+      
+      let statusClass = 'pending';
+      let statusIcon = '';
+      
+      if (policy.status === 'present' || policy.status === 'easy') {
+        statusClass = 'present';
+        statusIcon = '<svg class="policy-status-icon present" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+      } else if (policy.status === 'absent' || policy.status === 'hard') {
+        statusClass = 'absent';
+        statusIcon = '<svg class="policy-status-icon absent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+      } else if (policy.status === 'pending' || policy.status === 'moderate' || policy.status === 'limited') {
+        statusClass = 'pending';
+        statusIcon = '<svg class="policy-status-icon pending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
+      }
+
+      return `
+        <div class="policy-item ${statusClass}">
+          ${statusIcon}
+          <div class="policy-item-content">
+            <div class="policy-item-title">${categoryLabel}</div>
+            <div class="policy-item-detail">${policy.details || 'No details available.'}</div>
+            ${policy.year_enacted ? `<span class="policy-item-year">Enacted: ${policy.year_enacted}</span>` : ''}
+            ${policy.source_url ? `
+              <div class="policy-item-source">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <a href="${policy.source_url}" target="_blank" rel="noopener">Source: ${policy.source_attribution}</a>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // Close jurisdiction panel with smooth animation
+    function closePanel() {
+      if (!panelOpen) return;
+      
+      panelOpen = false;
+      currentJurisdiction = null;
+      jurisdictionPanel.classList.remove('open');
+      panelOverlay.classList.remove('active');
+      mapView.classList.remove('panel-open');
+      
+      // Resize map after transition
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 400);
+    }
+
+    // Toggle policy section collapse
+    function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      section.classList.toggle('collapsed');
+    }
+
+    // Open methodology modal
+    function openMethodology() {
+      document.getElementById('methodologyModal').classList.add('active');
+    }
+
+    // Close methodology modal
+    function closeMethodology() {
+      document.getElementById('methodologyModal').classList.remove('active');
+    }
+
+    // Render Federal Overview
+    function renderFederalOverview() {
+      const federalPolicies = policyData.filter(p => p.jurisdiction === 'Federal');
+      const federalGrid = document.getElementById('federalGrid');
+      
+      if (federalPolicies.length === 0) {
+        federalGrid.innerHTML = '<p style="text-align: center; color: var(--color-text-muted);">Loading federal policy data...</p>';
+        return;
+      }
+
+      const scoreInfo = calculatePolicyScore('Federal');
+
+      let html = `
+        <div class="card card-primary">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Overall Federal Assessment</h3>
+              <p class="card-subtitle">Comprehensive LGBTIQ+ protections at the Commonwealth level</p>
+            </div>
+            <span class="badge ${scoreInfo.score === 'strong' ? 'badge-success' : scoreInfo.score === 'moderate' ? 'badge-warning' : 'badge-error'}">${scoreInfo.label}</span>
+          </div>
+          <div class="card-body">
+            <p>The Australian federal government has enacted significant LGBTIQ+ protections, particularly following the Criminal Code Amendment (Inciting Violence or Hatred) Act 2025 and the 2017 marriage equality reforms.</p>
+          </div>
+        </div>
+      `;
+
+      // Group by protection type
+      const categories = {
+        'Current Protections': federalPolicies.filter(p => p.status === 'present'),
+        'Pending Reforms': federalPolicies.filter(p => p.status === 'pending')
+      };
+
+      Object.entries(categories).forEach(([title, policies]) => {
+        if (policies.length === 0) return;
+
+        html += `<div class="card">
+          <h3 class="card-title">${title}</h3>
+          <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+            ${policies.map(p => renderPolicyItem(p)).join('')}
+          </div>
+        </div>`;
+      });
+
+      federalGrid.innerHTML = html;
+    }
+
+    // Render Parliament Activity
+    function renderParliamentActivity() {
+      const grid = document.getElementById('parliamentGrid');
+      const jurisdictionFilter = document.getElementById('jurisdictionFilter').value;
+      const statusFilter = document.getElementById('statusFilter').value;
+
+      let filteredBills = parliamentData;
+
+      if (jurisdictionFilter !== 'all') {
+        filteredBills = filteredBills.filter(b => b.jurisdiction === jurisdictionFilter);
+      }
+
+      if (statusFilter !== 'all') {
+        filteredBills = filteredBills.filter(b => b.status.includes(statusFilter));
+      }
+
+      if (filteredBills.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; color: var(--color-text-muted); padding: var(--space-8);">No bills found matching your filters.</p>';
+        return;
+      }
+
+      grid.innerHTML = filteredBills.map(bill => {
+        const statusClass = bill.status.includes('Passed') ? 'badge-success' : 
+                           bill.status.includes('Lapsed') ? 'badge-neutral' :
+                           bill.status.includes('Ongoing') ? 'badge-warning' : 'badge-primary';
+
+        return `
+          <div class="bill-card">
+            <div class="bill-header">
+              <div>
+                <span class="bill-jurisdiction">${bill.jurisdiction}</span>
+                <h3 class="bill-title">${bill.bill_title}</h3>
+              </div>
+              <span class="badge ${statusClass} bill-status">${bill.status}</span>
+            </div>
+            <div class="bill-meta">
+              ${bill.date_introduced ? `
+                <span class="bill-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  Introduced: ${bill.date_introduced}
+                </span>
+              ` : ''}
+              ${bill.sponsor ? `
+                <span class="bill-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  ${bill.sponsor}
+                </span>
+              ` : ''}
+            </div>
+            ${bill.summary ? `<p class="bill-summary">${bill.summary}</p>` : ''}
+            ${bill.keywords ? `
+              <div class="bill-keywords">
+                ${bill.keywords.split(';').map(k => `<span class="tag">${k.trim()}</span>`).join('')}
+              </div>
+            ` : ''}
+            <div class="bill-footer">
+              <span class="bill-source">Source: ${bill.source_attribution}</span>
+              <div style="display: flex; gap: var(--space-2);">
+                ${bill.bill_url ? `<a href="${bill.bill_url}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">View Bill</a>` : ''}
+                ${bill.hansard_url ? `<a href="${bill.hansard_url}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Hansard</a>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // State comparison data (from state_comparison.html)
+    const CONVERSION_PRACTICES_STATUS = {
+      "QLD": { status: "passed", date: "2020-03", year: 2020, note: "First in Australia" },
+      "VIC": { status: "passed", date: "2020-11", year: 2020, note: "Most comprehensive at time" },
+      "NSW": { status: "passed", date: "2024-03", year: 2024, note: "Took effect April 2025" },
+      "SA": { status: "passed", date: "2024-09", year: 2024, note: "Took effect April 2025" },
+      "TAS": { status: "pending", date: "2025", year: 2025, note: "Under consideration" },
+      "WA": { status: "pending", date: "2025-post", year: 2025, note: "Expected after March 2025 election" },
+      "ACT": { status: "pending", date: "2025", year: 2025, note: "Status unclear" },
+      "NT": { status: "pending", date: "2025", year: 2025, note: "Under consideration" }
+    };
+    
+    const GENDER_RECOGNITION_STATUS = {
+      "TAS": { level: "most_progressive", year: 2019, features: ["No surgery", "No divorce", "Non-binary", "Gender-optional", "16+ without parent"] },
+      "VIC": { level: "progressive", year: 2023, features: ["No surgery", "Free (2025)", "Non-binary"] },
+      "WA": { level: "progressive", year: 2024, features: ["No surgery", "Non-binary", "Simplified process"] },
+      "ACT": { level: "progressive", year: 2024, features: ["No clinical treatment", "Expanded descriptors"] },
+      "NSW": { level: "moderate", year: 2023, features: ["No surgery"] },
+      "QLD": { level: "moderate", year: 2024, features: ["No surgery (2024)"] },
+      "SA": { level: "moderate", year: 2016, features: ["No surgery"] },
+      "NT": { level: "limited", year: null, features: [] }
+    };
+
+    // Key differences and unique features
+    const KEY_DIFFERENCES = {
+      "VIC": {
+        title: "Victoria - LGBTQ+ Commissioner",
+        description: "Victoria is the only state with a dedicated Commissioner for LGBTIQ+ Communities, established in 2015. The Commissioner advocates for LGBTIQ+ rights and monitors policy implementation.",
+        link: "https://www.vic.gov.au/commissioner-lgbtiq-communities",
+        linkText: "Learn more about the Commissioner"
+      },
+      "TAS": {
+        title: "Tasmania - Most Progressive Gender Recognition",
+        description: "Tasmania has the most progressive gender recognition laws in Australia, allowing self-determination without medical evidence, non-binary options, and no requirement to divorce when changing gender marker.",
+        link: "https://www.legislation.tas.gov.au/view/html/asmade/act-2019-007",
+        linkText: "View legislation"
+      },
+      "ACT": {
+        title: "ACT - First Non-Binary Recognition",
+        description: "The Australian Capital Territory was the first jurisdiction in Australia to allow X (non-binary) gender markers on birth certificates in 2014.",
+        link: "https://www.legislation.act.gov.au/a/1997-112/",
+        linkText: "View legislation"
+      },
+      "SA": {
+        title: "South Australia - Significant Gaps",
+        description: "South Australia has notable gaps in LGBTIQ+ protections, lacking both hate crime and vilification laws covering LGBTIQ+ grounds, and requiring surgery for gender recognition.",
+        link: "https://www.legislation.sa.gov.au/",
+        linkText: "View legislation"
+      },
+      "NT": {
+        title: "Northern Territory - Limited Protections",
+        description: "The Northern Territory lacks hate crime and vilification laws covering LGBTIQ+ grounds, and has restrictive gender recognition requirements.",
+        link: "https://legislation.nt.gov.au/",
+        linkText: "View legislation"
+      }
+    };
+
+    // Render State Comparison View
+    function renderStateComparison() {
+      renderConversionTimeline();
+      renderGenderRecognition();
+      renderLegislationTable();
+      renderKeyDifferences();
+      renderReformStatus();
+    }
+
+    function renderConversionTimeline() {
+      const timeline = document.getElementById('conversionTimeline');
+      if (!timeline) return;
+      
+      const sorted = Object.entries(CONVERSION_PRACTICES_STATUS)
+        .sort((a, b) => {
+          if (a[1].status === 'passed' && b[1].status !== 'passed') return -1;
+          if (a[1].status !== 'passed' && b[1].status === 'passed') return 1;
+          return (a[1].year || 9999) - (b[1].year || 9999);
+        });
+      
+      timeline.innerHTML = sorted.map(([state, info]) => {
+        const statusClass = info.status === 'passed' ? 'passed' : 
+                           info.status === 'pending' ? 'pending' : 'none';
+        const statusBadge = info.status === 'passed' ? 
+          `<span class="status-badge status-passed">PASSED</span>` :
+          `<span class="status-badge status-pending">PENDING</span>`;
+        
+        return `
+          <div class="timeline-item ${statusClass}">
+            <div class="timeline-date">${info.date || 'TBD'}</div>
+            <div class="timeline-content">
+              <div class="timeline-state">${STATE_COORDS[state]?.name || state} ${statusBadge}</div>
+              <div class="timeline-description">${info.note}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function renderGenderRecognition() {
+      const grid = document.getElementById('genderRecognitionGrid');
+      if (!grid) return;
+      
+      const sorted = Object.entries(GENDER_RECOGNITION_STATUS)
+        .sort((a, b) => {
+          const levels = { most_progressive: 4, progressive: 3, moderate: 2, limited: 1 };
+          return (levels[b[1].level] || 0) - (levels[a[1].level] || 0);
+        });
+      
+      grid.innerHTML = sorted.map(([state, info]) => {
+        const levelColors = {
+          most_progressive: '#10b981',
+          progressive: '#3b82f6',
+          moderate: '#f59e0b',
+          limited: '#ef4444'
+        };
+        const color = levelColors[info.level] || '#6b7280';
+        
+        return `
+          <div class="state-card">
+            <div class="state-card-header">
+              <div class="state-name">${STATE_COORDS[state]?.name || state}</div>
+              <span class="status-badge" style="background: ${color}20; color: ${color};">
+                ${info.level.replace('_', ' ').toUpperCase()}
+              </span>
+            </div>
+            <div class="state-stats">
+              <div class="stat-row">
+                <span class="stat-label">Year:</span>
+                <span class="stat-value">${info.year || 'N/A'}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Features:</span>
+                <span class="stat-value">${info.features.length}</span>
+              </div>
+              ${info.features.length > 0 ? `
+                <div style="margin-top: var(--space-2); font-size: var(--text-xs); color: var(--color-text-secondary);">
+                  ${info.features.join(', ')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLegislationTable() {
+      const tbody = document.getElementById('legislationTableBody');
+      if (!tbody) return;
+
+      const states = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT'];
+      
+      tbody.innerHTML = states.map(state => {
+        const statePolicies = policyData.filter(p => p.jurisdiction === state);
+        
+        const getPolicyStatus = (category) => {
+          const policy = statePolicies.find(p => p.policy_category === category);
+          if (!policy) return { status: 'absent', label: 'Absent', class: 'absent', url: null, year: null };
+          
+          let label = 'Unknown';
+          if (policy.status === 'present') label = 'Present';
+          else if (policy.status === 'absent') label = 'Absent';
+          else if (policy.status === 'pending') label = 'Pending';
+          else if (policy.status === 'limited') label = 'Limited';
+          else if (policy.status === 'easy') label = 'Easy';
+          else if (policy.status === 'moderate') label = 'Moderate';
+          else if (policy.status === 'hard') label = 'Hard';
+          
+          return { 
+            status: policy.status, 
+            label: label, 
+            class: policy.status === 'present' || policy.status === 'easy' ? 'present' : 
+                   policy.status === 'absent' || policy.status === 'hard' ? 'absent' : 
+                   policy.status === 'limited' || policy.status === 'moderate' ? 'limited' : 'pending',
+            url: policy.source_url || null,
+            year: policy.year_enacted || null
+          };
+        };
+
+        const hateCrime = getPolicyStatus('hate_crime_law');
+        const vilification = getPolicyStatus('vilification_law');
+        const discrimination = getPolicyStatus('discrimination_protection_employment');
+        const genderRec = getPolicyStatus('gender_recognition');
+        const conversion = getPolicyStatus('conversion_practices_ban');
+        const exemptions = getPolicyStatus('religious_exemptions');
+
+        const renderCell = (policy) => {
+          let content = `<span class="legislation-status ${policy.class}">${policy.label}</span>`;
+          if (policy.year) {
+            content += `<br><span style="font-size: var(--text-xs); color: var(--color-text-muted);">${policy.year}</span>`;
+          }
+          if (policy.url) {
+            content = `<a href="${policy.url}" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">${content}</a>`;
+          }
+          return content;
+        };
+
+        return `
+          <tr>
+            <td><strong>${STATE_COORDS[state]?.name || state}</strong></td>
+            <td>${renderCell(hateCrime)}</td>
+            <td>${renderCell(vilification)}</td>
+            <td>${renderCell(discrimination)}</td>
+            <td>${renderCell(genderRec)}</td>
+            <td>${renderCell(conversion)}</td>
+            <td>${renderCell(exemptions)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderKeyDifferences() {
+      const grid = document.getElementById('keyDifferencesGrid');
+      if (!grid) return;
+
+      grid.innerHTML = Object.entries(KEY_DIFFERENCES).map(([state, info]) => {
+        return `
+          <div class="difference-card">
+            <h3>${STATE_COORDS[state]?.name || state}: ${info.title}</h3>
+            <p>${info.description}</p>
+            ${info.link ? `<a href="${info.link}" target="_blank" rel="noopener">${info.linkText} →</a>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderReformStatus() {
+      const grid = document.getElementById('reformStatusGrid');
+      if (!grid) return;
+      
+      const states = Object.keys(STATE_COORDS).filter(s => s !== 'Federal');
+      
+      grid.innerHTML = states.map(state => {
+        const conversion = CONVERSION_PRACTICES_STATUS[state] || { status: 'none' };
+        const gender = GENDER_RECOGNITION_STATUS[state] || { level: 'limited' };
+        
+        return `
+          <div class="reform-item">
+            <div class="reform-label">${STATE_COORDS[state]?.name || state}</div>
+            <div style="margin-bottom: var(--space-2);">
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Conversion Practices</div>
+              <span class="status-badge ${conversion.status === 'passed' ? 'status-passed' : conversion.status === 'pending' ? 'status-pending' : 'status-none'}">
+                ${conversion.status === 'passed' ? 'PASSED' : conversion.status === 'pending' ? 'PENDING' : 'NONE'}
+              </span>
+            </div>
+            <div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Gender Recognition</div>
+              <div class="reform-status" style="color: ${gender.level === 'most_progressive' ? '#10b981' : gender.level === 'progressive' ? '#3b82f6' : gender.level === 'moderate' ? '#f59e0b' : '#ef4444'};">
+                ${gender.level ? gender.level.replace('_', ' ').toUpperCase() : 'LIMITED'}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // View switching
+    function setView(view) {
+      // Close panel first if switching away from map
+      if (panelOpen && view !== 'map') {
+        closePanel();
+      }
+      
+      currentView = view;
+      
+      viewTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.view === view);
+      });
+
+      mapView.classList.toggle('active', view === 'map');
+      mapView.style.display = view === 'map' ? 'flex' : 'none';
+      
+      comparisonView.classList.toggle('active', view === 'comparison');
+      
+      federalView.classList.toggle('active', view === 'federal');
+      
+      parliamentView.classList.toggle('active', view === 'parliament');
+
+      if (view === 'map' && map) {
+        setTimeout(() => map.invalidateSize(), 100);
+      }
+
+      if (view === 'comparison') {
+        renderStateComparison();
+      }
+
+      if (view === 'federal') {
+        renderFederalOverview();
+      }
+
+      if (view === 'parliament') {
+        renderParliamentActivity();
+      }
+    }
+
+    // Load data
+    function loadPolicyData() {
+      return new Promise((resolve, reject) => {
+        Papa.parse(POLICY_DATA_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            policyData = results.data.filter(row => row.jurisdiction && row.policy_category);
+            console.log(`Loaded ${policyData.length} policy records`);
+            resolve();
+          },
+          error: (err) => {
+            console.error('Failed to load policy data:', err);
+            reject(err);
+          }
+        });
+      });
+    }
+
+    function loadParliamentData() {
+      return new Promise((resolve, reject) => {
+        Papa.parse(PARLIAMENT_DATA_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            parliamentData = results.data.filter(row => row.bill_id && row.bill_title);
+            console.log(`Loaded ${parliamentData.length} parliament activity records`);
+            resolve();
+          },
+          error: (err) => {
+            console.error('Failed to load parliament data:', err);
+            reject(err);
+          }
+        });
+      });
+    }
+
+    // Event listeners
+    viewTabs.forEach(tab => {
+      tab.addEventListener('click', () => setView(tab.dataset.view));
+    });
+
+    document.getElementById('jurisdictionFilter').addEventListener('change', renderParliamentActivity);
+    document.getElementById('statusFilter').addEventListener('change', renderParliamentActivity);
+
+    // Panel close button
+    panelCloseBtn.addEventListener('click', closePanel);
+    
+    // Panel back button (mobile)
+    panelBackBtn.addEventListener('click', closePanel);
+
+    // Click overlay to close panel
+    panelOverlay.addEventListener('click', closePanel);
+
+    // ESC key to close panel
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (panelOpen) {
+          closePanel();
+        }
+        if (document.getElementById('methodologyModal').classList.contains('active')) {
+          closeMethodology();
+        }
+      }
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('methodologyModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeMethodology();
+      }
+    });
+
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('active');
+    });
+
+    // Initialize
+    async function initialize() {
+      initializeMap();
+
+      try {
+        await Promise.all([loadPolicyData(), loadParliamentData()]);
+        createStateMarkers();
+        
+        // Add map click handler for closing panel when clicking on map background
+        map.on('click', (e) => {
+          // Small delay to allow marker click to fire first
+          setTimeout(() => {
+            if (panelOpen && !e.originalEvent.defaultPrevented) {
+              closePanel();
+            }
+          }, 50);
+        });
+        
+        // Show instruction tooltip briefly
+        const instruction = document.getElementById('mapInstruction');
+        if (instruction) {
+          instruction.style.opacity = '0';
+          instruction.style.animation = 'fadeInOut 4s ease forwards';
+        }
+        
+        console.log('Policy landscape initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize:', error);
+      }
+    }
+
+    // Start
+    if (document.readyState === 'complete') {
+      initialize();
+    } else {
+      window.addEventListener('load', initialize);
+    }
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+      if (map && currentView === 'map') {
+        setTimeout(() => map.invalidateSize(), 100);
+      }
+    });
+  </script>
+</body>
+</html>
+

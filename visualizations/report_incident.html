@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <title>Report an Incident | Incidex Australia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incidex.au/report_incident.html">
+  <meta property="og:title" content="Report an Incident | Incidex Australia">
+  <meta property="og:description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://incidex.au/report_incident.html">
+  <meta property="twitter:title" content="Report an Incident | Incidex Australia">
+  <meta property="twitter:description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page-specific styles */
+    .report-page {
+      min-height: calc(100vh - var(--header-height));
+      background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+    }
+
+    .report-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    /* Hero Section */
+    .report-hero {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .report-hero-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-5);
+      background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .report-hero h1 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .report-hero p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-lg);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Disclaimer Banner */
+    .disclaimer-banner {
+      background: linear-gradient(135deg, rgba(26, 95, 122, 0.06) 0%, rgba(212, 165, 212, 0.06) 100%);
+      border: 1px solid var(--color-primary-100);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+
+    .disclaimer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: var(--font-semibold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .disclaimer-title svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .disclaimer-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .disclaimer-text p {
+      margin-bottom: var(--space-2);
+    }
+
+    .disclaimer-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .disclaimer-text strong {
+      color: var(--color-text);
+    }
+
+    .police-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      color: var(--color-primary);
+      font-weight: var(--font-medium);
+    }
+
+    /* Privacy Notice */
+    .privacy-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+
+    .privacy-badge svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-success);
+    }
+
+    /* Form Card */
+    .report-form-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .form-section {
+      padding: var(--space-8);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .form-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .form-section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .form-section-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary-50);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .form-section-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-primary);
+    }
+
+    .form-section-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+    }
+
+    .form-section-subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    /* Form Grid */
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Enhanced Form Elements */
+    .form-group-enhanced {
+      margin-bottom: var(--space-5);
+    }
+
+    .form-group-enhanced:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label-enhanced {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-2);
+    }
+
+    .form-label-enhanced .label-text {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+    }
+
+    .form-label-enhanced .label-optional {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-weight: var(--font-normal);
+    }
+
+    .form-label-enhanced .required::after {
+      content: '*';
+      color: var(--color-secondary);
+      margin-left: var(--space-1);
+    }
+
+    /* Radio/Checkbox Groups */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-2);
+    }
+
+    .option-card {
+      position: relative;
+    }
+
+    .option-card input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .option-card-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .option-card input:hover + .option-card-label {
+      border-color: var(--color-primary-light);
+      background: var(--color-primary-50);
+    }
+
+    .option-card input:checked + .option-card-label {
+      border-color: var(--color-primary);
+      background: var(--color-primary-50);
+    }
+
+    .option-card input:focus + .option-card-label {
+      box-shadow: var(--focus-ring);
+    }
+
+    .option-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .option-card-text {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+    }
+
+    /* Yes/No Toggle */
+    .toggle-group {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .toggle-option {
+      flex: 1;
+    }
+
+    .toggle-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .toggle-option-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .toggle-option input:hover + .toggle-option-label {
+      border-color: var(--color-text-muted);
+    }
+
+    .toggle-option input:checked + .toggle-option-label {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .toggle-option input:focus + .toggle-option-label {
+      box-shadow: var(--focus-ring);
+    }
+
+    /* Consent Checkbox */
+    .consent-box {
+      background: linear-gradient(135deg, rgba(45, 157, 111, 0.05) 0%, rgba(26, 95, 122, 0.05) 100%);
+      border: 1px solid var(--color-success);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .consent-checkbox {
+      display: flex;
+      gap: var(--space-4);
+      cursor: pointer;
+    }
+
+    .consent-checkbox input {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      accent-color: var(--color-success);
+      cursor: pointer;
+    }
+
+    .consent-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .consent-text strong {
+      color: var(--color-text);
+    }
+
+    /* Submit Section */
+    .submit-section {
+      padding: var(--space-6) var(--space-8);
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .submit-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: flex-end;
+    }
+
+    .submit-actions .btn {
+      min-width: 150px;
+    }
+
+    @media (max-width: 640px) {
+      .submit-actions {
+        flex-direction: column-reverse;
+      }
+
+      .submit-actions .btn {
+        width: 100%;
+      }
+    }
+
+    /* Success/Error States */
+    .submission-result {
+      display: none;
+      animation: fadeInUp var(--transition-slow) ease forwards;
+    }
+
+    .submission-result.show {
+      display: block;
+    }
+
+    .result-success {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10);
+      text-align: center;
+    }
+
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-5);
+      background: var(--color-success-light);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .result-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .result-message {
+      color: var(--color-text-secondary);
+      max-width: 500px;
+      margin: 0 auto var(--space-6);
+    }
+
+    /* Support Resources Section */
+    .support-resources {
+      margin-top: var(--space-8);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .support-resources-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-5);
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .support-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+
+    .support-card:hover {
+      border-color: var(--color-primary-100);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .support-card-name {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .support-card-phone {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .support-card-desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .support-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+      padding: var(--space-1) var(--space-2);
+      background: var(--gradient-rainbow);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+      color: var(--color-bg-dark);
+    }
+
+    .support-local-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .support-local-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      justify-content: center;
+    }
+
+    .support-local-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-primary-50);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      transition: all var(--transition-fast);
+    }
+
+    .support-local-link:hover {
+      background: var(--color-primary-100);
+    }
+
+    .support-local-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Result Actions */
+    .result-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      margin-top: var(--space-6);
+    }
+
+    /* Loading State */
+    .form-loading {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .form-loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: var(--radius-full);
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Error Messages */
+    .field-error {
+      display: none;
+      font-size: var(--text-sm);
+      color: var(--color-error);
+      margin-top: var(--space-1);
+    }
+
+    .field-error.show {
+      display: block;
+    }
+
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error {
+      border-color: var(--color-error);
+    }
+
+    /* Character Counter */
+    .char-counter {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-align: right;
+      margin-top: var(--space-1);
+    }
+
+    .char-counter.warning {
+      color: var(--color-warning);
+    }
+
+    .char-counter.error {
+      color: var(--color-error);
+    }
+
+    /* Encryption Badge */
+    .encryption-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3);
+      background: var(--color-success-light);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-success-dark);
+      margin-bottom: var(--space-4);
+    }
+
+    .encryption-badge svg {
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Resources
+        </a>
+        <a href="report_incident.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link active">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="report-page" id="main">
+    <div class="report-container">
+      <!-- Hero Section -->
+      <div class="report-hero">
+        <div class="report-hero-icon">📝</div>
+        <h1>Report an Incident</h1>
+        <p>Your report helps document LGBTIQ+ hate crimes for advocacy and awareness. All submissions are anonymous and encrypted.</p>
+      </div>
+
+      <!-- Disclaimer Banner -->
+      <div class="disclaimer-banner">
+        <div class="disclaimer-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Important Information
+        </div>
+        <div class="disclaimer-text">
+          <p><strong>You are not required to report to police.</strong> This portal is independent and community-led. Your report helps document hate crimes for advocacy purposes.</p>
+          <p>If you want police involvement, contact the <a href="tel:131444" class="police-link">Police Assistance Line: 131 444</a> or <a href="tel:000" class="police-link">Emergency: 000</a>.</p>
+          <p>Your submission will be fully encrypted and stored securely. Personal details are never shared without your explicit consent.</p>
+        </div>
+        
+        <div class="privacy-badges">
+          <span class="privacy-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 12 15 22 5"></polyline></svg>
+            No IP Logging
+          </span>
+          <span class="privacy-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            No Location Tracking
+          </span>
+          <span class="privacy-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            SSL Encrypted
+          </span>
+          <span class="privacy-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Anonymized Public Data
+          </span>
+        </div>
+      </div>
+
+      <!-- Report Form -->
+      <div id="formContainer">
+        <form id="incidentForm" class="report-form-card" novalidate>
+          <!-- Section 1: Incident Details -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="form-section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="form-section-title">Incident Details</div>
+                <div class="form-section-subtitle">Tell us what happened</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group-enhanced">
+                <div class="form-label-enhanced">
+                  <span class="label-text required">Date of Incident</span>
+                </div>
+                <input type="date" class="form-input" id="incidentDate" name="date" required max="">
+                <span class="form-hint">Can be recent or historical</span>
+                <span class="field-error" id="dateError">Please enter the date of the incident</span>
+              </div>
+
+              <div class="form-group-enhanced">
+                <div class="form-label-enhanced">
+                  <span class="label-text required">Incident Type</span>
+                </div>
+                <select class="form-select" id="incidentType" name="incident_type" required>
+                  <option value="">Select type...</option>
+                  <option value="assault">Physical Assault</option>
+                  <option value="harassment">Harassment</option>
+                  <option value="vandalism">Vandalism / Property Damage</option>
+                  <option value="hate_speech">Hate Speech</option>
+                  <option value="threat">Threats / Intimidation</option>
+                  <option value="discrimination">Discrimination</option>
+                  <option value="online">Online Abuse / Doxxing</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="field-error" id="typeError">Please select an incident type</span>
+              </div>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text required">Location</span>
+              </div>
+              <div class="form-row">
+                <div>
+                  <input type="text" class="form-input" id="suburb" name="suburb" placeholder="Suburb or city" required>
+                  <span class="form-hint">e.g., Sydney CBD, Brunswick</span>
+                </div>
+                <div>
+                  <input type="text" class="form-input" id="street" name="street" placeholder="Street (optional)">
+                  <span class="form-hint">Optional - helps with verification</span>
+                </div>
+              </div>
+              <span class="field-error" id="locationError">Please enter at least the suburb/city</span>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text required">Brief Description</span>
+              </div>
+              <textarea class="form-textarea" id="description" name="description" rows="4" placeholder="Describe what happened. Include relevant details like time of day, circumstances, and any witnesses." required maxlength="2000"></textarea>
+              <div class="char-counter" id="descCharCounter">0 / 2000 characters</div>
+              <span class="field-error" id="descError">Please provide a brief description of the incident</span>
+            </div>
+          </div>
+
+          <!-- Section 2: Victim Information -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="form-section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <div class="form-section-title">Victim Information</div>
+                <div class="form-section-subtitle">This helps us understand patterns</div>
+              </div>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text required">Victim Identity</span>
+              </div>
+              <div class="options-grid">
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="gay" required>
+                  <span class="option-card-label">
+                    <span class="option-card-icon">👨‍❤️‍👨</span>
+                    <span class="option-card-text">Gay</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="lesbian">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">👩‍❤️‍👩</span>
+                    <span class="option-card-text">Lesbian</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="trans">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">🏳️‍⚧️</span>
+                    <span class="option-card-text">Trans</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="bi">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">💜</span>
+                    <span class="option-card-text">Bisexual</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="queer">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">🏳️‍🌈</span>
+                    <span class="option-card-text">Queer</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="intersex">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">⚧</span>
+                    <span class="option-card-text">Intersex</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="other">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">✨</span>
+                    <span class="option-card-text">Other</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="prefer_not_say">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">🔒</span>
+                    <span class="option-card-text">Prefer not to say</span>
+                  </span>
+                </label>
+              </div>
+              <span class="field-error" id="identityError">Please select an option</span>
+            </div>
+          </div>
+
+          <!-- Section 3: Reporting Status -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="form-section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div>
+                <div class="form-section-title">Additional Information</div>
+                <div class="form-section-subtitle">Optional but helpful</div>
+              </div>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text">Was this reported to police?</span>
+              </div>
+              <div class="toggle-group">
+                <label class="toggle-option">
+                  <input type="radio" name="reported_to_police" value="yes">
+                  <span class="toggle-option-label">Yes</span>
+                </label>
+                <label class="toggle-option">
+                  <input type="radio" name="reported_to_police" value="no">
+                  <span class="toggle-option-label">No</span>
+                </label>
+                <label class="toggle-option">
+                  <input type="radio" name="reported_to_police" value="prefer_not_say" checked>
+                  <span class="toggle-option-label">Prefer not to say</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text">Would you like us to share with advocacy organizations?</span>
+              </div>
+              <div class="toggle-group">
+                <label class="toggle-option">
+                  <input type="radio" name="consent_share" value="yes">
+                  <span class="toggle-option-label">Yes, share with advocates</span>
+                </label>
+                <label class="toggle-option">
+                  <input type="radio" name="consent_share" value="no" checked>
+                  <span class="toggle-option-label">No, keep private</span>
+                </label>
+              </div>
+              <span class="form-hint">If yes, we may share anonymized details with organizations like ACON, Equality Australia, or state-based LGBTIQ+ groups.</span>
+            </div>
+
+            <div class="form-group-enhanced">
+              <div class="form-label-enhanced">
+                <span class="label-text">Your Contact</span>
+                <span class="label-optional">Optional</span>
+              </div>
+              <input type="email" class="form-input" id="contact" name="contact" placeholder="Email address (only if you want follow-up)">
+              <span class="form-hint">We will only contact you if you request follow-up. Never shared publicly.</span>
+            </div>
+          </div>
+
+          <!-- Section 4: Consent -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="form-section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <div class="form-section-title">Consent</div>
+                <div class="form-section-subtitle">Required to submit</div>
+              </div>
+            </div>
+
+            <div class="encryption-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Your submission is protected with SSL encryption
+            </div>
+
+            <div class="consent-box">
+              <label class="consent-checkbox">
+                <input type="checkbox" id="consent" name="consent" required>
+                <span class="consent-text">
+                  <strong>I consent to this information being added to the public database (anonymized).</strong><br>
+                  I understand that my personal contact details will never be shared publicly. Only the incident date, location (suburb level), type, and general description will appear on the public map. The report will be marked as "Community Report (Unverified)" until verified against news sources.
+                </span>
+              </label>
+              <span class="field-error" id="consentError">You must provide consent to submit this report</span>
+            </div>
+          </div>
+
+          <!-- Submit Section -->
+          <div class="submit-section">
+            <div class="submit-actions">
+              <button type="button" class="btn btn-tertiary" onclick="resetForm()">Clear Form</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+                Submit Report
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success Result -->
+      <div class="submission-result" id="successResult">
+        <div class="result-success">
+          <div class="result-icon">✅</div>
+          <h2 class="result-title">Thank You for Your Report</h2>
+          <p class="result-message">
+            Your incident has been recorded and will be reviewed. It will appear on the map as a "Community Report (Unverified)" until we can verify it against news sources.
+          </p>
+          
+          <!-- Support Resources -->
+          <div class="support-resources">
+            <h3 class="support-resources-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              Support Services in Your Area
+            </h3>
+            
+            <div class="support-grid">
+              <div class="support-card">
+                <div class="support-card-name">QLife</div>
+                <a href="tel:1800184527" class="support-card-phone">1800 184 527</a>
+                <div class="support-card-desc">LGBTIQ+ peer support, 3pm-midnight daily</div>
+                <span class="support-card-badge">LGBTIQ+ Specialist</span>
+              </div>
+              <div class="support-card">
+                <div class="support-card-name">Lifeline</div>
+                <a href="tel:131114" class="support-card-phone">13 11 14</a>
+                <div class="support-card-desc">24/7 crisis support & suicide prevention</div>
+              </div>
+              <div class="support-card">
+                <div class="support-card-name">Beyond Blue</div>
+                <a href="tel:1300224636" class="support-card-phone">1300 224 636</a>
+                <div class="support-card-desc">24/7 anxiety & depression support</div>
+              </div>
+              <div class="support-card">
+                <div class="support-card-name">1800RESPECT</div>
+                <a href="tel:1800737732" class="support-card-phone">1800 737 732</a>
+                <div class="support-card-desc">24/7 domestic & family violence support</div>
+              </div>
+            </div>
+
+            <div class="support-local-title">LGBTIQ+ Specific Organizations</div>
+            <div class="support-local-list" id="localResources">
+              <a href="https://www.acon.org.au" target="_blank" rel="noopener" class="support-local-link">
+                ACON (NSW)
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+              <a href="https://www.equalityaustralia.org.au" target="_blank" rel="noopener" class="support-local-link">
+                Equality Australia
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+              <a href="https://www.switchboard.org.au" target="_blank" rel="noopener" class="support-local-link">
+                Switchboard (VIC)
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+              <a href="https://www.quac.org.au" target="_blank" rel="noopener" class="support-local-link">
+                QuAC (QLD)
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+              <a href="resources.html" class="support-local-link">
+                View All Resources
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <a href="map.html" class="btn btn-secondary">View Map</a>
+            <button onclick="submitAnother()" class="btn btn-primary">Report Another Incident</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+            </a>
+          </div>
+          <h4>About</h4>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="resources.html">Support Resources</a></li>
+            <li><a href="report_incident.html">Report an Incident</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Get Help</h4>
+          <ul>
+            <li><a href="tel:1800184527">QLife: 1800 184 527</a></li>
+            <li><a href="tel:131114">Lifeline: 13 11 14</a></li>
+            <li><a href="tel:000">Emergency: 000</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Have a question or want to contribute? <a href="contact.html">Get in touch</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 Incidex Australia. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Form Elements
+    const form = document.getElementById('incidentForm');
+    const formContainer = document.getElementById('formContainer');
+    const successResult = document.getElementById('successResult');
+    const submitBtn = document.getElementById('submitBtn');
+    const descriptionField = document.getElementById('description');
+    const charCounter = document.getElementById('descCharCounter');
+    const dateInput = document.getElementById('incidentDate');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    // Set max date to today
+    dateInput.max = new Date().toISOString().split('T')[0];
+
+    // Character counter for description
+    descriptionField.addEventListener('input', function() {
+      const count = this.value.length;
+      const max = 2000;
+      charCounter.textContent = `${count} / ${max} characters`;
+      
+      if (count > max * 0.9) {
+        charCounter.classList.add('warning');
+      } else {
+        charCounter.classList.remove('warning');
+      }
+      
+      if (count >= max) {
+        charCounter.classList.add('error');
+      } else {
+        charCounter.classList.remove('error');
+      }
+    });
+
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', function() {
+      mobileNav.classList.toggle('active');
+    });
+
+    // Form Validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Clear previous errors
+      document.querySelectorAll('.field-error').forEach(el => el.classList.remove('show'));
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
+
+      // Date validation
+      if (!dateInput.value) {
+        document.getElementById('dateError').classList.add('show');
+        dateInput.classList.add('error');
+        isValid = false;
+      }
+
+      // Incident type validation
+      const incidentType = document.getElementById('incidentType');
+      if (!incidentType.value) {
+        document.getElementById('typeError').classList.add('show');
+        incidentType.classList.add('error');
+        isValid = false;
+      }
+
+      // Location validation
+      const suburb = document.getElementById('suburb');
+      if (!suburb.value.trim()) {
+        document.getElementById('locationError').classList.add('show');
+        suburb.classList.add('error');
+        isValid = false;
+      }
+
+      // Description validation
+      if (!descriptionField.value.trim()) {
+        document.getElementById('descError').classList.add('show');
+        descriptionField.classList.add('error');
+        isValid = false;
+      }
+
+      // Victim identity validation
+      const victimIdentity = document.querySelector('input[name="victim_identity"]:checked');
+      if (!victimIdentity) {
+        document.getElementById('identityError').classList.add('show');
+        isValid = false;
+      }
+
+      // Consent validation
+      const consent = document.getElementById('consent');
+      if (!consent.checked) {
+        document.getElementById('consentError').classList.add('show');
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Form Submission
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!validateForm()) {
+        // Scroll to first error
+        const firstError = document.querySelector('.field-error.show');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      // Disable submit button and show loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+
+      // Gather form data
+      const formData = {
+        date: dateInput.value,
+        location: document.getElementById('suburb').value + (document.getElementById('street').value ? ', ' + document.getElementById('street').value : ''),
+        incident_type: document.getElementById('incidentType').value,
+        victim_identity: document.querySelector('input[name="victim_identity"]:checked').value,
+        description: descriptionField.value,
+        reported_to_police: document.querySelector('input[name="reported_to_police"]:checked')?.value || 'prefer_not_say',
+        consent_share: document.querySelector('input[name="consent_share"]:checked')?.value || 'no',
+        contact: document.getElementById('contact').value || '',
+        consent: 'yes',
+        verified: 'false',
+        submitted_at: new Date().toISOString(),
+        source: 'community_report'
+      };
+
+      try {
+        // In a real implementation, this would POST to a server endpoint
+        // For now, we'll simulate the submission and store to localStorage
+        // The server would handle writing to the CSV
+        
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Store in localStorage for demonstration (in production, this goes to server)
+        const reports = JSON.parse(localStorage.getItem('community_reports') || '[]');
+        reports.push(formData);
+        localStorage.setItem('community_reports', JSON.stringify(reports));
+
+        // Show success
+        formContainer.style.display = 'none';
+        successResult.classList.add('show');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        console.log('Report submitted:', formData);
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('There was an error submitting your report. Please try again.');
+        
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+          Submit Report
+        `;
+      }
+    });
+
+    // Reset Form
+    function resetForm() {
+      form.reset();
+      document.querySelectorAll('.field-error').forEach(el => el.classList.remove('show'));
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
+      charCounter.textContent = '0 / 2000 characters';
+      charCounter.classList.remove('warning', 'error');
+    }
+
+    // Submit Another
+    function submitAnother() {
+      resetForm();
+      formContainer.style.display = 'block';
+      successResult.classList.remove('show');
+      
+      // Reset submit button
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+        Submit Report
+      `;
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Check for location in URL params (linked from map)
+    function checkURLParams() {
+      const params = new URLSearchParams(window.location.search);
+      const location = params.get('location');
+      if (location) {
+        document.getElementById('suburb').value = location;
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', checkURLParams);
+  </script>
+</body>
+</html>
+
+
+
+

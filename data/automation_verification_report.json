@@ -1,0 +1,131 @@
+{
+  "verification_timestamp": "2025-12-21T20:48:47.026010+00:00",
+  "overall_status": "⚠️ Partial (some components offline)",
+  "components": {
+    "scraper": {
+      "status": "✅",
+      "modules": {
+        "pandas": {
+          "status": "✅",
+          "installed": true
+        },
+        "requests": {
+          "status": "✅",
+          "installed": true
+        },
+        "bs4": {
+          "status": "✅",
+          "installed": true
+        },
+        "openai": {
+          "status": "✅",
+          "installed": true
+        },
+        "feedparser": {
+          "status": "✅",
+          "installed": true
+        },
+        "geopy": {
+          "status": "✅",
+          "installed": true
+        },
+        "scripts/rss_monitor.py": {
+          "status": "✅",
+          "exists": true
+        },
+        "monitor.py": {
+          "status": "✅",
+          "exists": true
+        },
+        "article_fetcher.py": {
+          "status": "✅",
+          "exists": true
+        },
+        "incident_extractor.py": {
+          "status": "✅",
+          "exists": true
+        },
+        "geocoder.py": {
+          "status": "✅",
+          "exists": true
+        },
+        "deduplicator.py": {
+          "status": "✅",
+          "exists": true
+        }
+      },
+      "missing_modules": []
+    },
+    "openai": {
+      "status": "✅",
+      "api_key_present": true,
+      "configured_in_workflow": true,
+      "note": "Cannot verify billing/credits without API call"
+    },
+    "data_pipeline": {
+      "status": "✅",
+      "csv_output_exists": true,
+      "map_csv_exists": true,
+      "csv_has_recent_timestamp": true,
+      "csv_format_valid": true,
+      "csv_last_modified": "2025-12-21T18:55:52.533141+00:00",
+      "csv_days_old": 0,
+      "csv_row_count": 0
+    },
+    "map_sync": {
+      "status": "⚠️",
+      "map_csv_exists": true,
+      "map_csv_recent": false,
+      "map_csv_last_modified": "2025-12-06T04:12:23.222608+00:00",
+      "map_csv_days_old": 15
+    },
+    "review_alerts": {
+      "status": "✅",
+      "alert_script_exists": true,
+      "review_queue_exists": false,
+      "alert_config_exists": false
+    }
+  },
+  "workflows": {
+    "files": {
+      "daily_rss_monitor.yml": {
+        "exists": true,
+        "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\daily_rss_monitor.yml",
+        "status": "✅",
+        "valid_yaml": true
+      },
+      "rss_monitor.yml": {
+        "exists": true,
+        "path": "C:\\Users\\Tom\\OneDrive\\Desktop\\lgbtiq-hate-crime-map\\.github\\workflows\\rss_monitor.yml",
+        "status": "✅",
+        "valid_yaml": true
+      }
+    },
+    "configuration": {
+      "daily_rss_monitor.yml": {
+        "has_schedule": true,
+        "has_manual_trigger": true,
+        "has_openai_key": true,
+        "status": "✅"
+      },
+      "rss_monitor.yml": {
+        "has_schedule": true,
+        "has_manual_trigger": true,
+        "has_openai_key": true,
+        "status": "✅"
+      }
+    },
+    "recent_runs": {
+      "status": "skipped",
+      "note": "GitHub token and repository not configured"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "P1",
+      "issue": "Map CSV not updated recently",
+      "fix": "Check if scraper is running and committing changes",
+      "time_estimate": "30 minutes"
+    }
+  ]
+}

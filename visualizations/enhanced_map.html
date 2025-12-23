@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Incidex | Rights Map - Incidents & Legal Cases</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <meta name="description" content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://incidex.au/enhanced_map.html">
+    <meta property="og:title" content="Incidex | Rights Map - Incidents & Legal Cases">
+    <meta property="og:description" content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia.">
+    <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://incidex.au/enhanced_map.html">
+    <meta property="twitter:title" content="Incidex | Rights Map - Incidents & Legal Cases">
+    <meta property="twitter:description" content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia.">
+    <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+    
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark: #0c0f1a;
+        --bg-card: #161b2e;
+        --bg-card-hover: #1e2542;
+        --accent-purple: #9f7aea;
+        --accent-pink: #ed64a6;
+        --accent-blue: #4299e1;
+        --accent-teal: #38b2ac;
+        --accent-red: #fc8181;
+        --accent-green: #68d391;
+        --accent-yellow: #f6e05e;
+        --text-primary: #f7fafc;
+        --text-secondary: #a0aec0;
+        --text-muted: #718096;
+        --border-color: rgba(159, 122, 234, 0.2);
+        --gradient-primary: linear-gradient(135deg, #9f7aea 0%, #ed64a6 100%);
+        --gradient-blue: linear-gradient(135deg, #4299e1 0%, #38b2ac 100%);
+        --shadow-glow: 0 0 40px rgba(159, 122, 234, 0.15);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Animated background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(ellipse at 20% 20%, rgba(159, 122, 234, 0.08) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, rgba(237, 100, 166, 0.08) 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, rgba(66, 153, 225, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      header {
+        padding: 1.5rem 2rem;
+        background: linear-gradient(180deg, rgba(12, 15, 26, 0.95) 0%, rgba(12, 15, 26, 0.8) 100%);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        z-index: 100;
+      }
+
+      header h1 {
+        margin: 0 0 0.5rem;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .intro {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      /* Dataset Toggle */
+      .dataset-toggle {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.25rem;
+        background: var(--bg-card);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        margin-top: 1rem;
+        width: fit-content;
+      }
+
+      .toggle-btn {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        background: transparent;
+        color: var(--text-muted);
+      }
+
+      .toggle-btn:hover {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .toggle-btn.active {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: 0 4px 15px rgba(159, 122, 234, 0.4);
+      }
+
+      .toggle-btn.active[data-view="cases"] {
+        background: var(--gradient-blue);
+        box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+      }
+
+      .toggle-btn.active[data-view="both"] {
+        background: linear-gradient(135deg, #9f7aea 0%, #4299e1 50%, #38b2ac 100%);
+      }
+
+      .layout {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .controls {
+        width: 340px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+        padding-right: 0.5rem;
+      }
+
+      .controls::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .controls::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .controls::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 3px;
+      }
+
+      .filter-card {
+        background: var(--bg-card);
+        border-radius: 16px;
+        padding: 1.25rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-glow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .filter-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 50px rgba(159, 122, 234, 0.2);
+      }
+
+      .filter-card h3 {
+        margin: 0 0 1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .filter-card h3::before {
+        content: "";
+        width: 4px;
+        height: 16px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+      }
+
+      .filter-card.cases-filter h3::before {
+        background: var(--gradient-blue);
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .control-group:last-child {
+        margin-bottom: 0;
+      }
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      select,
+      input[type="date"],
+      input[type="number"] {
+        width: 100%;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-primary);
+        transition: all 0.2s ease;
+      }
+
+      select:focus,
+      input[type="date"]:focus,
+      input[type="number"]:focus {
+        outline: none;
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.15);
+      }
+
+      select option {
+        background: var(--bg-card);
+        color: var(--text-primary);
+      }
+
+      .date-row {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .date-row input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      button {
+        padding: 0.65rem 1.25rem;
+        border: none;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(159, 122, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+      }
+
+      .status-box {
+        padding: 1rem;
+        background: rgba(159, 122, 234, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(159, 122, 234, 0.2);
+      }
+
+      .status-text {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .legend-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .legend-marker {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      #map {
+        flex: 1;
+        min-height: 500px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow-glow);
+        border: 1px solid var(--border-color);
+      }
+
+      /* Leaflet popup styling */
+      .leaflet-popup-content-wrapper {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .leaflet-popup-content {
+        margin: 1rem;
+        color: var(--text-primary);
+        font-family: "DM Sans", system-ui, sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        max-width: 320px;
+      }
+
+      .leaflet-popup-tip {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+      }
+
+      .popup-title {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+        color: var(--text-primary);
+      }
+
+      .popup-subtitle {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+      }
+
+      .popup-badge {
+        display: inline-block;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 0.4rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .badge-won {
+        background: rgba(104, 211, 145, 0.2);
+        color: var(--accent-green);
+      }
+
+      .badge-lost {
+        background: rgba(252, 129, 129, 0.2);
+        color: var(--accent-red);
+      }
+
+      .badge-ongoing {
+        background: rgba(246, 224, 94, 0.2);
+        color: var(--accent-yellow);
+      }
+
+      .badge-federal {
+        background: rgba(66, 153, 225, 0.2);
+        color: var(--accent-blue);
+      }
+
+      .badge-state {
+        background: rgba(56, 178, 172, 0.2);
+        color: var(--accent-teal);
+      }
+
+      .popup-section {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .popup-section-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 0.35rem;
+      }
+
+      .popup-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 0.9rem;
+        background: var(--gradient-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 0.75rem;
+        transition: all 0.2s ease;
+      }
+
+      .popup-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+      }
+
+      .popup-issues {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.35rem;
+      }
+
+      .issue-tag {
+        padding: 0.2rem 0.5rem;
+        background: rgba(159, 122, 234, 0.15);
+        border-radius: 4px;
+        font-size: 0.7rem;
+        color: var(--accent-purple);
+      }
+
+      /* Severity badges for hate crimes */
+      .badge-low {
+        background: rgba(104, 211, 145, 0.2);
+        color: var(--accent-green);
+      }
+
+      .badge-medium {
+        background: rgba(246, 224, 94, 0.2);
+        color: var(--accent-yellow);
+      }
+
+      .badge-high {
+        background: rgba(252, 129, 129, 0.2);
+        color: var(--accent-red);
+      }
+
+      /* Hide/show filter sections */
+      .filter-card.hidden {
+        display: none;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          flex-direction: column;
+        }
+
+        .controls {
+          width: 100%;
+          max-height: none;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+
+        .filter-card {
+          flex: 1;
+          min-width: 280px;
+        }
+
+        #map {
+          height: 60vh;
+          min-height: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>LGBTIQ+ Rights Map of Australia</h1>
+      <p class="intro">
+        Explore hate crime incidents and landmark legal cases affecting the LGBTIQ+ community.
+        Toggle between datasets and use filters to discover patterns and history.
+      </p>
+      <div class="dataset-toggle">
+        <button class="toggle-btn active" data-view="incidents">Hate Crimes</button>
+        <button class="toggle-btn" data-view="cases">Legal Cases</button>
+        <button class="toggle-btn" data-view="both">Both</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="controls">
+        <!-- Hate Crimes Filters -->
+        <div class="filter-card incidents-filter" id="incidentsFilters">
+          <h3>Hate Crime Filters</h3>
+          
+          <div class="control-group">
+            <label for="incidentTypeFilter">Incident Type</label>
+            <select id="incidentTypeFilter">
+              <option value="all">All types</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Date Range</label>
+            <div class="date-row">
+              <input type="date" id="incidentStartDate" />
+              <input type="date" id="incidentEndDate" />
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="severityFilter">Severity</label>
+            <select id="severityFilter">
+              <option value="all">All severities</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" id="applyIncidentFilters">Apply</button>
+            <button class="btn-secondary" id="resetIncidentFilters">Reset</button>
+          </div>
+
+          <div class="legend">
+            <span class="legend-item">
+              <span class="legend-dot" style="background: #68d391"></span>
+              Low
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot" style="background: #f6e05e"></span>
+              Medium
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot" style="background: #fc8181"></span>
+              High
+            </span>
+          </div>
+        </div>
+
+        <!-- Legal Cases Filters -->
+        <div class="filter-card cases-filter hidden" id="casesFilters">
+          <h3>Legal Case Filters</h3>
+          
+          <div class="control-group">
+            <label for="courtLevelFilter">Court Level</label>
+            <select id="courtLevelFilter">
+              <option value="all">All courts</option>
+              <option value="federal_high">Federal / High Court</option>
+              <option value="state_other">State / Other Courts</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="outcomeFilter">Outcome</label>
+            <select id="outcomeFilter">
+              <option value="all">All outcomes</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+              <option value="ongoing">Ongoing</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Year Range</label>
+            <div class="date-row">
+              <input type="number" id="caseStartYear" placeholder="From" min="1900" max="2030" />
+              <input type="number" id="caseEndYear" placeholder="To" min="1900" max="2030" />
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="issueFilter">Legal Issue</label>
+            <select id="issueFilter">
+              <option value="all">All issues</option>
+            </select>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" id="applyCaseFilters">Apply</button>
+            <button class="btn-secondary" id="resetCaseFilters">Reset</button>
+          </div>
+
+          <div class="legend">
+            <span class="legend-item">
+              <span class="legend-marker" style="background: #4299e1"></span>
+              Federal/High Court
+            </span>
+            <span class="legend-item">
+              <span class="legend-marker" style="background: #38b2ac"></span>
+              State/Other
+            </span>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="filter-card">
+          <div class="status-box">
+            <p class="status-text" id="statusText">Initializing map...</p>
+          </div>
+        </div>
+      </aside>
+
+      <section id="map"></section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script>
+      // Configuration
+      const INCIDENTS_PATH = "/data/incidents_in_progress.csv";
+      const CASES_PATH = "/data/landmark_cases.csv";
+      const DEFAULT_CENTER = [-25.2744, 133.7751];
+      const DEFAULT_ZOOM = 4;
+
+      const SEVERITY_COLORS = {
+        low: "#68d391",
+        medium: "#f6e05e",
+        high: "#fc8181",
+      };
+
+      const COURT_COLORS = {
+        federal: "#4299e1",
+        state: "#38b2ac",
+      };
+
+      // State
+      let currentView = "incidents";
+      let map, incidentsLayer, casesLayer;
+      let incidentsRaw = [], incidentsWithCoords = [];
+      let casesRaw = [], casesWithCoords = [];
+
+      // DOM Elements
+      const toggleBtns = document.querySelectorAll(".toggle-btn");
+      const incidentsFilters = document.getElementById("incidentsFilters");
+      const casesFilters = document.getElementById("casesFilters");
+      const statusText = document.getElementById("statusText");
+
+      // Incident filters
+      const incidentTypeFilter = document.getElementById("incidentTypeFilter");
+      const severityFilter = document.getElementById("severityFilter");
+      const incidentStartDate = document.getElementById("incidentStartDate");
+      const incidentEndDate = document.getElementById("incidentEndDate");
+      const applyIncidentFilters = document.getElementById("applyIncidentFilters");
+      const resetIncidentFilters = document.getElementById("resetIncidentFilters");
+
+      // Case filters
+      const courtLevelFilter = document.getElementById("courtLevelFilter");
+      const outcomeFilter = document.getElementById("outcomeFilter");
+      const caseStartYear = document.getElementById("caseStartYear");
+      const caseEndYear = document.getElementById("caseEndYear");
+      const issueFilter = document.getElementById("issueFilter");
+      const applyCaseFilters = document.getElementById("applyCaseFilters");
+      const resetCaseFilters = document.getElementById("resetCaseFilters");
+
+      // Initialize map
+      function initializeMap() {
+        if (typeof L === "undefined") {
+          statusText.textContent = "Error: Leaflet library not loaded.";
+          return;
+        }
+
+        const mapDiv = document.getElementById("map");
+        const rect = mapDiv.getBoundingClientRect();
+        
+        if (rect.width === 0 || rect.height === 0) {
+          setTimeout(initializeMap, 100);
+          return;
+        }
+
+        try {
+          map = L.map("map").setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+          
+          // Dark map tiles
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            maxZoom: 19,
+          }).addTo(map);
+
+          incidentsLayer = L.layerGroup().addTo(map);
+          casesLayer = L.layerGroup().addTo(map);
+
+          setTimeout(() => map && map.invalidateSize(), 200);
+          statusText.textContent = "Map loaded. Loading data...";
+        } catch (error) {
+          console.error("Failed to initialize map:", error);
+          statusText.textContent = "Error: Failed to initialize map.";
+        }
+      }
+
+      // Parse utilities
+      function parseDate(value) {
+        if (!value) return null;
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+      }
+
+      // Normalize incident data
+      function normalizeIncident(row) {
+        const latStr = (row.latitude || row.lat || "").toString().trim();
+        const lonStr = (row.longitude || row.lon || row.lng || "").toString().trim();
+        const lat = latStr ? parseFloat(latStr) : NaN;
+        const lon = lonStr ? parseFloat(lonStr) : NaN;
+        const incidentDate = row.date || row.source_date;
+
+        return {
+          title: row.title || "Untitled incident",
+          url: row.url,
+          source_date: row.source_date,
+          incident_type: (row.incident_type || "unknown").trim().toLowerCase(),
+          incident_type_label: row.incident_type || "Unknown",
+          date: incidentDate,
+          parsedDate: parseDate(incidentDate),
+          location: row.location || "Not specified",
+          victim_identity: row.victim_identity || "Not specified",
+          description: row.description || "No description provided.",
+          severity: (row.severity || "unknown").trim().toLowerCase(),
+          severity_label: row.severity || "Unknown",
+          perpetrator_info: row.perpetrator_info || "Not mentioned",
+          latitude: Number.isFinite(lat) ? lat : null,
+          longitude: Number.isFinite(lon) ? lon : null,
+        };
+      }
+
+      // Normalize case data
+      function normalizeCase(row) {
+        const lat = parseFloat(row.latitude);
+        const lon = parseFloat(row.longitude);
+        const courtLevel = (row.court_level || "").toLowerCase();
+        
+        return {
+          case_name: row.case_name || "Unknown Case",
+          court_level: row.court_level || "Other",
+          court_category: courtLevel.includes("federal") || courtLevel.includes("high") ? "federal" : "state",
+          year_decided: parseInt(row.year_decided) || null,
+          location: row.location || "Unknown",
+          key_issues: row.key_issues ? row.key_issues.split(",").map(i => i.trim()) : [],
+          summary: row.summary || "No summary available.",
+          significance: row.significance || "",
+          judgment_url: row.judgment_url || "",
+          outcome: (row.outcome || "unknown").toLowerCase(),
+          latitude: Number.isFinite(lat) ? lat : null,
+          longitude: Number.isFinite(lon) ? lon : null,
+        };
+      }
+
+      // Populate incident type dropdown
+      function populateIncidentTypes(data) {
+        const uniqueTypes = [...new Set(
+          data.map(d => d.incident_type_label).filter(v => v && v.trim())
+        )].sort();
+
+        uniqueTypes.forEach(type => {
+          const option = document.createElement("option");
+          option.value = type.trim().toLowerCase();
+          option.textContent = type;
+          incidentTypeFilter.appendChild(option);
+        });
+      }
+
+      // Populate legal issues dropdown
+      function populateLegalIssues(data) {
+        const allIssues = new Set();
+        data.forEach(d => d.key_issues.forEach(issue => allIssues.add(issue)));
+        
+        [...allIssues].sort().forEach(issue => {
+          const option = document.createElement("option");
+          option.value = issue.toLowerCase();
+          option.textContent = issue.charAt(0).toUpperCase() + issue.slice(1);
+          issueFilter.appendChild(option);
+        });
+      }
+
+      // Filter functions
+      function incidentMatchesFilters(incident) {
+        const selectedType = incidentTypeFilter.value;
+        const selectedSeverity = severityFilter.value;
+        const startDate = parseDate(incidentStartDate.value);
+        const endDate = parseDate(incidentEndDate.value);
+
+        if (selectedType !== "all" && incident.incident_type !== selectedType) return false;
+        if (selectedSeverity !== "all" && incident.severity !== selectedSeverity) return false;
+        if (startDate && incident.parsedDate && incident.parsedDate < startDate) return false;
+        if (endDate && incident.parsedDate && incident.parsedDate > endDate) return false;
+
+        return true;
+      }
+
+      function caseMatchesFilters(caseData) {
+        const selectedCourt = courtLevelFilter.value;
+        const selectedOutcome = outcomeFilter.value;
+        const startYear = parseInt(caseStartYear.value) || null;
+        const endYear = parseInt(caseEndYear.value) || null;
+        const selectedIssue = issueFilter.value;
+
+        if (selectedCourt === "federal_high" && caseData.court_category !== "federal") return false;
+        if (selectedCourt === "state_other" && caseData.court_category !== "state") return false;
+        if (selectedOutcome !== "all" && caseData.outcome !== selectedOutcome) return false;
+        if (startYear && caseData.year_decided && caseData.year_decided < startYear) return false;
+        if (endYear && caseData.year_decided && caseData.year_decided > endYear) return false;
+        if (selectedIssue !== "all" && !caseData.key_issues.some(i => i.toLowerCase() === selectedIssue)) return false;
+
+        return true;
+      }
+
+      // Create incident marker
+      function createIncidentMarker(incident) {
+        const color = SEVERITY_COLORS[incident.severity] || "#9f7aea";
+        
+        const marker = L.circleMarker([incident.latitude, incident.longitude], {
+          radius: 8,
+          weight: 2,
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.7,
+        });
+
+        const popup = `
+          <div class="popup-title">${incident.title}</div>
+          <div class="popup-subtitle">${incident.location}</div>
+          <div>
+            <span class="popup-badge badge-${incident.severity}">${incident.severity_label}</span>
+            <span class="popup-badge" style="background: rgba(159, 122, 234, 0.2); color: #9f7aea;">${incident.incident_type_label}</span>
+          </div>
+          <div class="popup-section">
+            <div class="popup-section-title">Date</div>
+            ${incident.date || "Not specified"}
+          </div>
+          <div class="popup-section">
+            <div class="popup-section-title">Victim Group</div>
+            ${incident.victim_identity}
+          </div>
+          <div class="popup-section">
+            <div class="popup-section-title">Description</div>
+            ${incident.description}
+          </div>
+          ${incident.perpetrator_info && incident.perpetrator_info !== "Not mentioned" ? `
+            <div class="popup-section">
+              <div class="popup-section-title">Perpetrator Info</div>
+              ${incident.perpetrator_info}
+            </div>
+          ` : ""}
+          ${incident.url ? `
+            <a href="${incident.url}" target="_blank" rel="noopener" class="popup-link">
+              Read Source →
+            </a>
+          ` : ""}
+        `;
+
+        marker.bindPopup(popup, { maxWidth: 350 });
+        return marker;
+      }
+
+      // Create case marker
+      function createCaseMarker(caseData) {
+        const color = COURT_COLORS[caseData.court_category];
+        
+        // Use a custom div icon for cases
+        const icon = L.divIcon({
+          className: "case-marker",
+          html: `<div style="
+            width: 24px;
+            height: 24px;
+            background: ${color};
+            border: 3px solid rgba(255,255,255,0.4);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+          ">⚖</div>`,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12],
+        });
+
+        const marker = L.marker([caseData.latitude, caseData.longitude], { icon });
+
+        const outcomeBadge = caseData.outcome === "won" ? "badge-won" 
+          : caseData.outcome === "lost" ? "badge-lost" 
+          : "badge-ongoing";
+        
+        const courtBadge = caseData.court_category === "federal" ? "badge-federal" : "badge-state";
+
+        const popup = `
+          <div class="popup-title">${caseData.case_name}</div>
+          <div class="popup-subtitle">${caseData.court_level} • ${caseData.year_decided} • ${caseData.location}</div>
+          <div>
+            <span class="popup-badge ${outcomeBadge}">${caseData.outcome}</span>
+            <span class="popup-badge ${courtBadge}">${caseData.court_category === "federal" ? "Federal/High" : "State"}</span>
+          </div>
+          <div class="popup-section">
+            <div class="popup-section-title">Key Issues</div>
+            <div class="popup-issues">
+              ${caseData.key_issues.map(issue => `<span class="issue-tag">${issue}</span>`).join("")}
+            </div>
+          </div>
+          <div class="popup-section">
+            <div class="popup-section-title">Summary</div>
+            ${caseData.summary}
+          </div>
+          ${caseData.significance ? `
+            <div class="popup-section">
+              <div class="popup-section-title">Significance</div>
+              ${caseData.significance}
+            </div>
+          ` : ""}
+          ${caseData.judgment_url ? `
+            <a href="${caseData.judgment_url}" target="_blank" rel="noopener" class="popup-link">
+              View Judgment →
+            </a>
+          ` : ""}
+        `;
+
+        marker.bindPopup(popup, { maxWidth: 350 });
+        return marker;
+      }
+
+      // Render markers based on current view
+      function renderMarkers() {
+        if (!map) return;
+
+        incidentsLayer.clearLayers();
+        casesLayer.clearLayers();
+
+        let incidentsCount = 0;
+        let casesCount = 0;
+        const allBounds = [];
+
+        // Render incidents if showing
+        if (currentView === "incidents" || currentView === "both") {
+          const filteredIncidents = incidentsWithCoords.filter(incidentMatchesFilters);
+          filteredIncidents.forEach(incident => {
+            const marker = createIncidentMarker(incident);
+            incidentsLayer.addLayer(marker);
+            allBounds.push([incident.latitude, incident.longitude]);
+          });
+          incidentsCount = filteredIncidents.length;
+        }
+
+        // Render cases if showing
+        if (currentView === "cases" || currentView === "both") {
+          const filteredCases = casesWithCoords.filter(caseMatchesFilters);
+          filteredCases.forEach(caseData => {
+            const marker = createCaseMarker(caseData);
+            casesLayer.addLayer(marker);
+            allBounds.push([caseData.latitude, caseData.longitude]);
+          });
+          casesCount = filteredCases.length;
+        }
+
+        // Fit bounds
+        if (allBounds.length > 0) {
+          try {
+            map.fitBounds(allBounds, { padding: [50, 50] });
+          } catch (e) {
+            map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+          }
+        } else {
+          map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+        }
+
+        // Update status
+        updateStatus(incidentsCount, casesCount);
+      }
+
+      function updateStatus(incidentsCount, casesCount) {
+        const incidentsMissing = incidentsRaw.length - incidentsWithCoords.length;
+        const casesMissing = casesRaw.length - casesWithCoords.length;
+
+        let statusMsg = "";
+        
+        if (currentView === "incidents") {
+          statusMsg = `Showing ${incidentsCount} of ${incidentsRaw.length} incidents`;
+          if (incidentsMissing > 0) statusMsg += ` (${incidentsMissing} missing coordinates)`;
+        } else if (currentView === "cases") {
+          statusMsg = `Showing ${casesCount} of ${casesRaw.length} legal cases`;
+          if (casesMissing > 0) statusMsg += ` (${casesMissing} missing coordinates)`;
+        } else {
+          statusMsg = `Showing ${incidentsCount} incidents and ${casesCount} legal cases`;
+        }
+
+        statusText.textContent = statusMsg;
+      }
+
+      // View toggle
+      function setView(view) {
+        currentView = view;
+        
+        toggleBtns.forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.view === view);
+        });
+
+        // Show/hide filter panels
+        incidentsFilters.classList.toggle("hidden", view === "cases");
+        casesFilters.classList.toggle("hidden", view === "incidents");
+
+        renderMarkers();
+      }
+
+      // Reset filters
+      function resetIncidentFiltersHandler() {
+        incidentTypeFilter.value = "all";
+        severityFilter.value = "all";
+        incidentStartDate.value = "";
+        incidentEndDate.value = "";
+        renderMarkers();
+      }
+
+      function resetCaseFiltersHandler() {
+        courtLevelFilter.value = "all";
+        outcomeFilter.value = "all";
+        caseStartYear.value = "";
+        caseEndYear.value = "";
+        issueFilter.value = "all";
+        renderMarkers();
+      }
+
+      // Load data
+      function loadIncidents() {
+        return new Promise((resolve, reject) => {
+          Papa.parse(INCIDENTS_PATH, {
+            header: true,
+            download: true,
+            skipEmptyLines: true,
+            complete: (results) => {
+              incidentsRaw = results.data.filter(row => row.title && row.title.trim());
+              incidentsWithCoords = incidentsRaw
+                .map(normalizeIncident)
+                .filter(i => i.latitude && i.longitude);
+              
+              populateIncidentTypes(incidentsRaw.map(normalizeIncident));
+              resolve();
+            },
+            error: (err) => {
+              console.error("Failed to load incidents:", err);
+              reject(err);
+            },
+          });
+        });
+      }
+
+      function loadCases() {
+        return new Promise((resolve, reject) => {
+          Papa.parse(CASES_PATH, {
+            header: true,
+            download: true,
+            skipEmptyLines: true,
+            complete: (results) => {
+              casesRaw = results.data.filter(row => row.case_name && row.case_name.trim());
+              casesWithCoords = casesRaw
+                .map(normalizeCase)
+                .filter(c => c.latitude && c.longitude);
+              
+              populateLegalIssues(casesWithCoords);
+              resolve();
+            },
+            error: (err) => {
+              console.error("Failed to load cases:", err);
+              reject(err);
+            },
+          });
+        });
+      }
+
+      // Event listeners
+      toggleBtns.forEach(btn => {
+        btn.addEventListener("click", () => setView(btn.dataset.view));
+      });
+
+      applyIncidentFilters.addEventListener("click", renderMarkers);
+      resetIncidentFilters.addEventListener("click", resetIncidentFiltersHandler);
+      applyCaseFilters.addEventListener("click", renderMarkers);
+      resetCaseFilters.addEventListener("click", resetCaseFiltersHandler);
+
+      // Initialize
+      async function initializeApp() {
+        initializeMap();
+        
+        setTimeout(async () => {
+          statusText.textContent = "Loading data...";
+          
+          try {
+            await Promise.all([loadIncidents(), loadCases()]);
+            statusText.textContent = `Loaded ${incidentsWithCoords.length} incidents and ${casesWithCoords.length} legal cases.`;
+            renderMarkers();
+          } catch (error) {
+            statusText.textContent = "Error loading data. Make sure the server is running.";
+          }
+        }, 300);
+      }
+
+      if (document.readyState === "complete") {
+        initializeApp();
+      } else {
+        window.addEventListener("load", initializeApp);
+      }
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+

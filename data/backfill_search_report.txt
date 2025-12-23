@@ -1,0 +1,79 @@
+================================================================================
+BACKFILL SEARCH REPORT: 2015-2019
+Generated: 2025-12-03 10:34:51
+================================================================================
+
+SUMMARY
+----------------------------------------
+Total search queries executed: 38
+Total articles found: 4530
+Articles processed with AI: 4529
+New hate crime incidents identified: 43
+Duplicate articles skipped: 1801
+Run duration: 3:53:51
+
+YEAR-BY-YEAR BREAKDOWN
+----------------------------------------
+  2015:    0 articles,   0 incidents
+  2016:    0 articles,   0 incidents
+  2017: 3299 articles,  26 incidents
+  2018: 1883 articles,  15 incidents
+  2019: 1383 articles,   2 incidents
+
+INCIDENTS BY TYPE
+----------------------------------------
+  murder: 18
+  assault: 13
+  harassment: 4
+  hate_speech: 4
+  threat: 2
+  vandalism: 1
+  rape: 1
+
+INCIDENTS BY SEVERITY
+----------------------------------------
+  critical: 18
+  high: 7
+  medium: 14
+  low: 4
+
+INCIDENTS BY LOCATION (Top 15)
+----------------------------------------
+  Sydney: 11
+  Manly: 5
+  Darlinghurst: 2
+  Perth: 2
+  unknown: 2
+  Sydney cliff: 1
+  Rushcutters Bay: 1
+  Bondi Beach: 1
+  Sydney Cliff: 1
+  cliff in undisclosed location: 1
+  Australia inquest did not specify a specific location: 1
+  Melbourne: 1
+  Fried chicken shop in Sydney: 1
+  Sydney CBD: 1
+  Sale: 1
+
+DATA QUALITY ASSESSMENT
+----------------------------------------
+  Incidents with coordinates: 30/43 (69.8%)
+  Incidents with dates: 2/43 (4.7%)
+
+  Estimated Data Completeness by Year:
+    2015: Limited (0 incidents found)
+    2016: Limited (0 incidents found)
+    2017: Good (26 incidents found)
+    2018: Partial (15 incidents found)
+    2019: Limited (2 incidents found)
+
+NOTES
+----------------------------------------
+  - Older articles (2015-2016) may have less detail available
+  - Some articles may be deleted or unavailable
+  - Marriage equality period (2017) may show spike in incidents
+  - Regional/rural incidents likely underrepresented
+
+================================================================================
+END OF REPORT
+================================================================================
