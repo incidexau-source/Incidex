@@ -124,6 +124,143 @@ class IncidentExtractor:
         logger.debug(f"Article filtered out by keywords ({matches} matches)")
         return False
     
+    def _parse_json_response(self, response_text: str) -> Optional[Dict[str, Any]]:
+        """
+        Robustly parse JSON response from GPT-4, handling edge cases.
+        
+        Args:
+            response_text: Raw response text from GPT-4
+            
+        Returns:
+            Parsed dictionary or None if parsing fails
+        """
+        if not response_text:
+            logger.warning("Empty response text from GPT-4")
+            return None
+        
+        # Log raw response for debugging
+        logger.debug(f"Raw GPT-4 response: {response_text[:500]}")  # First 500 chars for debugging
+        
+        # Clean up response text
+        cleaned_text = response_text.strip()
+        
+        # Remove markdown code blocks if present (even though we request JSON)
+        if cleaned_text.startswith("```"):
+            # Find the first ``` and remove it
+            parts = cleaned_text.split("```", 2)
+            if len(parts) >= 3:
+                cleaned_text = parts[1].strip()
+                # Remove language identifier (e.g., "json")
+                if cleaned_text.startswith("json"):
+                    cleaned_text = cleaned_text[4:].strip()
+                elif cleaned_text.startswith("JSON"):
+                    cleaned_text = cleaned_text[4:].strip()
+        
+        # Try to parse JSON with error handling
+        try:
+            # First, try direct parsing
+            result = json.loads(cleaned_text)
+            return result
+        except json.JSONDecodeError as e:
+            logger.debug(f"Initial JSON parse failed: {e}")
+            
+            # Try to extract JSON object from text if it's wrapped in other text
+            # Look for first { and last } - this handles cases where GPT adds explanatory text
+            start_idx = cleaned_text.find('{')
+            end_idx = cleaned_text.rfind('}')
+            if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+                json_snippet = cleaned_text[start_idx:end_idx + 1]
+                try:
+                    result = json.loads(json_snippet)
+                    logger.debug("Successfully parsed after extracting JSON snippet")
+                    return result
+                except json.JSONDecodeError as e2:
+                    logger.debug(f"JSON snippet extraction also failed: {e2}")
+            
+            # If all else fails, log the error with full context
+            logger.error(f"Failed to parse JSON response after all attempts: {e}")
+            logger.error(f"Problematic text (first 500 chars): {cleaned_text[:500]}")
+            # Also log the full response if it's not too long
+            if len(cleaned_text) <= 1000:
+                logger.error(f"Full problematic response: {cleaned_text}")
+            return None
+    
+    def _validate_and_normalize_response(self, result: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """
+        Validate and normalize the parsed response, providing fallback values.
+        
+        Args:
+            result: Parsed JSON dictionary from GPT-4
+            
+        Returns:
+            Validated and normalized dictionary, or None if invalid
+        """
+        if not isinstance(result, dict):
+            logger.warning("Response is not a dictionary")
+            return None
+        
+        # Check if this is a hate crime - if not, return None
+        is_hate_crime = result.get("is_hate_crime", False)
+        if not is_hate_crime:
+            logger.debug("GPT-4 determined this is not a hate crime incident")
+            return None
+        
+        # Validate and normalize incident_type with fallback
+        incident_type = result.get("incident_type")
+        if not incident_type or incident_type not in INCIDENT_TYPES:
+            logger.warning(f"Invalid or missing incident_type '{incident_type}', defaulting to 'other'")
+            incident_type = "other"
+        
+        # Validate and normalize victim_identity with fallback
+        victim_identity = result.get("victim_identity")
+        if not victim_identity or victim_identity not in VICTIM_IDENTITIES:
+            logger.warning(f"Invalid or missing victim_identity '{victim_identity}', defaulting to 'unknown'")
+            victim_identity = "unknown"
+        
+        # Extract other fields with fallbacks
+        location = result.get("location")
+        if location is None:
+            location = "unknown"
+        else:
+            location = str(location).strip()
+            if not location:
+                location = "unknown"
+        
+        date_of_incident = result.get("date_of_incident")
+        if date_of_incident is None:
+            date_of_incident = result.get("date")  # Try alternate field name
+        if date_of_incident is None:
+            date_of_incident = None
+        else:
+            date_of_incident = str(date_of_incident).strip() if date_of_incident else None
+        
+        description = result.get("description")
+        if description is None:
+            description = ""
+        else:
+            description = str(description).strip()
+        
+        confidence = result.get("confidence")
+        if confidence is None:
+            confidence = 0.5
+        else:
+            try:
+                confidence = float(confidence)
+                # Clamp to valid range
+                confidence = max(0.0, min(1.0, confidence))
+            except (ValueError, TypeError):
+                confidence = 0.5
+        
+        return {
+            "is_hate_crime": True,
+            "incident_type": incident_type,
+            "victim_identity": victim_identity,
+            "location": location,
+            "date_of_incident": date_of_incident,
+            "description": description,
+            "confidence": confidence,
+        }
+    
     def extract_incident(self, title: str, article_text: str, url: str) -> Optional[Dict[str, Any]]:
         """
         Extract incident details from article using GPT-4.
@@ -134,7 +271,7 @@ class IncidentExtractor:
             url: Article URL (for attribution)
             
         Returns:
-            Dictionary with incident details, or None if not a hate crime
+            Dictionary with incident details, or None if not a hate crime or if extraction fails
         """
         # Pre-filter with keywords
         if not self.passes_keyword_filter(title, article_text or ""):
@@ -154,7 +291,7 @@ class IncidentExtractor:
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert at identifying and extracting LGBTIQ+ hate crime incidents from news articles. Extract structured data accurately and consistently."
+                        "content": "You are an expert at identifying and extracting LGBTIQ+ hate crime incidents from news articles. Extract structured data accurately and consistently. Always return valid JSON."
                     },
                     {
                         "role": "user",
@@ -167,46 +304,27 @@ class IncidentExtractor:
             )
             
             result_text = response.choices[0].message.content.strip()
-            result = json.loads(result_text)
             
-            # Validate response structure
-            if not result.get("is_hate_crime"):
-                logger.debug("GPT-4 determined this is not a hate crime incident")
+            # Parse JSON with robust error handling
+            result = self._parse_json_response(result_text)
+            if result is None:
+                logger.warning("Failed to parse JSON response from GPT-4")
                 return None
             
-            # Validate and normalize incident type
-            incident_type = result.get("incident_type", "other")
-            if incident_type not in INCIDENT_TYPES:
-                logger.warning(f"Invalid incident_type '{incident_type}', defaulting to 'other'")
-                incident_type = "other"
+            # Validate and normalize the response
+            validated_result = self._validate_and_normalize_response(result)
+            if validated_result is None:
+                # Not a hate crime or invalid response
+                return None
             
-            # Validate and normalize victim identity
-            victim_identity = result.get("victim_identity", "unknown")
-            if victim_identity not in VICTIM_IDENTITIES:
-                logger.warning(f"Invalid victim_identity '{victim_identity}', defaulting to 'unknown'")
-                victim_identity = "unknown"
+            # Add article URL to the incident
+            validated_result["article_url"] = url
             
-            # Build structured incident data
-            incident = {
-                "is_hate_crime": True,
-                "incident_type": incident_type,
-                "victim_identity": victim_identity,
-                "location": result.get("location", "").strip(),
-                "date_of_incident": result.get("date_of_incident"),  # YYYY-MM-DD format
-                "description": result.get("description", "").strip(),
-                "confidence": result.get("confidence", 0.5),  # Optional confidence score
-                "article_url": url,
-            }
+            logger.info(f"Extracted incident: {validated_result['incident_type']} - {validated_result['location']}")
+            return validated_result
             
-            logger.info(f"Extracted incident: {incident_type} - {incident['location']}")
-            return incident
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse GPT-4 JSON response: {e}")
-            logger.debug(f"Response was: {result_text}")
-            return None
         except Exception as e:
-            logger.error(f"Error extracting incident: {e}")
+            logger.error(f"Error extracting incident from {url}: {e}", exc_info=True)
             return None
     
     def _build_extraction_prompt(self, title: str, article_text: str) -> str:
