@@ -1,0 +1,36 @@
+﻿name: Parliamentary Tracker
+
+on:
+  schedule:
+    - cron: '0 23 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  track-parliament:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml python-dotenv openai
+      
+      - name: Run parliamentary tracker
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python run_parliamentary_tracking.py
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/parliamentary-*.csv data/mp-alignment.csv data/policy-landscape.csv
+          git commit -m "Update parliamentary tracking data" || true
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/incidexau-source/Incidex.git
