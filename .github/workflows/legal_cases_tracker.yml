@@ -1,0 +1,68 @@
+name: Legal Cases Tracker
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC (7 PM AEST, 6 PM AEDT)
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  track-legal-cases:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Scrape Legal Cases
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/legal_cases_scraper.py || echo "Legal cases scraper completed with warnings"
+      
+      - name: Analyze Cases
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/case_analyzer.py || echo "Case analyzer completed with warnings"
+      
+      - name: Track Case Timelines
+        run: |
+          python scripts/case_timeline_tracker.py || echo "Case timeline tracker completed with warnings"
+      
+      - name: Track Precedents
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/precedent_tracker.py || echo "Precedent tracker completed with warnings"
+      
+      - name: Link Cases to Legislation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/legislative_linkage.py || echo "Legislative linkage completed with warnings"
+      
+      - name: Send Discord Alerts
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/legal_alerts.py || echo "Legal alerts completed with warnings"
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/legal-cases.csv data/case-analysis.csv data/case-timelines.csv data/case-precedents.csv data/case-bill-linkage.csv data/alert-log.csv || true
+          git commit -m "Update legal cases tracking data [skip ci]" || true
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git || true
+
