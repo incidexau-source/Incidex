@@ -28,16 +28,24 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: python scripts/rss_monitor.py
       
-        - name: Commit and push changes
+      - name: Run Parliamentary Tracking
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          FORCE_PARLIAMENTARY_TRACKING: ${{ github.event_name == 'workflow_dispatch' && 'true' || '' }}
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add data/*.csv
-          git commit -m "Update incident data" || true
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/incidexau-source/Incidex.git
-
-            - name: Run Discord hate crime alerts
+          python scripts/run_parliamentary_tracking.py || echo "Parliamentary tracking completed with warnings"
+      
+      - name: Run Discord hate crime alerts
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python hate_crime_alerts.py
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/*.csv data/cache/*.json || true
+          git commit -m "Update parliamentary tracking data" || true
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git || true
 
