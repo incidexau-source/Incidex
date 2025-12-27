@@ -1,0 +1,267 @@
+{
+    "jurisdiction": "TASMANIA",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Anti-Discrimination Act 1998 (Tas)",
+        "primary_act_citation": "Tas Act No. 46 of 1998",
+        "primary_act_url": "https://www.legislation.tas.gov.au/view/html/inforce/current/act-1998-046",
+        "other_relevant_acts": []
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Sexual orientation - means heterosexuality, homosexuality, bisexuality or asexuality",
+            "includes_bisexual": true,
+            "includes_asexual": true,
+            "source": "Anti-Discrimination Act 1998 (Tas), s 3",
+            "year_added": 1999
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity - in relation to a person, means the gender with which the person identifies",
+            "includes_non_binary": true,
+            "includes_gender_diverse": true,
+            "source": "Anti-Discrimination Act 1998 (Tas), s 3",
+            "year_added": 2019,
+            "notes": "Tasmania has one of the most inclusive gender identity definitions in Australia"
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "intersex variations of sex characteristics",
+            "definition_in_act": "Intersex variations of sex characteristics - means a person's status as having physical, hormonal or genetic features that are: (a) neither wholly female nor wholly male; or (b) a combination of female and male; or (c) neither female nor male",
+            "year_added": 2019,
+            "source": "Anti-Discrimination Act 1998 (Tas), s 3",
+            "notes": "Tasmania was the first Australian jurisdiction to update terminology from 'intersex status' to 'intersex variations of sex characteristics'"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Employment and work-related areas",
+            "Education",
+            "Provision of goods, services and facilities",
+            "Accommodation",
+            "Disposal of land",
+            "Clubs and associations",
+            "Access to places and vehicles"
+        ],
+        "areas_excluded_or_limited": [],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "Tasmania has the STRONGEST protections against religious discrimination in Australia. Religious exemptions only allow religious organisations to discriminate on the basis of people's religious beliefs, NOT on the basis of sexual orientation, gender identity or intersex variations of sex characteristics. This means LGBTIQ+ people are fully protected against discrimination by religious organisations, including religious schools.",
+                "is_broad": false,
+                "source": "Anti-Discrimination Act 1998 (Tas), s 52"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in Tasmania",
+                "source": "N/A"
+            },
+            "other_exemptions": []
+        },
+        "complaint_body": {
+            "name": "Equal Opportunity Tasmania (formerly Anti-Discrimination Tasmania)",
+            "type": "Commission",
+            "website": "https://www.equalopportunity.tas.gov.au",
+            "phone": "(03) 6165 7515 or 1300 305 062 (statewide)",
+            "email": "office@antidiscrimination.tas.gov.au or office@equalopportunity.tas.gov.au",
+            "time_limit": "12 months from the act of discrimination (Commissioner may accept complaints after this period if reasonable)",
+            "costs_summary": "No fee for lodging a complaint",
+            "source": "Equal Opportunity Tasmania website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": true,
+        "protected_vilification_attributes": [
+            "sexual orientation (including asexual)",
+            "gender identity (including non-binary)",
+            "intersex variations of sex characteristics"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": false
+        },
+        "statutory_basis": [
+            "Anti-Discrimination Act 1998 (Tas), Part 3 - prohibited conduct including vilification"
+        ],
+        "notes": "Tasmania has comprehensive vilification protections for LGBTIQ+ people, covering sexual orientation (including asexual), gender identity (including non-binary), and intersex variations of sex characteristics. Tasmania is one of only 5 Australian jurisdictions with LGBTIQ+ vilification protections.",
+        "source": "Anti-Discrimination Act 1998 (Tas); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTI Liaison Officers",
+        "how_to_contact": [
+            "Call 131 444 and ask for an LGBTI Liaison Officer",
+            "Visit your local police station and request an LGBTI Liaison Officer",
+            "Call 000 in emergencies"
+        ],
+        "source": "Tasmania Police website"
+    },
+    "support_services": [
+        {
+            "name": "Equal Opportunity Tasmania",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://www.equalopportunity.tas.gov.au",
+            "phone": "(03) 6165 7515 or 1300 305 062"
+        },
+        {
+            "name": "Working It Out (WIO)",
+            "role": "LGBTIQ+ community support and advocacy",
+            "website": "https://www.workingitout.org.au",
+            "phone": "(03) 6231 1200"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Sexual orientation (including asexual), gender identity (including non-binary) and intersex variations of sex characteristics are all protected",
+        "STRONGEST religious protections in Australia - religious organisations can ONLY discriminate on basis of religious belief, NOT on sexual orientation, gender identity or intersex status",
+        "LGBTIQ+ students and teachers in religious schools are fully protected",
+        "Comprehensive vilification protections for all LGBTIQ+ people",
+        "No small employer exemption",
+        "Tasmania is widely considered to have the best LGBTIQ+ anti-discrimination protections in Australia",
+        "12-month time limit for complaints (extensions possible)"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are heterosexual, gay, lesbian, bisexual, or asexual.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay, lesbian, bisexual, or asexual",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A school cannot expel your child for having same-sex parents",
+                    "A religious school cannot refuse to hire you as a teacher just because you're gay",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "None - Tasmania has the most comprehensive protections in Australia, explicitly including asexual people."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, agender, or any other gender identity.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns",
+                    "You cannot be denied employment because you are transitioning or non-binary",
+                    "A landlord cannot refuse housing because you are trans or non-binary",
+                    "Schools cannot prevent you from using facilities matching your gender identity",
+                    "You cannot be refused service at a shop, restaurant, or doctor because of your gender identity",
+                    "A religious school cannot refuse to hire you as a teacher just because you're trans or non-binary",
+                    "A religious school cannot expel students for being trans or non-binary"
+                ],
+                "limitations": "None - Tasmania has one of the most inclusive gender identity definitions in Australia. Religious organisations can ONLY discriminate based on religious belief, NOT gender identity."
+            },
+            "intersex_variations": {
+                "what_this_means": "You cannot be discriminated against based on intersex variations of sex characteristics (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of sex characteristics",
+                    "A gym cannot refuse you membership because you are intersex",
+                    "A religious school cannot refuse to hire you just because you're intersex"
+                ],
+                "limitations": "None - Tasmania was the first Australian jurisdiction to update terminology from 'intersex status' to 'intersex variations of sex characteristics' (2019)."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity/intersex variations",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being forced to hide your identity at work",
+                    "Being fired because you transition or come out",
+                    "Religious organisations refusing to hire you just because you're LGBTIQ+ (they can only discriminate based on religious belief)"
+                ],
+                "not_protected_from": [
+                    "Performance-based discipline (if you're underperforming for legitimate work reasons)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Schools refusing to enroll your child because you're a same-sex couple",
+                    "Universities discriminating in admissions",
+                    "Teachers intentionally using wrong pronouns",
+                    "Being excluded from school events, sports, or facilities",
+                    "Disciplinary action for being LGBTIQ+",
+                    "Religious schools expelling students for being LGBTIQ+",
+                    "Religious schools refusing to hire LGBTIQ+ teachers just because they're LGBTIQ+"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity or intersex variations",
+                    "Real estate agents refusing to show you properties",
+                    "Being denied mortgage approval because you're LGBTIQ+"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A doctor refusing to treat you",
+                    "Being denied access to public facilities",
+                    "Hotels refusing to book rooms for same-sex couples",
+                    "Hairdressers refusing service",
+                    "Religious organisations refusing to serve you just because you're LGBTIQ+"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation or gender identity",
+                    "Being denied membership in a professional association",
+                    "Being expelled from a club"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "Tasmania has the STRONGEST protections against religious discrimination in Australia. Religious organisations can ONLY discriminate based on religious belief, NOT on sexual orientation, gender identity, or intersex variations.",
+                "what_they_can_do": [
+                    "Religious schools can require staff and students to uphold religious beliefs",
+                    "Religious organisations can make decisions based on whether someone shares their religious faith"
+                ],
+                "what_they_cannot_do": [
+                    "Religious schools cannot refuse to hire someone just for being gay, lesbian, bisexual, asexual, trans, non-binary, or intersex",
+                    "Religious schools cannot expel students for being LGBTIQ+",
+                    "Religious organisations cannot refuse services to LGBTIQ+ people",
+                    "Religious hospitals cannot refuse to hire LGBTIQ+ staff just because they're LGBTIQ+"
+                ],
+                "real_example": "A Catholic school can require teachers to attend Mass and uphold Catholic teachings, but cannot refuse to hire a teacher simply because they are gay, transgender, or intersex. The school can only make employment decisions based on religious belief, not LGBTIQ+ status. This is the strongest protection in Australia.",
+                "if_you_face_discrimination": "Tasmania has the best protections in Australia. If a religious organisation claims they can discriminate against you, they must prove it's based on religious belief, not LGBTIQ+ status. Seek legal advice from Equal Opportunity Tasmania.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "GREEN",
+            "rating_explanation": "Tasmania has the strongest LGBTIQ+ protections in Australia. Sexual orientation (including asexual), gender identity (including non-binary), and intersex variations are all comprehensively protected. Religious organisations can ONLY discriminate based on religious belief, NOT LGBTIQ+ status. Comprehensive vilification protections exist. Tasmania is the gold standard for LGBTIQ+ rights in Australia.",
+            "strengths": [
+                "Sexual orientation (including asexual), gender identity (including non-binary), and intersex variations all protected",
+                "STRONGEST religious protections in Australia - religious organisations can ONLY discriminate based on religious belief, NOT LGBTIQ+ status",
+                "LGBTIQ+ students and teachers in religious schools are fully protected",
+                "Comprehensive vilification protections for all LGBTIQ+ people",
+                "No small employer exemption",
+                "Most inclusive definitions in Australia",
+                "Widely considered the best LGBTIQ+ protections in Australia"
+            ],
+            "gaps": [
+                "None identified - Tasmania is the gold standard"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Anti-Discrimination Act 1998 (Tas) - https://www.legislation.tas.gov.au/view/html/inforce/current/act-1998-046"
+        ],
+        "official_guides": [
+            "Equal Opportunity Tasmania - https://www.equalopportunity.tas.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws"
+        ]
+    }
+}

@@ -1,0 +1,262 @@
+{
+    "jurisdiction": "SOUTH AUSTRALIA",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Equal Opportunity Act 1984 (SA)",
+        "primary_act_citation": "SA Act No. 95 of 1984",
+        "primary_act_url": "https://www.legislation.sa.gov.au/lz?path=%2FC%2FA%2FEQUAL%20OPPORTUNITY%20ACT%201984",
+        "other_relevant_acts": []
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Sexuality - includes heterosexuality, homosexuality and bisexuality",
+            "includes_bisexual": true,
+            "includes_asexual": false,
+            "source": "Equal Opportunity Act 1984 (SA), s 5",
+            "year_added": 1984
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+            "includes_non_binary": "unclear",
+            "includes_gender_diverse": true,
+            "source": "Equal Opportunity Act 1984 (SA), s 5",
+            "year_added": 2009
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "intersex status",
+            "definition_in_act": "Intersex status - means the status of having physical, hormonal or genetic features that are: (a) neither wholly female nor wholly male; or (b) a combination of female and male; or (c) neither female nor male",
+            "year_added": 2016,
+            "source": "Equal Opportunity Act 1984 (SA), s 5"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Employment",
+            "Education",
+            "Provision of goods and services",
+            "Accommodation",
+            "Disposal of land",
+            "Clubs and associations",
+            "Conferral of qualifications",
+            "Advertising"
+        ],
+        "areas_excluded_or_limited": [
+            "Religious organisations have broad exemptions",
+            "Dress and appearance standards (gender identity only)"
+        ],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "Broad religious exemptions allow religious organisations to discriminate against LGBTIQ+ people. For students in religious schools, protections are unclear - section 37 provides protections but these are likely overridden by broad religious exemptions in section 50(1)(c). For teachers in religious schools, discrimination is permitted but subject to procedural requirements (written policy must be provided to employees, students, parents, and public on request).",
+                "is_broad": true,
+                "source": "Equal Opportunity Act 1984 (SA), s 37, s 50"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in SA",
+                "source": "N/A"
+            },
+            "other_exemptions": [
+                {
+                    "type": "Dress and appearance standards (gender identity only)",
+                    "summary": "Discrimination on ground of gender identity is lawful in relation to employment if the discrimination is for purposes of enforcing standards of appearance and dress reasonably required for the employment",
+                    "source": "Equal Opportunity Act 1984 (SA), s 66A"
+                }
+            ]
+        },
+        "complaint_body": {
+            "name": "Equal Opportunity Commission of South Australia",
+            "type": "Commission",
+            "website": "https://www.equalopportunity.sa.gov.au",
+            "phone": "(08) 7322 7070",
+            "email": "contact@eoc.sa.gov.au",
+            "time_limit": "12 months from the act of discrimination (extensions may be granted)",
+            "costs_summary": "No fee for lodging a complaint",
+            "source": "Equal Opportunity Commission SA website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": false,
+        "protected_vilification_attributes": [
+            "race"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": false
+        },
+        "statutory_basis": [
+            "Equal Opportunity Act 1984 (SA), Part 4A - racial vilification only"
+        ],
+        "notes": "SA has vilification laws for race only. There are NO vilification protections for LGBTIQ+ people as at 31 December 2025.",
+        "source": "Equal Opportunity Act 1984 (SA); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTI Liaison Officers",
+        "how_to_contact": [
+            "Call 131 444 and ask for an LGBTI Liaison Officer",
+            "Visit your local police station and request an LGBTI Liaison Officer",
+            "Call 000 in emergencies"
+        ],
+        "source": "SA Police website"
+    },
+    "support_services": [
+        {
+            "name": "Equal Opportunity Commission SA",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://www.equalopportunity.sa.gov.au",
+            "phone": "(08) 7322 7070"
+        },
+        {
+            "name": "Shine SA",
+            "role": "Sexual health and LGBTIQ+ support",
+            "website": "https://www.shinesa.org.au",
+            "phone": "(08) 8300 5300"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Sexuality, gender identity and intersex status are all protected attributes",
+        "Broad religious exemptions allow religious organisations to discriminate in most circumstances",
+        "Protection for LGBTIQ+ students in religious schools is unclear (likely not protected despite section 37)",
+        "Religious schools can discriminate against LGBTIQ+ teachers but must have written policy provided to employees, students, parents and public",
+        "Discrimination on ground of gender identity is lawful for enforcing dress and appearance standards",
+        "No vilification protections for LGBTIQ+ people (only race protected)",
+        "No small employer exemption",
+        "12-month time limit for complaints"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are heterosexual, gay, lesbian, or bisexual.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay, lesbian, or bisexual",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "Asexual people are not explicitly protected. Broad religious exemptions mean religious organisations can still discriminate in many circumstances."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, or agender.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns",
+                    "You cannot be denied employment because you are transitioning or non-binary",
+                    "A landlord cannot refuse housing because you are trans or non-binary"
+                ],
+                "limitations": "Non-binary protection is unclear. Employers can discriminate to enforce dress and appearance standards. Broad religious exemptions mean religious schools can likely discriminate against LGBTIQ+ students and staff."
+            },
+            "intersex_status": {
+                "what_this_means": "You cannot be discriminated against based on intersex status (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of intersex status",
+                    "A gym cannot refuse you membership because you are intersex"
+                ],
+                "limitations": "Protection added in 2016. However, broad religious exemptions may allow religious organisations to discriminate."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity/intersex status",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being fired because you transition or come out"
+                ],
+                "not_protected_from": [
+                    "Discrimination by religious organisations (broad exemptions)",
+                    "Dress and appearance standards (employers can discriminate on ground of gender identity to enforce these)",
+                    "Religious schools can likely discriminate against LGBTIQ+ teachers (must provide written policy)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Public schools refusing to enroll your child because you're a same-sex couple",
+                    "Public universities discriminating in admissions"
+                ],
+                "not_protected_from": [
+                    "Religious schools can likely discriminate against LGBTIQ+ students (protection unclear despite section 37)"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity or intersex status",
+                    "Real estate agents refusing to show you properties"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A public hospital refusing to treat you",
+                    "Hotels refusing to book rooms for same-sex couples"
+                ],
+                "not_protected_from": [
+                    "Discrimination by religious organisations (broad exemptions)"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation or gender identity",
+                    "Being denied membership in a professional association"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "SA has broad religious exemptions. Religious organisations can discriminate against LGBTIQ+ people in most circumstances. Protection for students in religious schools is unclear.",
+                "what_they_can_do": [
+                    "Religious schools can likely discriminate against LGBTIQ+ students (despite section 37, likely overridden by broad exemptions)",
+                    "Religious schools can discriminate against LGBTIQ+ teachers (must provide written policy to employees, students, parents, and public)",
+                    "Religious organisations can discriminate in service provision"
+                ],
+                "what_they_cannot_do": [
+                    "Religious schools must provide written policy on discrimination to employees, students, parents, and public on request"
+                ],
+                "real_example": "A religious school can likely discriminate against LGBTIQ+ students and teachers, but must have a written policy that is provided to employees, students, parents, and available to the public on request. The protection for students is unclear - section 37 appears to protect them, but this is likely overridden by broad religious exemptions in section 50.",
+                "if_you_face_discrimination": "SA's protections are unclear, especially for students in religious schools. If you face discrimination, seek legal advice from Equal Opportunity Commission SA to understand if the exemptions apply to your situation.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "AMBER",
+            "rating_explanation": "SA has moderate protections. Sexuality, gender identity, and intersex status are all protected. However, broad religious exemptions allow religious organisations to discriminate in most circumstances. Protection for LGBTIQ+ students in religious schools is unclear. No vilification protections. Employers can discriminate on ground of gender identity to enforce dress and appearance standards.",
+            "strengths": [
+                "Sexuality, gender identity, and intersex status are all protected attributes",
+                "No small employer exemption",
+                "Religious schools must provide written policy on discrimination"
+            ],
+            "gaps": [
+                "Broad religious exemptions allow religious organisations to discriminate in most circumstances",
+                "Protection for LGBTIQ+ students in religious schools is unclear (section 37 likely overridden by exemptions)",
+                "Religious schools can discriminate against LGBTIQ+ teachers (with procedural requirements)",
+                "No vilification protections for LGBTIQ+ people (only race protected)",
+                "Employers can discriminate on ground of gender identity to enforce dress and appearance standards",
+                "Non-binary protection unclear"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Equal Opportunity Act 1984 (SA) - https://www.legislation.sa.gov.au/lz?path=%2FC%2FA%2FEQUAL%20OPPORTUNITY%20ACT%201984"
+        ],
+        "official_guides": [
+            "Equal Opportunity Commission SA - https://www.equalopportunity.sa.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws"
+        ]
+    }
+}

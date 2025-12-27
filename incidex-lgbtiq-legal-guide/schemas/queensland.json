@@ -1,0 +1,281 @@
+{
+    "jurisdiction": "QUEENSLAND",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Anti-Discrimination Act 1991 (Qld)",
+        "primary_act_citation": "Qld Act No. 85 of 1991",
+        "primary_act_url": "https://www.legislation.qld.gov.au/view/html/inforce/current/act-1991-085",
+        "other_relevant_acts": [
+            "Anti-Discrimination and Other Legislation Amendment Act 2024 (Qld) - sex characteristics and expanded gender identity definition commenced 29 April 2024",
+            "Respect at Work and Other Matters Amendment Act 2024 (Qld) - additional reforms commence 1 July 2025"
+        ]
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Lawful sexual activity - means sexual activity (other than sexual activity involving a child) that is lawful in Queensland",
+            "includes_bisexual": true,
+            "includes_asexual": "unspecified",
+            "source": "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary)",
+            "year_added": 2002,
+            "notes": "Queensland uses the term 'lawful sexual activity' rather than 'sexual orientation'"
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity means a person's internal experience of their gender, including their sense of their body (which may involve, if freely chosen, modification of bodily appearance or function by medical, surgical or other means) and other expressions of their gender, including their name, dress, speech and behaviour",
+            "includes_non_binary": true,
+            "includes_gender_diverse": true,
+            "source": "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary) - definition expanded 29 April 2024",
+            "year_added": 2002,
+            "notes": "Definition significantly expanded in April 2024 to explicitly protect non-binary and gender diverse people"
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "sex characteristics",
+            "definition_in_act": "Sex characteristics means a person's physical features relating to sex, including the following, whether or not the person has undergone medical intervention: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+            "year_added": 2024,
+            "source": "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary) - added 29 April 2024",
+            "notes": "Sex characteristics added as a new protected attribute on 29 April 2024"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Work",
+            "Education",
+            "Goods and services",
+            "Accommodation",
+            "Clubs and associations",
+            "Administration of state laws",
+            "Local government"
+        ],
+        "areas_excluded_or_limited": [
+            "Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' (Don't Ask Don't Tell policy)",
+            "Work involving care or instruction of children (limited exemption for gender identity - to be repealed)"
+        ],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "Religious organisations do not have a general right to discriminate against LGBTIQ+ employees. However, they can discriminate where acting or not acting in a particular way breaches 'genuine occupational requirements' of the position. LGBTIQ+ students in religious schools are protected. Religious schools cannot 'seek information' about staff sexual orientation or gender identity (Don't Ask Don't Tell policy).",
+                "is_broad": false,
+                "source": "Anti-Discrimination Act 1991 (Qld), s 25, s 109"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in Queensland",
+                "source": "N/A"
+            },
+            "other_exemptions": [
+                {
+                    "type": "Work with children (gender identity only)",
+                    "summary": "Section 28 allowed discrimination on basis of gender identity for work involving care or instruction of minors. This abhorrent provision was repealed by the Births, Deaths and Marriages Registration Act 2022 and is no longer in force as at 31 Dec 2025.",
+                    "source": "Anti-Discrimination Act 1991 (Qld), s 28 (repealed)"
+                }
+            ]
+        },
+        "complaint_body": {
+            "name": "Queensland Human Rights Commission (QHRC)",
+            "type": "Commission",
+            "website": "https://www.qhrc.qld.gov.au",
+            "phone": "1300 130 670",
+            "email": "enquiries@qhrc.qld.gov.au (general) or lgbtiq@qhrc.qld.gov.au (LGBTIQ+ liaison officers)",
+            "time_limit": "12 months from the act of discrimination (extensions may be granted)",
+            "costs_summary": "No fee for lodging a complaint with QHRC",
+            "source": "QHRC website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": true,
+        "protected_vilification_attributes": [
+            "sexual orientation (lawful sexual activity)",
+            "gender identity (including non-binary)",
+            "sex characteristics"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": true
+        },
+        "statutory_basis": [
+            "Anti-Discrimination Act 1991 (Qld), Part 3A - vilification provisions",
+            "Criminal Code Act 1899 (Qld) - serious vilification (criminal)"
+        ],
+        "notes": "Queensland has both civil and criminal vilification protections for LGBTIQ+ people. Following amendments in mid-2023, these protections now fully cover people with non-binary identities and people with variations in sex characteristics. Queensland is one of only 5 Australian jurisdictions with LGBTIQ+ vilification protections.",
+        "source": "Anti-Discrimination Act 1991 (Qld); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTI Liaison Officers",
+        "how_to_contact": [
+            "Call 131 444 (Police Link) and ask for an LGBTI Liaison Officer",
+            "Visit your local police station and request an LGBTI Liaison Officer",
+            "Call 000 in emergencies"
+        ],
+        "source": "Queensland Police Service website"
+    },
+    "support_services": [
+        {
+            "name": "Queensland Human Rights Commission",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://www.qhrc.qld.gov.au",
+            "phone": "1300 130 670",
+            "email": "lgbtiq@qhrc.qld.gov.au (LGBTIQ+ liaison)"
+        },
+        {
+            "name": "Queensland AIDS Council",
+            "role": "LGBTIQ health and community services",
+            "website": "https://www.quac.org.au",
+            "phone": "(07) 3017 1777"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Lawful sexual activity, gender identity (including non-binary) and sex characteristics are all protected (since April 2024 reforms)",
+        "LGBTIQ+ students in religious schools are fully protected",
+        "Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' and operate a Don't Ask Don't Tell policy",
+        "No general religious exemption for employment - limited to genuine occupational requirements",
+        "Full vilification protections (civil and criminal) for LGBTIQ+ people including non-binary and intersex people",
+        "Abhorrent 'work with children' exemption for gender identity was repealed",
+        "No small employer exemption",
+        "12-month time limit for complaints"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against based on your sexual orientation, including if you are gay, lesbian, bisexual, or any other orientation.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay, lesbian, or bisexual",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A school cannot expel your child for having same-sex parents",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "Queensland uses the term 'lawful sexual activity' rather than 'sexual orientation', but this provides comprehensive protection."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, or agender.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns (though religious schools operate 'Don't Ask Don't Tell')",
+                    "You cannot be denied employment because you are transitioning or non-binary",
+                    "A landlord cannot refuse housing because you are trans or non-binary",
+                    "Schools cannot prevent you from using facilities matching your gender identity",
+                    "You cannot be refused service at a shop, restaurant, or doctor because of your gender identity",
+                    "Religious schools cannot expel students for being trans or non-binary"
+                ],
+                "limitations": "Definition expanded in April 2024 to explicitly protect non-binary people. Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' and operate a 'Don't Ask Don't Tell' policy (cannot seek information about staff sexual orientation or gender identity)."
+            },
+            "sex_characteristics": {
+                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of sex characteristics",
+                    "A gym cannot refuse you membership because you are intersex"
+                ],
+                "limitations": "None - Queensland added sex characteristics protection in April 2024 as part of major reforms."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity/sex characteristics",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being forced to hide your identity at work (except in religious schools with 'Don't Ask Don't Tell')",
+                    "Being fired because you transition or come out"
+                ],
+                "not_protected_from": [
+                    "Performance-based discipline (if you're underperforming for legitimate work reasons)",
+                    "Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' (Don't Ask Don't Tell policy)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Schools refusing to enroll your child because you're a same-sex couple",
+                    "Universities discriminating in admissions",
+                    "Teachers intentionally using wrong pronouns",
+                    "Being excluded from school events, sports, or facilities",
+                    "Disciplinary action for being LGBTIQ+",
+                    "Religious schools expelling students for being LGBTIQ+"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity or sex characteristics",
+                    "Real estate agents refusing to show you properties",
+                    "Being denied mortgage approval because you're LGBTIQ+"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A doctor refusing to treat you",
+                    "Being denied access to public facilities",
+                    "Hotels refusing to book rooms for same-sex couples",
+                    "Hairdressers refusing service"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation or gender identity",
+                    "Being denied membership in a professional association",
+                    "Being expelled from a club"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "Queensland protects LGBTIQ+ students in religious schools. Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' and operate a 'Don't Ask Don't Tell' policy.",
+                "what_they_can_do": [
+                    "Religious schools can discriminate against LGBTIQ+ staff where it breaches 'genuine occupational requirements'",
+                    "Religious schools cannot 'seek information' about staff sexual orientation or gender identity (Don't Ask Don't Tell)"
+                ],
+                "what_they_cannot_do": [
+                    "Religious schools cannot expel LGBTIQ+ students",
+                    "Religious schools cannot discriminate against students based on LGBTIQ+ status",
+                    "Religious organisations do not have a general right to discriminate - only where genuine occupational requirements apply"
+                ],
+                "real_example": "A religious school cannot expel a student for being gay or trans. However, the school can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' and operates a 'Don't Ask Don't Tell' policy - they cannot ask staff about their sexual orientation or gender identity, but can discriminate if it becomes known and breaches occupational requirements.",
+                "if_you_face_discrimination": "Queensland protects students strongly. If you're a staff member, the 'genuine occupational requirements' exemption is narrower than in some states. Seek legal advice from QHRC.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "AMBER",
+            "rating_explanation": "Queensland has good protections following major reforms in April 2024. Sexual orientation, gender identity (including non-binary), and sex characteristics are all protected. Students in religious schools are fully protected. Vilification protections are comprehensive. However, religious schools can still discriminate against LGBTIQ+ staff under 'genuine occupational requirements' with a 'Don't Ask Don't Tell' policy.",
+            "strengths": [
+                "Sexual orientation, gender identity (including non-binary), and sex characteristics all protected (since April 2024)",
+                "LGBTIQ+ students in religious schools are fully protected",
+                "Comprehensive vilification protections (civil and criminal) for all LGBTIQ+ people",
+                "Abhorrent 'work with children' exemption for gender identity was repealed",
+                "No small employer exemption",
+                "QHRC has dedicated LGBTIQ+ liaison officers"
+            ],
+            "gaps": [
+                "Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements'",
+                "'Don't Ask Don't Tell' policy for religious school staff",
+                "Government promised new Anti-Discrimination Act before end of 2023 but not delivered as of December 2025"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Anti-Discrimination Act 1991 (Qld) - https://www.legislation.qld.gov.au/view/html/inforce/current/act-1991-085",
+            "Anti-Discrimination and Other Legislation Amendment Act 2024 (Qld)",
+            "Respect at Work and Other Matters Amendment Act 2024 (Qld)"
+        ],
+        "official_guides": [
+            "Queensland Human Rights Commission - https://www.qhrc.qld.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws",
+            "Equality Australia resources"
+        ]
+    }
+}

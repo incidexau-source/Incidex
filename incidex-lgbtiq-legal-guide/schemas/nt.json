@@ -1,0 +1,261 @@
+{
+    "jurisdiction": "NORTHERN TERRITORY",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Anti-Discrimination Act 1992 (NT)",
+        "primary_act_citation": "NT Act No. 80 of 1992",
+        "primary_act_url": "https://legislation.nt.gov.au/en/Legislation/ANTI-DISCRIMINATION-ACT-1992",
+        "other_relevant_acts": [
+            "Anti-Discrimination Amendment Act 2022 (NT) - commenced 3 July 2023",
+            "Anti-Discrimination Amendment Act 2025 (NT) - amendments passed October 2025"
+        ]
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Sexuality - means the sexuality of a person, whether heterosexual, homosexual, lesbian, bisexual or otherwise",
+            "includes_bisexual": true,
+            "includes_asexual": "unspecified",
+            "source": "Anti-Discrimination Act 1992 (NT), s 4",
+            "year_added": 1992
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+            "includes_non_binary": true,
+            "includes_gender_diverse": true,
+            "source": "Anti-Discrimination Act 1992 (NT), s 4",
+            "year_added": 2004
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "sex characteristics",
+            "definition_in_act": "Sex characteristics - means a person's physical features relating to sex, including the following (whether or not the person has undergone medical intervention): (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+            "year_added": 2022,
+            "source": "Anti-Discrimination Act 1992 (NT), s 4 (added late 2022, replaced 'intersex status')"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Work",
+            "Accommodation",
+            "Education",
+            "Provision of goods, services and facilities",
+            "Insurance and superannuation",
+            "Clubs"
+        ],
+        "areas_excluded_or_limited": [],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "NT has narrower religious exemptions than most jurisdictions. The Act only exempts 'an act by a body established for religious purposes if the act is done as part of any religious observance or practice' - this restricts discrimination to acts in relation to religious observance or practice only. Recent changes (July 2023) saw LGBTIQ+ teachers finally protected against discrimination. However, amendments passed in October 2025 re-introduced a religious discrimination exemption (though narrower than previous versions).",
+                "is_broad": false,
+                "source": "Anti-Discrimination Act 1992 (NT), s 51, s 37B (as amended 2023 and 2025)"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in NT",
+                "source": "N/A"
+            },
+            "other_exemptions": []
+        },
+        "complaint_body": {
+            "name": "Northern Territory Anti-Discrimination Commission",
+            "type": "Commission",
+            "website": "https://adc.nt.gov.au",
+            "phone": "(08) 8999 1444 or 1800 813 846 (freecall)",
+            "email": "antidiscrimination@nt.gov.au",
+            "time_limit": "12 months from the act of discrimination (Commission can accept complaints outside this timeframe with valid reason)",
+            "costs_summary": "No fee for lodging a complaint",
+            "source": "NT Anti-Discrimination Commission website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": true,
+        "protected_vilification_attributes": [
+            "sexuality",
+            "gender identity",
+            "sex characteristics"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": false
+        },
+        "statutory_basis": [
+            "Anti-Discrimination Act 1992 (NT), s 20A - offensive behaviour provisions (added late 2022)"
+        ],
+        "notes": "NT added section 20A in late 2022, prohibiting conduct that 'offends, insults, humiliates or intimidates' people on various grounds including sexuality, gender identity and sex characteristics. This makes NT one of only 5 Australian jurisdictions with LGBTIQ+ vilification protections. However, amendments passed in October 2025 altered the prohibition against offensive behaviour.",
+        "source": "Anti-Discrimination Act 1992 (NT); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTI Liaison Officers",
+        "how_to_contact": [
+            "Call 131 444 and ask for an LGBTI Liaison Officer",
+            "Visit your local police station and request an LGBTI Liaison Officer",
+            "Call 000 in emergencies"
+        ],
+        "source": "NT Police website"
+    },
+    "support_services": [
+        {
+            "name": "NT Anti-Discrimination Commission",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://adc.nt.gov.au",
+            "phone": "(08) 8999 1444 or 1800 813 846"
+        },
+        {
+            "name": "Rainbow Territory",
+            "role": "LGBTIQ+ community support and advocacy",
+            "website": "https://www.rainbowterritory.org.au",
+            "phone": "Contact via website"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Sexuality, gender identity and sex characteristics are all protected (sex characteristics added late 2022)",
+        "Narrower religious exemptions than most jurisdictions - discrimination only permitted for acts in relation to religious observance or practice",
+        "LGBTIQ+ teachers protected against discrimination (since July 2023)",
+        "Vilification protections added late 2022 (conduct that offends, insults, humiliates or intimidates on grounds including sexuality, gender identity, sex characteristics)",
+        "October 2025 amendments re-introduced a religious discrimination exemption (narrower than before) and altered offensive behaviour provisions",
+        "Positive duty to eliminate discrimination, sexual harassment and victimisation",
+        "No small employer exemption",
+        "12-month time limit for complaints (extensions possible)"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are heterosexual, gay, lesbian, bisexual, or any other sexual orientation.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay, lesbian, or bisexual",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "Asexual people may or may not be protected (definition says 'or otherwise'). Narrower religious exemptions than most jurisdictions, though October 2025 amendments re-introduced a religious exemption."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, or agender.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns",
+                    "You cannot be denied employment because you are transitioning or non-binary",
+                    "A landlord cannot refuse housing because you are trans or non-binary",
+                    "Schools cannot prevent you from using facilities matching your gender identity",
+                    "You cannot be refused service at a shop, restaurant, or doctor because of your gender identity"
+                ],
+                "limitations": "LGBTIQ+ teachers protected since July 2023. October 2025 amendments re-introduced a narrower religious exemption."
+            },
+            "sex_characteristics": {
+                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of sex characteristics",
+                    "A gym cannot refuse you membership because you are intersex"
+                ],
+                "limitations": "Protection added late 2022, replacing 'intersex status'."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity/sex characteristics",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being forced to hide your identity at work",
+                    "Being fired because you transition or come out"
+                ],
+                "not_protected_from": [
+                    "Performance-based discipline (if you're underperforming for legitimate work reasons)",
+                    "Discrimination for acts in relation to religious observance or practice (narrower than most jurisdictions, but October 2025 amendments re-introduced religious exemption)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Schools refusing to enroll your child because you're a same-sex couple",
+                    "Universities discriminating in admissions",
+                    "Teachers intentionally using wrong pronouns",
+                    "Being excluded from school events, sports, or facilities",
+                    "Disciplinary action for being LGBTIQ+"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity or sex characteristics",
+                    "Real estate agents refusing to show you properties",
+                    "Being denied mortgage approval because you're LGBTIQ+"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A doctor refusing to treat you",
+                    "Being denied access to public facilities",
+                    "Hotels refusing to book rooms for same-sex couples",
+                    "Hairdressers refusing service"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation or gender identity",
+                    "Being denied membership in a professional association",
+                    "Being expelled from a club"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "NT has narrower religious exemptions than most jurisdictions. Discrimination is only permitted for acts in relation to religious observance or practice. LGBTIQ+ teachers were protected in July 2023. However, October 2025 amendments re-introduced a religious exemption (though narrower than before).",
+                "what_they_can_do": [
+                    "Religious organisations can discriminate for acts in relation to religious observance or practice",
+                    "October 2025 amendments re-introduced a religious discrimination exemption (narrower than previous versions)"
+                ],
+                "what_they_cannot_do": [
+                    "Religious organisations cannot discriminate in general employment or service provision (only for acts in relation to religious observance or practice)",
+                    "LGBTIQ+ teachers have been protected since July 2023"
+                ],
+                "real_example": "A religious organisation can discriminate for roles that are genuinely part of religious observance or practice (e.g., a priest or religious teacher), but cannot discriminate in general employment. LGBTIQ+ teachers in religious schools have been protected since July 2023. However, October 2025 amendments re-introduced a narrower religious exemption.",
+                "if_you_face_discrimination": "NT has narrower exemptions than most jurisdictions, though October 2025 amendments re-introduced a religious exemption. If you face discrimination, seek legal advice from NT Anti-Discrimination Commission to understand if the exemption applies.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "AMBER",
+            "rating_explanation": "NT has good protections following reforms in late 2022 and July 2023. Sexuality, gender identity, and sex characteristics are all protected. Religious exemptions are narrower than most jurisdictions (discrimination only for acts in relation to religious observance or practice). LGBTIQ+ teachers protected since July 2023. Vilification protections added late 2022. However, October 2025 amendments re-introduced a narrower religious exemption and altered offensive behaviour provisions.",
+            "strengths": [
+                "Sexuality, gender identity, and sex characteristics all protected (sex characteristics added late 2022)",
+                "Narrower religious exemptions than most jurisdictions - discrimination only for acts in relation to religious observance or practice",
+                "LGBTIQ+ teachers protected since July 2023",
+                "Vilification protections added late 2022 (conduct that offends, insults, humiliates or intimidates)",
+                "Positive duty to eliminate discrimination, sexual harassment and victimisation",
+                "No small employer exemption"
+            ],
+            "gaps": [
+                "October 2025 amendments re-introduced a religious discrimination exemption (though narrower than before)",
+                "October 2025 amendments altered offensive behaviour provisions",
+                "Asexual protection unclear"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Anti-Discrimination Act 1992 (NT) - https://legislation.nt.gov.au/en/Legislation/ANTI-DISCRIMINATION-ACT-1992",
+            "Anti-Discrimination Amendment Act 2022 (NT)",
+            "Anti-Discrimination Amendment Act 2025 (NT)"
+        ],
+        "official_guides": [
+            "NT Anti-Discrimination Commission - https://adc.nt.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws"
+        ]
+    }
+}

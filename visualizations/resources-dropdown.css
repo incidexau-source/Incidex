@@ -1,0 +1,315 @@
+/* Resources Dropdown Navigation Styles */
+
+/* Dropdown Container */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  font-medium: 500;
+  color: #374151;
+  transition: color 0.2s ease;
+}
+
+.nav-dropdown-toggle:hover {
+  color: #2563eb;
+}
+
+.nav-dropdown-toggle.active {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.nav-dropdown-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown.open .nav-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  min-width: 600px;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown Sections */
+.dropdown-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dropdown-section:last-child {
+  border-bottom: none;
+}
+
+.dropdown-section-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-section-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Jurisdiction Grid */
+.jurisdiction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.jurisdiction-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: #374151;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.jurisdiction-card:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.jurisdiction-card:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.jurisdiction-icon {
+  width: 24px;
+  height: 24px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.jurisdiction-card:hover .jurisdiction-icon {
+  color: #2563eb;
+}
+
+.jurisdiction-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.jurisdiction-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jurisdiction-rating {
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.rating-strongest { background: #dcfce7; color: #166534; }
+.rating-very-strong { background: #dcfce7; color: #166534; }
+.rating-strong { background: #dbeafe; color: #1e40af; }
+.rating-good { background: #dbeafe; color: #1e40af; }
+.rating-moderate { background: #fef3c7; color: #92400e; }
+.rating-weak { background: #fed7aa; color: #9a3412; }
+.rating-weakest { background: #fee2e2; color: #991b1b; }
+.rating-federal { background: #f3f4f6; color: #374151; }
+
+/* National Comparison Toggle */
+.comparison-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.comparison-toggle:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.comparison-toggle-text {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.comparison-toggle-arrow {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.comparison-toggle.open .comparison-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.comparison-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.comparison-content.open {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  font-size: 0.75rem;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.comparison-table th {
+  background: #f9fafb;
+  padding: 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.comparison-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.comparison-table tr:hover {
+  background: #f9fafb;
+}
+
+/* Services Link */
+.services-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: #1e40af;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.services-link:hover {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  transform: translateX(4px);
+}
+
+.services-link-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .nav-dropdown-menu {
+    min-width: 90vw;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  .nav-dropdown.open .nav-dropdown-menu {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .jurisdiction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-content.open {
+    max-height: 300px;
+  }
+}
+
+/* Accessibility */
+.nav-dropdown-toggle:focus,
+.jurisdiction-card:focus,
+.comparison-toggle:focus,
+.services-link:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+.nav-dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

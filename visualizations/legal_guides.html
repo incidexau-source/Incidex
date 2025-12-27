@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description"
+        content="Know Your Rights: Comprehensive LGBTIQ+ legal factsheets and anti-discrimination law comparisons for all Australian jurisdictions.">
+    <title>LGBTIQ+ Legal Guides | Incidex Australia</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="resources-dropdown.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#1e293b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        heading: ['Outfit', 'Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .rating-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .rating-pill-green {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .rating-pill-amber {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .rating-pill-red {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .factsheet-card {
+            transition: all 0.3s ease;
+        }
+
+        .factsheet-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+
+        .comparison-table th {
+            background-color: #f9fafb;
+            padding: 1rem;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .what-it-means {
+            color: #6b7280;
+            font-size: 0.8125rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+    <!-- Header (Standardized) -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex Logo" class="h-10 w-10 object-cover rounded-lg">
+                <div>
+                    <h1 class="font-heading font-bold text-xl leading-none">Incidex</h1>
+                    <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Hate Crime Monitoring</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="map.html"
+                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 011.053-1.789L9 2m0 18l6 3 6-3V4.618a2 2 0 00-1.053-1.789L15 0m-6 2l6 3m-6 3l6-3">
+                        </path>
+                    </svg>
+                    Map
+                </a>
+                <a href="policy_landscape.html"
+                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    Policy
+                </a>
+                <a href="voting_records.html"
+                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00 2 2h10a2 2 0 00 2-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                        </path>
+                    </svg>
+                    MP Voting
+                </a>
+                <!-- Resources Dropdown (Standardized) -->
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle text-blue-600 font-bold" aria-expanded="false"
+                        aria-haspopup="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                        Resources
+                        <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="nav-dropdown-menu" aria-hidden="true">
+                        <!-- Know Your Rights Section -->
+                        <div class="dropdown-section">
+                            <div class="dropdown-section-title">
+                                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                                    </path>
+                                </svg>
+                                Legal Guides: Know Your Rights
+                            </div>
+                            <a href="legal_guides.html"
+                                class="block p-3 mb-4 bg-blue-50 border border-blue-100 rounded-xl hover:bg-blue-100 transition-colors">
+                                <div class="font-bold text-blue-700 text-sm font-sans">LGBTIQ+ Legal Factsheets</div>
+                                <div class="text-[10px] text-blue-600 font-medium font-sans">Practical guides for every
+                                    Australian jurisdiction</div>
+                            </a>
+                            <!-- Jurisdiction Grid -->
+                            <div class="jurisdiction-grid">
+                                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
+                                    onclick="openJurisdictionModal('commonwealth')">
+                                    <div class="jurisdiction-name">Commonwealth</div>
+                                </a>
+                                <a href="legal_guides.html#nsw" class="jurisdiction-card"
+                                    onclick="openJurisdictionModal('nsw')">
+                                    <div class="jurisdiction-name">NSW</div>
+                                </a>
+                                <a href="legal_guides.html#victoria" class="jurisdiction-card"
+                                    onclick="openJurisdictionModal('vic')">
+                                    <div class="jurisdiction-name">VIC</div>
+                                </a>
+                                <a href="legal_guides.html#queensland" class="jurisdiction-card"
+                                    onclick="openJurisdictionModal('qld')">
+                                    <div class="jurisdiction-name">QLD</div>
+                                </a>
+                                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
+                                    onclick="openJurisdictionModal('tas')">
+                                    <div class="jurisdiction-name">TAS</div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Support Services Section -->
+                        <div class="dropdown-section">
+                            <a href="resources.html" class="services-link">
+                                <span>View All Support Services</span>
+                                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html"
+                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all">About</a>
+            </nav>
+
+            <button class="md:hidden text-gray-500" id="mobileMenuBtn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-slate-900 to-indigo-900 text-white py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Know Your Rights</h1>
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                    Comprehensive, plain-English legal guides for the LGBTIQ+ community across Australia.
+                    Understand your protections against discrimination and vilification with real-world examples.
+                </p>
+            </div>
+        </section>
+
+        <!-- National Comparison Section -->
+        <section id="comparison" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                    <div class="max-w-2xl">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">National Comparison Overview</h2>
+                        <p class="text-slate-600">
+                            LGBTIQ+ protections vary significantly between states. This table translates complex legal
+                            differences into what they actually mean for your daily life.
+                        </p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            <span class="text-sm font-medium">Strong</span>
+                        </div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="text-sm font-medium">Moderate</span>
+                        </div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span> <span
+                                class="text-sm font-medium">Weak</span></div>
+                    </div>
+                </div>
+
+                <div class="comparison-table-wrapper shadow-xl">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Jurisdiction</th>
+                                <th>Sexual Orientation</th>
+                                <th>Gender Identity</th>
+                                <th>Sex Characteristics</th>
+                                <th>Overall Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold">Queensland</td>
+                                <td>✅ Protected <span class="what-it-means">Bi/Pan/Asexual included</span></td>
+                                <td>✅ Protected <span class="what-it-means">Inclusive 2024 reforms</span></td>
+                                <td>✅ Protected <span class="what-it-means">Modern terminology</span></td>
+                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Tasmania</td>
+                                <td>✅ Protected <span class="what-it-means">Gold Standard</span></td>
+                                <td>✅ Protected <span class="what-it-means">Full inclusivity</span></td>
+                                <td>✅ Protected <span class="what-it-means">Intersex variations</span></td>
+                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">ACT</td>
+                                <td>✅ Protected <span class="what-it-means">Broad coverage</span></td>
+                                <td>✅ Protected <span class="what-it-means">Inclusive language</span></td>
+                                <td>✅ Protected <span class="what-it-means">Modern terms</span></td>
+                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Victoria</td>
+                                <td>✅ Protected <span class="what-it-means">Full coverage</span></td>
+                                <td>✅ Protected <span class="what-it-means">Sept 2025 updates</span></td>
+                                <td>✅ Protected <span class="what-it-means">Full coverage</span></td>
+                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">NT</td>
+                                <td>✅ Protected <span class="what-it-means">Modern laws</span></td>
+                                <td>✅ Protected <span class="what-it-means">Inclusive</span></td>
+                                <td>✅ Protected <span class="what-it-means">2022 reforms</span></td>
+                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">SA</td>
+                                <td>✅ Protected <span class="what-it-means">Basic coverage</span></td>
+                                <td>⚠️ Limited <span class="what-it-means">Non-binary unclear</span></td>
+                                <td>✅ Protected <span class="what-it-means">Intersex status</span></td>
+                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Commonwealth</td>
+                                <td>✅ Protected <span class="what-it-means">Basic floor</span></td>
+                                <td>⚠️ Limited <span class="what-it-means">Non-binary gaps</span></td>
+                                <td>✅ Protected <span class="what-it-means">Intersex status</span></td>
+                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">WA</td>
+                                <td>✅ Protected <span class="what-it-means">Standard coverage</span></td>
+                                <td>⚠️ Limited <span class="what-it-means">Binary only</span></td>
+                                <td>❌ NOT Protected <span class="what-it-means">Significant gap</span></td>
+                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-red-600">NSW</td>
+                                <td>⚠️ Limited <span class="what-it-means">Gay/Lesbian only</span></td>
+                                <td>⚠️ Limited <span class="what-it-means">Binary trans only</span></td>
+                                <td>❌ NOT Protected <span class="what-it-means">Significant gap</span></td>
+                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Factsheets Section -->
+        <section id="guides" class="py-16 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">State-Specific Legal Guides</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Commonwealth -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-commonwealth">
+                        <span class="rating-pill rating-pill-red">🔴 Red</span>
+                        <h3 class="text-2xl font-bold">Commonwealth</h3>
+                        <p class="text-slate-600 text-sm mb-4">The baseline for federal law. Broad religious exemptions
+                            and no vilification protections.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('commonwealth')">Read Full Guide →</button>
+                    </div>
+                    <!-- NSW -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-nsw">
+                        <span class="rating-pill rating-pill-red">🔴 Red</span>
+                        <h3 class="text-2xl font-bold">New South Wales</h3>
+                        <p class="text-slate-600 text-sm mb-4">Weakest protections in Australia. Outdated terminology
+                            and significant gaps for intersex people.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('nsw')">Read Full Guide →</button>
+                    </div>
+                    <!-- Victoria -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-vic">
+                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
+                        <h3 class="text-2xl font-bold">Victoria</h3>
+                        <p class="text-slate-600 text-sm mb-4">Strong protections and narrowed religious exemptions
+                            since 2021. Lacks vilification laws.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('vic')">Read Full Guide →</button>
+                    </div>
+                    <!-- Queensland -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-qld">
+                        <span class="rating-pill rating-pill-green">🟢 Green</span>
+                        <h3 class="text-2xl font-bold">Queensland</h3>
+                        <p class="text-slate-600 text-sm mb-4">Best in Australia following 2024 reforms. Comprehensive
+                            vilification protections.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('qld')">Read Full Guide →</button>
+                    </div>
+                    <!-- WA -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-wa">
+                        <span class="rating-pill rating-pill-red">🔴 Red</span>
+                        <h3 class="text-2xl font-bold">Western Australia</h3>
+                        <p class="text-slate-600 text-sm mb-4">Delayed reforms. Gaps in protection for non-binary and
+                            intersex individuals.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('wa')">Read Full Guide →</button>
+                    </div>
+                    <!-- SA -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-sa">
+                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
+                        <h3 class="text-2xl font-bold">South Australia</h3>
+                        <p class="text-slate-600 text-sm mb-4">Moderate protections. Complexities in religious
+                            exemptions for community services.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('sa')">Read Full Guide →</button>
+                    </div>
+                    <!-- Tasmania -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-tas">
+                        <span class="rating-pill rating-pill-green">🟢 Green</span>
+                        <h3 class="text-2xl font-bold">Tasmania</h3>
+                        <p class="text-slate-600 text-sm mb-4">The gold standard. Strongest protections and narrowest
+                            religious exemptions.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('tas')">Read Full Guide →</button>
+                    </div>
+                    <!-- ACT -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-act">
+                        <span class="rating-pill rating-pill-green">🟢 Green</span>
+                        <h3 class="text-2xl font-bold">ACT</h3>
+                        <p class="text-slate-600 text-sm mb-4">Strong protections and reformed religious exemptions
+                            reflecting modern values.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('act')">Read Full Guide →</button>
+                    </div>
+                    <!-- NT -->
+                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
+                        id="card-nt">
+                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
+                        <h3 class="text-2xl font-bold">Northern Territory</h3>
+                        <p class="text-slate-600 text-sm mb-4">Recent 2022-2025 reforms. Balanced protections with
+                            specific religious considerations.</p>
+                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
+                            onclick="showFactsheet('nt')">Read Full Guide →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2025 Incidex Australia. Data accurate as of 31 December 2025.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Factsheeet Detail -->
+    <div id="factsheet-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title"
+        role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-slate-900/75 transition-opacity" aria-hidden="true" onclick="closeModal()">
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[80vh] overflow-y-auto">
+                    <div id="modal-content" class="prose prose-slate max-w-none">
+                        <!-- Content injected here -->
+                    </div>
+                </div>
+                <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-200">
+                    <button type="button"
+                        class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-6 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        onclick="closeModal()">Close Guide</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="resources-dropdown.js"></script>
+    <script>
+        const factsheetData = {
+            'vic': {
+                title: 'Victoria: LGBTIQ+ Legal Guide',
+                rating: '🟡 AMBER',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Overall Assessment</h3>
+                        <p class="text-slate-700 leading-relaxed">Victoria has some of the strongest anti-discrimination laws in Australia, particularly following the 2021 reforms. These reforms significantly narrowed the 'loopholes' that religious organisations can use to discriminate. However, it lacks stand-alone vilification laws for the LGBTIQ+ community, which is why it receives an Amber rating.</p>
+                    </section>
+                    
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">What's Protected</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-blue-800 mb-2">Sexual Orientation</h4>
+                                <p class="text-sm text-blue-700">Full protection for all sexual orientations. You cannot be fired or refused housing for being gay, bi, pan, or asexual.</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-blue-800 mb-2">Gender Identity</h4>
+                                <p class="text-sm text-blue-700">Inclusive protection. Your employer must use your correct name and pronouns, and schools must allow facility use matching your gender.</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-blue-800 mb-2">Sex Characteristics</h4>
+                                <p class="text-sm text-blue-700">Protected since 2021. You cannot be discriminated against based on being intersex.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Exemptions (The Loophole)</h3>
+                        <p class="text-slate-700 mb-4">Religious organisations can only discriminate if it's 'reasonably necessary' to comply with their doctrine. Crucially, they <strong>cannot</strong> discriminate against students in religious schools or against people accessing government-funded services (like homelessness support).</p>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-100">
+                            <p class="text-sm text-red-800 font-medium">Real World Example: A religious school cannot expel a student for being gay, even if it goes against their doctrine.</p>
+                        </div>
+                    </section>
+                </div>
+            `
+            },
+            'tas': {
+                title: 'Tasmania: LGBTIQ+ Legal Guide',
+                rating: '🟢 GREEN',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">The Gold Standard</h3>
+                        <p class="text-slate-700 leading-relaxed">Tasmania's Anti-Discrimination Act is widely considered the best in Australia. It has the narrowest religious exemptions and the most inclusive definitions of gender and sex characteristics.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Why it's Green:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Sexual orientation & Gender identity:</strong> Fully protected with modern, inclusive language.</li>
+                            <li><strong>Religious Schools:</strong> Virtually no right to discriminate against staff or students based on LGBTIQ+ status.</li>
+                            <li><strong>Intersex Protections:</strong> Strong, stand-alone protections for variations of sex characteristics.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'commonwealth': {
+                title: 'Commonwealth: Federal Legal Guide',
+                rating: '🔴 RED',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Federal Protection Floor</h3>
+                        <p class="text-slate-700 leading-relaxed">Federal law (the Sex Discrimination Act) provides a basic level of protection across all of Australia, but it has significant gaps and very broad religious exemptions.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Key Gaps:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Religious Schools:</strong> Can still lawfully fire teachers or expel students for being LGBTIQ+ under federal law (though state laws may override this).</li>
+                            <li><strong>Vilification:</strong> No federal laws protecting LGBTIQ+ people from hate speech or vilification.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'nsw': {
+                title: 'New South Wales: LGBTIQ+ Legal Guide',
+                rating: '🔴 RED',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Weakest Protections in Australia</h3>
+                        <p class="text-slate-700 leading-relaxed">NSW anti-discrimination law is outdated and fails to protect many members of our community. It uses restrictive language and provides broad 'outs' for employers and schools.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Major Issues:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Gender Identity:</strong> Only protects 'transgender' people in a binary sense. Non-binary people are not clearly protected.</li>
+                            <li><strong>Sex Characteristics:</strong> No protection for intersex people.</li>
+                            <li><strong>Private Schools:</strong> Can discriminate against both staff and students for being LGBTIQ+.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'qld': {
+                title: 'Queensland: LGBTIQ+ Legal Guide',
+                rating: '🟢 GREEN',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">2024 Reform Champion</h3>
+                        <p class="text-slate-700 leading-relaxed">Following landmark reforms in 2024, Queensland now has some of the most modern and inclusive laws in Australia. It features comprehensive vilification protections that cover more than just physical threats.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Key Highlights:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Inclusive Definitions:</strong> Protections for gender identity and sex characteristics are broad and modern.</li>
+                            <li><strong>Vilification:</strong> Illegal to incite hatred, serious contempt, or severe ridicule against LGBTIQ+ people.</li>
+                            <li><strong>Religious Schools:</strong> Narrowed exemptions mean clearer rights for staff and students.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'wa': {
+                title: 'Western Australia: LGBTIQ+ Legal Guide',
+                rating: '🔴 RED',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Delayed Reforms</h3>
+                        <p class="text-slate-700 leading-relaxed">While reforms have been promised for years, WA remains one of the more difficult jurisdictions for LGBTIQ+ people to navigate. It still requires medical intervention for gender recognition in some contexts.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Key Gaps:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Sex Characteristics:</strong> NO protection for intersex variations.</li>
+                            <li><strong>Gender Identity:</strong> Outdated 'gender history' terminology that fails to protect non-binary or some trans people.</li>
+                            <li><strong>Schools:</strong> Religious schools retain broad powers to discriminate.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'sa': {
+                title: 'South Australia: LGBTIQ+ Legal Guide',
+                rating: '🟡 AMBER',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Moderate Protections</h3>
+                        <p class="text-slate-700 leading-relaxed">South Australia has decent protections but they are often complex to apply in practice. It was the first state to protect 'intersex status' but other areas have lagged behind.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Key Areas:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Gender Identity:</strong> Protective but uses slightly older definitions.</li>
+                            <li><strong>Exemptions:</strong> Religious organisations can still discriminate in some community service roles.</li>
+                            <li><strong>Vilification:</strong> No stand-alone laws for LGBTIQ+ vilification.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'act': {
+                title: 'ACT: LGBTIQ+ Legal Guide',
+                rating: '🟢 GREEN',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">Human Rights focused</h3>
+                        <p class="text-slate-700 leading-relaxed">The ACT's laws are built on a human rights framework, making them naturally more protective of LGBTIQ+ individuals than most other Australian laws.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">Top Features:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>Zero Tolerance for Trolling:</strong> Strong vilification laws including cyber-bullying context.</li>
+                            <li><strong>Religious Schools:</strong> Cannot discriminate against staff or students based on identity.</li>
+                            <li><strong>Sex Characteristics:</strong> Comprehensive protections for the intersex community.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            },
+            'nt': {
+                title: 'Northern Territory: LGBTIQ+ Legal Guide',
+                rating: '🟡 AMBER',
+                content: `
+                <div class="space-y-6">
+                    <section>
+                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Recent Improvements</h3>
+                        <p class="text-slate-700 leading-relaxed">The NT has recently overhauled its Anti-Discrimination Act (2022-2025) to move away from binary definitions and toward modern human rights standards.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-slate-900 mb-2">What changed:</h4>
+                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
+                            <li><strong>End of Binary:</strong> Definitions of gender and sex are now inclusive of all identities.</li>
+                            <li><strong>Vilification:</strong> New laws making hate speech illegal in the Territory.</li>
+                            <li><strong>Exemptions:</strong> Many religious 'carve-outs' were removed in the 2022 reforms.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+            }
+        };
+
+        function showFactsheet(id) {
+            const modal = document.getElementById('factsheet-modal');
+            const content = document.getElementById('modal-content');
+            const data = factsheetData[id] || { title: 'Guide Not Found', content: '<p>Sorry, this guide is not yet available.</p>' };
+
+            content.innerHTML = `
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-3xl font-bold text-slate-900">${data.title}</h2>
+                    <span class="rating-pill ${data.rating ? (data.rating.includes('GREEN') ? 'rating-pill-green' : (data.rating.includes('AMBER') ? 'rating-pill-amber' : 'rating-pill-red')) : ''}">${data.rating || ''}</span>
+                </div>
+                <hr class="border-slate-200">
+            </div>
+            ${data.content}
+        `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            history.pushState(null, null, '#' + id);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('factsheet-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            history.pushState(null, null, window.location.pathname);
+        }
+
+        // Auto-open based on hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && factsheetData[hash]) {
+                showFactsheet(hash);
+            }
+        });
+
+        // Handle back button
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && factsheetData[hash]) {
+                showFactsheet(hash);
+            } else {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

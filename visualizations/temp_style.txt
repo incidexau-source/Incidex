@@ -1,0 +1,27 @@
+  <style>
+    /* Leaflet popup overrides - hide default popup since we use panel */
+    .leaflet-popup {
+      display: none;
+    }
+
+    /* Toggle Logic */
+    .policy-section.collapsed .policy-section-toggle {
+      transform: rotate(-90deg);
+    }
+    .policy-section.collapsed .policy-section-content {
+      display: none;
+    }
+    
+    /* State marker styles */
+    .state-marker-wrapper {
+      background: transparent !important;
+      border: none !important;
+    }
+    .state-marker {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .state-marker:hover {
+      transform: scale(1.1);
+    }
+  </style>

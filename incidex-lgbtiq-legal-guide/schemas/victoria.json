@@ -1,0 +1,279 @@
+{
+    "jurisdiction": "VICTORIA",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Equal Opportunity Act 2010 (Vic)",
+        "primary_act_citation": "Vic Act No. 16 of 2010",
+        "primary_act_url": "https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
+        "other_relevant_acts": [
+            "Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic) - narrowed religious exemptions"
+        ]
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Sexual orientation means a person's emotional, affectional and sexual attraction to, or intimate or sexual relations with, persons of a different gender or the same gender or more than one gender",
+            "includes_bisexual": true,
+            "includes_asexual": "unspecified",
+            "source": "Equal Opportunity Act 2010 (Vic), s 4",
+            "year_added": 2010
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity means a person's gender-related identity, appearance or mannerisms or other gender-related characteristics of the person, whether by way of medical intervention or not, with or without regard to the person's designated sex at birth",
+            "includes_non_binary": true,
+            "includes_gender_diverse": true,
+            "source": "Equal Opportunity Act 2010 (Vic), s 4 (updated definition effective 20 September 2025)",
+            "year_added": 2010,
+            "notes": "Definition updated in 2025 to be more inclusive of non-binary and gender diverse people"
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "sex characteristics",
+            "definition_in_act": "Sex characteristics means a person's physical features relating to sex, including: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features, whether or not the person has undergone medical intervention",
+            "year_added": 2021,
+            "source": "Equal Opportunity Act 2010 (Vic), s 4",
+            "notes": "Victoria added 'sex characteristics' in February 2021, replacing the need for 'intersex status' protection"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Employment",
+            "Education",
+            "Provision of goods and services",
+            "Accommodation",
+            "Clubs and club membership",
+            "Sport",
+            "Local government",
+            "Qualifying bodies",
+            "Pre-selection for political candidacy"
+        ],
+        "areas_excluded_or_limited": [],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "Religious exemptions were significantly narrowed in 2021. Religious organisations can now only discriminate on the basis of religious belief (not sexual orientation or gender identity) in: (1) employment in religious schools; (2) student selection in religious schools; and (3) government-funded service provision. Discrimination on grounds of sexual orientation and gender identity is still permitted in non-government-funded service provision by religious organisations.",
+                "is_broad": false,
+                "source": "Equal Opportunity Act 2010 (Vic), s 82, s 83, s 84 (as amended by Equal Opportunity (Religious Exceptions) Amendment Act 2021)"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in Victoria",
+                "source": "N/A"
+            },
+            "other_exemptions": [
+                {
+                    "type": "Competitive sporting activities",
+                    "summary": "Discrimination on the ground of gender identity or sex characteristics may be permitted in competitive sporting activities in certain circumstances",
+                    "source": "Equal Opportunity Act 2010 (Vic), s 72"
+                }
+            ]
+        },
+        "complaint_body": {
+            "name": "Victorian Civil and Administrative Tribunal (VCAT) / Victorian Equal Opportunity and Human Rights Commission (VEOHRC)",
+            "type": "Tribunal and Commission",
+            "website": "https://www.humanrights.vic.gov.au",
+            "phone": "1300 292 153 or (03) 9032 3583",
+            "email": "enquiries@veohrc.vic.gov.au",
+            "time_limit": "12 months from the act of discrimination (VEOHRC can assist with dispute resolution; formal complaints go to VCAT)",
+            "costs_summary": "No fee for lodging a discrimination complaint with VCAT",
+            "source": "VEOHRC website; Equal Opportunity Act 2010 (Vic)"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": false,
+        "protected_vilification_attributes": [
+            "race",
+            "religion"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": true
+        },
+        "statutory_basis": [
+            "Racial and Religious Tolerance Act 2001 (Vic) - race and religion only"
+        ],
+        "notes": "Victoria has vilification laws for race and religion only. There are NO vilification protections for LGBTIQ+ people as at 31 December 2025, despite long-standing promises by the Victorian Government to introduce these protections. A parliamentary inquiry previously investigated this issue but reforms have not been implemented.",
+        "source": "Racial and Religious Tolerance Act 2001 (Vic); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTIQA+ Liaison Officers (LLOs)",
+        "how_to_contact": [
+            "Call 131 444 (Police Assistance Line) and ask for an LGBTIQA+ Liaison Officer",
+            "Email: LLO-Coordinator-MGR@police.vic.gov.au",
+            "Phone (business hours): (03) 9247 6944",
+            "Visit your local police station and request an LLO",
+            "Call 000 in emergencies"
+        ],
+        "source": "Victoria Police website - over 450 LLOs across Victoria"
+    },
+    "support_services": [
+        {
+            "name": "Victorian Equal Opportunity and Human Rights Commission",
+            "role": "Rights advice, dispute resolution & discrimination information",
+            "website": "https://www.humanrights.vic.gov.au",
+            "phone": "1300 292 153 or (03) 9032 3583"
+        },
+        {
+            "name": "Thorne Harbour Health (formerly VAC)",
+            "role": "LGBTIQ health and community services",
+            "website": "https://thorneharbour.org",
+            "phone": "(03) 9865 6700"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Sexual orientation, gender identity and sex characteristics are all protected attributes (strongest protections in Australia)",
+        "Religious exemptions significantly narrowed in 2021 - religious schools can only discriminate on basis of religious belief, not sexual orientation or gender identity, in employment and student selection",
+        "Religious organisations can still discriminate on grounds of sexual orientation and gender identity in non-government-funded service provision",
+        "No vilification protections for LGBTIQ+ people (only race and religion protected)",
+        "No small employer exemption",
+        "Positive duty on organisations to prevent discrimination and sexual harassment (introduced 2025)",
+        "12-month time limit for complaints"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are gay, lesbian, bisexual, or any other sexual orientation.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A school cannot expel your child for having same-sex parents",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "None - Victoria has comprehensive protections for sexual orientation since 2010."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, or agender.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns",
+                    "You cannot be denied employment because you are transitioning",
+                    "A landlord cannot refuse housing because you are trans or non-binary",
+                    "Schools cannot prevent you from using facilities matching your gender identity",
+                    "You cannot be refused service at a shop, restaurant, or doctor because of your gender identity",
+                    "A religious school cannot refuse to hire you as a teacher just because you're trans"
+                ],
+                "limitations": "None - Victoria updated the definition in September 2025 to be more inclusive of non-binary and gender diverse people. Religious schools reformed in 2021 can only discriminate based on religious belief, not gender identity."
+            },
+            "sex_characteristics": {
+                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of sex characteristics",
+                    "A gym cannot refuse you membership because you are intersex"
+                ],
+                "limitations": "None - Victoria added sex characteristics protection in February 2021, making it one of the strongest protections in Australia."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being forced to hide your identity at work",
+                    "Being fired because you transition or come out",
+                    "Religious schools refusing to hire you just because you're LGBTIQ+ (they can only discriminate based on religious belief)"
+                ],
+                "not_protected_from": [
+                    "Performance-based discipline (if you're underperforming for legitimate work reasons)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Schools refusing to enroll your child because you're a same-sex couple",
+                    "Universities discriminating in admissions",
+                    "Teachers intentionally using wrong pronouns",
+                    "Being excluded from school events, sports, or facilities",
+                    "Disciplinary action for being LGBTIQ+",
+                    "Religious schools expelling students for being LGBTIQ+"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity",
+                    "Real estate agents refusing to show you properties",
+                    "Being denied mortgage approval because you're LGBTIQ+"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A doctor refusing to treat you",
+                    "Being denied access to public facilities",
+                    "Hotels refusing to book rooms for same-sex couples",
+                    "Hairdressers refusing service",
+                    "Government-funded religious services refusing to serve you"
+                ],
+                "not_protected_from": [
+                    "Non-government-funded religious services (they can still discriminate on grounds of sexual orientation and gender identity)"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation",
+                    "Being denied membership in a professional association",
+                    "Being expelled from a club"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "Victoria significantly narrowed religious exemptions in 2021. Religious schools can now only discriminate based on religious belief, NOT sexual orientation or gender identity.",
+                "what_they_can_do": [
+                    "Religious schools can require staff and students to uphold religious beliefs",
+                    "Religious organisations can discriminate in non-government-funded service provision on grounds of sexual orientation and gender identity"
+                ],
+                "what_they_cannot_do": [
+                    "Religious schools cannot refuse to hire someone just for being gay, lesbian, bisexual, or trans",
+                    "Religious schools cannot expel students for being LGBTIQ+",
+                    "Government-funded religious services cannot discriminate against LGBTIQ+ service users"
+                ],
+                "real_example": "A Catholic school can require teachers to attend Mass and uphold Catholic teachings, but cannot refuse to hire a teacher simply because they are gay or transgender. The school can only make employment decisions based on religious belief, not LGBTIQ+ status.",
+                "if_you_face_discrimination": "Victoria has some of the strongest protections in Australia. If a religious organisation claims they can discriminate against you, they must prove it's based on religious belief, not LGBTIQ+ status. Seek legal advice from VEOHRC.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "AMBER",
+            "rating_explanation": "Victoria has strong protections for LGBTIQ+ people with comprehensive coverage of sexual orientation, gender identity, and sex characteristics. Religious exemptions were significantly narrowed in 2021. However, Victoria lacks vilification protections for LGBTIQ+ people despite long-standing promises.",
+            "strengths": [
+                "Sexual orientation, gender identity, and sex characteristics all protected (strongest in Australia)",
+                "Religious exemptions significantly narrowed in 2021 - religious schools can only discriminate based on religious belief, not LGBTIQ+ status",
+                "No small employer exemption",
+                "Positive duty on organisations to prevent discrimination (introduced 2025)",
+                "Government-funded religious services cannot discriminate"
+            ],
+            "gaps": [
+                "No vilification protections for LGBTIQ+ people (only race and religion protected)",
+                "Religious organisations can still discriminate in non-government-funded service provision",
+                "Victorian Government has promised vilification protections for years but not delivered"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Equal Opportunity Act 2010 (Vic) - https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
+            "Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic)",
+            "Racial and Religious Tolerance Act 2001 (Vic)"
+        ],
+        "official_guides": [
+            "Victorian Equal Opportunity and Human Rights Commission - https://www.humanrights.vic.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws",
+            "Equality Australia resources"
+        ]
+    }
+}

@@ -1,0 +1,282 @@
+{
+    "jurisdiction": "NEW SOUTH WALES",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Anti-Discrimination Act 1977 (NSW)",
+        "primary_act_citation": "NSW Act No. 48 of 1977",
+        "primary_act_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-1977-048",
+        "other_relevant_acts": [
+            "Equality Legislation Amendment (LGBTIQA+) Act 2024 (NSW) - commenced 1 July 2025 for gender recognition reforms"
+        ]
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Homosexuality - defined as male or female homosexuality",
+            "includes_bisexual": false,
+            "includes_asexual": false,
+            "source": "Anti-Discrimination Act 1977 (NSW), s 4, s 49ZG",
+            "year_added": 1982,
+            "notes": "NSW law uses the term 'homosexuality' rather than 'sexual orientation', which may not clearly cover bisexual or asexual people"
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Transgender - a person who identifies as a member of the opposite sex by living, or seeking to live, as a member of the opposite sex; or has identified as a member of the opposite sex by living as a member of the opposite sex; or being thought of as a member of the opposite sex",
+            "includes_non_binary": false,
+            "includes_gender_diverse": "unclear",
+            "source": "Anti-Discrimination Act 1977 (NSW), s 38A",
+            "year_added": 1996,
+            "notes": "Definition uses binary language ('opposite sex') which may not clearly protect non-binary people. Gender recognition reforms commenced 1 July 2025 allow non-binary markers on birth certificates but discrimination law not updated"
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": false,
+            "term_used": "not protected",
+            "year_added": null,
+            "source": "Anti-Discrimination Act 1977 (NSW) - no intersex/sex characteristics protection",
+            "notes": "NSW does not protect intersex people or people with variations in sex characteristics as at 31 December 2025"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Employment (employers with more than 5 employees)",
+            "Education",
+            "Goods and services",
+            "Accommodation",
+            "Registered clubs"
+        ],
+        "areas_excluded_or_limited": [
+            "Small employers (5 or fewer employees) can discriminate on grounds of homosexuality and transgender status",
+            "All private schools and colleges (not just religious ones) can discriminate against LGBTIQ+ students and staff"
+        ],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "Very broad religious exemptions allow religious organisations to discriminate against LGBTIQ+ people in almost all circumstances, including employment and service provision. Section 56 provides carte blanche exemptions for bodies established to propagate religion.",
+                "is_broad": true,
+                "source": "Anti-Discrimination Act 1977 (NSW), s 56"
+            },
+            "small_employers": {
+                "exists": true,
+                "summary": "Employers with 5 or fewer employees can lawfully discriminate on grounds of homosexuality and transgender status. This exemption does not apply to race discrimination.",
+                "source": "Anti-Discrimination Act 1977 (NSW), s 49ZH, s 49ZYB"
+            },
+            "other_exemptions": [
+                {
+                    "type": "Private educational authorities",
+                    "summary": "ALL private schools and colleges (not just religious ones) can discriminate against LGBTIQ+ students and staff on grounds of homosexuality and transgender status",
+                    "source": "Anti-Discrimination Act 1977 (NSW), s 49ZG(2), s 38C"
+                }
+            ]
+        },
+        "complaint_body": {
+            "name": "Anti-Discrimination NSW (formerly NSW Anti-Discrimination Board)",
+            "type": "Statutory body",
+            "website": "https://www.antidiscrimination.nsw.gov.au",
+            "phone": "02 9268 5544 or 1800 670 812 (free call)",
+            "email": "complaintsadb@justice.nsw.gov.au",
+            "time_limit": "12 months from the date of discrimination",
+            "costs_summary": "No fee for lodging a complaint. Most complaints resolved within 6 months.",
+            "source": "Anti-Discrimination NSW website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": "partial",
+        "protected_vilification_attributes": [
+            "homosexuality (gay men and lesbians only - civil)",
+            "transgender (binary identities only - civil)",
+            "sexual orientation, gender identity (incitement to violence - criminal)"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": true
+        },
+        "statutory_basis": [
+            "Anti-Discrimination Act 1977 (NSW), Part 4C - civil vilification (homosexuality and transgender)",
+            "Crimes Act 1900 (NSW), s 93Z - inciting violence on grounds including sexual orientation and gender identity"
+        ],
+        "notes": "NSW has complex vilification protections. Civil vilification complaints under the Anti-Discrimination Act only cover gay men, lesbians (not bisexuals), and transgender people with binary identities (not non-binary people). Intersex people are not covered. However, the Crimes Act incitement to violence provisions cover sexual orientation and gender identity more broadly, including bisexual, non-binary and intersex people. Amendments passed in 2018.",
+        "source": "Anti-Discrimination Act 1977 (NSW), Crimes Act 1900 (NSW); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTIQA+ Liaison Officers (LLOs)",
+        "how_to_contact": [
+            "Call 131 444 (Police Assistance Line) and ask for an LGBTIQ+ Liaison Officer",
+            "Visit your local police station and request to speak with an LLO",
+            "Call 000 in emergencies"
+        ],
+        "source": "NSW Police Force website"
+    },
+    "support_services": [
+        {
+            "name": "Anti-Discrimination NSW",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://www.antidiscrimination.nsw.gov.au",
+            "phone": "02 9268 5544 or 1800 670 812"
+        },
+        {
+            "name": "ACON (NSW LGBTQ health organisation)",
+            "role": "Health, support and advocacy",
+            "website": "https://www.acon.org.au",
+            "phone": "02 9206 2000"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Homosexuality (gay men and lesbians) and transgender status (binary identities) are protected, but protections are limited",
+        "Bisexual, non-binary and intersex people are NOT clearly protected against discrimination as at 31 Dec 2025",
+        "Small employers (5 or fewer employees) can legally discriminate against LGBTIQ+ people",
+        "ALL private schools (not just religious ones) can discriminate against LGBTIQ+ students and staff",
+        "Very broad religious exemptions allow religious organisations to discriminate in almost all circumstances",
+        "Partial vilification protections: civil complaints only for gay men, lesbians and binary trans people; criminal incitement provisions broader",
+        "Gender recognition reforms (non-binary birth certificates) commenced 1 July 2025 but discrimination law not updated",
+        "12-month time limit for complaints"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are gay or lesbian. However, bisexual and asexual people may not be clearly protected.",
+                "real_world_examples": [
+                    "Your employer (with more than 5 staff) cannot fire you for being gay or lesbian",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A public hospital cannot deny you treatment based on being gay or lesbian",
+                    "A café cannot refuse to serve you because you're gay or lesbian"
+                ],
+                "limitations": "NSW uses outdated terminology ('homosexuality' meaning 'male or female homosexuality') which may not clearly protect bisexual or asexual people. Small employers (5 or fewer staff) can legally discriminate. ALL private schools can discriminate."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against if you are transgender with a binary identity (male or female). Non-binary people may not be clearly protected.",
+                "real_world_examples": [
+                    "Your employer (with more than 5 staff) must use your correct name and pronouns if you're a trans man or trans woman",
+                    "You cannot be denied employment because you are transitioning from male to female or female to male",
+                    "A landlord cannot refuse housing because you are a trans man or trans woman"
+                ],
+                "limitations": "NSW uses binary language ('opposite sex') which does not clearly protect non-binary people. Gender recognition reforms in July 2025 allow non-binary birth certificates, but discrimination law was NOT updated. Small employers (5 or fewer staff) can legally discriminate. ALL private schools can discriminate."
+            },
+            "intersex_status": {
+                "what_this_means": "Intersex people and people with variations in sex characteristics are NOT protected in NSW.",
+                "real_world_examples": [
+                    "An employer CAN ask invasive questions about your body if you're intersex",
+                    "A school CAN exclude you from activities because of sex characteristics",
+                    "A gym CAN refuse you membership because you are intersex"
+                ],
+                "limitations": "NSW does NOT protect intersex people or people with variations in sex characteristics as of December 2025. This is a major gap."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because you're gay/lesbian or trans (binary only) - IF employer has more than 5 employees",
+                    "Being paid less than colleagues because you're gay/lesbian or trans",
+                    "Being harassed by coworkers or managers",
+                    "Being fired because you come out as gay/lesbian or trans"
+                ],
+                "not_protected_from": [
+                    "Discrimination by small employers (5 or fewer employees) - they can legally discriminate",
+                    "Discrimination by ALL private schools (not just religious ones)",
+                    "Discrimination by religious organisations (very broad exemptions)",
+                    "Discrimination if you're bisexual, asexual, non-binary, or intersex (unclear or no protection)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Public schools refusing to enroll your child because you're a same-sex couple",
+                    "Public universities discriminating in admissions"
+                ],
+                "not_protected_from": [
+                    "ALL private schools can discriminate against LGBTIQ+ students and staff (not just religious schools)",
+                    "This is unique to NSW - no other jurisdiction allows ALL private schools to discriminate"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're gay/lesbian or trans (binary)",
+                    "Being evicted because of your sexual orientation or gender identity",
+                    "Real estate agents refusing to show you properties"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant (if you're gay/lesbian or binary trans)",
+                    "A public hospital refusing to treat you",
+                    "Hotels refusing to book rooms for same-sex couples"
+                ],
+                "not_protected_from": [
+                    "Discrimination by religious organisations (very broad exemptions)"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because you're gay/lesbian or trans (binary)",
+                    "Being denied membership in a professional association"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "NSW has very broad religious exemptions. Religious organisations can discriminate against LGBTIQ+ people in almost all circumstances. Additionally, ALL private schools (not just religious ones) can discriminate.",
+                "what_they_can_do": [
+                    "Religious schools can refuse to hire LGBTIQ+ teachers",
+                    "Religious schools can expel LGBTIQ+ students",
+                    "ALL private schools (even non-religious ones) can discriminate against LGBTIQ+ students and staff",
+                    "Religious organisations can refuse to provide services to LGBTIQ+ people",
+                    "Religious hospitals can refuse to hire LGBTIQ+ staff"
+                ],
+                "what_they_cannot_do": [
+                    "Very little - the exemptions are extremely broad in NSW"
+                ],
+                "real_example": "A Catholic school can refuse to hire a gay teacher or expel a trans student. Even a non-religious private school can discriminate against LGBTIQ+ students and staff. A small business with 5 or fewer employees can refuse to hire someone because they're gay.",
+                "if_you_face_discrimination": "NSW has the weakest protections in Australia. If you face discrimination, seek legal advice from Anti-Discrimination NSW, but be aware the exemptions are very broad.",
+                "jurisdiction_specific": true
+            },
+            "small_employers": {
+                "plain_english_summary": "NSW is the ONLY jurisdiction in Australia where small employers (5 or fewer employees) can legally discriminate against LGBTIQ+ people.",
+                "what_they_can_do": [
+                    "Small businesses with 5 or fewer employees can refuse to hire you because you're gay, lesbian, or trans",
+                    "Small employers can fire you for being LGBTIQ+",
+                    "Small employers can pay you less because you're LGBTIQ+"
+                ],
+                "real_example": "A small café with 4 employees can legally refuse to hire you because you're gay. This exemption does NOT apply to race discrimination - only LGBTIQ+ discrimination.",
+                "if_you_face_discrimination": "If a small employer discriminates against you, this is likely legal in NSW. However, you may have protections under Commonwealth law. Seek legal advice."
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "RED",
+            "rating_explanation": "NSW has the weakest LGBTIQ+ protections in Australia. The law uses outdated terminology that may not protect bisexual or non-binary people. Intersex people are NOT protected. NSW is the only jurisdiction with a small employer exemption for LGBTIQ+ discrimination. ALL private schools (not just religious ones) can discriminate. Religious exemptions are very broad.",
+            "strengths": [
+                "Gay men, lesbians, and binary trans people have some protections (added 1982 and 1996)",
+                "Partial vilification protections exist (civil for gay/lesbian/binary trans; criminal broader)"
+            ],
+            "gaps": [
+                "Outdated terminology may not protect bisexual or asexual people",
+                "Binary language may not protect non-binary people (despite non-binary birth certificates being available since July 2025)",
+                "Intersex people are NOT protected",
+                "Small employer exemption (5 or fewer employees) - unique to NSW",
+                "ALL private schools can discriminate (not just religious ones) - unique to NSW",
+                "Very broad religious exemptions",
+                "Discrimination law not updated despite gender recognition reforms in 2025"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Anti-Discrimination Act 1977 (NSW) - https://legislation.nsw.gov.au/view/html/inforce/current/act-1977-048",
+            "Equality Legislation Amendment (LGBTIQA+) Act 2024 (NSW)",
+            "Crimes Act 1900 (NSW)"
+        ],
+        "official_guides": [
+            "Anti-Discrimination NSW - https://www.antidiscrimination.nsw.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws",
+            "Equality Australia resources"
+        ]
+    }
+}

@@ -1,0 +1,262 @@
+{
+    "jurisdiction": "AUSTRALIAN CAPITAL TERRITORY",
+    "country": "Australia",
+    "last_updated": "2025-12-31",
+    "last_reviewed": "2025-12-31",
+    "legislation": {
+        "primary_act": "Discrimination Act 1991 (ACT)",
+        "primary_act_citation": "ACT Act No. 81 of 1991",
+        "primary_act_url": "https://www.legislation.act.gov.au/a/1991-81",
+        "other_relevant_acts": []
+    },
+    "protected_attributes": {
+        "sexual_orientation": {
+            "protected": true,
+            "definition_in_act": "Sexuality - means heterosexuality, homosexuality, bisexuality or being intersex",
+            "includes_bisexual": true,
+            "includes_asexual": false,
+            "source": "Discrimination Act 1991 (ACT), Dictionary",
+            "year_added": 1991,
+            "notes": "ACT's definition of 'sexuality' unusually includes 'being intersex' alongside sexual orientations"
+        },
+        "gender_identity": {
+            "protected": true,
+            "definition_in_act": "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+            "includes_non_binary": true,
+            "includes_gender_diverse": true,
+            "source": "Discrimination Act 1991 (ACT), Dictionary",
+            "year_added": 2004
+        },
+        "intersex_status_or_sex_characteristics": {
+            "protected": true,
+            "term_used": "sex characteristics",
+            "definition_in_act": "Sex characteristics - means a person's physical features relating to sex, including the following (whether or not the person has undergone medical intervention): (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+            "year_added": 2020,
+            "source": "Discrimination Act 1991 (ACT), Dictionary (replaced 'intersex status' in August 2020)",
+            "notes": "ACT replaced 'intersex status' with 'sex characteristics' in August 2020, with definition supported by intersex organisations"
+        }
+    },
+    "discrimination_coverage": {
+        "areas_where_discrimination_is_unlawful": [
+            "Work and work-related areas",
+            "Education",
+            "Provision of goods, services and facilities",
+            "Accommodation",
+            "Clubs",
+            "Administration of Territory laws and programs"
+        ],
+        "areas_excluded_or_limited": [],
+        "major_exemptions": {
+            "religious_organisations": {
+                "exists": true,
+                "summary": "ACT has provided protections for LGBTIQ+ students and teachers in religious schools since 2019. Amendments passed in late March 2023 extended protections to employment and service provision by religious organisations in other sectors. Religious organisations can now only discriminate on the basis of religious belief, not sexual orientation, gender identity or sex characteristics, in most circumstances.",
+                "is_broad": false,
+                "source": "Discrimination Act 1991 (ACT), s 32, s 33 (as amended 2019 and 2023)"
+            },
+            "small_employers": {
+                "exists": false,
+                "summary": "No small employer exemption in ACT",
+                "source": "N/A"
+            },
+            "other_exemptions": []
+        },
+        "complaint_body": {
+            "name": "ACT Human Rights Commission",
+            "type": "Commission",
+            "website": "https://hrc.act.gov.au",
+            "phone": "(02) 6205 2222",
+            "email": "human.rights@act.gov.au",
+            "time_limit": "12 months from the act of discrimination (extensions may be granted)",
+            "costs_summary": "No fee for lodging a complaint",
+            "source": "ACT Human Rights Commission website"
+        }
+    },
+    "vilification": {
+        "has_lgbtiq_vilification_provisions": true,
+        "protected_vilification_attributes": [
+            "sexuality (including sexual orientation and being intersex)",
+            "gender identity"
+        ],
+        "civil_or_criminal": {
+            "civil": true,
+            "criminal": false
+        },
+        "statutory_basis": [
+            "Discrimination Act 1991 (ACT), Part 3 - vilification provisions"
+        ],
+        "notes": "ACT has civil vilification protections for LGBTIQ+ people, covering sexuality (which includes sexual orientation and being intersex) and gender identity. ACT is one of only 5 Australian jurisdictions with LGBTIQ+ vilification protections.",
+        "source": "Discrimination Act 1991 (ACT); Alastair Lawrie analysis"
+    },
+    "police_reporting": {
+        "has_lgbtiq_liaison_program": true,
+        "program_name": "LGBTIQ Liaison Officers",
+        "how_to_contact": [
+            "Call 131 444 (Police Operations Centre) and ask for an LGBTIQ Liaison Officer",
+            "Visit your local police station and request an LGBTIQ Liaison Officer",
+            "Call 000 in emergencies"
+        ],
+        "source": "ACT Policing website"
+    },
+    "support_services": [
+        {
+            "name": "ACT Human Rights Commission",
+            "role": "Rights advice & discrimination complaints",
+            "website": "https://hrc.act.gov.au",
+            "phone": "(02) 6205 2222"
+        },
+        {
+            "name": "A Gender Agenda",
+            "role": "Trans and gender diverse support and advocacy",
+            "website": "https://genderrights.org.au",
+            "phone": "(02) 6162 1924"
+        },
+        {
+            "name": "QLife",
+            "role": "Anonymous LGBTIQ+ peer support",
+            "website": "https://qlife.org.au",
+            "phone": "1800 184 527"
+        }
+    ],
+    "key_points_summary": [
+        "Sexuality (including bisexual and intersex), gender identity (including non-binary) and sex characteristics are all protected",
+        "Strong protections against religious discrimination - religious organisations can only discriminate on basis of religious belief in most circumstances (reforms in 2019 and 2023)",
+        "LGBTIQ+ students and teachers in religious schools are fully protected (since 2019)",
+        "Civil vilification protections for LGBTIQ+ people",
+        "No small employer exemption",
+        "ACT replaced 'intersex status' with 'sex characteristics' in August 2020 with definition supported by intersex organisations",
+        "12-month time limit for complaints"
+    ],
+    "practical_guide": {
+        "protected_attributes_explained": {
+            "sexual_orientation": {
+                "what_this_means": "You cannot be discriminated against because you are heterosexual, gay, lesbian, or bisexual. The ACT's definition unusually includes 'being intersex' under sexuality.",
+                "real_world_examples": [
+                    "Your employer cannot fire you for being gay, lesbian, or bisexual",
+                    "A landlord cannot refuse to rent to you because you're in a same-sex relationship",
+                    "A hospital cannot deny you treatment based on sexual orientation",
+                    "A religious school cannot refuse to hire you as a teacher just because you're gay",
+                    "A café cannot refuse to serve you because you're in a same-sex relationship"
+                ],
+                "limitations": "Asexual people are not explicitly protected. Religious organisations reformed in 2019 and 2023 can only discriminate based on religious belief in most circumstances."
+            },
+            "gender_identity": {
+                "what_this_means": "You cannot be discriminated against based on your gender identity, including if you are transgender, non-binary, genderfluid, or agender.",
+                "real_world_examples": [
+                    "Your employer must use your correct name and pronouns",
+                    "You cannot be denied employment because you are transitioning or non-binary",
+                    "A landlord cannot refuse housing because you are trans or non-binary",
+                    "Schools cannot prevent you from using facilities matching your gender identity",
+                    "You cannot be refused service at a shop, restaurant, or doctor because of your gender identity",
+                    "A religious school cannot refuse to hire you as a teacher just because you're trans or non-binary"
+                ],
+                "limitations": "None - ACT has strong protections. Religious organisations reformed in 2019 and 2023 can only discriminate based on religious belief, not gender identity."
+            },
+            "sex_characteristics": {
+                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy).",
+                "real_world_examples": [
+                    "You cannot be denied medical care based on being intersex",
+                    "An employer cannot ask invasive questions about your body",
+                    "You cannot be excluded from school activities because of sex characteristics",
+                    "A gym cannot refuse you membership because you are intersex",
+                    "A religious school cannot refuse to hire you just because you're intersex"
+                ],
+                "limitations": "None - ACT replaced 'intersex status' with 'sex characteristics' in August 2020 with definition supported by intersex organisations."
+            }
+        },
+        "protected_areas_explained": {
+            "employment": {
+                "what_youre_protected_from": [
+                    "Being rejected for a job because of sexual orientation/gender identity/sex characteristics",
+                    "Being paid less than colleagues because you're LGBTIQ+",
+                    "Being harassed by coworkers or managers",
+                    "Being forced to hide your identity at work",
+                    "Being fired because you transition or come out",
+                    "Religious organisations refusing to hire you just because you're LGBTIQ+ (they can only discriminate based on religious belief)"
+                ],
+                "not_protected_from": [
+                    "Performance-based discipline (if you're underperforming for legitimate work reasons)"
+                ]
+            },
+            "education": {
+                "what_youre_protected_from": [
+                    "Schools refusing to enroll your child because you're a same-sex couple",
+                    "Universities discriminating in admissions",
+                    "Teachers intentionally using wrong pronouns",
+                    "Being excluded from school events, sports, or facilities",
+                    "Disciplinary action for being LGBTIQ+",
+                    "Religious schools expelling students for being LGBTIQ+",
+                    "Religious schools refusing to hire LGBTIQ+ teachers just because they're LGBTIQ+"
+                ]
+            },
+            "housing": {
+                "what_youre_protected_from": [
+                    "Landlords refusing to rent because you're in a same-sex relationship",
+                    "Being evicted because of your gender identity or sex characteristics",
+                    "Real estate agents refusing to show you properties",
+                    "Being denied mortgage approval because you're LGBTIQ+"
+                ]
+            },
+            "goods_and_services": {
+                "what_youre_protected_from": [
+                    "Being refused service at a café or restaurant",
+                    "A doctor refusing to treat you",
+                    "Being denied access to public facilities",
+                    "Hotels refusing to book rooms for same-sex couples",
+                    "Hairdressers refusing service",
+                    "Religious organisations refusing to serve you just because you're LGBTIQ+"
+                ]
+            },
+            "clubs_and_associations": {
+                "what_youre_protected_from": [
+                    "Being excluded from a sports team because of sexual orientation or gender identity",
+                    "Being denied membership in a professional association",
+                    "Being expelled from a club"
+                ]
+            }
+        },
+        "exemptions_explained": {
+            "religious_organisations": {
+                "plain_english_summary": "ACT has strong protections. Religious organisations can only discriminate based on religious belief in most circumstances. Reforms in 2019 protected students and teachers, and 2023 reforms extended protections to other sectors.",
+                "what_they_can_do": [
+                    "Religious schools can require staff and students to uphold religious beliefs",
+                    "Religious organisations can make decisions based on whether someone shares their religious faith"
+                ],
+                "what_they_cannot_do": [
+                    "Religious schools cannot refuse to hire someone just for being gay, lesbian, bisexual, trans, non-binary, or intersex",
+                    "Religious schools cannot expel students for being LGBTIQ+",
+                    "Religious organisations cannot refuse services to LGBTIQ+ people just because they're LGBTIQ+",
+                    "Religious hospitals cannot refuse to hire LGBTIQ+ staff just because they're LGBTIQ+"
+                ],
+                "real_example": "A Catholic school can require teachers to attend Mass and uphold Catholic teachings, but cannot refuse to hire a teacher simply because they are gay, transgender, or intersex. The school can only make employment decisions based on religious belief, not LGBTIQ+ status. This protection was introduced in 2019 for schools and extended to other sectors in 2023.",
+                "if_you_face_discrimination": "ACT has very strong protections following reforms in 2019 and 2023. If a religious organisation claims they can discriminate against you, they must prove it's based on religious belief, not LGBTIQ+ status. Seek legal advice from ACT Human Rights Commission.",
+                "jurisdiction_specific": true
+            }
+        },
+        "jurisdiction_rating": {
+            "overall_rating": "GREEN",
+            "rating_explanation": "ACT has very strong LGBTIQ+ protections. Sexuality (including bisexual and intersex), gender identity (including non-binary), and sex characteristics are all protected. Religious exemptions were significantly narrowed in 2019 and 2023 - religious organisations can only discriminate based on religious belief in most circumstances. Comprehensive vilification protections exist.",
+            "strengths": [
+                "Sexuality (including bisexual and intersex), gender identity (including non-binary), and sex characteristics all protected",
+                "Strong protections against religious discrimination - religious organisations can only discriminate based on religious belief in most circumstances (reforms in 2019 and 2023)",
+                "LGBTIQ+ students and teachers in religious schools are fully protected (since 2019)",
+                "Civil vilification protections for LGBTIQ+ people",
+                "No small employer exemption",
+                "ACT replaced 'intersex status' with 'sex characteristics' in August 2020 with definition supported by intersex organisations"
+            ],
+            "gaps": [
+                "Asexual people not explicitly protected under sexuality definition"
+            ]
+        }
+    },
+    "sources_used": {
+        "primary_legislation": [
+            "Discrimination Act 1991 (ACT) - https://www.legislation.act.gov.au/a/1991-81"
+        ],
+        "official_guides": [
+            "ACT Human Rights Commission - https://hrc.act.gov.au"
+        ],
+        "secondary_analysis": [
+            "Alastair Lawrie - A Quick Guide to Australian LGBTI Anti-Discrimination Laws"
+        ]
+    }
+}
