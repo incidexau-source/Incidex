@@ -1,0 +1,39 @@
+name: Weekly Legal Cases Monitor
+
+on:
+  schedule:
+    - cron: '0 17 * * 0'  # Monday 3 AM AEDT (Sunday 5 PM UTC)
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  legal-monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run legal cases monitor
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          cd scripts
+          python legal_cases_scraper.py
+      
+      - name: Commit and push results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Legal Cases Monitor Bot"
+          git add data/legal-cases.csv data/*legal*.csv || true
+          git commit -m "Auto: Weekly legal cases update [skip ci]" || true
+          git push || true
+

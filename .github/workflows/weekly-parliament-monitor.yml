@@ -1,0 +1,39 @@
+name: Weekly Parliamentary Monitor
+
+on:
+  schedule:
+    - cron: '0 17 * * 1'  # Tuesday 3 AM AEDT (Monday 5 PM UTC)
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  parliament-monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run parliament monitor
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          cd scripts
+          python parliament_scraper.py
+      
+      - name: Commit and push results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Parliament Monitor Bot"
+          git add data/parliament_activity.csv data/*parliament*.csv || true
+          git commit -m "Auto: Weekly parliamentary update [skip ci]" || true
+          git push || true
+
