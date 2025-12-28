@@ -226,7 +226,7 @@ class Deduplicator:
         if check_existing and len(self.existing_incidents) > 0:
             for new_idx, new_incident in enumerate(new_incidents):
                 for existing_idx, existing_row in self.existing_incidents.iterrows():
-                    if self._is_duplicate(new_incident, existing_row.to_dict()):
+                    if self.is_duplicate(new_incident, existing_row.to_dict()):
                         existing_duplicates.append({
                             "new_incident": new_incident,
                             "existing_incident": existing_row.to_dict(),
@@ -249,7 +249,7 @@ class Deduplicator:
                 if j in seen_indices:
                     continue
                 
-                if self._is_duplicate(incident1, incident2):
+                if self.is_duplicate(incident1, incident2):
                     duplicate_group.append(incident2)
                     duplicate_indices.append(j)
                     seen_indices.add(j)
@@ -292,7 +292,7 @@ class Deduplicator:
         
         return result
     
-    def _is_duplicate(self, incident1: Dict[str, Any], incident2: Dict[str, Any]) -> bool:
+    def is_duplicate(self, incident1: Dict[str, Any], incident2: Dict[str, Any]) -> bool:
         """
         Check if two incidents are duplicates.
         

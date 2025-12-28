@@ -21,13 +21,10 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # Configure Gemini
+# BASE_DIR already added to sys.path above
 try:
     from config import GOOGLE_API_KEY
 except ImportError:
-    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
-if not GOOGLE_API_KEY:
-    # Try one last check in env in case config failed but env has it
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 if not GOOGLE_API_KEY:
@@ -114,17 +111,21 @@ def extract_incident(title: str, text: str, url: str, model_name: str = "gemini-
         Article URL: {url}
         
         Return a JSON object with the following fields:
-        - incident_type: (assault, harassment, threat, vandalism, murder, discrimination, hate_speech)
-        - date_of_incident: YYYY-MM-DD (estimate if not exact, use article date {typing.Union[str, None]} if unknown)
-        - location: Specific suburb and state (e.g. "Darlinghurst, NSW"). Infer from context if possible.
-        - victim_identity: (gay, lesbian, trans, bi, queer, general_lgbtiq, unknown)
-        - description: Concise summary (2-3 sentences) of what happened.
-        - confidence_score: Numeric 0-100 representing confidence this is a genuine hate crime report.
-        - notes: Any additional context (e.g. "Alleged perpetrator arrested").
+        - incident_type: string (assault, harassment, threat, vandalism, murder, discrimination, hate_speech)
+        - date_of_incident: string or null (YYYY-MM-DD format, estimate if not exact, use article date if unknown, or null if unavailable)
+        - location: string or null (Specific suburb and state e.g. "Darlinghurst, NSW". Infer from context if possible, or null if unavailable)
+        - victim_identity: string or null (gay, lesbian, trans, bi, queer, general_lgbtiq, unknown, or null)
+        - description: string (Concise summary, 2-3 sentences of what happened)
+        - confidence_score: number (0-100 representing confidence this is a genuine hate crime report)
+        - notes: string or null (Any additional context e.g. "Alleged perpetrator arrested", or null)
         """
         
         response = model.generate_content(prompt)
         result = json.loads(response.text)
+        
+        # Add URL and title to result for traceability
+        result["article_url"] = url
+        result["article_title"] = title
         
         # Ensure minimal fields are present
         if "location" not in result or "incident_type" not in result:

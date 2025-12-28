@@ -18,10 +18,10 @@ from dotenv import load_dotenv
 # Add parent directory to path to allow imports if running from scripts/
 sys.path.append(str(Path(__file__).parent.parent))
 
-from scripts import rss_feeds
+from rss_feeds import get_all_feeds
 from scripts import gemini_extractor
-from scripts.geocoder import Geocoder
-from scripts.deduplicator import Deduplicator
+from geocoder import Geocoder
+from deduplicator import Deduplicator
 
 # Load environment variables
 load_dotenv()
@@ -44,7 +44,7 @@ REPORT_FILE = Path("daily_report.txt")
 
 class RSSAgent:
     def __init__(self):
-        self.feeds = rss_feeds.get_all_feeds()
+        self.feeds = get_all_feeds()
         self.processed_urls = self._load_processed_urls()
         self.geocoder = Geocoder()
         self.deduplicator = Deduplicator(existing_csv_path="data/incidents_in_progress.csv")
@@ -136,7 +136,7 @@ class RSSAgent:
                     
                     is_batch_duplicate = False
                     for existing_new in self.new_incidents:
-                        if self.deduplicator._is_duplicate(incident_data, existing_new):
+                        if self.deduplicator.is_duplicate(incident_data, existing_new):
                             is_batch_duplicate = True
                             break
                     

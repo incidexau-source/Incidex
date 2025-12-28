@@ -1,5 +1,14 @@
-# OpenAI API Configuration
-OPENAI_API_KEY = "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"
+import os
+
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
+
+# OpenAI API Configuration (load from environment)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+
+# Google Gemini API Configuration (load from environment)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 
 # Processing settings
 BATCH_SIZE = 50
