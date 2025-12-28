@@ -1,0 +1,64 @@
+2025-12-28 12:38:07,078 - deduplicator - INFO - Existing incidents file not found: data\incidents_in_progress.csv
+2025-12-28 12:38:07,090 - RSSAgent - INFO - Starting RSS Agent run...
+2025-12-28 12:38:07,091 - RSSAgent - INFO - Checking feed: ABC News Australia - National
+2025-12-28 12:38:19,704 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:38:19,713 - RSSAgent - ERROR - Error processing feed ABC News Australia - National: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:38:19,721 - RSSAgent - INFO - Checking feed: The Guardian Australia
+2025-12-28 12:38:32,200 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:38:32,202 - RSSAgent - ERROR - Error processing feed The Guardian Australia: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:38:32,203 - RSSAgent - INFO - Checking feed: ABC News - VIC
+2025-12-28 12:38:32,914 - RSSAgent - INFO - Checking feed: The Age
+2025-12-28 12:38:33,401 - RSSAgent - INFO - Checking feed: ABC News - QLD
+2025-12-28 12:38:45,654 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:38:45,657 - RSSAgent - ERROR - Error processing feed ABC News - QLD: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:38:45,658 - RSSAgent - INFO - Checking feed: Courier Mail
+2025-12-28 12:38:45,941 - RSSAgent - INFO - Checking feed: ABC News - WA
+2025-12-28 12:38:46,286 - RSSAgent - INFO - Checking feed: The West Australian
+2025-12-28 12:38:47,236 - RSSAgent - INFO - Checking feed: ABC News - SA
+2025-12-28 12:38:48,577 - RSSAgent - INFO - Checking feed: The Advertiser
+2025-12-28 12:38:48,894 - RSSAgent - INFO - Checking feed: ABC News - TAS
+2025-12-28 12:38:49,308 - RSSAgent - INFO - Checking feed: The Mercury
+2025-12-28 12:38:49,656 - RSSAgent - INFO - Checking feed: ABC News - ACT
+2025-12-28 12:38:50,009 - RSSAgent - INFO - Checking feed: The Canberra Times
+2025-12-28 12:39:02,337 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:39:02,338 - RSSAgent - ERROR - Error processing feed The Canberra Times: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:39:02,340 - RSSAgent - INFO - Checking feed: ABC News - NT
+2025-12-28 12:39:02,612 - RSSAgent - INFO - Checking feed: PinkNews - LGBTIQ+ News
+2025-12-28 12:39:15,691 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:39:15,692 - RSSAgent - ERROR - Error processing feed PinkNews - LGBTIQ+ News: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:39:15,693 - RSSAgent - INFO - Checking feed: Star Observer
+2025-12-28 12:39:28,588 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:39:28,590 - RSSAgent - ERROR - Error processing feed Star Observer: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:39:28,591 - RSSAgent - INFO - Checking feed: Newcastle Herald
+2025-12-28 12:39:40,777 - scripts.gemini_extractor - ERROR - Error in filter_article: 
+  No API_KEY or ADC found. Please either:
+    - Set the `GOOGLE_API_KEY` environment variable.
+    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
+    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+2025-12-28 12:39:40,779 - RSSAgent - ERROR - Error processing feed Newcastle Herald: [Errno 2] No such file or directory: 'data\\processed_urls.txt'
+2025-12-28 12:39:40,779 - RSSAgent - INFO - Checking feed: Gold Coast Bulletin
+2025-12-28 12:39:41,094 - RSSAgent - INFO - RSS Agent run complete.

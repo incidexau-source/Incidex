@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <h1>Server Connection Test</h1>
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function addResult(message, isSuccess) {
+            const div = document.createElement('div');
+            div.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+
+        function addLoading(message) {
+            const div = document.createElement('div');
+            div.className = 'test-result loading';
+            div.textContent = message;
+            div.id = 'loading';
+            resultsDiv.appendChild(div);
+        }
+
+        function removeLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.remove();
+        }
+
+        // Test 1: Check if server is responding
+        addLoading('Testing server connection...');
+        fetch('/visualizations/index.html')
+            .then(response => {
+                removeLoading();
+                if (response.ok) {
+                    addResult('✓ Server is responding', true);
+                    return testDataFiles();
+                } else {
+                    addResult(`✗ Server returned status: ${response.status}`, false);
+                }
+            })
+            .catch(error => {
+                removeLoading();
+                addResult(`✗ Server connection failed: ${error.message}`, false);
+            });
+
+        // Test 2: Check data files
+        async function testDataFiles() {
+            const files = [
+                '/data/incidents_in_progress.csv',
+                '/data/landmark_cases.csv',
+                '/data/mp-lgbtiq-votes.json',
+                '/data/resources_by_location.csv'
+            ];
+
+            for (const file of files) {
+                addLoading(`Testing ${file}...`);
+                try {
+                    const response = await fetch(file);
+                    removeLoading();
+                    if (response.ok) {
+                        const contentType = response.headers.get('content-type');
+                        addResult(`✓ ${file} - OK (${contentType})`, true);
+                    } else {
+                        addResult(`✗ ${file} - Status: ${response.status}`, false);
+                    }
+                } catch (error) {
+                    removeLoading();
+                    addResult(`✗ ${file} - Error: ${error.message}`, false);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -3,48 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Compare LGBTIQ+ voting records and policy progress across Australian states and territories">
-  <title>State Comparison | Incidex Australia</title>
+  <meta name="description" content="State and Territory Comparison - Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.">
+  <title>State & Territory Comparison | Incidex</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
   
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://incidex.au/state_comparison.html">
-  <meta property="og:title" content="State Comparison | Incidex Australia">
-  <meta property="og:description" content="Compare LGBTIQ+ voting records and policy progress across Australian states and territories">
-  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://incidex.au/state_comparison.html">
-  <meta property="twitter:title" content="State Comparison | Incidex Australia">
-  <meta property="twitter:description" content="Compare LGBTIQ+ voting records and policy progress across Australian states and territories">
-  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
-  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources-dropdown.css">
+  
+  <!-- PapaParse for CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   
   <style>
-    .page-content {
-      max-width: var(--container-xl);
-      margin: 0 auto;
-      padding: var(--space-8) var(--space-6);
+    /* Page-specific styles */
+    .page-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - var(--header-height));
     }
 
-    .page-header {
+    .main-content {
+      flex: 1;
+      padding: var(--space-8) var(--space-6);
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .comparison-header {
       margin-bottom: var(--space-8);
     }
 
-    .page-title {
+    .comparison-header h1 {
       font-family: var(--font-heading);
       font-size: var(--text-3xl);
       font-weight: var(--font-bold);
@@ -52,7 +51,7 @@
       margin-bottom: var(--space-2);
     }
 
-    .page-subtitle {
+    .comparison-subtitle {
       font-size: var(--text-lg);
       color: var(--color-text-secondary);
     }
@@ -149,7 +148,7 @@
 
     .state-name {
       font-weight: var(--font-semibold);
-      font-size: var(--text-lg);
+      color: var(--color-text);
     }
 
     .state-stats {
@@ -165,7 +164,7 @@
     }
 
     .stat-label {
-      color: var(--color-text-muted);
+      color: var(--color-text-secondary);
     }
 
     .stat-value {
@@ -173,24 +172,98 @@
       color: var(--color-text);
     }
 
+    .legislation-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .legislation-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .legislation-table th,
+    .legislation-table td {
+      padding: var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .legislation-table th {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      background: var(--color-bg);
+      position: sticky;
+      top: 0;
+    }
+
+    .legislation-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+    }
+
+    .legislation-status.present { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .legislation-status.absent { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+    .legislation-status.limited { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .legislation-status.pending { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+
+    .key-differences-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .difference-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .difference-card h3 {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .difference-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .difference-card a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+    }
+
+    .difference-card a:hover {
+      text-decoration: underline;
+    }
+
     .reform-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--space-3);
-      margin-top: var(--space-4);
+      gap: var(--space-4);
     }
 
     .reform-item {
-      padding: var(--space-3);
       background: var(--color-bg);
-      border-radius: var(--radius-md);
-      text-align: center;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
     }
 
     .reform-label {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-2);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
     }
 
     .reform-status {
@@ -199,20 +272,23 @@
     }
 
     @media (max-width: 768px) {
-      .page-content {
+      .main-content {
         padding: var(--space-4);
       }
-      
-      .comparison-grid {
+
+      .comparison-grid,
+      .key-differences-grid,
+      .reform-grid {
         grid-template-columns: 1fr;
+      }
+
+      .legislation-table-wrapper {
+        overflow-x: scroll;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Skip Link -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
   <!-- Header -->
   <header class="site-header">
     <div class="header-inner">
@@ -222,122 +298,199 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="map.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
           Map
         </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
         <a href="voting_records.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           MP Voting
         </a>
-        <a href="state_comparison.html" class="nav-link active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
-          State Compare
-        </a>
-        <a href="policy_landscape.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
-          Policy
-        </a>
         <a href="statistics.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           Statistics
         </a>
+        <!-- Resources Dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Resources
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="nav-dropdown-menu" aria-hidden="true">
+            <!-- Know Your Rights Section -->
+            <div class="dropdown-section">
+              <div class="dropdown-section-title">
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                </svg>
+                Legal Guides: Know Your Rights
+              </div>
+              <a href="legal_guides.html" style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+                <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
+              </a>
+              <!-- Jurisdiction Grid -->
+              <div class="jurisdiction-grid">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Commonwealth</div>
+                </a>
+                <a href="legal_guides.html#nsw" class="jurisdiction-card">
+                  <div class="jurisdiction-name">NSW</div>
+                </a>
+                <a href="legal_guides.html#vic" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Victoria</div>
+                </a>
+                <a href="legal_guides.html#qld" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Queensland</div>
+                </a>
+                <a href="legal_guides.html#sa" class="jurisdiction-card">
+                  <div class="jurisdiction-name">South Australia</div>
+                </a>
+                <a href="legal_guides.html#wa" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Western Australia</div>
+                </a>
+                <a href="legal_guides.html#tas" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Tasmania</div>
+                </a>
+                <a href="legal_guides.html#act" class="jurisdiction-card">
+                  <div class="jurisdiction-name">ACT</div>
+                </a>
+                <a href="legal_guides.html#nt" class="jurisdiction-card">
+                  <div class="jurisdiction-name">Northern Territory</div>
+                </a>
+              </div>
+            </div>
+            <!-- Support Services Section -->
+            <div class="dropdown-section">
+              <div class="dropdown-section-title">
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Support Services
+              </div>
+              <a href="resources.html" class="dropdown-link">Find Support Services →</a>
+            </div>
+          </div>
+        </div>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
       </nav>
-
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      </button>
     </div>
   </header>
 
-  <!-- Mobile Navigation -->
-  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-    <a href="map.html" class="nav-link">Map</a>
-    <a href="voting_records.html" class="nav-link">MP Voting</a>
-    <a href="state_comparison.html" class="nav-link active">State Compare</a>
-    <a href="policy_landscape.html" class="nav-link">Policy</a>
-    <a href="statistics.html" class="nav-link">Statistics</a>
-  </nav>
-
   <!-- Main Content -->
-  <main id="main-content" class="page-content">
-    <div class="page-header">
-      <h1 class="page-title">State & Territory Comparison</h1>
-      <p class="page-subtitle">
-        Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
-      </p>
+  <main class="page-layout">
+    <div class="main-content">
+      <div class="comparison-header">
+        <h1>State & Territory Comparison</h1>
+        <p class="comparison-subtitle">
+          Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
+        </p>
+      </div>
+
+      <!-- Conversion Practices Ban Timeline -->
+      <section class="comparison-section" aria-labelledby="conversion-timeline-title">
+        <h2 id="conversion-timeline-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Conversion Practices Ban Timeline
+        </h2>
+        <div class="timeline" id="conversionTimeline">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Gender Recognition Progress -->
+      <section class="comparison-section" aria-labelledby="gender-recognition-title">
+        <h2 id="gender-recognition-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Gender Recognition Progressiveness
+        </h2>
+        <div class="comparison-grid" id="genderRecognitionGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Comprehensive Legislation Comparison -->
+      <section class="comparison-section" aria-labelledby="legislation-title">
+        <h2 id="legislation-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Comprehensive Legislation Comparison
+        </h2>
+        <div class="legislation-table-wrapper">
+          <table class="legislation-table" id="legislationTable">
+            <thead>
+              <tr>
+                <th>State/Territory</th>
+                <th>Hate Crime Law</th>
+                <th>Vilification Law</th>
+                <th>Anti-Discrimination</th>
+                <th>Gender Recognition</th>
+                <th>Conversion Practices Ban</th>
+                <th>Religious Exemptions</th>
+              </tr>
+            </thead>
+            <tbody id="legislationTableBody">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Key Differences -->
+      <section class="comparison-section" aria-labelledby="key-differences-title">
+        <h2 id="key-differences-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Key Differences & Unique Features
+        </h2>
+        <div class="key-differences-grid" id="keyDifferencesGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Reform Status Dashboard -->
+      <section class="comparison-section" aria-labelledby="reform-status-title">
+        <h2 id="reform-status-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          Reform Status Dashboard
+        </h2>
+        <div class="reform-grid" id="reformStatusGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- State-by-State Summary -->
+      <section class="comparison-section" aria-labelledby="state-summary-title">
+        <h2 id="state-summary-title" class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+          State-by-State Summary
+        </h2>
+        <div class="comparison-grid" id="stateSummaryGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
     </div>
-
-    <!-- Conversion Practices Ban Timeline -->
-    <section class="comparison-section" aria-labelledby="conversion-timeline-title">
-      <h2 id="conversion-timeline-title" class="section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Conversion Practices Ban Timeline
-      </h2>
-      <div class="timeline" id="conversionTimeline">
-        <!-- Populated by JavaScript -->
-      </div>
-    </section>
-
-    <!-- Gender Recognition Progress -->
-    <section class="comparison-section" aria-labelledby="gender-recognition-title">
-      <h2 id="gender-recognition-title" class="section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Gender Recognition Progressiveness
-      </h2>
-      <div class="comparison-grid" id="genderRecognitionGrid">
-        <!-- Populated by JavaScript -->
-      </div>
-    </section>
-
-    <!-- Reform Status Dashboard -->
-    <section class="comparison-section" aria-labelledby="reform-status-title">
-      <h2 id="reform-status-title" class="section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        Reform Status Dashboard
-      </h2>
-      <div class="reform-grid" id="reformStatusGrid">
-        <!-- Populated by JavaScript -->
-      </div>
-    </section>
-
-    <!-- State-by-State Summary -->
-    <section class="comparison-section" aria-labelledby="state-summary-title">
-      <h2 id="state-summary-title" class="section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
-        State-by-State Summary
-      </h2>
-      <div class="comparison-grid" id="stateSummaryGrid">
-        <!-- Populated by JavaScript -->
-      </div>
-    </section>
   </main>
 
+  <script src="resources-dropdown.js"></script>
   <script>
+    // State comparison data
     const STATE_DATA_PATH = "/data/state-mp-lgbtiq-votes.json";
-    
-    // Conversion practices ban data
-    const CONVERSION_PRACTICES_STATUS = {
-      "QLD": { status: "passed", date: "2020-03", year: 2020, note: "First in Australia" },
-      "VIC": { status: "passed", date: "2020-11", year: 2020, note: "Most comprehensive at time" },
-      "NSW": { status: "passed", date: "2024-03", year: 2024, note: "Took effect April 2025" },
-      "SA": { status: "passed", date: "2024-09", year: 2024, note: "Took effect April 2025" },
-      "TAS": { status: "pending", date: "2025", year: 2025, note: "Under consideration" },
-      "WA": { status: "pending", date: "2025-post", year: 2025, note: "Expected after March 2025 election" },
-      "ACT": { status: "pending", date: "2025", year: 2025, note: "Status unclear" },
-      "NT": { status: "pending", date: "2025", year: 2025, note: "Under consideration" }
-    };
-    
-    // Gender recognition progressiveness
-    const GENDER_RECOGNITION_STATUS = {
-      "TAS": { level: "most_progressive", year: 2019, features: ["No surgery", "No divorce", "Non-binary", "Gender-optional", "16+ without parent"] },
-      "VIC": { level: "progressive", year: 2023, features: ["No surgery", "Free (2025)", "Non-binary"] },
-      "WA": { level: "progressive", year: 2024, features: ["No surgery", "Non-binary", "Simplified process"] },
-      "ACT": { level: "progressive", year: 2024, features: ["No clinical treatment", "Expanded descriptors"] },
-      "NSW": { level: "moderate", year: 2023, features: ["No surgery"] },
-      "QLD": { level: "moderate", year: 2024, features: ["No surgery (2024)"] },
-      "SA": { level: "moderate", year: 2016, features: ["No surgery"] },
-      "NT": { level: "limited", year: null, features: [] }
-    };
+    const POLICY_DATA_PATH = "/data/policy_landscape.csv";
     
     const STATE_NAMES = {
       "NSW": "New South Wales",
@@ -351,19 +504,111 @@
     };
     
     let stateData = null;
+    let policyData = [];
     
+    const CONVERSION_PRACTICES_STATUS = {
+      "QLD": { status: "passed", date: "2020-03", year: 2020, note: "First in Australia" },
+      "VIC": { status: "passed", date: "2020-11", year: 2020, note: "Most comprehensive at time" },
+      "NSW": { status: "passed", date: "2024-03", year: 2024, note: "Took effect April 2025" },
+      "SA": { status: "passed", date: "2024-09", year: 2024, note: "Took effect April 2025" },
+      "TAS": { status: "pending", date: "2025", year: 2025, note: "Under consideration" },
+      "WA": { status: "pending", date: "2025-post", year: 2025, note: "Expected after March 2025 election" },
+      "ACT": { status: "pending", date: "2025", year: 2025, note: "Status unclear" },
+      "NT": { status: "pending", date: "2025", year: 2025, note: "Under consideration" }
+    };
+    
+    const GENDER_RECOGNITION_STATUS = {
+      "TAS": { level: "most_progressive", year: 2019, features: ["No surgery", "No divorce", "Non-binary", "Gender-optional", "16+ without parent"] },
+      "VIC": { level: "progressive", year: 2023, features: ["No surgery", "Free (2025)", "Non-binary"] },
+      "WA": { level: "progressive", year: 2024, features: ["No surgery", "Non-binary", "Simplified process"] },
+      "ACT": { level: "progressive", year: 2024, features: ["No clinical treatment", "Expanded descriptors"] },
+      "NSW": { level: "moderate", year: 2023, features: ["No surgery"] },
+      "QLD": { level: "moderate", year: 2024, features: ["No surgery (2024)"] },
+      "SA": { level: "moderate", year: 2016, features: ["No surgery"] },
+      "NT": { level: "limited", year: null, features: [] }
+    };
+
+    // Key differences and unique features
+    const KEY_DIFFERENCES = {
+      "VIC": {
+        title: "Victoria - LGBTQ+ Commissioner",
+        description: "Victoria is the only state with a dedicated Commissioner for LGBTIQ+ Communities, established in 2015. The Commissioner advocates for LGBTIQ+ rights and monitors policy implementation.",
+        link: "https://www.vic.gov.au/commissioner-lgbtiq-communities",
+        linkText: "Learn more about the Commissioner"
+      },
+      "TAS": {
+        title: "Tasmania - Most Progressive Gender Recognition",
+        description: "Tasmania has the most progressive gender recognition laws in Australia, allowing self-determination without medical evidence, non-binary options, and no requirement to divorce when changing gender marker.",
+        link: "https://www.legislation.tas.gov.au/view/html/asmade/act-2019-007",
+        linkText: "View legislation"
+      },
+      "ACT": {
+        title: "ACT - First Non-Binary Recognition",
+        description: "The Australian Capital Territory was the first jurisdiction in Australia to allow X (non-binary) gender markers on birth certificates in 2014.",
+        link: "https://www.legislation.act.gov.au/a/1997-112/",
+        linkText: "View legislation"
+      },
+      "SA": {
+        title: "South Australia - Significant Gaps",
+        description: "South Australia has notable gaps in LGBTIQ+ protections, lacking both hate crime and vilification laws covering LGBTIQ+ grounds, and requiring surgery for gender recognition.",
+        link: "https://www.legislation.sa.gov.au/",
+        linkText: "View legislation"
+      },
+      "NT": {
+        title: "Northern Territory - Limited Protections",
+        description: "The Northern Territory lacks hate crime and vilification laws covering LGBTIQ+ grounds, and has restrictive gender recognition requirements.",
+        link: "https://legislation.nt.gov.au/",
+        linkText: "View legislation"
+      }
+    };
+
+    // Load data
+    async function loadPolicyData() {
+      return new Promise((resolve, reject) => {
+        Papa.parse(POLICY_DATA_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            policyData = results.data.filter(row => row.jurisdiction && row.policy_category);
+            console.log(`Loaded ${policyData.length} policy records`);
+            resolve();
+          },
+          error: (err) => {
+            console.error('Failed to load policy data:', err);
+            reject(err);
+          }
+        });
+      });
+    }
+
     async function loadStateData() {
       try {
         const response = await fetch(STATE_DATA_PATH + '?v=' + Date.now());
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         stateData = await response.json();
-        renderAll();
+        console.log('State data loaded:', stateData);
       } catch (error) {
         console.error('Failed to load state data:', error);
+        const grid = document.getElementById('stateSummaryGrid');
+        if (grid) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-secondary);">
+              <p>Unable to load state data. Please check the console for details.</p>
+              <p style="font-size: var(--text-xs); margin-top: var(--space-2);">Error: ${error.message}</p>
+            </div>
+          `;
+        }
       }
     }
-    
+
+    // Render functions
     function renderConversionTimeline() {
       const timeline = document.getElementById('conversionTimeline');
+      if (!timeline) return;
+      
       const sorted = Object.entries(CONVERSION_PRACTICES_STATUS)
         .sort((a, b) => {
           if (a[1].status === 'passed' && b[1].status !== 'passed') return -1;
@@ -371,7 +616,7 @@
           return (a[1].year || 9999) - (b[1].year || 9999);
         });
       
-      timeline.innerHTML = sorted.map(([state, info]) => {
+      const html = sorted.map(([state, info]) => {
         const statusClass = info.status === 'passed' ? 'passed' : 
                            info.status === 'pending' ? 'pending' : 'none';
         const statusBadge = info.status === 'passed' ? 
@@ -382,23 +627,27 @@
           <div class="timeline-item ${statusClass}">
             <div class="timeline-date">${info.date || 'TBD'}</div>
             <div class="timeline-content">
-              <div class="timeline-state">${STATE_NAMES[state]} ${statusBadge}</div>
+              <div class="timeline-state">${STATE_NAMES[state] || state} ${statusBadge}</div>
               <div class="timeline-description">${info.note}</div>
             </div>
           </div>
         `;
       }).join('');
+      
+      timeline.innerHTML = html;
     }
     
     function renderGenderRecognition() {
       const grid = document.getElementById('genderRecognitionGrid');
+      if (!grid) return;
+      
       const sorted = Object.entries(GENDER_RECOGNITION_STATUS)
         .sort((a, b) => {
           const levels = { most_progressive: 4, progressive: 3, moderate: 2, limited: 1 };
           return (levels[b[1].level] || 0) - (levels[a[1].level] || 0);
         });
       
-      grid.innerHTML = sorted.map(([state, info]) => {
+      const html = sorted.map(([state, info]) => {
         const levelColors = {
           most_progressive: '#10b981',
           progressive: '#3b82f6',
@@ -410,7 +659,7 @@
         return `
           <div class="state-card">
             <div class="state-card-header">
-              <div class="state-name">${STATE_NAMES[state]}</div>
+              <div class="state-name">${STATE_NAMES[state] || state}</div>
               <span class="status-badge" style="background: ${color}20; color: ${color};">
                 ${info.level.replace('_', ' ').toUpperCase()}
               </span>
@@ -433,41 +682,144 @@
           </div>
         `;
       }).join('');
+      
+      grid.innerHTML = html;
     }
-    
+
+    function renderLegislationTable() {
+      const tbody = document.getElementById('legislationTableBody');
+      if (!tbody) return;
+
+      const states = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT'];
+      
+      tbody.innerHTML = states.map(state => {
+        const statePolicies = policyData.filter(p => p.jurisdiction === state);
+        
+        const getPolicyStatus = (category) => {
+          const policy = statePolicies.find(p => p.policy_category === category);
+          if (!policy) return { status: 'absent', label: 'Absent', class: 'absent', url: null, year: null };
+          
+          let label = 'Unknown';
+          if (policy.status === 'present') label = 'Present';
+          else if (policy.status === 'absent') label = 'Absent';
+          else if (policy.status === 'pending') label = 'Pending';
+          else if (policy.status === 'limited') label = 'Limited';
+          else if (policy.status === 'easy') label = 'Easy';
+          else if (policy.status === 'moderate') label = 'Moderate';
+          else if (policy.status === 'hard') label = 'Hard';
+          
+          return { 
+            status: policy.status, 
+            label: label, 
+            class: policy.status === 'present' || policy.status === 'easy' ? 'present' : 
+                   policy.status === 'absent' || policy.status === 'hard' ? 'absent' : 
+                   policy.status === 'limited' || policy.status === 'moderate' ? 'limited' : 'pending',
+            url: policy.source_url || null,
+            year: policy.year_enacted || null
+          };
+        };
+
+        const hateCrime = getPolicyStatus('hate_crime_law');
+        const vilification = getPolicyStatus('vilification_law');
+        const discrimination = getPolicyStatus('discrimination_protection_employment');
+        const genderRec = getPolicyStatus('gender_recognition');
+        const conversion = getPolicyStatus('conversion_practices_ban');
+        const exemptions = getPolicyStatus('religious_exemptions');
+
+        const renderCell = (policy) => {
+          let content = `<span class="legislation-status ${policy.class}">${policy.label}</span>`;
+          if (policy.year) {
+            content += `<br><span style="font-size: var(--text-xs); color: var(--color-text-muted);">${policy.year}</span>`;
+          }
+          if (policy.url) {
+            content = `<a href="${policy.url}" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">${content}</a>`;
+          }
+          return content;
+        };
+
+        return `
+          <tr>
+            <td><strong>${STATE_NAMES[state] || state}</strong></td>
+            <td>${renderCell(hateCrime)}</td>
+            <td>${renderCell(vilification)}</td>
+            <td>${renderCell(discrimination)}</td>
+            <td>${renderCell(genderRec)}</td>
+            <td>${renderCell(conversion)}</td>
+            <td>${renderCell(exemptions)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderKeyDifferences() {
+      const grid = document.getElementById('keyDifferencesGrid');
+      if (!grid) return;
+
+      grid.innerHTML = Object.entries(KEY_DIFFERENCES).map(([state, info]) => {
+        return `
+          <div class="difference-card">
+            <h3>${STATE_NAMES[state] || state}: ${info.title}</h3>
+            <p>${info.description}</p>
+            ${info.link ? `<a href="${info.link}" target="_blank" rel="noopener">${info.linkText} →</a>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
     function renderReformStatus() {
       const grid = document.getElementById('reformStatusGrid');
+      if (!grid) return;
+      
       const states = Object.keys(STATE_NAMES);
       
       grid.innerHTML = states.map(state => {
-        const conversion = CONVERSION_PRACTICES_STATUS[state];
-        const gender = GENDER_RECOGNITION_STATUS[state];
+        const conversion = CONVERSION_PRACTICES_STATUS[state] || { status: 'none' };
+        const gender = GENDER_RECOGNITION_STATUS[state] || { level: 'limited' };
         
         return `
           <div class="reform-item">
-            <div class="reform-label">${STATE_NAMES[state]}</div>
+            <div class="reform-label">${STATE_NAMES[state] || state}</div>
             <div style="margin-bottom: var(--space-2);">
               <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Conversion Practices</div>
-              <span class="status-badge ${conversion.status === 'passed' ? 'status-passed' : 'status-pending'}">
-                ${conversion.status === 'passed' ? 'PASSED' : 'PENDING'}
+              <span class="status-badge ${conversion.status === 'passed' ? 'status-passed' : conversion.status === 'pending' ? 'status-pending' : 'status-none'}">
+                ${conversion.status === 'passed' ? 'PASSED' : conversion.status === 'pending' ? 'PENDING' : 'NONE'}
               </span>
             </div>
             <div>
               <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Gender Recognition</div>
               <div class="reform-status" style="color: ${gender.level === 'most_progressive' ? '#10b981' : gender.level === 'progressive' ? '#3b82f6' : gender.level === 'moderate' ? '#f59e0b' : '#ef4444'};">
-                ${gender.level.replace('_', ' ').toUpperCase()}
+                ${gender.level ? gender.level.replace('_', ' ').toUpperCase() : 'LIMITED'}
               </div>
             </div>
           </div>
         `;
       }).join('');
     }
-    
+
     function renderStateSummary() {
-      if (!stateData) return;
-      
       const grid = document.getElementById('stateSummaryGrid');
+      
+      if (!grid) return;
+      
+      if (!stateData || !stateData.states) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-secondary);">
+            <p>State data is loading...</p>
+          </div>
+        `;
+        return;
+      }
+      
       const states = Object.keys(stateData.states || {});
+      
+      if (states.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-secondary);">
+            <p>No state data available.</p>
+          </div>
+        `;
+        return;
+      }
       
       grid.innerHTML = states.map(stateCode => {
         const state = stateData.states[stateCode];
@@ -478,7 +830,7 @@
         return `
           <div class="state-card">
             <div class="state-card-header">
-              <div class="state-name">${STATE_NAMES[stateCode]}</div>
+              <div class="state-name">${STATE_NAMES[stateCode] || stateCode}</div>
               <a href="index.html?state=${stateCode}" class="btn btn-primary btn-sm">
                 View Map
               </a>
@@ -503,21 +855,26 @@
         `;
       }).join('');
     }
-    
-    function renderAll() {
-      renderConversionTimeline();
-      renderGenderRecognition();
-      renderReformStatus();
-      renderStateSummary();
-    }
-    
-    // Mobile menu
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileNav').classList.toggle('active');
-    });
-    
+
     // Initialize
-    loadStateData();
+    async function initialize() {
+      try {
+        await Promise.all([loadPolicyData(), loadStateData()]);
+        
+        // Render all sections
+        renderConversionTimeline();
+        renderGenderRecognition();
+        renderLegislationTable();
+        renderKeyDifferences();
+        renderReformStatus();
+        renderStateSummary();
+      } catch (error) {
+        console.error('Error initializing:', error);
+      }
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', initialize);
   </script>
 </body>
 </html>

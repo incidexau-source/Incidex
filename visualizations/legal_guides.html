@@ -140,38 +140,23 @@
 
 <body class="bg-slate-50 text-slate-900">
     <!-- Header (Standardized) -->
-    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-            <a href="index.html" class="flex items-center gap-3">
-                <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex Logo" class="h-10 w-10 object-cover rounded-lg">
-                <div>
-                    <h1 class="font-heading font-bold text-xl leading-none">Incidex</h1>
-                    <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Hate Crime Monitoring</p>
-                </div>
-            </a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+      </a>
 
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex items-center gap-1">
-                <a href="map.html"
-                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 011.053-1.789L9 2m0 18l6 3 6-3V4.618a2 2 0 00-1.053-1.789L15 0m-6 2l6 3m-6 3l6-3">
-                        </path>
-                    </svg>
-                    Map
-                </a>
-                <a href="policy_landscape.html"
-                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                    Policy
-                </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Policy and Legislation
+        </a>
                 <a href="voting_records.html"
-                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all flex items-center gap-2">
+                    class="nav-link">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00 2 2h10a2 2 0 00 2-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
@@ -181,19 +166,13 @@
                 </a>
                 <!-- Resources Dropdown (Standardized) -->
                 <div class="nav-dropdown">
-                    <button class="nav-dropdown-toggle text-blue-600 font-bold" aria-expanded="false"
-                        aria-haspopup="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        </svg>
-                        Resources
-                        <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
+          <button class="nav-dropdown-toggle nav-link active" aria-expanded="false" aria-haspopup="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Resources
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
                     <div class="nav-dropdown-menu" aria-hidden="true">
                         <!-- Know Your Rights Section -->
                         <div class="dropdown-section">
@@ -206,35 +185,40 @@
                                 </svg>
                                 Legal Guides: Know Your Rights
                             </div>
-                            <a href="legal_guides.html"
-                                class="block p-3 mb-4 bg-blue-50 border border-blue-100 rounded-xl hover:bg-blue-100 transition-colors">
-                                <div class="font-bold text-blue-700 text-sm font-sans">LGBTIQ+ Legal Factsheets</div>
-                                <div class="text-[10px] text-blue-600 font-medium font-sans">Practical guides for every
-                                    Australian jurisdiction</div>
-                            </a>
+              <a href="legal_guides.html" style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+                <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
+              </a>
                             <!-- Jurisdiction Grid -->
-                            <div class="jurisdiction-grid">
-                                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
-                                    onclick="openJurisdictionModal('commonwealth')">
-                                    <div class="jurisdiction-name">Commonwealth</div>
-                                </a>
-                                <a href="legal_guides.html#nsw" class="jurisdiction-card"
-                                    onclick="openJurisdictionModal('nsw')">
-                                    <div class="jurisdiction-name">NSW</div>
-                                </a>
-                                <a href="legal_guides.html#victoria" class="jurisdiction-card"
-                                    onclick="openJurisdictionModal('vic')">
-                                    <div class="jurisdiction-name">VIC</div>
-                                </a>
-                                <a href="legal_guides.html#queensland" class="jurisdiction-card"
-                                    onclick="openJurisdictionModal('qld')">
-                                    <div class="jurisdiction-name">QLD</div>
-                                </a>
-                                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
-                                    onclick="openJurisdictionModal('tas')">
-                                    <div class="jurisdiction-name">TAS</div>
-                                </a>
-                            </div>
+              <div class="jurisdiction-grid">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
+                  <div class="jurisdiction-name">Commonwealth</div>
+                </a>
+                <a href="legal_guides.html#nsw" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
+                  <div class="jurisdiction-name">NSW</div>
+                </a>
+                <a href="legal_guides.html#victoria" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
+                  <div class="jurisdiction-name">VIC</div>
+                </a>
+                <a href="legal_guides.html#queensland" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
+                  <div class="jurisdiction-name">QLD</div>
+                </a>
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
+                  <div class="jurisdiction-name">TAS</div>
+                </a>
+                <a href="legal_guides.html#sa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
+                  <div class="jurisdiction-name">SA</div>
+                </a>
+                <a href="legal_guides.html#wa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
+                  <div class="jurisdiction-name">WA</div>
+                </a>
+                <a href="legal_guides.html#nt" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
+                  <div class="jurisdiction-name">NT</div>
+                </a>
+                <a href="legal_guides.html#act" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
+                  <div class="jurisdiction-name">ACT</div>
+                </a>
+              </div>
                         </div>
                         <!-- Support Services Section -->
                         <div class="dropdown-section">
@@ -248,18 +232,42 @@
                         </div>
                     </div>
                 </div>
-                <a href="about.html"
-                    class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all">About</a>
-            </nav>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact
+        </a>
+      </nav>
 
-            <button class="md:hidden text-gray-500" id="mobileMenuBtn">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
-                </svg>
-            </button>
-        </div>
-    </header>
+      <div class="header-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" placeholder="Search incidents..." id="globalSearch" aria-label="Search incidents">
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
 
     <main id="main">
         <!-- Hero Section -->

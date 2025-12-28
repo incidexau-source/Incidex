@@ -1,0 +1,9 @@
+Incidex Daily Scrape Report [2025-12-28]
+        
+Processed Articles: 7
+Relevant Incidents Found: 0
+Duplicates Blocked: 0
+Low Confidence (Review Required): 0
+Incidents Added to Database: 0
+
+Estimated Cost: $0.00 (Free Tier)

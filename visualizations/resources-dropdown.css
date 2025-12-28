@@ -3,7 +3,14 @@
 /* Dropdown Container */
 .nav-dropdown {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  /* Ensure dropdown doesn't affect header layout */
+  height: 100%;
+  /* Allow dropdown to extend beyond header */
+  overflow: visible;
+  /* Ensure dropdown menu can escape header boundaries */
+  z-index: 1000;
 }
 
 .nav-dropdown-toggle {
@@ -11,14 +18,24 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  padding: 0.5rem 0.75rem;
-  font-medium: 500;
-  color: #374151;
+  /* Padding removed - let nav-link handle it */
+  font-weight: 500;
+  color: inherit;
   transition: color 0.2s ease;
+  /* Reset button defaults */
+  background: none;
+  border: none;
+  font: inherit;
+  text-decoration: none;
 }
 
 .nav-dropdown-toggle:hover {
   color: #2563eb;
+}
+
+/* Prevent nav-link ::after from showing on dropdown toggle */
+.nav-dropdown-toggle::after {
+  display: none !important;
 }
 
 .nav-dropdown-toggle.active {
@@ -38,19 +55,20 @@
 
 /* Dropdown Menu */
 .nav-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 0.5rem;
+  position: fixed;
+  top: auto;
+  left: auto;
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  min-width: 600px;
-  max-width: 800px;
+  min-width: 320px;
+  width: max-content;
+  max-width: min(600px, 90vw);
   max-height: 80vh;
   overflow-y: auto;
-  z-index: 1000;
+  overflow-x: visible;
+  z-index: 99999;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
@@ -267,14 +285,14 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .nav-dropdown-menu {
-    min-width: 90vw;
-    max-width: 90vw;
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
+    min-width: calc(100vw - 2rem);
+    max-width: calc(100vw - 2rem);
+    /* Position will be set dynamically by JavaScript */
+    transform: translateY(-10px);
   }
 
   .nav-dropdown.open .nav-dropdown-menu {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 
   .jurisdiction-grid {
