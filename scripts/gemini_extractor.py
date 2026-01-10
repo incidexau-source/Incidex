@@ -33,7 +33,7 @@ else:
     genai.configure(api_key=GOOGLE_API_KEY)
 
 
-def filter_article(title: str, text: str, model_name: str = "gemini-2.0-flash-exp") -> bool:
+def filter_article(title: str, text: str, model_name: str = "gemini-1.5-flash") -> bool:
     """
     Determines if an article is about an LGBTIQ+ hate crime in Australia.
     
@@ -84,7 +84,7 @@ def filter_article(title: str, text: str, model_name: str = "gemini-2.0-flash-ex
         return False  # Fail safe to NO to avoid spam, or logging error
 
 
-def extract_incident(title: str, text: str, url: str, model_name: str = "gemini-2.0-flash-exp") -> typing.Optional[typing.Dict[str, typing.Any]]:
+def extract_incident(title: str, text: str, url: str, model_name: str = "gemini-1.5-flash") -> typing.Optional[typing.Dict[str, typing.Any]]:
     """
     Extracts structured incident data from a relevant article.
     
@@ -137,7 +137,7 @@ def extract_incident(title: str, text: str, url: str, model_name: str = "gemini-
         logger.error(f"Error in extract_incident: {e}")
         return None
 
-def validate_location(text: str, model_name: str = "gemini-2.0-flash-exp", debug: bool = False) -> typing.Union[bool, typing.Tuple[bool, typing.Dict[str, typing.Any]]]:
+def validate_location(text: str, model_name: str = "gemini-1.5-flash", debug: bool = False) -> typing.Union[bool, typing.Tuple[bool, typing.Dict[str, typing.Any]]]:
     """
     STAGE 2: Geographic validation.
     Checks if the incident occurred in Australia.
@@ -215,7 +215,7 @@ def validate_location(text: str, model_name: str = "gemini-2.0-flash-exp", debug
             })
         return False
 
-def validate_date(text: str, start_year: int = 2000, end_year: int = 2025, model_name: str = "gemini-2.0-flash-exp") -> bool:
+def validate_date(text: str, start_year: int = 2000, end_year: int = 2025, model_name: str = "gemini-1.5-flash") -> bool:
     """
     STAGE 3: Date validation.
     Checks if the incident occurred within the specified year range.

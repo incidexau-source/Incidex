@@ -25,6 +25,7 @@ from deduplicator import Deduplicator
 from scripts.approval_manager import ApprovalManager
 from scripts.incident_publisher import IncidentPublisher
 from scripts.email_handler import EmailHandler
+from article_fetcher import ArticleFetcher, ArticleData
 
 # Load environment variables
 load_dotenv()
@@ -45,6 +46,15 @@ INCIDENTS_FILE = Path("data/incidents_news_sourced.csv")
 REVIEW_DIR = Path("data/review")
 REPORT_FILE = Path("daily_report.txt")
 
+# Keywords to trigger deep fetching
+FETCH_KEYWORDS = [
+    'assault', 'attack', 'murder', 'police', 'court', 'crime', 'violent', 'violence',
+    'abuse', 'harass', 'discriminat', 'hate', 'gay', 'trans', 'lgbt', 'queer', 
+    'homophob', 'transphob', 'conversion', 'bashing', 'kill', 'stab', 'punch', 
+    'offender', 'victim', 'sentenced', 'charged', 'arrested'
+]
+
+
 class RSSAgent:
     def __init__(self):
         self.feeds = get_all_feeds()
@@ -54,6 +64,7 @@ class RSSAgent:
         self.approval_manager = ApprovalManager()
         self.incident_publisher = IncidentPublisher()
         self.email_handler = EmailHandler()
+        self.article_fetcher = ArticleFetcher()
         self.new_incidents: List[Dict] = []
         self.auto_publish_incidents: List[Dict] = []
         self.pending_review_incidents: List[Dict] = []
@@ -97,6 +108,26 @@ class RSSAgent:
                     
                     self.stats["processed_articles"] += 1
                     
+                    # Check if we should fetch full text
+                    # Logic: If content is short AND contains relevant keywords, fetch full text
+                    if len(content) < 800:
+                        combined_text = (title + " " + content).lower()
+                        if any(kw in combined_text for kw in FETCH_KEYWORDS):
+                            logger.info(f"Fetching full text for potential match: {title}")
+                            try:
+                                article_data = ArticleData(
+                                    title=title,
+                                    url=url,
+                                    publication_date=datetime.datetime.now(),
+                                    summary=content
+                                )
+                                self.article_fetcher.extract_article_text(article_data)
+                                if article_data.full_text:
+                                    content = article_data.full_text
+                                    logger.info(f"Updated content length: {len(content)}")
+                            except Exception as e:
+                                logger.warning(f"Failed to fetch {url}: {e}")
+
                     # Step 1: Filter (Is it LGBTIQ+ hate crime?)
                     is_relevant = gemini_extractor.filter_article(title, content)
                     

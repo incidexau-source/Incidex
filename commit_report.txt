@@ -1,0 +1,21 @@
+Verifying commit: 9e325cd
+Log: 9e325cd208fdaf9ac8007aad185a1163ebcb54f2 feat: Major update - Legal guides sync, approval workflow, and data consistency fixes
+Total files changed: 58
+
+New files created:
+  [NEW] scripts/approval_endpoint.py
+  [NEW] scripts/approval_manager.py
+  [NEW] scripts/email_handler.py
+  [NEW] scripts/incident_publisher.py
+
+Specific file updates:
+  [UPDATED] scripts/rss_agent.py (Status: M)
+    Diff stats:  1 file changed, 48 insertions(+), 48 deletions(-)
+  [UPDATED] scripts/gemini_extractor.py (Status: M)
+    Diff stats:  1 file changed, 56 insertions(+), 3 deletions(-)
+  [UPDATED] data/policy_landscape.csv (Status: M)
+    Diff stats:  1 file changed, 65 insertions(+), 65 deletions(-)
+  [UPDATED] data/parliament_activity.csv (Status: M)
+    Diff stats:  1 file changed, 17 insertions(+), 15 deletions(-)
+  [UPDATED] visualizations/legal_guides.html (Status: M)
+    Diff stats:  1 file changed, 1597 insertions(+), 636 deletions(-)
