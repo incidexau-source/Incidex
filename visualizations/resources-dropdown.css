@@ -19,18 +19,21 @@
   gap: 0.5rem;
   cursor: pointer;
   /* Padding removed - let nav-link handle it */
+  font-size: var(--text-sm); /* Match nav-link font-size */
   font-weight: 500;
-  color: inherit;
-  transition: color 0.2s ease;
+  color: var(--color-text-secondary); /* Match nav-link default color */
+  transition: all var(--transition-fast); /* Match nav-link transition */
   /* Reset button defaults */
   background: none;
   border: none;
-  font: inherit;
+  font-family: inherit;
+  line-height: inherit;
   text-decoration: none;
 }
 
 .nav-dropdown-toggle:hover {
-  color: #2563eb;
+  color: var(--color-accent); /* Match nav-link hover color */
+  background: var(--color-accent-50); /* Match nav-link hover background */
 }
 
 /* Prevent nav-link ::after from showing on dropdown toggle */
@@ -39,7 +42,8 @@
 }
 
 .nav-dropdown-toggle.active {
-  color: #2563eb;
+  color: var(--color-accent); /* Match nav-link active color */
+  background: var(--color-accent-50); /* Match nav-link active background */
   font-weight: 700;
 }
 

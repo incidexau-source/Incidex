@@ -25,6 +25,12 @@ jobs:
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          REVIEWER_EMAIL: ${{ secrets.REVIEWER_EMAIL }}
+          APPROVAL_SECRET: ${{ secrets.APPROVAL_SECRET }}
         run: |
           cd scripts
           python rss_agent.py
@@ -33,7 +39,7 @@ jobs:
         run: |
           git config user.email "action@github.com"
           git config user.name "RSS Monitor Bot"
-          git add data/incidents_news_sourced.csv data/review/*.json || true
-          git commit -m "Update: Daily RSS monitoring results" || true
+          git add data/incidents_in_progress.csv data/approvals/*.json data/approvals/*.jsonl daily_report.txt || true
+          git commit -m "Update: Daily RSS monitoring results with approval workflow" || true
           git push || true
 

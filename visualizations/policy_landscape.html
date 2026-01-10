@@ -1359,10 +1359,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
           State/Territory Map
         </button>
-        <button class="view-tab" data-view="comparison">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
-          State/Territory Comparison
-        </button>
         <button class="view-tab" data-view="federal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
           Federal Overview
@@ -1370,6 +1366,14 @@
         <button class="view-tab" data-view="parliament">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
           Parliament Activity
+        </button>
+        <button class="view-tab" data-view="comparison">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+          State/Territory Comparison
+        </button>
+        <button class="view-tab" data-view="state-comparison">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          State Comparison
         </button>
       </div>
 
@@ -1441,99 +1445,6 @@
         </div>
       </div>
 
-      <!-- State/Territory Comparison View -->
-      <div class="comparison-view" id="comparisonView">
-        <div class="comparison-content">
-          <div class="comparison-header">
-            <h1>State & Territory Comparison</h1>
-            <p class="comparison-subtitle">
-              Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
-            </p>
-          </div>
-
-          <!-- Conversion Practices Ban Timeline -->
-          <section class="comparison-section" aria-labelledby="conversion-timeline-title">
-            <h2 id="conversion-timeline-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Conversion Practices Ban Timeline
-            </h2>
-            <div class="timeline" id="conversionTimeline">
-              <!-- Populated by JavaScript -->
-            </div>
-          </section>
-
-          <!-- Gender Recognition Progress -->
-          <section class="comparison-section" aria-labelledby="gender-recognition-title">
-            <h2 id="gender-recognition-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              Gender Recognition Progressiveness
-            </h2>
-            <div class="comparison-grid" id="genderRecognitionGrid">
-              <!-- Populated by JavaScript -->
-            </div>
-          </section>
-
-          <!-- Comprehensive Legislation Comparison -->
-          <section class="comparison-section" aria-labelledby="legislation-title">
-            <h2 id="legislation-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-              Comprehensive Legislation Comparison
-            </h2>
-            <div class="legislation-table-wrapper">
-              <table class="legislation-table" id="legislationTable">
-                <thead>
-                  <tr>
-                    <th>State/Territory</th>
-                    <th>Hate Crime Law</th>
-                    <th>Vilification Law</th>
-                    <th>Anti-Discrimination</th>
-                    <th>Gender Recognition</th>
-                    <th>Conversion Practices Ban</th>
-                    <th>Religious Exemptions</th>
-                  </tr>
-                </thead>
-                <tbody id="legislationTableBody">
-                  <!-- Populated by JavaScript -->
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Key Differences -->
-          <section class="comparison-section" aria-labelledby="key-differences-title">
-            <h2 id="key-differences-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-              Key Differences & Unique Features
-            </h2>
-            <div class="key-differences-grid" id="keyDifferencesGrid">
-              <!-- Populated by JavaScript -->
-            </div>
-          </section>
-
-          <!-- Reform Status Dashboard -->
-          <section class="comparison-section" aria-labelledby="reform-status-title">
-            <h2 id="reform-status-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-              Reform Status Dashboard
-            </h2>
-            <div class="reform-grid" id="reformStatusGrid">
-              <!-- Populated by JavaScript -->
-            </div>
-          </section>
-
-          <!-- State-by-State Summary -->
-          <section class="comparison-section" aria-labelledby="state-summary-title">
-            <h2 id="state-summary-title" class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
-              State-by-State Summary
-            </h2>
-            <div class="comparison-grid" id="stateSummaryGrid">
-              <!-- Populated by JavaScript -->
-            </div>
-          </section>
-        </div>
-      </div>
-
       <!-- Federal Overview View -->
       <div class="federal-view" id="federalView">
         <div class="federal-content">
@@ -1584,6 +1495,23 @@
             <!-- Dynamic content loaded here -->
           </div>
         </div>
+      </div>
+
+      <!-- State/Territory Comparison View -->
+      <div class="comparison-view" id="comparisonView">
+        <div class="comparison-content">
+          <div class="comparison-header">
+            <h1>State & Territory Comparison</h1>
+            <p class="comparison-subtitle">
+              Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- State Comparison View (from state_comparison.html) -->
+      <div class="comparison-view" id="stateComparisonView" style="display: none;">
+        <iframe src="state_comparison.html" style="width: 100%; height: calc(100vh - var(--header-height) - 80px); border: none; display: block;"></iframe>
       </div>
     </div>
   </main>
@@ -1690,6 +1618,7 @@
     const viewTabs = document.querySelectorAll('.view-tab');
     const mapView = document.getElementById('mapView');
     const comparisonView = document.getElementById('comparisonView');
+    const stateComparisonView = document.getElementById('stateComparisonView');
     const federalView = document.getElementById('federalView');
     const parliamentView = document.getElementById('parliamentView');
     const jurisdictionPanel = document.getElementById('jurisdictionPanel');
@@ -1735,6 +1664,7 @@
           maxScore += 3;
         } else {
           if (policy.status === 'present') score += 3;
+          else if (policy.status === 'partial') score += 2;  // Partial protection (e.g., vilification covers race but not LGBTIQ+)
           else if (policy.status === 'pending') score += 1;
           maxScore += 3;
         }
@@ -2070,12 +2000,14 @@
           <div class="card-header">
             <div>
               <h3 class="card-title">Overall Federal Assessment</h3>
-              <p class="card-subtitle">Comprehensive LGBTIQ+ protections at the Commonwealth level</p>
+              <!-- Updated from legal_guides | Last verified: 31 December 2025 -->
+              <p class="card-subtitle">Basic protections with significant gaps at the Commonwealth level</p>
             </div>
             <span class="badge ${scoreInfo.score === 'strong' ? 'badge-success' : scoreInfo.score === 'moderate' ? 'badge-warning' : 'badge-error'}">${scoreInfo.label}</span>
           </div>
           <div class="card-body">
-            <p>The Australian federal government has enacted significant LGBTIQ+ protections, particularly following the Criminal Code Amendment (Inciting Violence or Hatred) Act 2025 and the 2017 marriage equality reforms.</p>
+            <!-- Updated from legal_guides | Last verified: 31 December 2025 -->
+            <p>Commonwealth law provides basic protections but has significant gaps. The federal government provides a basic floor but allows broad religious discrimination and has no vilification laws. The Sex Discrimination Act 1984 (Cth) protects sexual orientation, gender identity, and intersex status, but very broad religious exemptions allow religious organisations to discriminate against LGBTIQ+ people in most circumstances.</p>
           </div>
         </div>
       `;
@@ -2190,7 +2122,7 @@
       "SA": { status: "passed", date: "2024-09", year: 2024, note: "Took effect April 2025" },
       "TAS": { status: "pending", date: "2025", year: 2025, note: "Under consideration" },
       "WA": { status: "pending", date: "2025-post", year: 2025, note: "Expected after March 2025 election" },
-      "ACT": { status: "pending", date: "2025", year: 2025, note: "Status unclear" },
+      "ACT": { status: "passed", date: "2020", year: 2020, note: "Comprehensive ban including religious settings" },
       "NT": { status: "pending", date: "2025", year: 2025, note: "Under consideration" }
     };
     
@@ -2207,8 +2139,9 @@
 
     const KEY_DIFFERENCES = {
       "VIC": {
-        title: "Victoria - LGBTQ+ Commissioner",
-        description: "Victoria is the only state with a dedicated Commissioner for LGBTIQ+ Communities, established in 2015. The Commissioner advocates for LGBTIQ+ rights and monitors policy implementation.",
+        // Updated from legal_guides | Last verified: 31 December 2025
+        title: "Victoria - Strong Protections But No LGBTIQ+ Vilification Laws",
+        description: "Victoria has strong discrimination protections and a dedicated Commissioner for LGBTIQ+ Communities (established 2015). However, despite government promises for years, Victoria has NO vilification protections for LGBTIQ+ people - only racial and religious vilification is covered. This is a significant gap.",
         link: "https://www.vic.gov.au/commissioner-lgbtiq-communities",
         linkText: "Learn more about the Commissioner"
       },
@@ -2230,9 +2163,17 @@
         link: "https://www.legislation.sa.gov.au/",
         linkText: "View legislation"
       },
+      "WA": {
+        // Updated from legal_guides | Last verified: 31 December 2025
+        title: "Western Australia - No LGBTIQ+ Vilification Protections",
+        description: "Western Australia has NO vilification protections for LGBTIQ+ people. Only racial vilification is covered under Criminal Code s.77-80 and Equal Opportunity Act Part IXB. This is a significant gap in protection.",
+        link: "https://www.legislation.wa.gov.au/",
+        linkText: "View legislation"
+      },
       "NT": {
-        title: "Northern Territory - Limited Protections",
-        description: "The Northern Territory lacks hate crime and vilification laws covering LGBTIQ+ grounds, and has restrictive gender recognition requirements.",
+        // Updated from legal_guides | Last verified: 31 December 2025
+        title: "Northern Territory - Recent 2025 Amendments Raise Concerns",
+        description: "The NT has good protections following major reforms in 2022 and 2023, including vilification protections. However, October 2025 amendments re-introduced some religious exemptions, raising concerns.",
         link: "https://legislation.nt.gov.au/",
         linkText: "View legislation"
       }
@@ -2367,6 +2308,7 @@
           
           let label = 'Unknown';
           if (policy.status === 'present') label = 'Present';
+          else if (policy.status === 'partial') label = 'Partial';
           else if (policy.status === 'absent') label = 'Absent';
           else if (policy.status === 'pending') label = 'Pending';
           else if (policy.status === 'limited') label = 'Limited';
@@ -2378,6 +2320,7 @@
             status: policy.status, 
             label: label, 
             class: policy.status === 'present' || policy.status === 'easy' ? 'present' : 
+                   policy.status === 'partial' ? 'limited' :
                    policy.status === 'absent' || policy.status === 'hard' ? 'absent' : 
                    policy.status === 'limited' || policy.status === 'moderate' ? 'limited' : 'pending',
             url: policy.source_url || null,
@@ -2591,6 +2534,326 @@
       console.log("renderComparisonTab() completed");
     }
 
+    // Render state comparison tab - similar to renderComparisonTab but uses unique IDs
+    async function renderStateComparisonTab() {
+      console.log("renderStateComparisonTab() called");
+      
+      // Load policyData if not already loaded
+      if (!policyData || policyData.length === 0) {
+        console.log("Loading policyData...");
+        await loadPolicyData();
+      }
+      
+      // Load stateData if not already loaded
+      if (!stateData) {
+        console.log("Loading stateData...");
+        await loadStateData();
+      }
+      
+      // Render all sections with state comparison specific IDs
+      try {
+        renderStateCompConversionTimeline();
+      } catch (e) {
+        console.error("Error in renderStateCompConversionTimeline():", e);
+      }
+      
+      try {
+        renderStateCompGenderRecognition();
+      } catch (e) {
+        console.error("Error in renderStateCompGenderRecognition():", e);
+      }
+      
+      try {
+        renderStateCompLegislationTable();
+      } catch (e) {
+        console.error("Error in renderStateCompLegislationTable():", e);
+      }
+      
+      try {
+        renderStateCompKeyDifferences();
+      } catch (e) {
+        console.error("Error in renderStateCompKeyDifferences():", e);
+      }
+      
+      try {
+        renderStateCompReformStatus();
+      } catch (e) {
+        console.error("Error in renderStateCompReformStatus():", e);
+      }
+      
+      try {
+        renderStateCompStateSummary();
+      } catch (e) {
+        console.error("Error in renderStateCompStateSummary():", e);
+      }
+      
+      console.log("renderStateComparisonTab() completed");
+    }
+
+    // Render functions for state comparison tab (using unique IDs)
+    function renderStateCompConversionTimeline() {
+      const timeline = document.getElementById('stateCompConversionTimeline');
+      if (!timeline) return;
+      
+      const sorted = Object.entries(CONVERSION_PRACTICES_STATUS)
+        .sort((a, b) => {
+          if (a[1].status === 'passed' && b[1].status !== 'passed') return -1;
+          if (a[1].status !== 'passed' && b[1].status === 'passed') return 1;
+          return (a[1].year || 9999) - (b[1].year || 9999);
+        });
+      
+      const html = sorted.map(([state, info]) => {
+        const statusClass = info.status === 'passed' ? 'passed' : 
+                           info.status === 'pending' ? 'pending' : 'none';
+        const statusBadge = info.status === 'passed' ? 
+          `<span class="status-badge status-passed">PASSED</span>` :
+          `<span class="status-badge status-pending">PENDING</span>`;
+        
+        return `
+          <div class="timeline-item ${statusClass}">
+            <div class="timeline-date">${info.date || 'TBD'}</div>
+            <div class="timeline-content">
+              <div class="timeline-state">${STATE_NAMES[state] || state} ${statusBadge}</div>
+              <div class="timeline-description">${info.note}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      timeline.innerHTML = html;
+    }
+    
+    function renderStateCompGenderRecognition() {
+      const grid = document.getElementById('stateCompGenderRecognitionGrid');
+      if (!grid) return;
+      
+      const sorted = Object.entries(GENDER_RECOGNITION_STATUS)
+        .sort((a, b) => {
+          const levels = { most_progressive: 4, progressive: 3, moderate: 2, limited: 1 };
+          return (levels[b[1].level] || 0) - (levels[a[1].level] || 0);
+        });
+      
+      const html = sorted.map(([state, info]) => {
+        const levelColors = {
+          most_progressive: '#10b981',
+          progressive: '#3b82f6',
+          moderate: '#f59e0b',
+          limited: '#ef4444'
+        };
+        const color = levelColors[info.level] || '#6b7280';
+        
+        return `
+          <div class="state-card">
+            <div class="state-card-header">
+              <div class="state-name">${STATE_NAMES[state] || state}</div>
+              <span class="status-badge" style="background: ${color}20; color: ${color};">
+                ${info.level.replace('_', ' ').toUpperCase()}
+              </span>
+            </div>
+            <div class="state-stats">
+              <div class="stat-row">
+                <span class="stat-label">Year:</span>
+                <span class="stat-value">${info.year || 'N/A'}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Features:</span>
+                <span class="stat-value">${info.features.length}</span>
+              </div>
+              ${info.features.length > 0 ? `
+                <div style="margin-top: var(--space-2); font-size: var(--text-xs); color: var(--color-text-secondary);">
+                  ${info.features.join(', ')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      grid.innerHTML = html;
+    }
+
+    function renderStateCompLegislationTable() {
+      const tbody = document.getElementById('stateCompLegislationTableBody');
+      if (!tbody) {
+        console.error("stateCompLegislationTableBody element not found");
+        return;
+      }
+
+      if (!policyData || policyData.length === 0) {
+        console.warn("policyData is empty, cannot render legislation table");
+        return;
+      }
+
+      const states = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT'];
+      
+      tbody.innerHTML = states.map(state => {
+        const statePolicies = policyData.filter(p => p.jurisdiction === state);
+        
+        const getPolicyStatus = (category) => {
+          const policy = statePolicies.find(p => p.policy_category === category);
+          if (!policy) return { status: 'absent', label: 'Absent', class: 'absent', url: null, year: null };
+          
+          let label = 'Unknown';
+          if (policy.status === 'present') label = 'Present';
+          else if (policy.status === 'partial') label = 'Partial';
+          else if (policy.status === 'absent') label = 'Absent';
+          else if (policy.status === 'pending') label = 'Pending';
+          else if (policy.status === 'limited') label = 'Limited';
+          else if (policy.status === 'easy') label = 'Easy';
+          else if (policy.status === 'moderate') label = 'Moderate';
+          else if (policy.status === 'hard') label = 'Hard';
+          
+          return { 
+            status: policy.status, 
+            label: label, 
+            class: policy.status === 'present' || policy.status === 'easy' ? 'present' : 
+                   policy.status === 'partial' ? 'limited' :
+                   policy.status === 'absent' || policy.status === 'hard' ? 'absent' : 
+                   policy.status === 'limited' || policy.status === 'moderate' ? 'limited' : 'pending',
+            url: policy.source_url || null,
+            year: policy.year_enacted || null
+          };
+        };
+
+        const hateCrime = getPolicyStatus('hate_crime_law');
+        const vilification = getPolicyStatus('vilification_law');
+        const discrimination = getPolicyStatus('discrimination_protection_employment');
+        const genderRec = getPolicyStatus('gender_recognition');
+        const conversion = getPolicyStatus('conversion_practices_ban');
+        const exemptions = getPolicyStatus('religious_exemptions');
+
+        const renderCell = (policy) => {
+          let content = `<span class="legislation-status ${policy.class}">${policy.label}</span>`;
+          if (policy.year) {
+            content += `<br><span style="font-size: var(--text-xs); color: var(--color-text-muted);">${policy.year}</span>`;
+          }
+          if (policy.url) {
+            content = `<a href="${policy.url}" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">${content}</a>`;
+          }
+          return content;
+        };
+
+        return `
+          <tr>
+            <td><strong>${STATE_NAMES[state] || state}</strong></td>
+            <td>${renderCell(hateCrime)}</td>
+            <td>${renderCell(vilification)}</td>
+            <td>${renderCell(discrimination)}</td>
+            <td>${renderCell(genderRec)}</td>
+            <td>${renderCell(conversion)}</td>
+            <td>${renderCell(exemptions)}</td>
+          </tr>
+        `;
+      }).join('');
+      
+      console.log("State comparison legislation table rendered with", states.length, "states");
+    }
+
+    function renderStateCompKeyDifferences() {
+      const grid = document.getElementById('stateCompKeyDifferencesGrid');
+      if (!grid) return;
+
+      grid.innerHTML = Object.entries(KEY_DIFFERENCES).map(([state, info]) => {
+        return `
+          <div class="difference-card">
+            <h3>${STATE_NAMES[state] || state}: ${info.title}</h3>
+            <p>${info.description}</p>
+            ${info.link ? `<a href="${info.link}" target="_blank" rel="noopener">${info.linkText} →</a>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderStateCompReformStatus() {
+      const grid = document.getElementById('stateCompReformStatusGrid');
+      if (!grid) return;
+      
+      const states = Object.keys(STATE_NAMES);
+      
+      grid.innerHTML = states.map(state => {
+        const conversion = CONVERSION_PRACTICES_STATUS[state] || { status: 'none' };
+        const gender = GENDER_RECOGNITION_STATUS[state] || { level: 'limited' };
+        
+        return `
+          <div class="reform-item">
+            <div class="reform-label">${STATE_NAMES[state] || state}</div>
+            <div style="margin-bottom: var(--space-2);">
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Conversion Practices</div>
+              <span class="status-badge ${conversion.status === 'passed' ? 'status-passed' : conversion.status === 'pending' ? 'status-pending' : 'status-none'}">
+                ${conversion.status === 'passed' ? 'PASSED' : conversion.status === 'pending' ? 'PENDING' : 'NONE'}
+              </span>
+            </div>
+            <div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px;">Gender Recognition</div>
+              <div class="reform-status" style="color: ${gender.level === 'most_progressive' ? '#10b981' : gender.level === 'progressive' ? '#3b82f6' : gender.level === 'moderate' ? '#f59e0b' : '#ef4444'};">
+                ${gender.level ? gender.level.replace('_', ' ').toUpperCase() : 'LIMITED'}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderStateCompStateSummary() {
+      const grid = document.getElementById('stateCompStateSummaryGrid');
+      
+      if (!grid) return;
+      
+      if (!stateData || !stateData.states) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-secondary);">
+            <p>State data is loading...</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const states = Object.keys(stateData.states || {});
+      
+      if (states.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-secondary);">
+            <p>No state data available.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      grid.innerHTML = states.map(stateCode => {
+        const state = stateData.states[stateCode];
+        const divisions = state.divisions || [];
+        const avgAlignment = divisions.length > 0 ?
+          divisions.reduce((sum, d) => sum + (d.current_mp?.alignment_score || 0), 0) / divisions.length : 0;
+        
+        return `
+          <div class="state-card">
+            <div class="state-card-header">
+              <div class="state-name">${STATE_NAMES[stateCode] || stateCode}</div>
+              <a href="index.html?state=${stateCode}" class="btn btn-primary btn-sm">
+                View Map
+              </a>
+            </div>
+            <div class="state-stats">
+              <div class="stat-row">
+                <span class="stat-label">Divisions:</span>
+                <span class="stat-value">${state.total_divisions || divisions.length}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Bills Tracked:</span>
+                <span class="stat-value">${state.bills_tracked || 0}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Avg Alignment:</span>
+                <span class="stat-value" style="color: ${avgAlignment >= 75 ? '#10b981' : avgAlignment >= 50 ? '#3b82f6' : '#f59e0b'}">
+                  ${avgAlignment.toFixed(1)}%
+                </span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // View switching
     function setView(view) {
       console.log("setView() called with view =", view);
@@ -2612,6 +2875,9 @@
       comparisonView.classList.toggle('active', view === 'comparison');
       comparisonView.style.display = view === 'comparison' ? 'block' : 'none';
       
+      stateComparisonView.classList.toggle('active', view === 'state-comparison');
+      stateComparisonView.style.display = view === 'state-comparison' ? 'block' : 'none';
+      
       federalView.classList.toggle('active', view === 'federal');
       federalView.style.display = view === 'federal' ? 'block' : 'none';
       
@@ -2625,6 +2891,8 @@
       if (view === 'comparison') {
         renderComparisonTab();
       }
+
+      // state-comparison view uses iframe, no render needed
 
       if (view === 'federal') {
         renderFederalOverview();

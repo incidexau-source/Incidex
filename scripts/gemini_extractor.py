@@ -137,17 +137,30 @@ def extract_incident(title: str, text: str, url: str, model_name: str = "gemini-
         logger.error(f"Error in extract_incident: {e}")
         return None
 
-def validate_location(text: str, model_name: str = "gemini-2.0-flash-exp") -> bool:
+def validate_location(text: str, model_name: str = "gemini-2.0-flash-exp", debug: bool = False) -> typing.Union[bool, typing.Tuple[bool, typing.Dict[str, typing.Any]]]:
     """
     STAGE 2: Geographic validation.
     Checks if the incident occurred in Australia.
+    
+    Args:
+        text: Text to analyze
+        model_name: Gemini model to use
+        debug: If True, returns tuple (bool, dict) with debug info
+        
+    Returns:
+        bool if debug=False, tuple (bool, dict) if debug=True
+        Dict contains: 'prompt', 'response_text', 'detected_location', 'reason'
     """
     try:
         model = genai.GenerativeModel(model_name)
+        
+        # Use full text in debug mode, truncated otherwise for cost efficiency
+        text_to_analyze = text if debug else text[:1000]
+        
         prompt = f"""
         Analyze the text and determine if the incident described occurred in Australia.
         
-        Text: {text[:1000]}
+        Text: {text_to_analyze}
         
         Rules:
         - Return YES if location is Australia, an Australian state (NSW, VIC, QLD, WA, SA, TAS, ACT, NT), or an Australian city.
@@ -156,10 +169,50 @@ def validate_location(text: str, model_name: str = "gemini-2.0-flash-exp") -> bo
         
         Answer (YES/NO):
         """
+        
         response = model.generate_content(prompt)
-        return "YES" in response.text.strip().upper()
+        response_text = response.text.strip()
+        is_valid = "YES" in response_text.upper()
+        
+        if debug:
+            # Try to extract location information from response
+            detected_location = None
+            reason = response_text
+            
+            # Try to extract location mentions from original text
+            import re
+            aus_keywords = ['Australia', 'NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT',
+                          'Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide', 'Canberra', 'Hobart', 'Darwin',
+                          'New South Wales', 'Victoria', 'Queensland', 'Western Australia', 
+                          'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory']
+            found_locations = []
+            for keyword in aus_keywords:
+                if re.search(r'\b' + re.escape(keyword) + r'\b', text, re.IGNORECASE):
+                    found_locations.append(keyword)
+            
+            debug_info = {
+                'prompt': prompt,
+                'response_text': response_text,
+                'response_raw': str(response),
+                'detected_location': ', '.join(found_locations) if found_locations else 'None detected',
+                'reason': reason,
+                'is_valid': is_valid,
+                'text_length': len(text),
+                'text_sample': text[:500] + ('...' if len(text) > 500 else '')
+            }
+            return (is_valid, debug_info)
+        else:
+            return is_valid
+            
     except Exception as e:
         logger.error(f"Error in validate_location: {e}")
+        if debug:
+            return (False, {
+                'error': str(e),
+                'error_type': type(e).__name__,
+                'text_length': len(text),
+                'text_sample': text[:500] + ('...' if len(text) > 500 else '')
+            })
         return False
 
 def validate_date(text: str, start_year: int = 2000, end_year: int = 2025, model_name: str = "gemini-2.0-flash-exp") -> bool:

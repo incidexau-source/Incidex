@@ -22,6 +22,9 @@ from rss_feeds import get_all_feeds
 from scripts import gemini_extractor
 from geocoder import Geocoder
 from deduplicator import Deduplicator
+from scripts.approval_manager import ApprovalManager
+from scripts.incident_publisher import IncidentPublisher
+from scripts.email_handler import EmailHandler
 
 # Load environment variables
 load_dotenv()
@@ -48,13 +51,18 @@ class RSSAgent:
         self.processed_urls = self._load_processed_urls()
         self.geocoder = Geocoder()
         self.deduplicator = Deduplicator(existing_csv_path="data/incidents_in_progress.csv")
+        self.approval_manager = ApprovalManager()
+        self.incident_publisher = IncidentPublisher()
+        self.email_handler = EmailHandler()
         self.new_incidents: List[Dict] = []
+        self.auto_publish_incidents: List[Dict] = []
+        self.pending_review_incidents: List[Dict] = []
         self.stats = {
             "processed_articles": 0,
             "relevant_found": 0,
             "duplicates_blocked": 0,
-            "low_confidence_review": 0,
-            "added_to_db": 0
+            "pending_review": 0,
+            "auto_published": 0
         }
         
     def _load_processed_urls(self) -> Set[str]:
@@ -146,7 +154,7 @@ class RSSAgent:
                         self._save_processed_url(url)
                         continue
 
-                    # Step 5: Validate and Store
+                    # Step 5: Validate and Route to Approval Workflow
                     # Check confidence
                     confidence = incident_data.get("confidence_score", 0)
                     if isinstance(confidence, str):
@@ -155,72 +163,64 @@ class RSSAgent:
                         except:
                             confidence = 0
                             
+                    incident_data["confidence_score"] = confidence
                     incident_data["source_feed"] = feed_config.name
                     incident_data["date_scraped"] = datetime.datetime.now().isoformat()
                     
-                    if confidence >= 85:
-                        incident_data["verification_status"] = "high_confidence"
-                        self.new_incidents.append(incident_data)
-                        self.stats["added_to_db"] += 1
-                        logger.info(f"High confidence incident added: {title}")
-                    elif confidence < 70:
-                        # Save for manual review
-                        self._save_to_review(incident_data)
-                        self.stats["low_confidence_review"] += 1
-                        logger.info(f"Low confidence incident saved for review: {title}")
+                    # Route based on confidence threshold (95% for auto-publish)
+                    if confidence >= 95:
+                        # Auto-publish (high confidence)
+                        self.auto_publish_incidents.append(incident_data)
+                        self.stats["auto_published"] += 1
+                        logger.info(f"Auto-publish incident (confidence {confidence}%): {title}")
                     else:
-                        # Medium confidence (70-85) - treat as verified for now or add to DB with status='pending_review'?
-                        # User requirement: Valid Incidents to CSV. Low confidence < 70 to review. High > 85 marked high.
-                        # Assuming 70-85 is "valid" but not "high_confidence" status, maybe just "generated".
-                        incident_data["verification_status"] = "generated"
-                        self.new_incidents.append(incident_data)
-                        self.stats["added_to_db"] += 1
-                        logger.info(f"Medium confidence incident added: {title}")
+                        # Needs human approval (confidence < 95%)
+                        incident_id = self.approval_manager.add_incident_for_review(incident_data)
+                        self.pending_review_incidents.append(incident_data)
+                        self.stats["pending_review"] += 1
+                        logger.info(f"Incident pending review (confidence {confidence}%): {title} [ID: {incident_id}]")
                     
                     self._save_processed_url(url)
             
             except Exception as e:
                 logger.error(f"Error processing feed {feed_config.name}: {e}")
 
-        # Save all new incidents to CSV
-        self._save_incidents_to_csv()
+        # Process auto-published incidents
+        if self.auto_publish_incidents:
+            logger.info(f"Publishing {len(self.auto_publish_incidents)} auto-approved incidents...")
+            publish_stats = self.incident_publisher.publish_auto_approved_incidents(self.auto_publish_incidents)
+            logger.info(f"Auto-published {publish_stats['published_count']} incidents")
         
-        # Generator Report
+        # Send daily summary email
+        try:
+            logger.info("Sending daily summary email...")
+            self.email_handler.send_auto_published_summary(
+                self.auto_publish_incidents,
+                self.approval_manager.get_pending_incidents()
+            )
+            logger.info("Daily summary email sent")
+        except Exception as e:
+            logger.error(f"Error sending daily summary email: {e}")
+        
+        # Generate Report
         self._generate_report()
         logger.info("RSS Agent run complete.")
 
-    def _save_to_review(self, incident_data: Dict):
-        REVIEW_DIR.mkdir(parents=True, exist_ok=True)
-        filename = f"{datetime.date.today().isoformat()}_{incident_data.get('source_feed', 'unknown')}_{hash(incident_data.get('article_url', ''))}.json"
-        # Sanitize filename
-        filename = "".join([c for c in filename if c.isalpha() or c.isdigit() or c in (' ', '-', '_', '.')]).strip()
-        
-        with open(REVIEW_DIR / filename, 'w', encoding='utf-8') as f:
-            json.dump(incident_data, f, indent=2, default=str)
-
-    def _save_incidents_to_csv(self):
-        if not self.new_incidents:
-            return
-            
-        df = pd.DataFrame(self.new_incidents)
-        
-        # Ensure directory exists
-        INCIDENTS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Append to CSV if exists, else create
-        if INCIDENTS_FILE.exists():
-            df.to_csv(INCIDENTS_FILE, mode='a', header=False, index=False)
-        else:
-            df.to_csv(INCIDENTS_FILE, mode='w', header=True, index=False)
             
     def _generate_report(self):
+        pending_count = len(self.approval_manager.get_pending_incidents())
         report = f"""Incidex Daily Scrape Report [{datetime.date.today()}]
         
 Processed Articles: {self.stats['processed_articles']}
 Relevant Incidents Found: {self.stats['relevant_found']}
 Duplicates Blocked: {self.stats['duplicates_blocked']}
-Low Confidence (Review Required): {self.stats['low_confidence_review']}
-Incidents Added to Database: {self.stats['added_to_db']}
+Auto-Published (confidence ≥95%): {self.stats['auto_published']}
+Pending Review (confidence <95%): {self.stats['pending_review']}
+Total Pending in Queue: {pending_count}
+
+Workflow Status:
+- Auto-published incidents have been added to the main database
+- Pending incidents require human approval via email
 
 Estimated Cost: $0.00 (Free Tier)
 """

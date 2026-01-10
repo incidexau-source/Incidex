@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="description"
-        content="Know Your Rights: Comprehensive LGBTIQ+ legal factsheets and anti-discrimination law comparisons for all Australian jurisdictions.">
+  <meta name="description" content="Comprehensive LGBTIQ+ legal rights guide for all Australian jurisdictions. Know your rights, understand protections, and access support resources.">
     <title>LGBTIQ+ Legal Guides | Incidex Australia</title>
 
     <!-- Favicon -->
@@ -17,128 +14,521 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Shared Styles -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="resources-dropdown.css">
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            850: '#1e293b',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-                        heading: ['Outfit', 'Inter', 'ui-sans-serif', 'system-ui']
-                    }
-                }
-            }
-        }
-    </script>
+  <style>
+    /* ===== LEGAL GUIDES PAGE SPECIFIC STYLES ===== */
+    
+    /* Main Container */
+    .legal-guides-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px;
+      background: #FFFFFF;
+    }
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+    /* Page Header */
+    .page-header-section {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid #E0E0E0;
+    }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Outfit', sans-serif;
-        }
+    .page-header-section h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
 
-        .rating-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-        }
+    .page-subtitle {
+      font-size: 18px;
+      color: #333333;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      max-width: 800px;
+    }
 
-        .rating-pill-green {
-            background-color: #dcfce7;
-            color: #166534;
-        }
+    .last-updated {
+      font-size: 14px;
+      color: #666666;
+      font-style: italic;
+    }
 
-        .rating-pill-amber {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
+    /* State Selector */
+    .state-selector-section {
+      margin-bottom: 48px;
+    }
 
-        .rating-pill-red {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
+    .state-selector-section h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
 
-        .factsheet-card {
-            transition: all 0.3s ease;
-        }
+    .state-btn-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
 
-        .factsheet-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+    .state-btn {
+      height: 48px;
+      padding: 12px 16px;
+      background: #E0E0E0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #1a1a1a;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
 
-        .comparison-table-wrapper {
-            overflow-x: auto;
-            border-radius: 0.75rem;
-            border: 1px solid #e5e7eb;
-        }
+    .state-btn:hover {
+      background: #D0D0D0;
+      transform: translateY(-1px);
+    }
 
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.875rem;
-        }
+    .state-btn:focus {
+      outline: 3px solid #2db4c6;
+      outline-offset: 2px;
+    }
 
-        .comparison-table th {
-            background-color: #f9fafb;
-            padding: 1rem;
-            font-weight: 600;
-            color: #374151;
-            border-bottom: 2px solid #e5e7eb;
-        }
+    .state-btn.active {
+      background: #2db4c6;
+      color: white;
+      border-color: #2db4c6;
+    }
 
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: top;
-        }
+    .state-btn[aria-pressed="true"] {
+      background: #2db4c6;
+      color: white;
+    }
 
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
+    /* State Content */
+    .state-content {
+      display: none;
+    }
 
-        .comparison-table tr:hover {
-            background-color: #f9fafb;
-        }
+    .state-content.active {
+      display: block;
+    }
 
-        .what-it-means {
-            color: #6b7280;
-            font-size: 0.8125rem;
-            margin-top: 0.25rem;
-            display: block;
-        }
+    .state-header {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+
+    .state-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .state-summary {
+      font-size: 18px;
+      color: #333333;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* Content Sections */
+    .content-section {
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+
+    .content-section:last-child {
+      border-bottom: none;
+    }
+
+    .content-section h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .protection-list,
+    .area-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .protection-list li,
+    .area-list li {
+      padding: 10px 0;
+      line-height: 1.6;
+      font-size: 16px;
+      color: #333333;
+    }
+
+    .protection-list li::before {
+      content: "✅ ";
+      margin-right: 8px;
+    }
+
+    .area-list li::before {
+      content: "• ";
+      margin-right: 8px;
+      font-weight: bold;
+      color: #2db4c6;
+    }
+
+    /* Limitations Box */
+    .limitations-box {
+      background: #FFF3CD;
+      border-left: 4px solid #f39c12;
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .limitations-box h3 {
+      color: #856404;
+      margin-bottom: 12px;
+    }
+
+    .limitations-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .limitations-box li {
+      padding: 6px 0;
+      color: #856404;
+    }
+
+    .limitations-box li::before {
+      content: "⚠️ ";
+      margin-right: 8px;
+    }
+
+    /* Expandable Section */
+    .expandable-section {
+      margin: 32px 0;
+    }
+
+    .expandable-btn {
+      width: 100%;
+      background: transparent;
+      border: 2px solid #2db4c6;
+      color: #2db4c6;
+      padding: 14px 24px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .expandable-btn:hover {
+      background: #2db4c6;
+      color: white;
+    }
+
+    .expandable-btn:focus {
+      outline: 3px solid #2db4c6;
+      outline-offset: 2px;
+    }
+
+    .expandable-btn::after {
+      content: "▶";
+      margin-left: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .expandable-btn[aria-expanded="true"]::after {
+      transform: rotate(90deg);
+    }
+
+    #full-analysis {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      margin-top: 24px;
+    }
+
+    #full-analysis.open {
+      max-height: 10000px;
+    }
+
+    .full-analysis-content {
+      padding: 24px;
+      background: #F8F9FA;
+      border-radius: 6px;
+      border: 1px solid #E0E0E0;
+    }
+
+    .full-analysis-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .full-analysis-content h4:first-child {
+      margin-top: 0;
+    }
+
+    .full-analysis-content p {
+      line-height: 1.6;
+      color: #333333;
+      margin-bottom: 12px;
+    }
+
+    .full-analysis-content ul {
+      margin: 12px 0;
+      padding-left: 24px;
+    }
+
+    .full-analysis-content li {
+      line-height: 1.6;
+      color: #333333;
+      margin-bottom: 8px;
+    }
+
+    .full-analysis-content a {
+      color: #2db4c6;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .full-analysis-content a:hover {
+      text-decoration: none;
+      background-color: rgba(45, 180, 198, 0.1);
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    .action-btn-primary {
+      background: #2db4c6;
+      color: white;
+    }
+
+    .action-btn-primary:hover {
+      background: #25a0b0;
+    }
+
+    .action-btn-secondary {
+      background: #E0E0E0;
+      color: #1a1a1a;
+    }
+
+    .action-btn-secondary:hover {
+      background: #D0D0D0;
+    }
+
+    .action-btn:focus {
+      outline: 3px solid #2db4c6;
+      outline-offset: 2px;
+    }
+
+    /* Contact Info */
+    .contact-info {
+      background: #F8F9FA;
+      padding: 20px;
+      border-radius: 6px;
+      margin-top: 24px;
+    }
+
+    .contact-info p {
+      margin: 8px 0;
+      color: #333333;
+    }
+
+    .contact-info strong {
+      color: #1a1a1a;
+    }
+
+    /* Navigation */
+    .state-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 48px 0;
+      padding-top: 32px;
+      border-top: 2px solid #E0E0E0;
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      background: #E0E0E0;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    .nav-btn:hover {
+      background: #2db4c6;
+      color: white;
+    }
+
+    .nav-btn:focus {
+      outline: 3px solid #2db4c6;
+      outline-offset: 2px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1023px) {
+      .legal-guides-container {
+        padding: 24px;
+      }
+
+      .state-btn-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .legal-guides-container {
+        padding: 16px;
+      }
+
+      .page-header-section h1 {
+        font-size: 28px;
+      }
+
+      .state-btn-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .state-btn {
+        padding: 10px 12px;
+        font-size: 12px;
+        height: 44px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+      }
+
+      .state-navigation {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-btn {
+        width: 100%;
+      }
+    }
+
+
+    .status-icon {
+      font-size: var(--text-lg);
+      margin-right: var(--space-2);
+    }
+
+    /* Rankings */
+    .rankings-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+
+    /* Legislation Citation Links */
+    .legislation-link {
+      color: var(--color-accent);
+      text-decoration: underline;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+
+    .legislation-link:hover {
+      text-decoration: none;
+      background-color: rgba(45, 180, 198, 0.1);
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    .legislation-link:visited {
+      color: var(--color-accent);
+    }
+
+    .citation {
+      display: inline;
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    .citation-section {
+      margin-top: var(--space-2);
+      padding-left: var(--space-4);
+      border-left: 2px solid var(--color-border-light);
+    }
+
+    .citation-section p {
+      margin: var(--space-1) 0;
+      font-size: var(--text-sm);
+    }
+
+    /* Print Styles */
+    @media print {
+      .state-btn-grid,
+      .expandable-btn,
+      .action-buttons {
+        display: none !important;
+      }
+
+      .state-content {
+        display: block !important;
+      }
+
+      #full-analysis {
+        max-height: none !important;
+        display: block !important;
+      }
+    }
     </style>
 </head>
-
-<body class="bg-slate-50 text-slate-900">
+<body>
     <!-- Header (Standardized) -->
   <header class="site-header">
     <div class="header-inner">
@@ -148,23 +538,22 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="map.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
           Map
         </a>
         <a href="policy_landscape.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           Policy and Legislation
         </a>
-                <a href="voting_records.html"
-                    class="nav-link">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00 2 2h10a2 2 0 00 2-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                        </path>
-                    </svg>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                     MP Voting
                 </a>
-                <!-- Resources Dropdown (Standardized) -->
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Statistics
+        </a>
+        <!-- Resources Dropdown -->
                 <div class="nav-dropdown">
           <button class="nav-dropdown-toggle nav-link active" aria-expanded="false" aria-haspopup="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
@@ -177,11 +566,8 @@
                         <!-- Know Your Rights Section -->
                         <div class="dropdown-section">
                             <div class="dropdown-section-title">
-                                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
-                                    </path>
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
                                 </svg>
                                 Legal Guides: Know Your Rights
                             </div>
@@ -189,43 +575,12 @@
                 <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
                 <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
               </a>
-                            <!-- Jurisdiction Grid -->
-              <div class="jurisdiction-grid">
-                <a href="legal_guides.html#commonwealth" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
-                  <div class="jurisdiction-name">Commonwealth</div>
-                </a>
-                <a href="legal_guides.html#nsw" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
-                  <div class="jurisdiction-name">NSW</div>
-                </a>
-                <a href="legal_guides.html#victoria" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
-                  <div class="jurisdiction-name">VIC</div>
-                </a>
-                <a href="legal_guides.html#queensland" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
-                  <div class="jurisdiction-name">QLD</div>
-                </a>
-                <a href="legal_guides.html#tasmania" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
-                  <div class="jurisdiction-name">TAS</div>
-                </a>
-                <a href="legal_guides.html#sa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
-                  <div class="jurisdiction-name">SA</div>
-                </a>
-                <a href="legal_guides.html#wa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
-                  <div class="jurisdiction-name">WA</div>
-                </a>
-                <a href="legal_guides.html#nt" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
-                  <div class="jurisdiction-name">NT</div>
-                </a>
-                <a href="legal_guides.html#act" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
-                  <div class="jurisdiction-name">ACT</div>
-                </a>
-              </div>
                         </div>
                         <!-- Support Services Section -->
                         <div class="dropdown-section">
                             <a href="resources.html" class="services-link">
                                 <span>View All Support Services</span>
-                                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>
@@ -233,26 +588,21 @@
                     </div>
                 </div>
         <a href="report_incident.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
           Report
         </a>
         <a href="about.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           About
         </a>
         <a href="contact.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
           Contact
         </a>
       </nav>
 
-      <div class="header-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="search" placeholder="Search incidents..." id="globalSearch" aria-label="Search incidents">
-      </div>
-
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </div>
   </header>
@@ -263,506 +613,1117 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="legal_guides.html" class="nav-link active">Legal Guides</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
     <a href="about.html" class="nav-link">About</a>
     <a href="contact.html" class="nav-link">Contact</a>
   </nav>
 
-    <main id="main">
-        <!-- Hero Section -->
-        <section class="bg-gradient-to-br from-slate-900 to-indigo-900 text-white py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Know Your Rights</h1>
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                    Comprehensive, plain-English legal guides for the LGBTIQ+ community across Australia.
-                    Understand your protections against discrimination and vilification with real-world examples.
-                </p>
-            </div>
-        </section>
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="legal-guides-container">
+      <!-- Page Header -->
+      <header class="page-header-section">
+        <h1>LGBTIQ+ Legal Rights Guide</h1>
+        <p class="page-subtitle">Comprehensive, plain-English legal guides for the LGBTIQ+ community across Australia. Understand your protections against discrimination and vilification with real-world examples.</p>
+        <p class="last-updated">Last Updated: 31 December 2025</p>
+      </header>
 
-        <!-- National Comparison Section -->
-        <section id="comparison" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                    <div class="max-w-2xl">
-                        <h2 class="text-3xl font-bold text-slate-900 mb-4">National Comparison Overview</h2>
-                        <p class="text-slate-600">
-                            LGBTIQ+ protections vary significantly between states. This table translates complex legal
-                            differences into what they actually mean for your daily life.
-                        </p>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span>
-                            <span class="text-sm font-medium">Strong</span>
-                        </div>
-                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                            <span class="text-sm font-medium">Moderate</span>
-                        </div>
-                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span> <span
-                                class="text-sm font-medium">Weak</span></div>
-                    </div>
-                </div>
-
-                <div class="comparison-table-wrapper shadow-xl">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Jurisdiction</th>
-                                <th>Sexual Orientation</th>
-                                <th>Gender Identity</th>
-                                <th>Sex Characteristics</th>
-                                <th>Overall Rating</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="font-bold">Queensland</td>
-                                <td>✅ Protected <span class="what-it-means">Bi/Pan/Asexual included</span></td>
-                                <td>✅ Protected <span class="what-it-means">Inclusive 2024 reforms</span></td>
-                                <td>✅ Protected <span class="what-it-means">Modern terminology</span></td>
-                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">Tasmania</td>
-                                <td>✅ Protected <span class="what-it-means">Gold Standard</span></td>
-                                <td>✅ Protected <span class="what-it-means">Full inclusivity</span></td>
-                                <td>✅ Protected <span class="what-it-means">Intersex variations</span></td>
-                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">ACT</td>
-                                <td>✅ Protected <span class="what-it-means">Broad coverage</span></td>
-                                <td>✅ Protected <span class="what-it-means">Inclusive language</span></td>
-                                <td>✅ Protected <span class="what-it-means">Modern terms</span></td>
-                                <td><span class="rating-pill rating-pill-green">🟢 Green</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">Victoria</td>
-                                <td>✅ Protected <span class="what-it-means">Full coverage</span></td>
-                                <td>✅ Protected <span class="what-it-means">Sept 2025 updates</span></td>
-                                <td>✅ Protected <span class="what-it-means">Full coverage</span></td>
-                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">NT</td>
-                                <td>✅ Protected <span class="what-it-means">Modern laws</span></td>
-                                <td>✅ Protected <span class="what-it-means">Inclusive</span></td>
-                                <td>✅ Protected <span class="what-it-means">2022 reforms</span></td>
-                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">SA</td>
-                                <td>✅ Protected <span class="what-it-means">Basic coverage</span></td>
-                                <td>⚠️ Limited <span class="what-it-means">Non-binary unclear</span></td>
-                                <td>✅ Protected <span class="what-it-means">Intersex status</span></td>
-                                <td><span class="rating-pill rating-pill-amber">🟡 Amber</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">Commonwealth</td>
-                                <td>✅ Protected <span class="what-it-means">Basic floor</span></td>
-                                <td>⚠️ Limited <span class="what-it-means">Non-binary gaps</span></td>
-                                <td>✅ Protected <span class="what-it-means">Intersex status</span></td>
-                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold">WA</td>
-                                <td>✅ Protected <span class="what-it-means">Standard coverage</span></td>
-                                <td>⚠️ Limited <span class="what-it-means">Binary only</span></td>
-                                <td>❌ NOT Protected <span class="what-it-means">Significant gap</span></td>
-                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-red-600">NSW</td>
-                                <td>⚠️ Limited <span class="what-it-means">Gay/Lesbian only</span></td>
-                                <td>⚠️ Limited <span class="what-it-means">Binary trans only</span></td>
-                                <td>❌ NOT Protected <span class="what-it-means">Significant gap</span></td>
-                                <td><span class="rating-pill rating-pill-red">🔴 Red</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detailed Factsheets Section -->
-        <section id="guides" class="py-16 bg-slate-50 border-t border-slate-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">State-Specific Legal Guides</h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Commonwealth -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-commonwealth">
-                        <span class="rating-pill rating-pill-red">🔴 Red</span>
-                        <h3 class="text-2xl font-bold">Commonwealth</h3>
-                        <p class="text-slate-600 text-sm mb-4">The baseline for federal law. Broad religious exemptions
-                            and no vilification protections.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('commonwealth')">Read Full Guide →</button>
-                    </div>
-                    <!-- NSW -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-nsw">
-                        <span class="rating-pill rating-pill-red">🔴 Red</span>
-                        <h3 class="text-2xl font-bold">New South Wales</h3>
-                        <p class="text-slate-600 text-sm mb-4">Weakest protections in Australia. Outdated terminology
-                            and significant gaps for intersex people.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('nsw')">Read Full Guide →</button>
-                    </div>
-                    <!-- Victoria -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-vic">
-                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
-                        <h3 class="text-2xl font-bold">Victoria</h3>
-                        <p class="text-slate-600 text-sm mb-4">Strong protections and narrowed religious exemptions
-                            since 2021. Lacks vilification laws.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('vic')">Read Full Guide →</button>
-                    </div>
-                    <!-- Queensland -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-qld">
-                        <span class="rating-pill rating-pill-green">🟢 Green</span>
-                        <h3 class="text-2xl font-bold">Queensland</h3>
-                        <p class="text-slate-600 text-sm mb-4">Best in Australia following 2024 reforms. Comprehensive
-                            vilification protections.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('qld')">Read Full Guide →</button>
-                    </div>
-                    <!-- WA -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-wa">
-                        <span class="rating-pill rating-pill-red">🔴 Red</span>
-                        <h3 class="text-2xl font-bold">Western Australia</h3>
-                        <p class="text-slate-600 text-sm mb-4">Delayed reforms. Gaps in protection for non-binary and
-                            intersex individuals.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('wa')">Read Full Guide →</button>
-                    </div>
-                    <!-- SA -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-sa">
-                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
-                        <h3 class="text-2xl font-bold">South Australia</h3>
-                        <p class="text-slate-600 text-sm mb-4">Moderate protections. Complexities in religious
-                            exemptions for community services.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('sa')">Read Full Guide →</button>
-                    </div>
-                    <!-- Tasmania -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-tas">
-                        <span class="rating-pill rating-pill-green">🟢 Green</span>
-                        <h3 class="text-2xl font-bold">Tasmania</h3>
-                        <p class="text-slate-600 text-sm mb-4">The gold standard. Strongest protections and narrowest
-                            religious exemptions.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('tas')">Read Full Guide →</button>
-                    </div>
-                    <!-- ACT -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-act">
-                        <span class="rating-pill rating-pill-green">🟢 Green</span>
-                        <h3 class="text-2xl font-bold">ACT</h3>
-                        <p class="text-slate-600 text-sm mb-4">Strong protections and reformed religious exemptions
-                            reflecting modern values.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('act')">Read Full Guide →</button>
-                    </div>
-                    <!-- NT -->
-                    <div class="factsheet-card bg-white p-8 rounded-2xl border border-slate-200 flex flex-col items-start gap-4"
-                        id="card-nt">
-                        <span class="rating-pill rating-pill-amber">🟡 Amber</span>
-                        <h3 class="text-2xl font-bold">Northern Territory</h3>
-                        <p class="text-slate-600 text-sm mb-4">Recent 2022-2025 reforms. Balanced protections with
-                            specific religious considerations.</p>
-                        <button class="mt-auto text-blue-600 font-bold hover:underline flex items-center gap-2"
-                            onclick="showFactsheet('nt')">Read Full Guide →</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-900 text-slate-400 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p>&copy; 2025 Incidex Australia. Data accurate as of 31 December 2025.</p>
+      <!-- State Selector -->
+      <section class="state-selector-section" aria-label="Select your state or territory">
+        <h2>Select Your State/Territory</h2>
+        <div class="state-btn-grid" role="group" aria-label="Jurisdiction selection">
+          <button class="state-btn" data-state="tasmania" data-rating="green" aria-pressed="true">🟢 TAS</button>
+          <button class="state-btn" data-state="act" data-rating="green" aria-pressed="false">🟢 ACT</button>
+          <button class="state-btn" data-state="queensland" data-rating="green" aria-pressed="false">🟢 QLD</button>
+          <button class="state-btn" data-state="victoria" data-rating="amber" aria-pressed="false">🟡 VIC</button>
+          <button class="state-btn" data-state="nt" data-rating="amber" aria-pressed="false">🟡 NT</button>
+          <button class="state-btn" data-state="sa" data-rating="amber" aria-pressed="false">🟡 SA</button>
+          <button class="state-btn" data-state="commonwealth" data-rating="red" aria-pressed="false">🔴 CWL</button>
+          <button class="state-btn" data-state="wa" data-rating="red" aria-pressed="false">🔴 WA</button>
+          <button class="state-btn" data-state="nsw" data-rating="red" aria-pressed="false">🔴 NSW</button>
         </div>
-    </footer>
+      </section>
 
-    <!-- Modal for Factsheeet Detail -->
-    <div id="factsheet-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title"
-        role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-slate-900/75 transition-opacity" aria-hidden="true" onclick="closeModal()">
-            </div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div
-                class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[80vh] overflow-y-auto">
-                    <div id="modal-content" class="prose prose-slate max-w-none">
-                        <!-- Content injected here -->
-                    </div>
-                </div>
-                <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-200">
-                    <button type="button"
-                        class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-6 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                        onclick="closeModal()">Close Guide</button>
-                </div>
-            </div>
-        </div>
+      <!-- State Content (dynamically generated) -->
+      <div id="state-content-container">
+        <!-- State content will be generated here by JavaScript -->
+      </div>
     </div>
+  </main>
 
-    <script src="resources-dropdown.js"></script>
-    <script>
-        const factsheetData = {
-            'vic': {
-                title: 'Victoria: LGBTIQ+ Legal Guide',
-                rating: '🟡 AMBER',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Overall Assessment</h3>
-                        <p class="text-slate-700 leading-relaxed">Victoria has some of the strongest anti-discrimination laws in Australia, particularly following the 2021 reforms. These reforms significantly narrowed the 'loopholes' that religious organisations can use to discriminate. However, it lacks stand-alone vilification laws for the LGBTIQ+ community, which is why it receives an Amber rating.</p>
-                    </section>
-                    
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">What's Protected</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                                <h4 class="font-bold text-blue-800 mb-2">Sexual Orientation</h4>
-                                <p class="text-sm text-blue-700">Full protection for all sexual orientations. You cannot be fired or refused housing for being gay, bi, pan, or asexual.</p>
-                            </div>
-                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                                <h4 class="font-bold text-blue-800 mb-2">Gender Identity</h4>
-                                <p class="text-sm text-blue-700">Inclusive protection. Your employer must use your correct name and pronouns, and schools must allow facility use matching your gender.</p>
-                            </div>
-                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                                <h4 class="font-bold text-blue-800 mb-2">Sex Characteristics</h4>
-                                <p class="text-sm text-blue-700">Protected since 2021. You cannot be discriminated against based on being intersex.</p>
-                            </div>
-                        </div>
-                    </section>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>About Incidex</h4>
+          <p>Documenting incidents against LGBTIQ+ Australians to support advocacy, raise awareness, and build a safer future.</p>
+                    </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="legal_guides.html">Legal Guides</a></li>
+            <li><a href="resources.html">Support Services</a></li>
+            <li><a href="report_incident.html">Report an Incident</a></li>
+          </ul>
+                    </div>
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+                    </div>
+                    </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 Incidex Australia. Last Updated: 31 December 2025</p>
+        <p class="footer-copyright"><em>This guide provides general legal information only and is not legal advice. Laws may change after 31 December 2025. For specific legal advice, consult a lawyer.</em></p>
+                    </div>
+                    </div>
+  </footer>
 
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Exemptions (The Loophole)</h3>
-                        <p class="text-slate-700 mb-4">Religious organisations can only discriminate if it's 'reasonably necessary' to comply with their doctrine. Crucially, they <strong>cannot</strong> discriminate against students in religious schools or against people accessing government-funded services (like homelessness support).</p>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-100">
-                            <p class="text-sm text-red-800 font-medium">Real World Example: A religious school cannot expel a student for being gay, even if it goes against their doctrine.</p>
-                        </div>
-                    </section>
-                </div>
-            `
-            },
-            'tas': {
-                title: 'Tasmania: LGBTIQ+ Legal Guide',
-                rating: '🟢 GREEN',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">The Gold Standard</h3>
-                        <p class="text-slate-700 leading-relaxed">Tasmania's Anti-Discrimination Act is widely considered the best in Australia. It has the narrowest religious exemptions and the most inclusive definitions of gender and sex characteristics.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Why it's Green:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Sexual orientation & Gender identity:</strong> Fully protected with modern, inclusive language.</li>
-                            <li><strong>Religious Schools:</strong> Virtually no right to discriminate against staff or students based on LGBTIQ+ status.</li>
-                            <li><strong>Intersex Protections:</strong> Strong, stand-alone protections for variations of sex characteristics.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'commonwealth': {
-                title: 'Commonwealth: Federal Legal Guide',
-                rating: '🔴 RED',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Federal Protection Floor</h3>
-                        <p class="text-slate-700 leading-relaxed">Federal law (the Sex Discrimination Act) provides a basic level of protection across all of Australia, but it has significant gaps and very broad religious exemptions.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Key Gaps:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Religious Schools:</strong> Can still lawfully fire teachers or expel students for being LGBTIQ+ under federal law (though state laws may override this).</li>
-                            <li><strong>Vilification:</strong> No federal laws protecting LGBTIQ+ people from hate speech or vilification.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'nsw': {
-                title: 'New South Wales: LGBTIQ+ Legal Guide',
-                rating: '🔴 RED',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Weakest Protections in Australia</h3>
-                        <p class="text-slate-700 leading-relaxed">NSW anti-discrimination law is outdated and fails to protect many members of our community. It uses restrictive language and provides broad 'outs' for employers and schools.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Major Issues:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Gender Identity:</strong> Only protects 'transgender' people in a binary sense. Non-binary people are not clearly protected.</li>
-                            <li><strong>Sex Characteristics:</strong> No protection for intersex people.</li>
-                            <li><strong>Private Schools:</strong> Can discriminate against both staff and students for being LGBTIQ+.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'qld': {
-                title: 'Queensland: LGBTIQ+ Legal Guide',
-                rating: '🟢 GREEN',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">2024 Reform Champion</h3>
-                        <p class="text-slate-700 leading-relaxed">Following landmark reforms in 2024, Queensland now has some of the most modern and inclusive laws in Australia. It features comprehensive vilification protections that cover more than just physical threats.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Key Highlights:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Inclusive Definitions:</strong> Protections for gender identity and sex characteristics are broad and modern.</li>
-                            <li><strong>Vilification:</strong> Illegal to incite hatred, serious contempt, or severe ridicule against LGBTIQ+ people.</li>
-                            <li><strong>Religious Schools:</strong> Narrowed exemptions mean clearer rights for staff and students.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'wa': {
-                title: 'Western Australia: LGBTIQ+ Legal Guide',
-                rating: '🔴 RED',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-red-200 pb-2 mb-4">Delayed Reforms</h3>
-                        <p class="text-slate-700 leading-relaxed">While reforms have been promised for years, WA remains one of the more difficult jurisdictions for LGBTIQ+ people to navigate. It still requires medical intervention for gender recognition in some contexts.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Key Gaps:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Sex Characteristics:</strong> NO protection for intersex variations.</li>
-                            <li><strong>Gender Identity:</strong> Outdated 'gender history' terminology that fails to protect non-binary or some trans people.</li>
-                            <li><strong>Schools:</strong> Religious schools retain broad powers to discriminate.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'sa': {
-                title: 'South Australia: LGBTIQ+ Legal Guide',
-                rating: '🟡 AMBER',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Moderate Protections</h3>
-                        <p class="text-slate-700 leading-relaxed">South Australia has decent protections but they are often complex to apply in practice. It was the first state to protect 'intersex status' but other areas have lagged behind.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Key Areas:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Gender Identity:</strong> Protective but uses slightly older definitions.</li>
-                            <li><strong>Exemptions:</strong> Religious organisations can still discriminate in some community service roles.</li>
-                            <li><strong>Vilification:</strong> No stand-alone laws for LGBTIQ+ vilification.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'act': {
-                title: 'ACT: LGBTIQ+ Legal Guide',
-                rating: '🟢 GREEN',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-green-200 pb-2 mb-4">Human Rights focused</h3>
-                        <p class="text-slate-700 leading-relaxed">The ACT's laws are built on a human rights framework, making them naturally more protective of LGBTIQ+ individuals than most other Australian laws.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">Top Features:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>Zero Tolerance for Trolling:</strong> Strong vilification laws including cyber-bullying context.</li>
-                            <li><strong>Religious Schools:</strong> Cannot discriminate against staff or students based on identity.</li>
-                            <li><strong>Sex Characteristics:</strong> Comprehensive protections for the intersex community.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            },
-            'nt': {
-                title: 'Northern Territory: LGBTIQ+ Legal Guide',
-                rating: '🟡 AMBER',
-                content: `
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-4">Recent Improvements</h3>
-                        <p class="text-slate-700 leading-relaxed">The NT has recently overhauled its Anti-Discrimination Act (2022-2025) to move away from binary definitions and toward modern human rights standards.</p>
-                    </section>
-                    <section>
-                        <h4 class="font-bold text-slate-900 mb-2">What changed:</h4>
-                        <ul class="list-disc ml-6 space-y-2 text-slate-700">
-                            <li><strong>End of Binary:</strong> Definitions of gender and sex are now inclusive of all identities.</li>
-                            <li><strong>Vilification:</strong> New laws making hate speech illegal in the Territory.</li>
-                            <li><strong>Exemptions:</strong> Many religious 'carve-outs' were removed in the 2022 reforms.</li>
-                        </ul>
-                    </section>
-                </div>
-            `
-            }
-        };
+  <script src="resources-dropdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    // Policy scoring system (same as policy_landscape.html)
+    const POLICY_DATA_PATH = "/data/policy_landscape.csv";
+    let policyData = [];
 
-        function showFactsheet(id) {
-            const modal = document.getElementById('factsheet-modal');
-            const content = document.getElementById('modal-content');
-            const data = factsheetData[id] || { title: 'Guide Not Found', content: '<p>Sorry, this guide is not yet available.</p>' };
+    // Map legal_guides jurisdiction keys to CSV jurisdiction names
+    const jurisdictionMap = {
+      'tasmania': 'TAS',
+      'act': 'ACT',
+      'queensland': 'QLD',
+      'victoria': 'VIC',
+      'nt': 'NT',
+      'sa': 'SA',
+      'commonwealth': 'Federal',
+      'wa': 'WA',
+      'nsw': 'NSW'
+    };
 
-            content.innerHTML = `
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-3xl font-bold text-slate-900">${data.title}</h2>
-                    <span class="rating-pill ${data.rating ? (data.rating.includes('GREEN') ? 'rating-pill-green' : (data.rating.includes('AMBER') ? 'rating-pill-amber' : 'rating-pill-red')) : ''}">${data.rating || ''}</span>
-                </div>
-                <hr class="border-slate-200">
+    // Calculate policy score for a jurisdiction (same algorithm as policy_landscape.html)
+    function calculatePolicyScore(jurisdiction) {
+      const policies = policyData.filter(p => p.jurisdiction === jurisdiction);
+      if (policies.length === 0) return { score: 'pending', label: 'Data Pending', color: '#8a8a8a', rating: 'pending', ratingClass: 'pending' };
+
+      let score = 0;
+      let maxScore = 0;
+
+      policies.forEach(policy => {
+        if (policy.policy_category === 'religious_exemptions') {
+          // Lower is better for religious exemptions
+          if (policy.status === 'limited') score += 2;
+          else if (policy.status === 'absent') score += 3;
+          maxScore += 3;
+        } else if (policy.policy_category === 'gender_recognition') {
+          if (policy.status === 'easy') score += 3;
+          else if (policy.status === 'moderate') score += 2;
+          else if (policy.status === 'hard') score += 1;
+          maxScore += 3;
+        } else {
+          if (policy.status === 'present') score += 3;
+          else if (policy.status === 'partial') score += 2;
+          else if (policy.status === 'pending') score += 1;
+          maxScore += 3;
+        }
+      });
+
+      const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
+
+      if (percentage >= 70) {
+        return { score: 'strong', label: 'Strong Protections', color: '#2d9d6f', rating: '🟢 GREEN', ratingClass: 'green' };
+      } else if (percentage >= 40) {
+        return { score: 'moderate', label: 'Moderate Protections', color: '#e8985e', rating: '🟡 AMBER', ratingClass: 'amber' };
+      } else {
+        return { score: 'weak', label: 'Weak Protections', color: '#d9534f', rating: '🔴 RED', ratingClass: 'red' };
+      }
+    }
+
+    // Load policy data from CSV
+    function loadPolicyData() {
+      return new Promise((resolve, reject) => {
+        Papa.parse(POLICY_DATA_PATH, {
+          header: true,
+          download: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            policyData = results.data.filter(row => row.jurisdiction && row.policy_category);
+            console.log(`Loaded ${policyData.length} policy records for scoring`);
+            resolve();
+          },
+          error: (err) => {
+            console.error('Failed to load policy data:', err);
+            reject(err);
+          }
+        });
+      });
+    }
+
+    // Update ratings based on calculated scores
+    function updateRatingsFromScores() {
+      Object.keys(jurisdictionMap).forEach(key => {
+        const csvJurisdiction = jurisdictionMap[key];
+        const scoreInfo = calculatePolicyScore(csvJurisdiction);
+        
+        if (jurisdictionData[key]) {
+          // Update rating and ratingClass
+          jurisdictionData[key].rating = scoreInfo.rating;
+          jurisdictionData[key].ratingClass = scoreInfo.ratingClass;
+          
+          // Update rankingsData if it exists
+          const rankingIndex = rankingsData.findIndex(r => {
+            const nameMap = {
+              'Tasmania': 'tasmania',
+              'ACT': 'act',
+              'Queensland': 'queensland',
+              'Victoria': 'victoria',
+              'NT': 'nt',
+              'SA': 'sa',
+              'Commonwealth': 'commonwealth',
+              'WA': 'wa',
+              'NSW': 'nsw'
+            };
+            return nameMap[r.name] === key;
+          });
+          
+          if (rankingIndex !== -1) {
+            rankingsData[rankingIndex].rating = scoreInfo.ratingClass;
+          }
+        }
+      });
+      
+      // Update state button ratings in the UI
+      updateStateButtonRatings();
+      
+      console.log('Ratings updated based on policy scores');
+    }
+
+    // Update state button ratings in the UI
+    function updateStateButtonRatings() {
+      Object.keys(jurisdictionMap).forEach(key => {
+        const data = jurisdictionData[key];
+        if (!data) return;
+        
+        const btn = document.querySelector(`.state-btn[data-state="${key}"]`);
+        if (btn) {
+          // Update data-rating attribute
+          btn.setAttribute('data-rating', data.ratingClass);
+          
+          // Update button text with emoji
+          const emojiMap = {
+            'green': '🟢',
+            'amber': '🟡',
+            'red': '🔴',
+            'pending': '⚪'
+          };
+          const emoji = emojiMap[data.ratingClass] || '⚪';
+          const codeMap = {
+            'tasmania': 'TAS',
+            'act': 'ACT',
+            'queensland': 'QLD',
+            'victoria': 'VIC',
+            'nt': 'NT',
+            'sa': 'SA',
+            'commonwealth': 'CWL',
+            'wa': 'WA',
+            'nsw': 'NSW'
+          };
+          const code = codeMap[key] || key.toUpperCase();
+          btn.textContent = `${emoji} ${code}`;
+        }
+      });
+    }
+
+    // Complete Jurisdiction Data
+    const jurisdictionData = {
+      tasmania: {
+        name: "Tasmania", rating: "🟢 GREEN", ratingClass: "green",
+        summary: "Only jurisdiction explicitly protecting asexual people. Strongest religious protections in Australia.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation (inc. asexual)" },
+          genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
+          intersex: { status: "✅", text: "Intersex Variations of Sex Characteristics" },
+          vilification: { status: "✅", text: "Vilification Protections" },
+          conversionPractices: { status: "❌", text: "No Conversion Practices Ban" }
+        },
+        areas: { employment: "✅ Full", education: "✅ Full", housing: "✅ Full", goodsServices: "✅ Full", clubs: "✅ Full" },
+        limitations: ["None identified. Tasmania is the gold standard."],
+        exemptions: "Narrowest in Australia - Religious organisations can ONLY discriminate based on religious belief, NOT on LGBTIQ status.",
+        contact: { body: "Equal Opportunity Tasmania", phone: "03 6165 7515 or 1300 305 062", email: "office@antidiscrimination.tas.gov.au", website: "www.equalopportunity.tas.gov.au" },
+        comprehensive: "Tasmania is widely considered to have the best LGBTIQ+ anti-discrimination protections in Australia."
+      },
+      act: {
+        name: "ACT", rating: "🟢 GREEN", ratingClass: "green",
+        summary: "Very close to Tasmania, with modern, clear legislation and strong student/teacher protections.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
+          intersex: { status: "✅", text: "Sex Characteristics" },
+          vilification: { status: "✅", text: "Vilification Protections" },
+          conversionPractices: { status: "✅", text: "Conversion Practices Ban (2020)" }
+        },
+        areas: { employment: "✅ Full", education: "✅ Full", housing: "✅ Full", goodsServices: "✅ Full", clubs: "✅ Full" },
+        limitations: ["Asexual people not explicitly mentioned (though likely protected)."],
+        exemptions: "Narrowed - Religious exemptions reformed in 2019 and 2023.",
+        contact: { body: "ACT Human Rights Commission", phone: "(02) 6205 2222", email: "hrc@act.gov.au", website: "hrc.act.gov.au" },
+        comprehensive: "The ACT has very strong LGBTIQ+ protections with modern, inclusive language."
+      },
+      queensland: {
+        name: "Queensland", rating: "🟢 GREEN", ratingClass: "green",
+        summary: "Recent 2024 reforms have propelled QLD to the top tier for inclusivity and vilification laws.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
+          intersex: { status: "✅", text: "Sex Characteristics" },
+          vilification: { status: "✅", text: "Vilification Protections" },
+          conversionPractices: { status: "⚠️", text: "Limited Conversion Practices Ban (2020)" }
+        },
+        areas: { employment: "✅ Full", education: "✅ Full", housing: "✅ Full", goodsServices: "✅ Full", clubs: "✅ Full" },
+        limitations: ["Religious schools can still discriminate against staff under 'genuine occupational requirements'."],
+        exemptions: "Partial - Students are fully protected, but teachers are under 'Don't Ask Don't Tell' policy.",
+        contact: { body: "Queensland Human Rights Commission", phone: "1300 130 670", email: "lgbtiq@qhrc.qld.gov.au", website: "qhrc.qld.gov.au" },
+        comprehensive: "Queensland has good protections following major reforms in April 2024."
+      },
+      victoria: {
+        name: "Victoria", rating: "🟡 AMBER", ratingClass: "amber",
+        summary: "Strong discrimination laws but let down by a total lack of vilification protections.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
+          intersex: { status: "✅", text: "Sex Characteristics" },
+          vilification: { status: "❌", text: "No Vilification Protections" },
+          conversionPractices: { status: "✅", text: "Conversion Practices Ban (2021)" }
+        },
+        areas: { employment: "✅ Full", education: "✅ Full", housing: "✅ Full", goodsServices: "✅ Full", clubs: "✅ Full" },
+        limitations: ["No vilification protections despite government promises for years."],
+        exemptions: "Narrow - Religious exemptions narrowed in 2021. Students and teachers are protected.",
+        contact: { body: "Victorian Equal Opportunity and Human Rights Commission", phone: "1300 292 153", email: "enquiries@veohrc.vic.gov.au", website: "humanrights.vic.gov.au" },
+        comprehensive: "Victoria has strong protections for LGBTIQ+ people but lacks vilification protections."
+      },
+      nt: {
+        name: "Northern Territory", rating: "🟡 AMBER", ratingClass: "amber",
+        summary: "Good modern laws, but recent 2025 amendments re-introducing exemptions are a concern.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
+          intersex: { status: "✅", text: "Sex Characteristics" },
+          vilification: { status: "✅", text: "Vilification Protections" },
+          conversionPractices: { status: "❌", text: "No Conversion Practices Ban" }
+        },
+        areas: { employment: "✅ Full", education: "✅ Full", housing: "✅ Full", goodsServices: "✅ Full", clubs: "✅ Full" },
+        limitations: ["October 2025 amendments re-introduced some religious exemptions."],
+        exemptions: "Narrowed - Following 2022/2023 reforms, exemptions are generally narrower.",
+        contact: { body: "Northern Territory Anti-Discrimination Commission", phone: "1800 813 846", email: "adc@nt.gov.au", website: "adc.nt.gov.au" },
+        comprehensive: "The NT has good protections following major reforms in 2022 and 2023."
+      },
+      sa: {
+        name: "South Australia", rating: "🟡 AMBER", ratingClass: "amber",
+        summary: "Protections exist but terminology is dated and religious exemptions remain broad.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "⚠️", text: "Gender Identity (unclear)" },
+          intersex: { status: "✅", text: "Intersex Status" },
+          vilification: { status: "❌", text: "No Vilification Protections" },
+          conversionPractices: { status: "❌", text: "No Conversion Practices Ban" }
+        },
+        areas: { employment: "⚠️ Limited", education: "⚠️ Limited", housing: "✅ Full", goodsServices: "⚠️ Limited", clubs: "⚠️ Limited" },
+        limitations: ["Terminology lags behind modern standards.", "No vilification protections.", "Broad religious exemptions."],
+        exemptions: "Broad - Religious organisations can discriminate in many circumstances.",
+        contact: { body: "Equal Opportunity Commission of South Australia", phone: "(08) 7322 7070", email: "eoc@sa.gov.au", website: "equalopportunity.sa.gov.au" },
+        comprehensive: "South Australia has moderate protections with broad religious exemptions."
+      },
+      commonwealth: {
+        name: "Commonwealth", rating: "🔴 RED", ratingClass: "red",
+        summary: "Provides a basic floor but allows broad religious discrimination and has no vilification laws.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "⚠️", text: "Gender Identity (unclear)" },
+          intersex: { status: "✅", text: "Intersex Status" },
+          vilification: { status: "❌", text: "No Vilification Protections" },
+          conversionPractices: { status: "⚠️", text: "Conversion Practices Inquiry (Pending)" }
+        },
+        areas: { employment: "⚠️ Limited", education: "⚠️ Limited", housing: "✅ Full", goodsServices: "✅ Full", clubs: "⚠️ Limited" },
+        limitations: ["Very broad religious exemptions.", "No vilification protections.", "Terminology becoming outdated."],
+        exemptions: "Broad - Religious organisations have very broad exemptions.",
+        contact: { body: "Australian Human Rights Commission", phone: "1300 656 419", email: "complaintsinfo@humanrights.gov.au", website: "humanrights.gov.au" },
+        comprehensive: "Commonwealth law provides basic protections but has significant gaps."
+      },
+      wa: {
+        name: "Western Australia", rating: "🔴 RED", ratingClass: "red",
+        summary: "Outdated binary language, no intersex protection, and broad religious licenses to discriminate.",
+        protected: {
+          sexualOrientation: { status: "✅", text: "Sexual Orientation" },
+          genderIdentity: { status: "⚠️", text: "Gender Identity (binary only)" },
+          intersex: { status: "❌", text: "NOT Protected" },
+          vilification: { status: "❌", text: "No Vilification Protections" },
+          conversionPractices: { status: "❌", text: "No Conversion Practices Ban" }
+        },
+        areas: { employment: "⚠️ Limited", education: "⚠️ Limited", housing: "⚠️ Limited", goodsServices: "⚠️ Limited", clubs: "⚠️ Limited" },
+        limitations: ["Binary-only 'gender history' definition.", "NO intersex protection.", "Very broad religious exemptions."],
+        exemptions: "Very Broad - Religious schools can refuse to hire or expel LGBTIQ+ people.",
+        contact: { body: "Equal Opportunity Commission of Western Australia", phone: "1800 198 149", email: "eoc@eoc.wa.gov.au", website: "eoc.wa.gov.au" },
+        comprehensive: "WA has weak LGBTIQ+ protections with outdated terminology."
+      },
+      nsw: {
+        name: "New South Wales", rating: "🔴 RED", ratingClass: "red",
+        summary: "The worst in Australia. Small business exemptions, no intersex protection, outdated binary language.",
+        protected: {
+          sexualOrientation: { status: "⚠️", text: "Sexual Orientation (Gay/Lesbian only)" },
+          genderIdentity: { status: "⚠️", text: "Gender Identity (binary only)" },
+          intersex: { status: "❌", text: "NOT Protected" },
+          vilification: { status: "⚠️", text: "Partial Vilification" },
+          conversionPractices: { status: "✅", text: "Conversion Practices Ban (2024)" }
+        },
+        areas: { employment: "⚠️ Limited", education: "⚠️ Limited", housing: "⚠️ Limited", goodsServices: "⚠️ Limited", clubs: "⚠️ Limited" },
+        limitations: ["Outdated terminology.", "NO intersex protection.", "Small employer exemption (5 or fewer employees).", "ALL private schools can discriminate."],
+        exemptions: "Broadest - ALL private schools can discriminate. Small employers can legally discriminate.",
+        contact: { body: "Anti-Discrimination NSW", phone: "1800 670 812", email: "antidiscrimination@justice.nsw.gov.au", website: "antidiscrimination.nsw.gov.au" },
+        comprehensive: "NSW has the weakest LGBTIQ+ protections in Australia."
+      }
+    };
+
+    // Comprehensive Citation Data (from JSON schemas)
+    const citationData = {
+      tasmania: {
+        primaryAct: "Anti-Discrimination Act 1998 (Tas)",
+        primaryActUrl: "https://www.legislation.tas.gov.au/view/html/inforce/current/act-1998-046",
+        sexualOrientation: {
+          definition: "Sexual orientation - means heterosexuality, homosexuality, bisexuality or asexuality",
+          source: "Anti-Discrimination Act 1998 (Tas), s 3",
+          yearAdded: 1999,
+          includesAsexual: true
+        },
+        genderIdentity: {
+          definition: "Gender identity - in relation to a person, means the gender with which the person identifies",
+          source: "Anti-Discrimination Act 1998 (Tas), s 3",
+          yearAdded: 2019,
+          includesNonBinary: true
+        },
+        intersex: {
+          definition: "Intersex variations of sex characteristics - means a person's status as having physical, hormonal or genetic features that are (a) neither wholly female nor wholly male or (b) a combination of female and male or (c) neither female nor male",
+          source: "Anti-Discrimination Act 1998 (Tas), s 3",
+          yearAdded: 2019
+        },
+        employment: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 3, s 16",
+          harassment: "Anti-Discrimination Act 1998 (Tas), s 17"
+        },
+        education: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 3, s 18"
+        },
+        housing: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 3, s 19"
+        },
+        goodsServices: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 3, s 20"
+        },
+        religiousExemptions: {
+          source: "Anti-Discrimination Act 1998 (Tas), s 52",
+          summary: "Religious exemptions only allow discrimination based on religious belief, NOT on sexual orientation, gender identity, or intersex variations of sex characteristics"
+        },
+        vilification: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 3"
+        },
+        conversionPractices: {
+          protected: false,
+          source: "No specific conversion practices ban in Tasmania. May rely on professional conduct standards."
+        },
+        complaintProcess: {
+          source: "Anti-Discrimination Act 1998 (Tas), Part 4",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      nsw: {
+        primaryAct: "Anti-Discrimination Act 1977 (NSW)",
+        primaryActUrl: "https://legislation.nsw.gov.au/view/html/inforce/current/act-1977-048",
+        otherActs: ["Crimes Act 1900 (NSW), s 93Z"],
+        sexualOrientation: {
+          definition: "Homosexuality - defined as male or female homosexuality",
+          source: "Anti-Discrimination Act 1977 (NSW), s 4, s 49ZG",
+          yearAdded: 1982,
+          includesBisexual: false,
+          includesAsexual: false
+        },
+        genderIdentity: {
+          definition: "Transgender - a person who identifies as a member of the opposite sex by living, or seeking to live, as a member of the opposite sex",
+          source: "Anti-Discrimination Act 1977 (NSW), s 38A",
+          yearAdded: 1996,
+          includesNonBinary: false
+        },
+        intersex: {
+          protected: false,
+          source: "Anti-Discrimination Act 1977 (NSW) - no intersex/sex characteristics protection"
+        },
+        employment: {
+          source: "Anti-Discrimination Act 1977 (NSW), s 49ZG",
+          smallEmployerExemption: "Anti-Discrimination Act 1977 (NSW), s 49ZH, s 49ZYB"
+        },
+        education: {
+          source: "Anti-Discrimination Act 1977 (NSW), s 49ZG",
+          privateSchools: "Anti-Discrimination Act 1977 (NSW), s 49ZG(2), s 38C"
+        },
+        housing: {
+          source: "Anti-Discrimination Act 1977 (NSW), Part 4"
+        },
+        goodsServices: {
+          source: "Anti-Discrimination Act 1977 (NSW), Part 4"
+        },
+        religiousExemptions: {
+          source: "Anti-Discrimination Act 1977 (NSW), s 56",
+          summary: "Very broad religious exemptions allow religious organisations to discriminate in almost all circumstances"
+        },
+        vilification: {
+          civil: "Anti-Discrimination Act 1977 (NSW), Part 4C",
+          criminal: "Crimes Act 1900 (NSW), s 93Z",
+          summary: "Civil vilification only covers gay men, lesbians, and binary trans people. Criminal incitement provisions are broader."
+        },
+        conversionPractices: {
+          source: "Conversion Practices Ban Act 2024 (NSW)",
+          yearAdded: 2024,
+          summary: "Passed 22 March 2024, came into effect 4 April 2025. Criminal penalties up to 5 years imprisonment. Civil scheme operational."
+        }
+      },
+      victoria: {
+        primaryAct: "Equal Opportunity Act 2010 (Vic)",
+        primaryActUrl: "https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
+        otherActs: ["Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic)"],
+        sexualOrientation: {
+          definition: "Sexual orientation means a person's emotional, affectional and sexual attraction to, or intimate or sexual relations with, persons of a different gender or the same gender or more than one gender",
+          source: "Equal Opportunity Act 2010 (Vic), s 4",
+          yearAdded: 2010
+        },
+        genderIdentity: {
+          definition: "Gender identity means a person's gender-related identity, appearance or mannerisms or other gender-related characteristics of the person, whether by way of medical intervention or not, with or without regard to the person's designated sex at birth",
+          source: "Equal Opportunity Act 2010 (Vic), s 4",
+          yearAdded: 2010,
+          updated: "20 September 2025",
+          includesNonBinary: true
+        },
+        intersex: {
+          definition: "Sex characteristics means a person's physical features relating to sex, including: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features, whether or not the person has undergone medical intervention",
+          source: "Equal Opportunity Act 2010 (Vic), s 4",
+          yearAdded: 2021
+        },
+        employment: {
+          source: "Equal Opportunity Act 2010 (Vic), Part 4"
+        },
+        education: {
+          source: "Equal Opportunity Act 2010 (Vic), Part 4"
+        },
+        housing: {
+          source: "Equal Opportunity Act 2010 (Vic), Part 4"
+        },
+        goodsServices: {
+          source: "Equal Opportunity Act 2010 (Vic), Part 4"
+        },
+        religiousExemptions: {
+          source: "Equal Opportunity Act 2010 (Vic), s 82, s 83, s 84 (as amended by Equal Opportunity (Religious Exceptions) Amendment Act 2021)",
+          summary: "Religious exemptions significantly narrowed in 2021. Religious schools can only discriminate based on religious belief, not sexual orientation or gender identity."
+        },
+        vilification: {
+          protected: false,
+          source: "Racial and Religious Tolerance Act 2001 (Vic) - race and religion only"
+        },
+        conversionPractices: {
+          source: "Change or Suppression (Conversion) Practices Prohibition Act 2021 (Vic)",
+          yearAdded: 2021,
+          summary: "First comprehensive ban in Australia. Criminal and civil penalties."
+        },
+        complaintProcess: {
+          source: "Equal Opportunity Act 2010 (Vic)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      queensland: {
+        primaryAct: "Anti-Discrimination Act 1991 (Qld)",
+        primaryActUrl: "https://www.legislation.qld.gov.au/view/html/inforce/current/act-1991-085",
+        otherActs: ["Anti-Discrimination and Other Legislation Amendment Act 2024 (Qld) - commenced 29 April 2024"],
+        sexualOrientation: {
+          definition: "Lawful sexual activity - means sexual activity (other than sexual activity involving a child) that is lawful in Queensland",
+          source: "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary)",
+          yearAdded: 2002
+        },
+        genderIdentity: {
+          definition: "Gender identity means a person's internal experience of their gender, including their sense of their body (which may involve, if freely chosen, modification of bodily appearance or function by medical, surgical or other means) and other expressions of their gender, including their name, dress, speech and behaviour",
+          source: "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary)",
+          yearAdded: 2002,
+          expanded: "29 April 2024",
+          includesNonBinary: true
+        },
+        intersex: {
+          definition: "Sex characteristics means a person's physical features relating to sex, including the following, whether or not the person has undergone medical intervention: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+          source: "Anti-Discrimination Act 1991 (Qld), Schedule (Dictionary)",
+          yearAdded: 2024
+        },
+        employment: {
+          source: "Anti-Discrimination Act 1991 (Qld), Part 2"
+        },
+        education: {
+          source: "Anti-Discrimination Act 1991 (Qld), Part 2"
+        },
+        housing: {
+          source: "Anti-Discrimination Act 1991 (Qld), Part 2"
+        },
+        goodsServices: {
+          source: "Anti-Discrimination Act 1991 (Qld), Part 2"
+        },
+        religiousExemptions: {
+          source: "Anti-Discrimination Act 1991 (Qld), s 25, s 109",
+          summary: "Religious schools can discriminate against LGBTIQ+ staff under 'genuine occupational requirements' but cannot 'seek information' about staff (Don't Ask Don't Tell). Students are fully protected."
+        },
+        vilification: {
+          civil: "Anti-Discrimination Act 1991 (Qld), Part 3A",
+          criminal: "Criminal Code Act 1899 (Qld)",
+          source: "Anti-Discrimination Act 1991 (Qld), Part 3A - vilification provisions"
+        },
+        conversionPractices: {
+          source: "Health Legislation Amendment Act 2020 (Qld)",
+          yearAdded: 2020,
+          summary: "Bans conversion practices by health service providers. Limited to health practitioners."
+        },
+        complaintProcess: {
+          source: "Anti-Discrimination Act 1991 (Qld)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      act: {
+        primaryAct: "Discrimination Act 1991 (ACT)",
+        primaryActUrl: "https://www.legislation.act.gov.au/a/1991-81",
+        sexualOrientation: {
+          definition: "Sexuality - means heterosexuality, homosexuality, bisexuality or being intersex",
+          source: "Discrimination Act 1991 (ACT), Dictionary",
+          yearAdded: 1991
+        },
+        genderIdentity: {
+          definition: "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+          source: "Discrimination Act 1991 (ACT), Dictionary",
+          yearAdded: 2004,
+          includesNonBinary: true
+        },
+        intersex: {
+          definition: "Sex characteristics - means a person's physical features relating to sex, including the following (whether or not the person has undergone medical intervention): (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+          source: "Discrimination Act 1991 (ACT), Dictionary",
+          yearAdded: 2020
+        },
+        employment: {
+          source: "Discrimination Act 1991 (ACT), Part 3"
+        },
+        education: {
+          source: "Discrimination Act 1991 (ACT), Part 3"
+        },
+        housing: {
+          source: "Discrimination Act 1991 (ACT), Part 3"
+        },
+        goodsServices: {
+          source: "Discrimination Act 1991 (ACT), Part 3"
+        },
+        religiousExemptions: {
+          source: "Discrimination Act 1991 (ACT), s 32, s 33 (as amended 2019 and 2023)",
+          summary: "Religious organisations can only discriminate based on religious belief in most circumstances. Reforms in 2019 protected students and teachers, and 2023 reforms extended protections to other sectors."
+        },
+        vilification: {
+          source: "Discrimination Act 1991 (ACT), Part 3"
+        },
+        conversionPractices: {
+          source: "Sexuality and Gender Identity Conversion Practices Act 2020 (ACT)",
+          yearAdded: 2020,
+          summary: "Comprehensive ban including religious settings."
+        },
+        complaintProcess: {
+          source: "Discrimination Act 1991 (ACT)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      commonwealth: {
+        primaryAct: "Sex Discrimination Act 1984 (Cth)",
+        primaryActUrl: "https://www.legislation.gov.au/C2004A02868/latest/text",
+        sexualOrientation: {
+          definition: "Sexual orientation means a person's sexual orientation towards persons of the same sex, persons of a different sex or persons of the same sex and persons of a different sex",
+          source: "Sex Discrimination Act 1984 (Cth), s 4, s 5A",
+          yearAdded: 2013
+        },
+        genderIdentity: {
+          definition: "Gender identity means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+          source: "Sex Discrimination Act 1984 (Cth), s 4, s 5B",
+          yearAdded: 2013
+        },
+        intersex: {
+          definition: "Intersex status means the status of having physical, hormonal or genetic features that are: (a) neither wholly female nor wholly male; or (b) a combination of female and male; or (c) neither female nor male",
+          source: "Sex Discrimination Act 1984 (Cth), s 4, s 5C",
+          yearAdded: 2013
+        },
+        employment: {
+          source: "Sex Discrimination Act 1984 (Cth), Part II"
+        },
+        education: {
+          source: "Sex Discrimination Act 1984 (Cth), Part II"
+        },
+        housing: {
+          source: "Sex Discrimination Act 1984 (Cth), Part II"
+        },
+        goodsServices: {
+          source: "Sex Discrimination Act 1984 (Cth), Part II"
+        },
+        religiousExemptions: {
+          source: "Sex Discrimination Act 1984 (Cth), s 37, s 38",
+          summary: "Very broad religious exemptions allow religious organisations and schools to discriminate against LGBTIQ+ people in most circumstances."
+        },
+        vilification: {
+          protected: false,
+          source: "Sex Discrimination Act 1984 (Cth) - no vilification provisions"
+        },
+        hateCrime: {
+          source: "Criminal Code Amendment (Inciting Violence or Hatred) Act 2025",
+          yearAdded: 2025,
+          summary: "Criminalises public incitement of violence or hatred on grounds including sexual orientation and gender identity."
+        },
+        conversionPractices: {
+          protected: false,
+          source: "Parliamentary inquiry into conversion practices ongoing. No federal ban yet enacted.",
+          inquiry: "Senate Legal and Constitutional Affairs Committee inquiry"
+        },
+        complaintProcess: {
+          source: "Australian Human Rights Commission Act 1986 (Cth), s 46P",
+          timeLimit: "6 months from the date of discrimination"
+        }
+      },
+      wa: {
+        primaryAct: "Equal Opportunity Act 1984 (WA)",
+        primaryActUrl: "https://www.legislation.wa.gov.au/legislation/statutes.nsf/law_a767.html",
+        sexualOrientation: {
+          definition: "Sexual orientation - means heterosexuality, homosexuality or bisexuality",
+          source: "Equal Opportunity Act 1984 (WA), s 4",
+          yearAdded: 2002
+        },
+        genderIdentity: {
+          definition: "Gender history - means the status of having identified, or having been identified, as a member of the opposite sex by living, or seeking to live, as a member of the opposite sex",
+          source: "Equal Opportunity Act 1984 (WA), s 4",
+          yearAdded: 2000,
+          includesNonBinary: false
+        },
+        intersex: {
+          protected: false,
+          source: "Equal Opportunity Act 1984 (WA) - no intersex/sex characteristics protection"
+        },
+        employment: {
+          source: "Equal Opportunity Act 1984 (WA), Part II"
+        },
+        education: {
+          source: "Equal Opportunity Act 1984 (WA), Part II"
+        },
+        housing: {
+          source: "Equal Opportunity Act 1984 (WA), Part II"
+        },
+        goodsServices: {
+          source: "Equal Opportunity Act 1984 (WA), Part II"
+        },
+        religiousExemptions: {
+          source: "Equal Opportunity Act 1984 (WA), s 72, s 73",
+          summary: "Very broad religious exemptions allow religious organisations to discriminate in almost all circumstances."
+        },
+        vilification: {
+          protected: false,
+          source: "Equal Opportunity Act 1984 (WA), Part IXB - racial harassment and racial vilification only"
+        },
+        conversionPractices: {
+          protected: false,
+          source: "No conversion practices ban in Western Australia. Advocacy ongoing."
+        },
+        complaintProcess: {
+          source: "Equal Opportunity Act 1984 (WA)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      sa: {
+        primaryAct: "Equal Opportunity Act 1984 (SA)",
+        primaryActUrl: "https://www.legislation.sa.gov.au/lz?path=%2FC%2FA%2FEQUAL%20OPPORTUNITY%20ACT%201984",
+        sexualOrientation: {
+          definition: "Sexuality - includes heterosexuality, homosexuality and bisexuality",
+          source: "Equal Opportunity Act 1984 (SA), s 5",
+          yearAdded: 1984
+        },
+        genderIdentity: {
+          definition: "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+          source: "Equal Opportunity Act 1984 (SA), s 5",
+          yearAdded: 2009
+        },
+        intersex: {
+          definition: "Intersex status - means the status of having physical, hormonal or genetic features that are: (a) neither wholly female nor wholly male; or (b) a combination of female and male; or (c) neither female nor male",
+          source: "Equal Opportunity Act 1984 (SA), s 5",
+          yearAdded: 2016
+        },
+        employment: {
+          source: "Equal Opportunity Act 1984 (SA), Part 3"
+        },
+        education: {
+          source: "Equal Opportunity Act 1984 (SA), Part 3"
+        },
+        housing: {
+          source: "Equal Opportunity Act 1984 (SA), Part 3"
+        },
+        goodsServices: {
+          source: "Equal Opportunity Act 1984 (SA), Part 3"
+        },
+        religiousExemptions: {
+          source: "Equal Opportunity Act 1984 (SA), s 37, s 50",
+          summary: "Broad religious exemptions allow religious organisations to discriminate in most circumstances. Protection for students in religious schools is unclear."
+        },
+        vilification: {
+          protected: false,
+          source: "Equal Opportunity Act 1984 (SA), Part 4A - racial vilification only"
+        },
+        conversionPractices: {
+          protected: false,
+          source: "No conversion practices ban in South Australia. No legislation introduced."
+        },
+        complaintProcess: {
+          source: "Equal Opportunity Act 1984 (SA)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      },
+      nt: {
+        primaryAct: "Anti-Discrimination Act 1992 (NT)",
+        primaryActUrl: "https://legislation.nt.gov.au/en/Legislation/ANTI-DISCRIMINATION-ACT-1992",
+        otherActs: ["Anti-Discrimination Amendment Act 2022 (NT) - commenced 3 July 2023", "Anti-Discrimination Amendment Act 2025 (NT) - amendments passed October 2025"],
+        sexualOrientation: {
+          definition: "Sexuality - means the sexuality of a person, whether heterosexual, homosexual, lesbian, bisexual or otherwise",
+          source: "Anti-Discrimination Act 1992 (NT), s 4",
+          yearAdded: 1992
+        },
+        genderIdentity: {
+          definition: "Gender identity - means the gender-related identity, appearance or mannerisms or other gender-related characteristics of a person (whether by way of medical intervention or not), with or without regard to the person's designated sex at birth",
+          source: "Anti-Discrimination Act 1992 (NT), s 4",
+          yearAdded: 2004,
+          includesNonBinary: true
+        },
+        intersex: {
+          definition: "Sex characteristics - means a person's physical features relating to sex, including the following (whether or not the person has undergone medical intervention): (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features",
+          source: "Anti-Discrimination Act 1992 (NT), s 4",
+          yearAdded: 2022
+        },
+        employment: {
+          source: "Anti-Discrimination Act 1992 (NT), Part 2"
+        },
+        education: {
+          source: "Anti-Discrimination Act 1992 (NT), Part 2"
+        },
+        housing: {
+          source: "Anti-Discrimination Act 1992 (NT), Part 2"
+        },
+        goodsServices: {
+          source: "Anti-Discrimination Act 1992 (NT), Part 2"
+        },
+        religiousExemptions: {
+          source: "Anti-Discrimination Act 1992 (NT), s 51, s 37B (as amended 2023 and 2025)",
+          summary: "Narrower religious exemptions than most jurisdictions. Discrimination only permitted for acts in relation to religious observance or practice. October 2025 amendments re-introduced a narrower religious exemption."
+        },
+        vilification: {
+          source: "Anti-Discrimination Act 1992 (NT), s 20A (added late 2022)",
+          summary: "Prohibits conduct that 'offends, insults, humiliates or intimidates' people on grounds including sexuality, gender identity and sex characteristics. October 2025 amendments altered the prohibition."
+        },
+        conversionPractices: {
+          protected: false,
+          source: "No conversion practices ban in Northern Territory. No legislation."
+        },
+        complaintProcess: {
+          source: "Anti-Discrimination Act 1992 (NT)",
+          timeLimit: "12 months from the act of discrimination"
+        }
+      }
+    };
+
+    // Helper function to format legislation citations with links
+    function formatCitation(citation, url) {
+      if (!citation) return '';
+      if (url) {
+        return `<a href="${url}" class="legislation-link" target="_blank" rel="noopener noreferrer">${citation}</a>`;
+      }
+      return `<span class="citation">${citation}</span>`;
+    }
+
+    // Rankings Data
+    const rankingsData = [
+      { rank: 1, name: "Tasmania", rating: "green", summary: "Gold standard—best in world. Only jurisdiction explicitly protecting asexual people.", strengths: ["Sexual orientation (including asexual) fully protected", "Gender identity (including non-binary) fully protected", "Intersex variations protected", "Comprehensive vilification protections", "Narrowest religious exemptions"], weaknesses: ["None identified"], verdict: "The strongest LGBTIQ+ protections in Australia." },
+      { rank: 2, name: "ACT", rating: "green", summary: "Very close to Tasmania, with modern, clear legislation.", strengths: ["Full protections for all attributes", "Religious exemptions narrowed", "Comprehensive vilification protections"], weaknesses: ["Asexual people not explicitly mentioned"], verdict: "Excellent protections with modern, inclusive language." },
+      { rank: 3, name: "Queensland", rating: "green", summary: "Recent 2024 reforms have propelled QLD to the top tier.", strengths: ["2024 reforms made definitions most inclusive", "Strongest vilification protections", "Students fully protected"], weaknesses: ["Religious schools can still discriminate against staff"], verdict: "Major improvements in 2024 make Queensland a leader." },
+      { rank: 4, name: "Victoria", rating: "amber", summary: "Strong discrimination laws but let down by lack of vilification protections.", strengths: ["Full protections for all attributes", "Religious exemptions narrowed", "Strong student/teacher protections"], weaknesses: ["No vilification protections"], verdict: "Excellent discrimination protections, but lacks vilification laws." },
+      { rank: 5, name: "NT", rating: "amber", summary: "Good modern laws, but recent 2025 amendments are a concern.", strengths: ["Full protections following reforms", "Vilification protections added", "LGBTIQ+ teachers protected"], weaknesses: ["October 2025 amendments re-introduced exemptions"], verdict: "Strong modern protections, but recent changes raise concerns." },
+      { rank: 6, name: "SA", rating: "amber", summary: "Protections exist but terminology is dated and exemptions broad.", strengths: ["Sexual orientation, gender identity, intersex status protected", "First state to protect intersex status"], weaknesses: ["Terminology lags behind", "No vilification protections", "Broad religious exemptions"], verdict: "Moderate protections with significant gaps." },
+      { rank: 7, name: "Commonwealth", rating: "red", summary: "Provides a basic floor but allows broad religious discrimination.", strengths: ["Provides baseline protection across Australia", "Sexual orientation, gender identity, intersex status protected"], weaknesses: ["Very broad religious exemptions", "No vilification protections", "Terminology becoming outdated"], verdict: "Basic safety net, but significantly weaker than state laws." },
+      { rank: 8, name: "WA", rating: "red", summary: "Outdated binary language, no intersex protection, broad exemptions.", strengths: ["Sexual orientation protected"], weaknesses: ["Binary-only definition", "NO intersex protection", "Very broad religious exemptions", "NO vilification protections"], verdict: "Significantly behind other jurisdictions. Urgent reforms needed." },
+      { rank: 9, name: "NSW", rating: "red", summary: "The worst in Australia. Small business exemptions, no intersex protection.", strengths: ["Partial vilification protections", "Conversion practices ban (2024)"], weaknesses: ["Outdated terminology", "NO intersex protection", "Small employer exemption", "ALL private schools can discriminate"], verdict: "The weakest protections in Australia. Urgent comprehensive reform needed." }
+    ];
+
+    // State order for navigation
+    const stateOrder = ['tasmania', 'act', 'queensland', 'victoria', 'nt', 'sa', 'commonwealth', 'wa', 'nsw'];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Load policy data and update ratings
+      try {
+        await loadPolicyData();
+        updateRatingsFromScores();
+        // Re-render if state is already loaded
+        if (currentState) {
+          loadState(currentState);
+        }
+      } catch (err) {
+        console.error('Error loading policy data:', err);
+      }
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileNav = document.getElementById('mobileNav');
+      
+      if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', function() {
+          const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+          mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+          mobileNav.classList.toggle('active');
+        });
+      }
+
+      // State button selection
+      document.querySelectorAll('.state-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const state = this.dataset.state;
+          loadState(state);
+        });
+      });
+
+      // Load default state
+      loadState('tasmania');
+    });
+
+    // Load state content
+    function loadState(stateCode) {
+      currentState = stateCode;
+      const data = jurisdictionData[stateCode];
+      const citations = citationData[stateCode];
+      if (!data) return;
+
+      // Update button states
+      document.querySelectorAll('.state-btn').forEach(btn => {
+        const isActive = btn.dataset.state === stateCode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
+
+      // Generate state content
+      const container = document.getElementById('state-content-container');
+      container.innerHTML = generateStateContent(data, citations, stateCode);
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Generate state content HTML
+    function generateStateContent(data, citations, stateCode) {
+      const stateIndex = stateOrder.indexOf(stateCode);
+      const prevState = stateIndex > 0 ? stateOrder[stateIndex - 1] : null;
+      const nextState = stateIndex < stateOrder.length - 1 ? stateOrder[stateIndex + 1] : null;
+      const prevData = prevState ? jurisdictionData[prevState] : null;
+      const nextData = nextState ? jurisdictionData[nextState] : null;
+
+      return `
+        <article class="state-content active" id="state-${stateCode}">
+          <!-- State Header -->
+          <div class="state-header">
+            <h2>${data.name} ${data.rating}</h2>
+            <p class="state-summary">${data.summary}</p>
+          </div>
+
+          <!-- What's Protected -->
+          <section class="content-section">
+            <h3>What's Protected?</h3>
+            <ul class="protection-list">
+              <li>${data.protected.sexualOrientation.text}</li>
+              <li>${data.protected.genderIdentity.text}</li>
+              <li>${data.protected.intersex.text}</li>
+              <li>${data.protected.vilification.text}</li>
+            </ul>
+          </section>
+
+          <!-- Where You're Protected -->
+          <section class="content-section">
+            <h3>Where You're Protected</h3>
+            <ul class="area-list">
+              <li>Employment: ${data.areas.employment}</li>
+              <li>Education: ${data.areas.education}</li>
+              <li>Housing: ${data.areas.housing}</li>
+              <li>Goods & Services: ${data.areas.goodsServices}</li>
+              <li>Clubs & Associations: ${data.areas.clubs}</li>
+            </ul>
+          </section>
+
+          <!-- Important Limitations -->
+          ${data.limitations.length > 0 && !data.limitations[0].includes('None') ? `
+          <section class="content-section">
+            <div class="limitations-box">
+              <h3>⚠️ Important Limitations</h3>
+              <ul>
+                ${data.limitations.map(lim => `<li>${lim}</li>`).join('')}
+              </ul>
             </div>
-            ${data.content}
+          </section>
+          ` : ''}
+
+          <!-- Religious Exemptions -->
+          <section class="content-section">
+            <h3>Religious Exemptions</h3>
+            <p>${data.exemptions}</p>
+          </section>
+
+          <!-- Expandable Full Analysis -->
+          <section class="expandable-section">
+            <button class="expandable-btn" id="analysis-btn" onclick="toggleFullAnalysis()" aria-expanded="false" aria-controls="full-analysis">
+              <span>▶ READ FULL LEGAL DETAILS</span>
+            </button>
+            <div id="full-analysis" class="full-analysis-content">
+              ${generateFullAnalysis(data, citations)}
+            </div>
+          </section>
+
+          <!-- Action Buttons -->
+          <section class="content-section">
+            <h3>Need Help?</h3>
+            <div class="action-buttons">
+              <button class="action-btn action-btn-primary" onclick="window.open('mailto:${data.contact.email}?subject=Discrimination Report', '_blank')">Report Discrimination</button>
+              <button class="action-btn action-btn-secondary" onclick="window.open('${data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website}', '_blank')">Contact Support</button>
+              <button class="action-btn action-btn-secondary" onclick="window.print()">Print This Page</button>
+            </div>
+            <div class="contact-info">
+              <p><strong>Complaint Body:</strong> ${data.contact.body}</p>
+              <p><strong>Phone:</strong> ${data.contact.phone}</p>
+              <p><strong>Email:</strong> <a href="mailto:${data.contact.email}">${data.contact.email}</a></p>
+              <p><strong>Website:</strong> <a href="${data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website}" target="_blank" rel="noopener">${data.contact.website}</a></p>
+            </div>
+          </section>
+
+          <!-- Navigation -->
+          <nav class="state-navigation" aria-label="State navigation">
+            ${prevState ? `<button class="nav-btn" onclick="loadState('${prevState}')">← ${prevData.name}</button>` : '<div></div>'}
+            ${nextState ? `<button class="nav-btn" onclick="loadState('${nextState}')">${nextData.name} →</button>` : '<div></div>'}
+          </nav>
+        </article>
+      `;
+    }
+
+    // Generate full analysis content
+    function generateFullAnalysis(data, citations) {
+      if (!citations) {
+        return `
+        <h4>Overview</h4>
+        <p>${data.comprehensive}</p>
+        <p><em>Detailed legislative citations are being compiled. Please check back soon.</em></p>
         `;
+      }
 
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            history.pushState(null, null, '#' + id);
-        }
+      return `
+        <h4>Overview</h4>
+        <p><strong>Rating:</strong> ${data.rating}</p>
+        <p><strong>Last Updated:</strong> 31 December 2025</p>
+        <p><strong>Legislation Reviewed:</strong> ${citations.primaryAct}${citations.otherActs ? '; ' + citations.otherActs.join('; ') : ''}</p>
+        <p>${data.comprehensive}</p>
 
-        function closeModal() {
-            const modal = document.getElementById('factsheet-modal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = '';
-            history.pushState(null, null, window.location.pathname);
-        }
+        <h4>Protected Attributes (Detailed)</h4>
+        ${citations.sexualOrientation && citations.sexualOrientation.protected !== false ? `
+        <p><strong>Sexual Orientation</strong></p>
+        <p>✅ PROTECTED</p>
+        ${citations.sexualOrientation.definition ? `<p><strong>Definition in law:</strong> "${citations.sexualOrientation.definition}"</p>` : ''}
+        ${citations.sexualOrientation.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.sexualOrientation.source}</a>` : citations.sexualOrientation.source}</p>` : ''}
+        ${citations.sexualOrientation.yearAdded ? `<p><strong>Year added:</strong> ${citations.sexualOrientation.yearAdded}</p>` : ''}
+        ${citations.sexualOrientation.includesAsexual ? '<p>Tasmania is the ONLY jurisdiction explicitly protecting asexual people.</p>' : ''}
+        ` : '<p><strong>Sexual Orientation:</strong> NOT PROTECTED</p>'}
 
-        // Auto-open based on hash
-        window.addEventListener('load', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && factsheetData[hash]) {
-                showFactsheet(hash);
-            }
-        });
+        ${citations.genderIdentity && citations.genderIdentity.protected !== false ? `
+        <p><strong>Gender Identity</strong></p>
+        <p>✅ PROTECTED${citations.genderIdentity.includesNonBinary ? ' (including non-binary)' : ''}</p>
+        ${citations.genderIdentity.definition ? `<p><strong>Definition in law:</strong> "${citations.genderIdentity.definition}"</p>` : ''}
+        ${citations.genderIdentity.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.genderIdentity.source}</a>` : citations.genderIdentity.source}</p>` : ''}
+        ${citations.genderIdentity.yearAdded ? `<p><strong>Year added:</strong> ${citations.genderIdentity.yearAdded}</p>` : ''}
+        ` : '<p><strong>Gender Identity:</strong> NOT PROTECTED</p>'}
 
-        // Handle back button
-        window.addEventListener('popstate', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && factsheetData[hash]) {
-                showFactsheet(hash);
-            } else {
-                closeModal();
-            }
-        });
+        ${citations.intersex && citations.intersex.protected !== false ? `
+        <p><strong>Intersex/Sex Characteristics</strong></p>
+        <p>✅ PROTECTED</p>
+        ${citations.intersex.definition ? `<p><strong>Definition in law:</strong> "${citations.intersex.definition}"</p>` : ''}
+        ${citations.intersex.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.intersex.source}</a>` : citations.intersex.source}</p>` : ''}
+        ${citations.intersex.yearAdded ? `<p><strong>Year added:</strong> ${citations.intersex.yearAdded}</p>` : ''}
+        ` : '<p><strong>Intersex/Sex Characteristics:</strong> NOT PROTECTED</p>'}
+
+        <h4>Where You're Protected (Detailed)</h4>
+        <p><strong>Employment</strong></p>
+        <p>${data.areas.employment}</p>
+        ${citations.employment && citations.employment.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.employment.source}</a>` : citations.employment.source}</p>` : ''}
+        <p>You cannot be discriminated against in employment because of your sexual orientation, gender identity${citations.intersex && citations.intersex.protected !== false ? ', or intersex variations of sex characteristics' : ''}.</p>
+
+        <p><strong>Education</strong></p>
+        <p>${data.areas.education}</p>
+        ${citations.education && citations.education.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.education.source}</a>` : citations.education.source}</p>` : ''}
+        <p>Schools cannot discriminate based on sexual orientation, gender identity${citations.intersex && citations.intersex.protected !== false ? ', or intersex variations of sex characteristics' : ''}.</p>
+
+        <p><strong>Housing</strong></p>
+        <p>${data.areas.housing}</p>
+        ${citations.housing && citations.housing.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.housing.source}</a>` : citations.housing.source}</p>` : ''}
+        <p>Landlords and real estate agents cannot discriminate based on sexual orientation, gender identity${citations.intersex && citations.intersex.protected !== false ? ', or intersex variations of sex characteristics' : ''}.</p>
+
+        <p><strong>Goods & Services</strong></p>
+        <p>${data.areas.goodsServices}</p>
+        ${citations.goodsServices && citations.goodsServices.source ? `<p><strong>Legislation:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.goodsServices.source}</a>` : citations.goodsServices.source}</p>` : ''}
+        <p>Businesses and services cannot refuse service or provide inferior terms based on sexual orientation, gender identity${citations.intersex && citations.intersex.protected !== false ? ', or intersex variations of sex characteristics' : ''}.</p>
+
+        <h4>Religious Exemptions (Detailed)</h4>
+        ${citations.religiousExemptions && citations.religiousExemptions.source ? `
+        <p><strong>Legislative basis:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.religiousExemptions.source}</a>` : citations.religiousExemptions.source}</p>
+        ` : ''}
+        <p>${citations.religiousExemptions && citations.religiousExemptions.summary ? citations.religiousExemptions.summary : data.exemptions}</p>
+
+        <h4>Vilification Protections</h4>
+        ${citations.vilification && citations.vilification.protected !== false ? `
+        <p>✅ VILIFICATION PROTECTIONS EXIST</p>
+        ${(citations.vilification.source || citations.vilification.civil || citations.vilification.criminal) ? `<p><strong>Legislative basis:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.vilification.source || citations.vilification.civil || citations.vilification.criminal}</a>` : (citations.vilification.source || citations.vilification.civil || citations.vilification.criminal)}</p>` : ''}
+        ${citations.vilification.summary ? `<p>${citations.vilification.summary}</p>` : ''}
+        ` : `
+        <p>❌ NO VILIFICATION PROTECTIONS</p>
+        <p>${citations.vilification && citations.vilification.source ? citations.vilification.source : 'No vilification protections exist for LGBTIQ+ people in this jurisdiction.'}</p>
+        `}
+
+        <h4>How to Report Discrimination</h4>
+        ${citations.complaintProcess && citations.complaintProcess.source ? `<p><strong>Legislative framework:</strong> ${citations.primaryActUrl ? `<a href="${citations.primaryActUrl}" target="_blank" rel="noopener">${citations.complaintProcess.source}</a>` : citations.complaintProcess.source}</p>` : ''}
+        <p><strong>Time limit:</strong> ${citations.complaintProcess && citations.complaintProcess.timeLimit ? citations.complaintProcess.timeLimit : '12 months from the act of discrimination'}</p>
+        <p><strong>Process:</strong> Contact ${data.contact.body} to lodge a complaint. The complaint body will investigate and attempt conciliation.</p>
+        <p><strong>Cost:</strong> No fee for lodging a complaint</p>
+      `;
+    }
+
+    // Toggle full analysis
+    function toggleFullAnalysis() {
+      const section = document.getElementById('full-analysis');
+      const button = document.getElementById('analysis-btn');
+      
+      if (!section || !button) return;
+
+      const isOpen = section.classList.contains('open');
+      
+      if (isOpen) {
+        section.classList.remove('open');
+        button.setAttribute('aria-expanded', 'false');
+        button.innerHTML = '<span>▶ READ FULL LEGAL DETAILS</span>';
+      } else {
+        section.classList.add('open');
+        button.setAttribute('aria-expanded', 'true');
+        button.innerHTML = '<span>▼ HIDE FULL LEGAL DETAILS</span>';
+        // Smooth scroll to section
+        setTimeout(() => {
+          section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+    }
+
     </script>
 </body>
-
 </html>

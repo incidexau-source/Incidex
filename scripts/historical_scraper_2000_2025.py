@@ -11,8 +11,8 @@ import json
 import time
 import re
 import csv
+import argparse
 from datetime import datetime, timezone
-from pathlib import Path
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import requests
@@ -38,8 +38,12 @@ except ImportError:
 # Setup Logging
 LOG_DIR = BASE_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
+
+# Check for debug mode from environment variable to set initial log level
+initial_log_level = logging.DEBUG if os.getenv("DEBUG_MODE", "").lower() in ("true", "1", "yes") else logging.INFO
+
 logging.basicConfig(
-    level=logging.INFO,
+    level=initial_log_level,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout),
@@ -60,8 +64,9 @@ PROGRESS_FILE = DATA_DIR / "historical_scraper_progress.json"
 (DATA_DIR / "audit").mkdir(exist_ok=True)
 
 class HistoricalScraper2000_2025:
-    def __init__(self, dry_run: bool = False):
+    def __init__(self, dry_run: bool = False, debug_mode: bool = False):
         self.dry_run = dry_run
+        self.debug_mode = debug_mode or os.getenv("DEBUG_MODE", "").lower() in ("true", "1", "yes")
         self.geocoder = Geocoder(cache_file=str(BASE_DIR / "geocoding_cache.json"))
         # Using existing Deduplicator but will add custom logic for this specific run
         self.deduplicator = Deduplicator(existing_csv_path=str(DATA_DIR / "incidents_in_progress.csv"))
@@ -80,6 +85,9 @@ class HistoricalScraper2000_2025:
         self.incidents_to_save = []
         self.incidents_for_review = []
         self.dedup_log = []
+        
+        if self.debug_mode:
+            logger.info("DEBUG MODE ENABLED - Enhanced logging and relaxed validation thresholds")
 
     def load_progress(self):
         # Implement resume logic if needed
@@ -109,10 +117,60 @@ class HistoricalScraper2000_2025:
             # STAGE 2: Geographic Validation
             # Combine title + partial text for cost efficiency
             content_sample = f"{title}\n{text[:1500]}"
-            if not validate_location(content_sample):
+            
+            # Direct debug print statements for validation
+            print("\n=== VALIDATION DEBUG ===")
+            print(f"Article: {url}")
+            print(f"Text: {content_sample[:500]}")
+            
+            # Call validate_location with debug=True to get detailed info
+            location_result = validate_location(content_sample, debug=True)
+            debug_info = None
+            
+            if isinstance(location_result, tuple):
+                is_valid, debug_info = location_result
+                
+                # Check if there was an API error
+                if 'error' in debug_info:
+                    print(f"Prompt: [ERROR - API call failed]")
+                    print(f"Response: [ERROR - {debug_info.get('error_type', 'Unknown')}]")
+                    print(f"Locations: N/A (error occurred)")
+                    print(f"Result: FAIL - {debug_info.get('error', 'N/A')}")
+                else:
+                    prompt_text = debug_info.get('prompt', 'N/A')
+                    response_text = debug_info.get('response_text', 'N/A')
+                    detected_locations = debug_info.get('detected_location', 'None detected')
+                    
+                    print(f"Prompt: {prompt_text}")
+                    print(f"Response: {response_text}")
+                    print(f"Locations: {detected_locations}")
+                    print(f"Result: {'PASS' if is_valid else 'FAIL'}")
+            else:
+                is_valid = location_result
+                print(f"Prompt: [Debug info not available]")
+                print(f"Response: [Debug info not available]")
+                print(f"Locations: [Debug info not available]")
+                print(f"Result: {'PASS' if is_valid else 'FAIL'}")
+            
+            print("======================\n")
+            
+            if not is_valid:
+                rejection_reason = "Non-Australian Location"
+                if debug_info:
+                    # Use already-retrieved debug info for rejection reason
+                    if 'error' in debug_info:
+                        rejection_reason = f"API Error: {debug_info.get('error_type', 'Unknown')}"
+                    elif 'detected_location' in debug_info:
+                        if debug_info.get('detected_location') == 'None detected':
+                            rejection_reason = "No Australian location detected in text"
+                        else:
+                            rejection_reason = f"Location mismatch: {debug_info.get('response_text', 'Unknown reason')}"
+                
                 self.stats["stage2_geo_rej"] += 1
-                logger.info("  -> Rejected: Non-Australian Location")
+                logger.info(f"  -> Rejected: {rejection_reason}")
                 continue
+            
+            logger.info("  -> Geographic validation passed")
 
             # STAGE 3: Date Validation
             if not validate_date(content_sample, 2000, 2025):
@@ -248,8 +306,8 @@ class HistoricalScraper2000_2025:
                 
             # Date Check (Exact string match for now, or use datetime)
             if inc_date == exist_date:
-                # Location fuzzy check could go here
-                if self.deduplicator._calculate_similarity(inc_loc, exist_loc) > 0.8:
+                # Location fuzzy check using deduplicator's method
+                if self.deduplicator._locations_match(inc_loc, exist_loc, threshold=80):
                     # Log it
                     self.dedup_log.append({
                         "new_id": incident["incident_id"],
@@ -408,9 +466,66 @@ class HistoricalScraper2000_2025:
                  incident["notes"] = (incident.get("notes") or "") + " [POTENTIAL HISTORICAL LINK/UPDATE]"
 
 
+def test_single_article(scraper: HistoricalScraper2000_2025, test_article: Dict[str, Any]):
+    """
+    Test function to run a single article through the validation pipeline.
+    """
+    logger.info("=" * 80)
+    logger.info("TEST MODE: Processing single article through validation pipeline")
+    logger.info("=" * 80)
+    
+    articles = [test_article]
+    scraper.run_pipeline(articles)
+    
+    logger.info("=" * 80)
+    logger.info("TEST COMPLETE")
+    logger.info("=" * 80)
+
+
 if __name__ == "__main__":
-    # Test Data / Dry Run
-    scraper = HistoricalScraper2000_2025(dry_run=False)
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Historical LGBTIQ+ Hate Crime Scraper (2000-2025)')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode with enhanced logging')
+    parser.add_argument('--test', action='store_true', help='Test mode: process a single test article')
+    parser.add_argument('--dry-run', action='store_true', help='Dry run mode: do not save results')
+    args = parser.parse_args()
+    
+    # Update log level if debug mode is enabled via command line
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
+        logger.setLevel(logging.DEBUG)
+        logger.info("Debug logging enabled via --debug flag")
+    
+    # Initialize scraper with debug mode
+    scraper = HistoricalScraper2000_2025(dry_run=args.dry_run, debug_mode=args.debug)
+    
+    # Test mode: process a single test article
+    if args.test:
+        logger.info("TEST MODE: Processing single test article")
+        
+        # Create a test article - replace with actual test data
+        test_article = {
+            "title": "LGBTIQ community member attacked in Sydney CBD",
+            "text": """
+            A member of the LGBTIQ community was violently attacked in Sydney's Central Business District 
+            on Saturday evening. The incident occurred around 9pm near Hyde Park, where a 28-year-old man 
+            was subjected to homophobic slurs before being physically assaulted. 
+            
+            Police have confirmed they are treating this as a hate crime. The victim, who wishes to remain 
+            anonymous, was walking with friends when a group of individuals approached them shouting 
+            anti-gay slurs. The attack resulted in minor injuries requiring medical treatment.
+            
+            NSW Police are investigating and have appealed for witnesses. This incident comes amid rising 
+            concerns about LGBTIQ+ safety in Australian cities.
+            """,
+            "url": "https://example.com/test-article-sydney",
+            "source": "example.com",
+            "date": "2024-01-15"
+        }
+        
+        test_single_article(scraper, test_article)
+        logger.info("Script Complete (Test Mode).")
+        sys.exit(0)
     
     # SEARCH STRATEGY - EXPANDED & HISTORICALLY APPROPRIATE
     # ---------------------------------------------------------
@@ -442,6 +557,8 @@ if __name__ == "__main__":
     ]
     
     logger.info("Executing expanded Search Strategy (2000-2025)...")
+    if args.debug:
+        logger.info("Debug mode enabled - will show detailed validation information")
     
     try:
         # Full historical search
@@ -457,6 +574,8 @@ if __name__ == "__main__":
         logger.info("Scraper stopped by user.")
     except Exception as e:
         logger.error(f"Fatal error: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
 
     logger.info("Script Complete.")
 
