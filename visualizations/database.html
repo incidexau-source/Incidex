@@ -1239,7 +1239,7 @@
     async function loadData() {
       try {
         console.log('Fetching data...');
-        const response = await fetch('../data/incidents_in_progress.csv');
+        const response = await fetch(`../data/incidents_in_progress.csv?v=${Date.now()}`);
         if (!response.ok) throw new Error('Failed to fetch CSV');
         const csvText = await response.text();
         console.log('CSV text loaded, length:', csvText.length);
