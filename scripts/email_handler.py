@@ -20,7 +20,8 @@ load_dotenv()
 
 # Email configuration
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+port_str = os.getenv("SMTP_PORT", "587")
+SMTP_PORT = int(port_str) if port_str.strip() else 587
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "")
 REVIEWER_EMAIL = os.getenv("REVIEWER_EMAIL", "")
