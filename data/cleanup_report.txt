@@ -1,0 +1,10 @@
+LGBTIQ+ Hate Crime Data Cleanup Report
+======================================
+Date: 2026-01-11 14:25:35.957631
+
+- Total records processed: 310
+- International/Irrelevant removed: 104
+- Duplicates removed: 62
+- Final Cleaned Count: 144
+
+Output location: C:\Users\Tom\OneDrive\Desktop\lgbtiq-hate-crime-map\data\cleaned_incidents_in_progress.csv
