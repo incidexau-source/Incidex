@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Incidex Database - Browse and search 297+ documented LGBTIQ+ hate crime incidents across Australia with advanced filtering and analysis tools.">
+  <title>Incidex | Incident Database</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources-dropdown.css">
+  <style>
+    :root {
+      --incident-assault: #d9534f;
+      --incident-harassment: #e8985e;
+      --incident-vandalism: #f0ad4e;
+      --incident-hate-speech: #8b5cf6;
+      --incident-threat: #d9534f;
+      --incident-discrimination: #5bc0de;
+      --incident-murder: #8b0000;
+      --incident-other: #5a6c7d;
+      --status-verified: #22c55e;
+      --status-unverified: #ef4444;
+      --status-pending: #f59e0b;
+    }
+
+    .db-layout {
+      display: flex;
+      gap: var(--space-6);
+      padding: var(--space-6);
+      min-height: calc(100vh - var(--header-height) - 200px);
+    }
+
+    .db-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      height: fit-content;
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-4));
+    }
+
+    .db-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .db-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .db-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .db-subtitle {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .db-controls {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .db-search {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+
+    .db-search input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      padding-left: 44px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+    }
+
+    .db-search input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-50);
+    }
+
+    .db-search svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--color-text-muted);
+    }
+
+    .filter-section {
+      margin-bottom: var(--space-5);
+    }
+
+    .filter-title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .filter-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      transition: background var(--transition-fast);
+    }
+
+    .filter-checkbox:hover {
+      background: var(--color-bg);
+    }
+
+    .filter-checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--color-accent);
+      cursor: pointer;
+    }
+
+    .filter-checkbox span {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .filter-checkbox .count {
+      margin-left: auto;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .date-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .date-inputs input {
+      width: 100%;
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .date-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+    }
+
+    .date-preset {
+      padding: 4px 8px;
+      font-size: var(--text-xs);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      color: var(--color-text-secondary);
+    }
+
+    .date-preset:hover,
+    .date-preset.active {
+      background: var(--color-accent-50);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 4px 10px;
+      background: var(--color-accent-50);
+      border: 1px solid var(--color-accent);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      color: var(--color-accent);
+    }
+
+    .filter-pill button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      color: inherit;
+    }
+
+    .results-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .results-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .results-count strong {
+      color: var(--color-text);
+    }
+
+    .view-options {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+    .view-btn {
+      padding: var(--space-2);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: all var(--transition-fast);
+    }
+
+    .view-btn:hover,
+    .view-btn.active {
+      background: var(--color-accent-50);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .view-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .table-container {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .data-table th {
+      background: var(--color-bg);
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .data-table th:hover {
+      background: var(--color-accent-50);
+      color: var(--color-accent);
+    }
+
+    .data-table th.sorted {
+      color: var(--color-accent);
+    }
+
+    .data-table th .sort-icon {
+      margin-left: var(--space-1);
+      opacity: 0.5;
+    }
+
+    .data-table th.sorted .sort-icon {
+      opacity: 1;
+    }
+
+    .data-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border-light);
+      color: var(--color-text);
+      vertical-align: top;
+    }
+
+    .data-table tr:hover {
+      background: var(--color-bg);
+    }
+
+    .data-table tr {
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .incident-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .type-assault {
+      background: rgba(217, 83, 79, 0.15);
+      color: var(--incident-assault);
+    }
+
+    .type-harassment {
+      background: rgba(232, 152, 94, 0.15);
+      color: var(--incident-harassment);
+    }
+
+    .type-vandalism {
+      background: rgba(240, 173, 78, 0.15);
+      color: var(--incident-vandalism);
+    }
+
+    .type-hate_speech {
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--incident-hate-speech);
+    }
+
+    .type-threat {
+      background: rgba(217, 83, 79, 0.15);
+      color: var(--incident-threat);
+    }
+
+    .type-discrimination {
+      background: rgba(91, 192, 222, 0.15);
+      color: var(--incident-discrimination);
+    }
+
+    .type-murder {
+      background: rgba(139, 0, 0, 0.15);
+      color: var(--incident-murder);
+    }
+
+    .type-other {
+      background: rgba(90, 108, 125, 0.15);
+      color: var(--incident-other);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+    }
+
+    .status-verified {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--status-verified);
+    }
+
+    .status-unverified {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--status-unverified);
+    }
+
+    .status-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--status-pending);
+    }
+
+    .severity-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .severity-high {
+      background: var(--color-error);
+    }
+
+    .severity-medium {
+      background: var(--color-warning);
+    }
+
+    .severity-low {
+      background: var(--color-success);
+    }
+
+    .description-cell {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--color-text-secondary);
+      font-size: var(--text-xs);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-4);
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .pagination-info {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .pagination-controls {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+    .pagination-btn {
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      transition: all var(--transition-fast);
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: var(--color-accent-50);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn.active {
+      background: var(--color-accent);
+      color: white;
+      border-color: var(--color-accent);
+    }
+
+    .page-size-select {
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-size: var(--text-sm);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+      color: var(--color-text-muted);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .modal-body {
+      padding: var(--space-6);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .detail-item {}
+
+    .detail-label {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+
+    .detail-value {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+
+    .detail-description {
+      background: var(--color-bg);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+    }
+
+    .detail-description p {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .modal-nav {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-6);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-bg);
+    }
+
+    .cards-container {
+      display: none;
+    }
+
+    .incident-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .incident-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-3);
+    }
+
+    .card-date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-title {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .card-location {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--space-16);
+      color: var(--color-text-muted);
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--space-4);
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: var(--space-16);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto var(--space-4);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .export-dropdown {
+      position: relative;
+    }
+
+    .export-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: var(--space-2);
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      min-width: 160px;
+      z-index: 100;
+      display: none;
+    }
+
+    .export-menu.active {
+      display: block;
+    }
+
+    .export-menu button {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      text-align: left;
+      transition: background var(--transition-fast);
+    }
+
+    .export-menu button:hover {
+      background: var(--color-bg);
+    }
+
+    .columns-dropdown {
+      position: relative;
+    }
+
+    .columns-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: var(--space-2);
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      min-width: 200px;
+      z-index: 100;
+      display: none;
+      padding: var(--space-3);
+    }
+
+    .columns-menu.active {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .db-layout {
+        flex-direction: column;
+      }
+
+      .db-sidebar {
+        width: 100%;
+        position: static;
+      }
+
+      .db-sidebar-toggle {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .table-container {
+        display: none;
+      }
+
+      .cards-container {
+        display: block;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .db-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .db-controls {
+        flex-direction: column;
+      }
+
+      .db-search {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+          class="logo-full" loading="eager">
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Statistics
+        </a>
+        <a href="database.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="9" x2="9" y2="21"></line>
+            <line x1="15" y1="9" x2="15" y2="21"></line>
+          </svg>
+          Database
+        </a>
+        <!-- Resources Dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            Resources
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="nav-dropdown-menu" aria-hidden="true">
+            <div class="dropdown-section">
+              <div class="dropdown-section-title">
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                  </path>
+                </svg>
+                Legal Guides: Know Your Rights
+              </div>
+              <a href="legal_guides.html"
+                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+                <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
+                  guides for every Australian jurisdiction</div>
+              </a>
+              <div class="jurisdiction-grid">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
+                  <div class="jurisdiction-name">Commonwealth</div>
+                </a>
+                <a href="legal_guides.html#nsw" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
+                  <div class="jurisdiction-name">NSW</div>
+                </a>
+                <a href="legal_guides.html#victoria" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
+                  <div class="jurisdiction-name">VIC</div>
+                </a>
+                <a href="legal_guides.html#queensland" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
+                  <div class="jurisdiction-name">QLD</div>
+                </a>
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
+                  <div class="jurisdiction-name">TAS</div>
+                </a>
+                <a href="legal_guides.html#sa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
+                  <div class="jurisdiction-name">SA</div>
+                </a>
+                <a href="legal_guides.html#wa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
+                  <div class="jurisdiction-name">WA</div>
+                </a>
+                <a href="legal_guides.html#nt" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
+                  <div class="jurisdiction-name">NT</div>
+                </a>
+                <a href="legal_guides.html#act" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
+                  <div class="jurisdiction-name">ACT</div>
+                </a>
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <a href="resources.html" class="services-link">
+                <span>View All Support Services</span>
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contact
+        </a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <circle cx="12" cy="12" r="5" />
+          <path
+            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" style="display:none">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="db-layout container">
+    <!-- Sidebar Filters -->
+    <aside class="db-sidebar" id="filterSidebar">
+      <div class="filter-section">
+        <div class="filter-title">📅 Date Range</div>
+        <div class="date-inputs">
+          <input type="date" id="dateFrom" placeholder="From">
+          <input type="date" id="dateTo" placeholder="To">
+        </div>
+        <div class="date-presets">
+          <button class="date-preset" data-days="30">30 days</button>
+          <button class="date-preset" data-days="90">90 days</button>
+          <button class="date-preset" data-days="365">1 year</button>
+          <button class="date-preset active" data-days="all">All time</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">📋 Incident Type</div>
+        <div class="filter-options" id="typeFilters"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">📍 State</div>
+        <div class="filter-options" id="stateFilters"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">👤 Victim Identity</div>
+        <div class="filter-options" id="identityFilters"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">✓ Verification</div>
+        <div class="filter-options" id="verificationFilters">
+          <label class="filter-checkbox"><input type="radio" name="verification" value="all"
+              checked><span>All</span></label>
+          <label class="filter-checkbox"><input type="radio" name="verification"
+              value="verified"><span>Verified</span></label>
+          <label class="filter-checkbox"><input type="radio" name="verification"
+              value="unverified"><span>Unverified</span></label>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-secondary" id="clearFilters" style="flex:1">Clear All</button>
+        <button class="btn btn-primary" id="applyFilters" style="flex:1">Apply</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="db-main">
+      <div class="db-header">
+        <div>
+          <h1 class="db-title">Incident Database</h1>
+          <p class="db-subtitle">Browse and search documented LGBTIQ+ hate crime incidents across Australia</p>
+        </div>
+        <div class="db-controls">
+          <div class="db-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search incidents...">
+          </div>
+          <div class="export-dropdown">
+            <button class="btn btn-secondary" id="exportBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              Export
+            </button>
+            <div class="export-menu" id="exportMenu">
+              <button id="exportCSV">📄 Export CSV</button>
+              <button id="exportJSON">📋 Export JSON</button>
+              <button id="exportPrint">🖨️ Print</button>
+            </div>
+          </div>
+          <div class="columns-dropdown">
+            <button class="btn btn-secondary" id="columnsBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+              Columns
+            </button>
+            <div class="columns-menu" id="columnsMenu"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Filters -->
+      <div class="active-filters" id="activeFilters"></div>
+
+      <!-- Results Info -->
+      <div class="results-info">
+        <div class="results-count" id="resultsCount" aria-live="polite">Loading incidents...</div>
+        <div class="view-options">
+          <button class="view-btn active" id="tableViewBtn" title="Table view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18" />
+            </svg>
+          </button>
+          <button class="view-btn" id="cardViewBtn" title="Card view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9" />
+              <rect x="14" y="3" width="7" height="5" />
+              <rect x="14" y="12" width="7" height="9" />
+              <rect x="3" y="16" width="7" height="5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <div class="table-container" id="tableContainer">
+        <table class="data-table">
+          <thead>
+            <tr id="tableHeader"></tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!-- Cards View (Mobile) -->
+      <div class="cards-container" id="cardsContainer"></div>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <p>Loading incident data...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <h3>No incidents found</h3>
+        <p>Try adjusting your filters or search terms</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="modalTitle">Incident Details</h2>
+          <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-top:4px" id="modalDate"></p>
+        </div>
+        <button class="modal-close" id="modalClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-grid" id="modalDetails"></div>
+        <div class="detail-description" id="modalDescription"></div>
+        <div class="modal-actions">
+          <a href="#" class="btn btn-primary" id="viewOnMap" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            View on Map
+          </a>
+          <a href="#" class="btn btn-secondary" id="viewSource" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+            </svg>
+            View Source
+          </a>
+          <button class="btn btn-secondary" id="copyDetails">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+      <div class="modal-nav">
+        <button class="btn btn-secondary" id="prevIncident">← Previous</button>
+        <button class="btn btn-secondary" id="nextIncident">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer
+    style="padding:var(--space-8);text-align:center;background:var(--color-bg-alt);border-top:1px solid var(--color-border);margin-top:var(--space-8)">
+    <p style="color:var(--color-text-muted);font-size:var(--text-sm)">© 2026 Incidex Australia. Data sourced from
+      verified news reports and community submissions.</p>
+    <p style="color:var(--color-text-muted);font-size:var(--text-xs);margin-top:var(--space-2)">
+      <a href="about.html" style="color:var(--color-accent)">About</a> ·
+      <a href="contact.html" style="color:var(--color-accent)">Contact</a> ·
+      <a href="resources.html" style="color:var(--color-accent)">Resources</a>
+    </p>
+  </footer>
+
+  <script src="resources-dropdown.js"></script>
+  <script>
+    // State
+    let allIncidents = [];
+    let filteredIncidents = [];
+    let currentPage = 1;
+    let pageSize = 20;
+    let sortColumn = 'date';
+    let sortDirection = 'desc';
+    let currentIncidentIndex = -1;
+    let viewMode = 'table';
+
+    const columns = [
+      { id: 'date', label: 'Date', width: '100px', sortable: true, visible: true },
+      { id: 'incident_type', label: 'Type', width: '120px', sortable: true, visible: true },
+      { id: 'location', label: 'Location', width: '150px', sortable: true, visible: true },
+      { id: 'state', label: 'State', width: '70px', sortable: true, visible: true },
+      { id: 'victim_identity', label: 'Identity', width: '120px', sortable: true, visible: true },
+      { id: 'description', label: 'Description', width: '250px', sortable: false, visible: true },
+      { id: 'severity', label: 'Severity', width: '90px', sortable: true, visible: true },
+      { id: 'source', label: 'Source', width: '100px', sortable: false, visible: false }
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', init);
+
+    async function init() {
+      await loadData();
+      setupEventListeners();
+      initTheme();
+    }
+
+    async function loadData() {
+      try {
+        console.log('Fetching data...');
+        const response = await fetch('../data/incidents_in_progress.csv');
+        if (!response.ok) throw new Error('Failed to fetch CSV');
+        const csvText = await response.text();
+        console.log('CSV text loaded, length:', csvText.length);
+
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          dynamicTyping: false,
+          complete: function (results) {
+            console.log('Parsed rows:', results.data.length);
+            if (results.errors.length > 0) {
+              console.warn('Parsing errors:', results.errors);
+            }
+
+            allIncidents = results.data.map((row, idx) => {
+              // DEBUG: Log first 5 rows to check structure
+              if (idx < 5) console.log(`Row ${idx}:`, row);
+              const dateVal = row.date || row.source_date || row.Date || row.SourceDate || '';
+              const parsedDate = parseDate(dateVal);
+
+              return {
+                id: idx,
+                date: parsedDate,
+                incident_type: row.incident_type || row.Type || 'other',
+                location: row.location || row.Location || 'Unknown',
+                state: extractState(row.location || row.Location),
+                victim_identity: row.victim_identity || row.Identity || 'unknown',
+                description: row.description || row.Description || row.title || row.Title || '',
+                severity: row.severity || row.Severity || 'medium',
+                url: row.url || row.URL || '',
+                title: row.title || row.Title || '',
+                latitude: parseFloat(row.latitude || row.Latitude) || null,
+                longitude: parseFloat(row.longitude || row.Longitude) || null,
+                verification: (row.url || row.URL) ? 'verified' : 'unverified'
+              };
+            });
+
+            console.log('Processed incidents:', allIncidents.length);
+            console.log('Sample incident:', allIncidents[0]);
+
+            populateFilters();
+            applyFilters();
+            document.getElementById('loadingState').style.display = 'none';
+          }
+        });
+      } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('loadingState').innerHTML = `<p style="color:var(--color-error)">Error loading data: ${error.message}</p>`;
+      }
+    }
+
+    function parseDate(dateStr) {
+      if (!dateStr) return null;
+      dateStr = String(dateStr).trim();
+
+      // Handle YYYYMMDDTHHmmssZ or YYYYMMDD
+      if (/^\d{8}/.test(dateStr)) {
+        const y = dateStr.substring(0, 4);
+        const m = dateStr.substring(4, 6);
+        const d = dateStr.substring(6, 8);
+        const dateObj = new Date(y, m - 1, d); // Months are 0-indexed
+        return isNaN(dateObj.getTime()) ? null : dateObj;
+      }
+
+      // Handle YYYY-MM-DD
+      if (dateStr.includes('-')) {
+        const d = new Date(dateStr.split('T')[0]);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      const d = new Date(dateStr);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function extractState(location) {
+      if (!location) return 'Other';
+      const loc = location.toUpperCase();
+      if (loc.includes('NSW') || loc.includes('NEW SOUTH WALES') || loc.includes('SYDNEY')) return 'NSW';
+      if (loc.includes('VIC') || loc.includes('VICTORIA') || loc.includes('MELBOURNE')) return 'VIC';
+      if (loc.includes('QLD') || loc.includes('QUEENSLAND') || loc.includes('BRISBANE')) return 'QLD';
+      if (loc.includes('WA') || loc.includes('WESTERN AUSTRALIA') || loc.includes('PERTH')) return 'WA';
+      if (loc.includes('SA') || loc.includes('SOUTH AUSTRALIA') || loc.includes('ADELAIDE')) return 'SA';
+      if (loc.includes('TAS') || loc.includes('TASMANIA') || loc.includes('HOBART')) return 'TAS';
+      if (loc.includes('ACT') || loc.includes('CANBERRA')) return 'ACT';
+      if (loc.includes('NT') || loc.includes('NORTHERN TERRITORY') || loc.includes('DARWIN')) return 'NT';
+      return 'Other';
+    }
+
+    function populateFilters() {
+      const types = {}, states = {}, identities = {};
+      allIncidents.forEach(inc => {
+        types[inc.incident_type] = (types[inc.incident_type] || 0) + 1;
+        states[inc.state] = (states[inc.state] || 0) + 1;
+        identities[inc.victim_identity] = (identities[inc.victim_identity] || 0) + 1;
+      });
+      renderCheckboxFilters('typeFilters', types, 'type');
+      renderCheckboxFilters('stateFilters', states, 'state');
+      renderCheckboxFilters('identityFilters', identities, 'identity');
+      renderColumnsMenu();
+    }
+
+    function renderCheckboxFilters(containerId, data, name) {
+      const container = document.getElementById(containerId);
+      const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+      container.innerHTML = sorted.map(([key, count]) => `
+        <label class="filter-checkbox">
+          <input type="checkbox" name="${name}" value="${key}" checked>
+          <span>${formatLabel(key)}</span>
+          <span class="count">${count}</span>
+        </label>
+      `).join('');
+    }
+
+    function renderColumnsMenu() {
+      const menu = document.getElementById('columnsMenu');
+      menu.innerHTML = columns.map(col => `
+        <label class="filter-checkbox">
+          <input type="checkbox" data-column="${col.id}" ${col.visible ? 'checked' : ''}>
+          <span>${col.label}</span>
+        </label>
+      `).join('');
+    }
+
+    function formatLabel(str) {
+      return str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const dateFrom = document.getElementById('dateFrom').value;
+      const dateTo = document.getElementById('dateTo').value;
+      const selectedTypes = getSelectedValues('type');
+      const selectedStates = getSelectedValues('state');
+      const selectedIdentities = getSelectedValues('identity');
+      const verification = document.querySelector('input[name="verification"]:checked')?.value || 'all';
+
+      filteredIncidents = allIncidents.filter(inc => {
+        if (search && !inc.description.toLowerCase().includes(search) && !inc.location.toLowerCase().includes(search) && !inc.title.toLowerCase().includes(search)) return false;
+        if (dateFrom && inc.date && inc.date < new Date(dateFrom)) return false;
+        if (dateTo && inc.date && inc.date > new Date(dateTo)) return false;
+        if (selectedTypes.length && !selectedTypes.includes(inc.incident_type)) return false;
+        if (selectedStates.length && !selectedStates.includes(inc.state)) return false;
+        if (selectedIdentities.length && !selectedIdentities.includes(inc.victim_identity)) return false;
+        if (verification !== 'all' && inc.verification !== verification) return false;
+        return true;
+      });
+
+      sortData();
+      currentPage = 1;
+      render();
+      updateActiveFilters();
+      saveFiltersToStorage();
+    }
+
+    function getSelectedValues(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(cb => cb.value);
+    }
+
+    function sortData() {
+      filteredIncidents.sort((a, b) => {
+        let aVal = a[sortColumn], bVal = b[sortColumn];
+        if (sortColumn === 'date') {
+          aVal = aVal ? aVal.getTime() : 0;
+          bVal = bVal ? bVal.getTime() : 0;
+        }
+        if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+        if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+        if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    function render() {
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const pageData = filteredIncidents.slice(start, end);
+
+      if (filteredIncidents.length === 0) {
+        document.getElementById('tableContainer').style.display = 'none';
+        document.getElementById('cardsContainer').style.display = 'none';
+        document.getElementById('emptyState').style.display = 'block';
+      } else {
+        document.getElementById('emptyState').style.display = 'none';
+        renderTable(pageData);
+        renderCards(pageData);
+        renderPagination();
+      }
+      document.getElementById('resultsCount').innerHTML = `Showing <strong>${Math.min(start + 1, filteredIncidents.length)}-${Math.min(end, filteredIncidents.length)}</strong> of <strong>${filteredIncidents.length}</strong> incidents`;
+    }
+
+    function renderTable(data) {
+      const visibleCols = columns.filter(c => c.visible);
+      const header = document.getElementById('tableHeader');
+      header.innerHTML = visibleCols.map(col => `
+        <th class="${sortColumn === col.id ? 'sorted' : ''}" data-column="${col.id}" style="width:${col.width}">
+          ${col.label}
+          ${col.sortable ? `<span class="sort-icon">${sortColumn === col.id ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}</span>` : ''}
+        </th>
+      `).join('') + '<th style="width:80px">Actions</th>';
+
+      const body = document.getElementById('tableBody');
+      body.innerHTML = data.map((inc, idx) => `
+        <tr data-index="${(currentPage - 1) * pageSize + idx}">
+          ${visibleCols.map(col => renderCell(inc, col.id)).join('')}
+          <td><button class="btn btn-sm btn-secondary view-btn-row" data-index="${(currentPage - 1) * pageSize + idx}">View</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderCell(inc, colId) {
+      switch (colId) {
+        case 'date':
+          return `<td>${inc.date ? inc.date.toLocaleDateString('en-AU') : 'Unknown'}</td>`;
+        case 'incident_type':
+          return `<td><span class="incident-type-badge type-${inc.incident_type}">${formatLabel(inc.incident_type)}</span></td>`;
+        case 'severity':
+          return `<td><span class="severity-indicator severity-${inc.severity}"></span>${formatLabel(inc.severity)}</td>`;
+        case 'description':
+          return `<td class="description-cell" title="${escapeHtml(inc.description)}">${escapeHtml(inc.description.substring(0, 80))}${inc.description.length > 80 ? '...' : ''}</td>`;
+        default:
+          return `<td>${escapeHtml(inc[colId] || '-')}</td>`;
+      }
+    }
+
+    function renderCards(data) {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = data.map((inc, idx) => `
+        <div class="incident-card" data-index="${(currentPage - 1) * pageSize + idx}">
+          <div class="card-header">
+            <span class="incident-type-badge type-${inc.incident_type}">${formatLabel(inc.incident_type)}</span>
+            <span class="card-date">${inc.date ? inc.date.toLocaleDateString('en-AU') : 'Unknown'}</span>
+          </div>
+          <div class="card-title">${escapeHtml(inc.description.substring(0, 100))}${inc.description.length > 100 ? '...' : ''}</div>
+          <div class="card-location">📍 ${escapeHtml(inc.location)}</div>
+          <div class="card-footer">
+            <span class="severity-indicator severity-${inc.severity}"></span>
+            <span>${formatLabel(inc.victim_identity)}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredIncidents.length / pageSize);
+      const pagination = document.getElementById('pagination');
+      let pages = [];
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+          pages.push(i);
+        } else if (pages[pages.length - 1] !== '...') {
+          pages.push('...');
+        }
+      }
+      pagination.innerHTML = `
+        <div class="pagination-info">Page ${currentPage} of ${totalPages}</div>
+        <div class="pagination-controls">
+          <select class="page-size-select" id="pageSizeSelect">
+            <option value="20" ${pageSize === 20 ? 'selected' : ''}>20 per page</option>
+            <option value="50" ${pageSize === 50 ? 'selected' : ''}>50 per page</option>
+            <option value="100" ${pageSize === 100 ? 'selected' : ''}>100 per page</option>
+          </select>
+          <button class="pagination-btn" id="prevPage" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>
+          ${pages.map(p => p === '...' ? '<span style="padding:0 8px">...</span>' : `<button class="pagination-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`).join('')}
+          <button class="pagination-btn" id="nextPage" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>
+        </div>
+      `;
+    }
+
+    function updateActiveFilters() {
+      const container = document.getElementById('activeFilters');
+      const pills = [];
+      const dateFrom = document.getElementById('dateFrom').value;
+      const dateTo = document.getElementById('dateTo').value;
+      if (dateFrom) pills.push({ type: 'dateFrom', label: `From: ${dateFrom}` });
+      if (dateTo) pills.push({ type: 'dateTo', label: `To: ${dateTo}` });
+      const search = document.getElementById('searchInput').value;
+      if (search) pills.push({ type: 'search', label: `Search: ${search}` });
+      container.innerHTML = pills.map(p => `
+        <span class="filter-pill">${p.label}<button data-clear="${p.type}">×</button></span>
+      `).join('');
+    }
+
+    function openDetailModal(index) {
+      currentIncidentIndex = index;
+      const inc = filteredIncidents[index];
+      if (!inc) return;
+      document.getElementById('modalTitle').textContent = formatLabel(inc.incident_type) + ' Incident';
+      document.getElementById('modalDate').textContent = inc.date ? inc.date.toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Date unknown';
+      document.getElementById('modalDetails').innerHTML = `
+        <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">${escapeHtml(inc.location)}</div></div>
+        <div class="detail-item"><div class="detail-label">State</div><div class="detail-value">${inc.state}</div></div>
+        <div class="detail-item"><div class="detail-label">Victim Identity</div><div class="detail-value">${formatLabel(inc.victim_identity)}</div></div>
+        <div class="detail-item"><div class="detail-label">Severity</div><div class="detail-value"><span class="severity-indicator severity-${inc.severity}"></span>${formatLabel(inc.severity)}</div></div>
+      `;
+      document.getElementById('modalDescription').innerHTML = `<p>${escapeHtml(inc.description)}</p>`;
+      document.getElementById('viewOnMap').href = inc.latitude && inc.longitude ? `map.html?lat=${inc.latitude}&lng=${inc.longitude}&zoom=15` : 'map.html';
+      document.getElementById('viewSource').href = inc.url || '#';
+      document.getElementById('viewSource').style.display = inc.url ? 'inline-flex' : 'none';
+      document.getElementById('detailModal').classList.add('active');
+      document.getElementById('prevIncident').disabled = index === 0;
+      document.getElementById('nextIncident').disabled = index >= filteredIncidents.length - 1;
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.remove('active');
+    }
+
+    function setupEventListeners() {
+      // Search
+      let searchTimeout;
+      document.getElementById('searchInput').addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(applyFilters, 250);
+      });
+
+      // Date presets
+      document.querySelectorAll('.date-preset').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.date-preset').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const days = btn.dataset.days;
+          if (days === 'all') {
+            document.getElementById('dateFrom').value = '';
+            document.getElementById('dateTo').value = '';
+          } else {
+            const to = new Date();
+            const from = new Date();
+            from.setDate(from.getDate() - parseInt(days));
+            document.getElementById('dateFrom').value = from.toISOString().split('T')[0];
+            document.getElementById('dateTo').value = to.toISOString().split('T')[0];
+          }
+          applyFilters();
+        });
+      });
+
+      // Filters
+      document.getElementById('applyFilters').addEventListener('click', applyFilters);
+      document.getElementById('clearFilters').addEventListener('click', () => {
+        document.querySelectorAll('.filter-checkbox input').forEach(cb => { if (cb.type === 'checkbox') cb.checked = true; });
+        document.querySelector('input[name="verification"][value="all"]').checked = true;
+        document.getElementById('dateFrom').value = '';
+        document.getElementById('dateTo').value = '';
+        document.getElementById('searchInput').value = '';
+        document.querySelectorAll('.date-preset').forEach(b => b.classList.remove('active'));
+        document.querySelector('.date-preset[data-days="all"]').classList.add('active');
+        applyFilters();
+      });
+
+      // Filter checkboxes
+      document.querySelectorAll('#typeFilters, #stateFilters, #identityFilters, #verificationFilters').forEach(container => {
+        container.addEventListener('change', applyFilters);
+      });
+
+      // Table sorting
+      document.getElementById('tableHeader').addEventListener('click', (e) => {
+        const th = e.target.closest('th');
+        if (!th || !th.dataset.column) return;
+        const col = columns.find(c => c.id === th.dataset.column);
+        if (!col || !col.sortable) return;
+        if (sortColumn === col.id) {
+          sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortColumn = col.id;
+          sortDirection = 'desc';
+        }
+        sortData();
+        render();
+      });
+
+      // Row clicks
+      document.getElementById('tableBody').addEventListener('click', (e) => {
+        const row = e.target.closest('tr');
+        if (row) openDetailModal(parseInt(row.dataset.index));
+      });
+
+      document.getElementById('cardsContainer').addEventListener('click', (e) => {
+        const card = e.target.closest('.incident-card');
+        if (card) openDetailModal(parseInt(card.dataset.index));
+      });
+
+      // Pagination
+      document.getElementById('pagination').addEventListener('click', (e) => {
+        if (e.target.id === 'prevPage' && currentPage > 1) { currentPage--; render(); }
+        else if (e.target.id === 'nextPage') { currentPage++; render(); }
+        else if (e.target.dataset.page) { currentPage = parseInt(e.target.dataset.page); render(); }
+      });
+
+      document.getElementById('pagination').addEventListener('change', (e) => {
+        if (e.target.id === 'pageSizeSelect') { pageSize = parseInt(e.target.value); currentPage = 1; render(); }
+      });
+
+      // Modal
+      document.getElementById('modalClose').addEventListener('click', closeDetailModal);
+      document.getElementById('detailModal').addEventListener('click', (e) => { if (e.target.id === 'detailModal') closeDetailModal(); });
+      document.getElementById('prevIncident').addEventListener('click', () => { if (currentIncidentIndex > 0) openDetailModal(currentIncidentIndex - 1); });
+      document.getElementById('nextIncident').addEventListener('click', () => { if (currentIncidentIndex < filteredIncidents.length - 1) openDetailModal(currentIncidentIndex + 1); });
+      document.getElementById('copyDetails').addEventListener('click', () => {
+        const inc = filteredIncidents[currentIncidentIndex];
+        const text = `${formatLabel(inc.incident_type)} - ${inc.location}\nDate: ${inc.date ? inc.date.toLocaleDateString('en-AU') : 'Unknown'}\nVictim: ${formatLabel(inc.victim_identity)}\n\n${inc.description}`;
+        navigator.clipboard.writeText(text);
+        alert('Details copied to clipboard');
+      });
+
+      // Export Dropdown
+      document.getElementById('exportBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('exportMenu').classList.toggle('active');
+        document.getElementById('columnsMenu').classList.remove('active');
+      });
+
+      // Columns Dropdown
+      document.getElementById('columnsBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('columnsMenu').classList.toggle('active');
+        document.getElementById('exportMenu').classList.remove('active');
+      });
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', () => {
+        const exportMenu = document.getElementById('exportMenu');
+        const columnsMenu = document.getElementById('columnsMenu');
+        if (exportMenu) exportMenu.classList.remove('active');
+        if (columnsMenu) columnsMenu.classList.remove('active');
+      });
+
+      // Export Actions
+      document.getElementById('exportCSV').addEventListener('click', exportCSV);
+      document.getElementById('exportJSON').addEventListener('click', exportJSON);
+      document.getElementById('exportPrint').addEventListener('click', () => window.print());
+
+      // Column Toggles
+      document.getElementById('columnsMenu').addEventListener('change', (e) => {
+        const colId = e.target.dataset.column;
+        const col = columns.find(c => c.id === colId);
+        if (col) {
+          col.visible = e.target.checked;
+          render();
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDetailModal();
+        if (document.getElementById('detailModal').classList.contains('active')) {
+          if (e.key === 'ArrowLeft' && currentIncidentIndex > 0) openDetailModal(currentIncidentIndex - 1);
+          if (e.key === 'ArrowRight' && currentIncidentIndex < filteredIncidents.length - 1) openDetailModal(currentIncidentIndex + 1);
+        }
+      });
+
+      // Modal Actions
+      document.getElementById('modalClose').addEventListener('click', closeDetailModal);
+      document.getElementById('detailModal').addEventListener('click', (e) => { if (e.target.id === 'detailModal') closeDetailModal(); });
+      document.getElementById('prevIncident').addEventListener('click', () => { if (currentIncidentIndex > 0) openDetailModal(currentIncidentIndex - 1); });
+      document.getElementById('nextIncident').addEventListener('click', () => { if (currentIncidentIndex < filteredIncidents.length - 1) openDetailModal(currentIncidentIndex + 1); });
+      document.getElementById('copyDetails').addEventListener('click', () => {
+        const inc = filteredIncidents[currentIncidentIndex];
+        const text = `${formatLabel(inc.incident_type)} - ${inc.location}\nDate: ${inc.date ? inc.date.toLocaleDateString('en-AU') : 'Unknown'}\nVictim: ${formatLabel(inc.victim_identity)}\n\n${inc.description}`;
+        navigator.clipboard.writeText(text).then(() => alert('Details copied to clipboard'));
+      });
+
+      // Theme toggle
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeIcons();
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcons();
+    }
+
+    function updateThemeIcons() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const sunIcon = document.querySelector('.icon-sun');
+      const moonIcon = document.querySelector('.icon-moon');
+      if (sunIcon) sunIcon.style.display = isDark ? 'none' : 'block';
+      if (moonIcon) moonIcon.style.display = isDark ? 'block' : 'none';
+    }
+
+    function saveFiltersToStorage() {
+      const filters = {
+        search: document.getElementById('searchInput').value,
+        dateFrom: document.getElementById('dateFrom').value,
+        dateTo: document.getElementById('dateTo').value,
+        types: getSelectedValues('type'),
+        states: getSelectedValues('state'),
+        identities: getSelectedValues('identity'),
+        verification: document.querySelector('input[name="verification"]:checked')?.value || 'all'
+      };
+      sessionStorage.setItem('incidex_db_filters', JSON.stringify(filters));
+    }
+
+    function exportCSV() {
+      const headers = columns.filter(c => c.visible).map(c => c.label);
+      const rows = filteredIncidents.map(inc => columns.filter(c => c.visible).map(c => {
+        let val = inc[c.id];
+        if (c.id === 'date') val = val ? val.toLocaleDateString('en-AU') : '';
+        return `"${String(val || '').replace(/"/g, '""')}"`;
+      }));
+      const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      downloadFile(csvContent, `incidex_incidents_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv;charset=utf-8;');
+    }
+
+    function exportJSON() {
+      const jsonContent = JSON.stringify(filteredIncidents, null, 2);
+      downloadFile(jsonContent, `incidex_incidents_${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+    }
+
+    function downloadFile(content, filename, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+
+</html>

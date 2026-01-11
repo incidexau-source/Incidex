@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Incidex - Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
+  <meta name="description"
+    content="Incidex - Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
   <title>Incidex | Interactive Incident Map</title>
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://incidex.au/">
   <meta property="og:title" content="Incidex | Interactive Incident Map">
-  <meta property="og:description" content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
+  <meta property="og:description"
+    content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
   <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://incidex.au/">
   <meta property="twitter:title" content="Incidex | Interactive Incident Map">
-  <meta property="twitter:description" content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
+  <meta property="twitter:description"
+    content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
   <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  
+
   <!-- Leaflet MarkerCluster CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
-  
+
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
-  
+
   <style>
     /* Page-specific styles */
     .page-layout {
@@ -172,7 +178,7 @@
       width: 10px;
       height: 10px;
       border-radius: var(--radius-full);
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       flex-shrink: 0;
     }
 
@@ -180,7 +186,7 @@
       width: 12px;
       height: 12px;
       border-radius: var(--radius-sm);
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       flex-shrink: 0;
     }
 
@@ -214,7 +220,7 @@
       position: relative;
       z-index: 1;
     }
-    
+
     /* Ensure map tiles are visible */
     .leaflet-container {
       height: 100% !important;
@@ -560,6 +566,7 @@
       background: rgba(26, 95, 122, 0.25);
       border: 2px solid rgba(26, 95, 122, 0.5);
     }
+
     .incident-cluster div {
       background: var(--color-primary);
       color: white;
@@ -570,6 +577,7 @@
       background: rgba(45, 157, 111, 0.25);
       border: 2px solid rgba(45, 157, 111, 0.5);
     }
+
     .incident-cluster-small div {
       background: var(--color-severity-low);
       color: white;
@@ -584,6 +592,7 @@
       background: rgba(232, 152, 94, 0.25);
       border: 2px solid rgba(232, 152, 94, 0.5);
     }
+
     .incident-cluster-medium div {
       background: var(--color-severity-medium);
       color: white;
@@ -593,6 +602,7 @@
       background: rgba(217, 83, 79, 0.25);
       border: 2px solid rgba(217, 83, 79, 0.5);
     }
+
     .incident-cluster-large div {
       background: var(--color-severity-high);
       color: white;
@@ -608,6 +618,7 @@
       background: rgba(224, 96, 85, 0.25);
       border: 2px solid rgba(224, 96, 85, 0.5);
     }
+
     .case-cluster div {
       background: var(--color-secondary);
       color: white;
@@ -618,6 +629,7 @@
       background: rgba(26, 95, 122, 0.2);
       border: 2px solid rgba(26, 95, 122, 0.4);
     }
+
     .case-cluster-small div {
       background: var(--color-primary);
       color: white;
@@ -632,6 +644,7 @@
       background: rgba(224, 96, 85, 0.25);
       border: 2px solid rgba(224, 96, 85, 0.5);
     }
+
     .case-cluster-medium div {
       background: var(--color-secondary);
       color: white;
@@ -641,6 +654,7 @@
       background: rgba(212, 165, 212, 0.3);
       border: 2px solid rgba(212, 165, 212, 0.6);
     }
+
     .case-cluster-large div {
       background: var(--color-accent);
       color: var(--color-text);
@@ -723,9 +737,17 @@
       flex-shrink: 0;
     }
 
-    .policy-dot.strong { background: #2d9d6f; }
-    .policy-dot.moderate { background: #e8985e; }
-    .policy-dot.weak { background: #d9534f; }
+    .policy-dot.strong {
+      background: #2d9d6f;
+    }
+
+    .policy-dot.moderate {
+      background: #e8985e;
+    }
+
+    .policy-dot.weak {
+      background: #d9534f;
+    }
 
     .policy-legend-disclaimer {
       margin-top: var(--space-3);
@@ -743,7 +765,7 @@
     .policy-state-marker {
       border-radius: var(--radius-full);
       border: 3px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -751,7 +773,7 @@
       font-weight: var(--font-bold);
       font-size: 11px;
       color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     /* Policy popup styles */
@@ -1104,6 +1126,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Skip Link -->
   <a href="#map" class="skip-link">Skip to map</a>
@@ -1112,32 +1135,70 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
-        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+          class="logo-full" loading="eager">
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="map.html" class="nav-link active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
           Map
         </a>
         <a href="policy_landscape.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
           Policy and Legislation
         </a>
         <a href="voting_records.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
           MP Voting
         </a>
         <a href="statistics.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
           Statistics
+        </a>
+        <a href="database.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="9" x2="9" y2="21"></line>
+            <line x1="15" y1="9" x2="15" y2="21"></line>
+          </svg>
+          Database
         </a>
         <!-- Resources Dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
             Resources
-            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
               <path d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
@@ -1145,42 +1206,56 @@
             <!-- Know Your Rights Section -->
             <div class="dropdown-section">
               <div class="dropdown-section-title">
-                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                  </path>
                 </svg>
                 Legal Guides: Know Your Rights
               </div>
-              <a href="legal_guides.html" style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+              <a href="legal_guides.html"
+                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
                 <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
-                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
+                  guides for every Australian jurisdiction</div>
               </a>
               <!-- Jurisdiction Grid -->
               <div class="jurisdiction-grid">
-                <a href="legal_guides.html#commonwealth" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
                   <div class="jurisdiction-name">Commonwealth</div>
                 </a>
-                <a href="legal_guides.html#nsw" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
+                <a href="legal_guides.html#nsw" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
                   <div class="jurisdiction-name">NSW</div>
                 </a>
-                <a href="legal_guides.html#victoria" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
+                <a href="legal_guides.html#victoria" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
                   <div class="jurisdiction-name">VIC</div>
                 </a>
-                <a href="legal_guides.html#queensland" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
+                <a href="legal_guides.html#queensland" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
                   <div class="jurisdiction-name">QLD</div>
                 </a>
-                <a href="legal_guides.html#tasmania" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
                   <div class="jurisdiction-name">TAS</div>
                 </a>
-                <a href="legal_guides.html#sa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
+                <a href="legal_guides.html#sa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
                   <div class="jurisdiction-name">SA</div>
                 </a>
-                <a href="legal_guides.html#wa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
+                <a href="legal_guides.html#wa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
                   <div class="jurisdiction-name">WA</div>
                 </a>
-                <a href="legal_guides.html#nt" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
+                <a href="legal_guides.html#nt" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
                   <div class="jurisdiction-name">NT</div>
                 </a>
-                <a href="legal_guides.html#act" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
+                <a href="legal_guides.html#act" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
                   <div class="jurisdiction-name">ACT</div>
                 </a>
               </div>
@@ -1189,7 +1264,8 @@
             <div class="dropdown-section">
               <a href="resources.html" class="services-link">
                 <span>View All Support Services</span>
-                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M9 5l7 7-7 7"></path>
                 </svg>
               </a>
@@ -1197,26 +1273,48 @@
           </div>
         </div>
         <a href="report_incident.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
           Report
         </a>
         <a href="about.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           About
         </a>
         <a href="contact.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
           Contact
         </a>
       </nav>
 
       <div class="header-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
         <input type="search" placeholder="Search incidents..." id="globalSearch" aria-label="Search incidents">
       </div>
 
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
   </header>
@@ -1227,6 +1325,7 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
     <a href="about.html" class="nav-link">About</a>
@@ -1250,7 +1349,7 @@
       <!-- Incidents Filters -->
       <div class="filter-section" id="incidentsFilters">
         <h3>Incident Filters</h3>
-        
+
         <div class="form-group">
           <label class="form-label" for="incidentTypeFilter">Incident Type</label>
           <select class="form-select" id="incidentTypeFilter">
@@ -1289,7 +1388,7 @@
       <!-- Legal Cases Filters -->
       <div class="filter-section" id="casesFilters" style="display: none;">
         <h3>Legal Case Filters</h3>
-        
+
         <div class="form-group">
           <label class="form-label" for="courtLevelFilter">Court Level</label>
           <select class="form-select" id="courtLevelFilter">
@@ -1356,8 +1455,14 @@
             High
           </div>
         </div>
-        <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); line-height: 1.5;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display: inline; vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <p
+          style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); line-height: 1.5;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"
+            style="display: inline; vertical-align: middle; margin-right: 4px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           Numbered circles show clustered markers. Click to expand or zoom in.
         </p>
       </div>
@@ -1374,8 +1479,14 @@
             State/Other
           </div>
         </div>
-        <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); line-height: 1.5;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display: inline; vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <p
+          style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); line-height: 1.5;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"
+            style="display: inline; vertical-align: middle; margin-right: 4px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           Numbered circles show clustered cases. Click to expand or zoom in.
         </p>
       </div>
@@ -1387,11 +1498,13 @@
     <!-- Map Area -->
     <section class="map-area">
       <div id="map" role="application" aria-label="Interactive map showing LGBTIQ+ hate crimes and legal cases"></div>
-      
+
       <!-- State/Territory Selector -->
       <div class="state-selector" id="stateSelector">
         <label for="stateSelect" class="state-selector-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+          </svg>
           Electoral Level:
         </label>
         <select id="stateSelect" class="state-select" aria-label="Select electoral level">
@@ -1406,28 +1519,54 @@
           <option value="NT">Northern Territory (2 divisions)</option>
         </select>
       </div>
-      
+
       <!-- Map Controls -->
       <div class="map-controls">
         <button class="btn btn-tertiary btn-icon" id="zoomInBtn" title="Zoom in" aria-label="Zoom in">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
         </button>
         <button class="btn btn-tertiary btn-icon" id="zoomOutBtn" title="Zoom out" aria-label="Zoom out">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
         </button>
         <button class="btn btn-tertiary btn-icon" id="resetViewBtn" title="Reset view" aria-label="Reset view">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
         </button>
         <button class="btn btn-tertiary btn-icon" id="fullscreenBtn" title="Fullscreen" aria-label="Toggle fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+            </path>
+          </svg>
         </button>
-        <button class="btn btn-tertiary btn-icon" id="policyLayerBtn" title="Toggle Policy Landscape" aria-label="Toggle policy layer overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <button class="btn btn-tertiary btn-icon" id="policyLayerBtn" title="Toggle Policy Landscape"
+          aria-label="Toggle policy layer overlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
         </button>
-        <button class="btn btn-tertiary btn-icon" id="electoralLayerBtn" title="Toggle Electoral Divisions" aria-label="Toggle electoral boundaries overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+        <button class="btn btn-tertiary btn-icon" id="electoralLayerBtn" title="Toggle Electoral Divisions"
+          aria-label="Toggle electoral boundaries overlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="20" height="20">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+          </svg>
         </button>
-        <button class="btn btn-tertiary btn-icon" id="recentIncidentsToggle" title="Show recent incidents" aria-label="Show recent incidents">📋</button>
+        <button class="btn btn-tertiary btn-icon" id="recentIncidentsToggle" title="Show recent incidents"
+          aria-label="Show recent incidents">📋</button>
       </div>
 
       <!-- Recent Incidents Widget -->
@@ -1444,7 +1583,9 @@
       <!-- Policy Layer Legend (shown when policy layer is active) -->
       <div class="policy-layer-legend" id="policyLayerLegend" style="display: none;">
         <h4>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
           Policy Strength
         </h4>
         <div class="policy-legend-items">
@@ -1460,20 +1601,30 @@
       <!-- Electoral Boundaries Legend (shown when electoral layer is active) -->
       <div class="electoral-layer-legend" id="electoralLayerLegend" style="display: none;">
         <h4>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+          </svg>
           Electoral Divisions
         </h4>
         <div class="electoral-legend-item">
           <span class="electoral-line"></span>
           Federal Division Boundary
         </div>
-        <div style="margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light);">
-          <div style="font-size: var(--text-xs); font-weight: var(--font-semibold); color: var(--color-text-muted); margin-bottom: var(--space-2);">MP LGBTIQ+ Alignment</div>
-          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot" style="background: #2d9d6f;"></span> Strong Supporter (85%+)</div>
-          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot" style="background: #1a5f7a;"></span> Supporter (70-84%)</div>
-          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot" style="background: #e8985e;"></span> Mixed (50-69%)</div>
-          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot" style="background: #d9534f;"></span> Opponent (30-49%)</div>
-          <div class="electoral-legend-item"><span class="policy-dot" style="background: #8b0000;"></span> Strong Opponent (&lt;30%)</div>
+        <div
+          style="margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light);">
+          <div
+            style="font-size: var(--text-xs); font-weight: var(--font-semibold); color: var(--color-text-muted); margin-bottom: var(--space-2);">
+            MP LGBTIQ+ Alignment</div>
+          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot"
+              style="background: #2d9d6f;"></span> Strong Supporter (85%+)</div>
+          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot"
+              style="background: #1a5f7a;"></span> Supporter (70-84%)</div>
+          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot"
+              style="background: #e8985e;"></span> Mixed (50-69%)</div>
+          <div class="electoral-legend-item" style="margin-bottom: 4px;"><span class="policy-dot"
+              style="background: #d9534f;"></span> Opponent (30-49%)</div>
+          <div class="electoral-legend-item"><span class="policy-dot" style="background: #8b0000;"></span> Strong
+            Opponent (&lt;30%)</div>
         </div>
         <div class="electoral-legend-disclaimer">
           <small>Click division for MP voting record. <a href="voting_records.html">Full database →</a></small>
@@ -1484,7 +1635,10 @@
 
   <!-- Filter Toggle Button (Mobile) -->
   <button class="filter-toggle-btn" id="filterToggleBtn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round" width="20" height="20">
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+    </svg>
     Filters
   </button>
 
@@ -1492,7 +1646,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  
+
   <script>
     // Configuration
     const INCIDENTS_PATH = "/data/incidents_in_progress.csv?v=" + Date.now();
@@ -1523,7 +1677,7 @@
       const count = cluster.getChildCount();
       let sizeClass = 'incident-cluster-small';
       let size = 40;
-      
+
       if (count >= 100) {
         sizeClass = 'incident-cluster-large';
         size = 50;
@@ -1531,7 +1685,7 @@
         sizeClass = 'incident-cluster-medium';
         size = 44;
       }
-      
+
       return L.divIcon({
         html: `<div><span>${count}</span></div>`,
         className: `marker-cluster incident-cluster ${sizeClass}`,
@@ -1544,7 +1698,7 @@
       const count = cluster.getChildCount();
       let sizeClass = 'case-cluster-small';
       let size = 40;
-      
+
       if (count >= 50) {
         sizeClass = 'case-cluster-large';
         size = 50;
@@ -1552,7 +1706,7 @@
         sizeClass = 'case-cluster-medium';
         size = 44;
       }
-      
+
       return L.divIcon({
         html: `<div><span>${count}</span></div>`,
         className: `marker-cluster case-cluster ${sizeClass}`,
@@ -1599,7 +1753,7 @@
     // Initialize map
     function initializeMap() {
       console.log('initializeMap called');
-      
+
       if (typeof L === "undefined") {
         console.error("Leaflet library not loaded");
         if (statusText) {
@@ -1616,10 +1770,10 @@
         }
         return;
       }
-      
+
       const rect = mapDiv.getBoundingClientRect();
       console.log('Map div dimensions:', rect.width, 'x', rect.height);
-      
+
       if (rect.width === 0 || rect.height === 0) {
         console.log('Map div has no dimensions, retrying...');
         setTimeout(initializeMap, 100);
@@ -1631,9 +1785,9 @@
         map = L.map("map", {
           zoomControl: false
         }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-        
+
         console.log('Map created, adding tile layer...');
-        
+
         // Light map tiles
         L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -1675,7 +1829,7 @@
             console.log('Map size invalidated, map should be visible now');
           }
         }, 200);
-        
+
         if (statusText) {
           statusText.textContent = "Map loaded. Loading data...";
         }
@@ -1751,7 +1905,7 @@
       const lat = parseFloat(row.latitude);
       const lon = parseFloat(row.longitude);
       const courtLevel = (row.court_level || "").toLowerCase();
-      
+
       return {
         case_name: row.case_name || "Unknown Case",
         court_level: row.court_level || "Other",
@@ -1786,7 +1940,7 @@
     function populateLegalIssues(data) {
       const allIssues = new Set();
       data.forEach(d => d.key_issues.forEach(issue => allIssues.add(issue)));
-      
+
       [...allIssues].sort().forEach(issue => {
         const option = document.createElement("option");
         option.value = issue.toLowerCase();
@@ -1830,7 +1984,7 @@
     // Create incident marker
     function createIncidentMarker(incident) {
       const color = SEVERITY_COLORS[incident.severity] || SEVERITY_COLORS.unknown;
-      
+
       const marker = L.circleMarker([incident.latitude, incident.longitude], {
         radius: 9,
         weight: 2,
@@ -1840,8 +1994,8 @@
       });
 
       // Get severity badge class
-      const severityBadgeClass = incident.severity === "high" ? "badge-high" : 
-                                 incident.severity === "medium" ? "badge-medium" : "badge-low";
+      const severityBadgeClass = incident.severity === "high" ? "badge-high" :
+        incident.severity === "medium" ? "badge-medium" : "badge-low";
 
       const popup = `
         <div class="popup-content">
@@ -1901,7 +2055,7 @@
     // Create case marker
     function createCaseMarker(caseData) {
       const color = COURT_COLORS[caseData.court_category];
-      
+
       const icon = L.divIcon({
         className: "case-marker-icon",
         html: `<div style="
@@ -1923,9 +2077,9 @@
 
       const marker = L.marker([caseData.latitude, caseData.longitude], { icon });
 
-      const outcomeBadgeClass = caseData.outcome === "won" ? "badge-won" 
-        : caseData.outcome === "lost" ? "badge-lost" 
-        : "badge-ongoing";
+      const outcomeBadgeClass = caseData.outcome === "won" ? "badge-won"
+        : caseData.outcome === "lost" ? "badge-lost"
+          : "badge-ongoing";
 
       const popup = `
         <div class="popup-content">
@@ -1973,6 +2127,8 @@
       return marker;
     }
 
+    let initialZoomPerformed = false;
+
     // Render markers based on current view
     function renderMarkers() {
       if (!map) return;
@@ -1996,7 +2152,7 @@
           allBounds.push([incident.latitude, incident.longitude]);
         });
         incidentsCount = filteredIncidents.length;
-        
+
         // Add all markers to cluster at once (more efficient)
         incidentsCluster.addLayers(incidentMarkers);
       }
@@ -2010,13 +2166,36 @@
           allBounds.push([caseData.latitude, caseData.longitude]);
         });
         casesCount = filteredCases.length;
-        
+
         // Add all markers to cluster at once (more efficient)
         casesCluster.addLayers(caseMarkers);
       }
 
-      // Fit bounds
-      if (allBounds.length > 0) {
+      // Check for URL parameters on initial load
+      const urlParams = new URLSearchParams(window.location.search);
+      const latParam = parseFloat(urlParams.get('lat'));
+      const lngParam = parseFloat(urlParams.get('lng'));
+      const zoomParam = parseInt(urlParams.get('zoom')) || 15;
+
+      if (!initialZoomPerformed && !isNaN(latParam) && !isNaN(lngParam)) {
+        map.setView([latParam, lngParam], zoomParam);
+
+        // Find and open marker
+        setTimeout(() => {
+          const markers = incidentsCluster.getLayers();
+          for (let marker of markers) {
+            const markerLat = marker.getLatLng().lat;
+            const markerLng = marker.getLatLng().lng;
+            if (Math.abs(markerLat - latParam) < 0.0001 && Math.abs(markerLng - lngParam) < 0.0001) {
+              marker.openPopup();
+              break;
+            }
+          }
+        }, 1000);
+
+        initialZoomPerformed = true;
+      } else if (allBounds.length > 0) {
+        // Fit bounds only if not auto-zooming to a point OR if it's a subsequent render
         try {
           map.fitBounds(allBounds, { padding: [50, 50] });
         } catch (e) {
@@ -2035,7 +2214,7 @@
       const casesMissing = casesRaw.length - casesWithCoords.length;
 
       let statusMsg = "";
-      
+
       if (currentView === "incidents") {
         statusMsg = `Showing ${incidentsCount.toLocaleString()} of ${incidentsRaw.length.toLocaleString()} incidents`;
         if (incidentsMissing > 0) statusMsg += ` (${incidentsMissing} missing coordinates)`;
@@ -2052,7 +2231,7 @@
     // View toggle
     function setView(view) {
       currentView = view;
-      
+
       datasetBtns.forEach(btn => {
         btn.classList.toggle("active", btn.dataset.view === view);
       });
@@ -2096,7 +2275,7 @@
             incidentsWithCoords = incidentsRaw
               .map(normalizeIncident)
               .filter(i => i.latitude && i.longitude);
-            
+
             populateIncidentTypes(incidentsRaw.map(normalizeIncident));
             // Refresh recent incidents widget and auto-show it
             if (typeof refreshRecentIncidentsWidget === 'function') {
@@ -2125,7 +2304,7 @@
             casesWithCoords = casesRaw
               .map(normalizeCase)
               .filter(c => c.latitude && c.longitude);
-            
+
             populateLegalIssues(casesWithCoords);
             resolve();
           },
@@ -2190,14 +2369,14 @@
       casesCluster.clearLayers();
 
       if (currentView !== "cases") {
-        const matchedIncidents = incidentsWithCoords.filter(i => 
+        const matchedIncidents = incidentsWithCoords.filter(i =>
           i.title.toLowerCase().includes(searchTerm) ||
           i.location.toLowerCase().includes(searchTerm) ||
           i.description.toLowerCase().includes(searchTerm)
         );
         const incidentMarkers = matchedIncidents.map(incident => createIncidentMarker(incident));
         incidentsCluster.addLayers(incidentMarkers);
-        
+
         // Update status for search results
         statusText.textContent = `Found ${matchedIncidents.length} incidents matching "${e.target.value}"`;
       }
@@ -2210,7 +2389,7 @@
         );
         const caseMarkers = matchedCases.map(caseData => createCaseMarker(caseData));
         casesCluster.addLayers(caseMarkers);
-        
+
         if (currentView === "cases") {
           statusText.textContent = `Found ${matchedCases.length} cases matching "${e.target.value}"`;
         } else if (currentView === "both") {
@@ -2224,12 +2403,12 @@
     async function initializeApp() {
       try {
         initializeMap();
-        
+
         setTimeout(async () => {
           if (statusText) {
             statusText.textContent = "Loading data...";
           }
-          
+
           try {
             await Promise.all([loadIncidents(), loadCases()]);
             if (statusText) {
@@ -2263,7 +2442,7 @@
         }
       }
     }
-    
+
     if (document.readyState === "complete") {
       startApp();
     } else {
@@ -2280,12 +2459,12 @@
     // =====================================================
     // POLICY LAYER FUNCTIONALITY
     // =====================================================
-    
+
     const POLICY_DATA_PATH = "/data/policy_landscape.csv";
     let policyLayerActive = false;
     let policyData = [];
     let policyMarkers = [];
-    
+
     // State coordinates for policy markers
     const STATE_COORDS = {
       'NSW': { lat: -32.0, lon: 146.5, name: 'New South Wales' },
@@ -2361,7 +2540,7 @@
     function createPolicyMarkers() {
       Object.entries(STATE_COORDS).forEach(([code, coords]) => {
         const scoreInfo = calculatePolicyScore(code);
-        
+
         // Create circle marker with policy color
         const marker = L.circleMarker([coords.lat, coords.lon], {
           radius: code === 'ACT' || code === 'TAS' ? 18 : 28,
@@ -2406,7 +2585,7 @@
         `;
 
         labelMarker.bindPopup(popupContent, { maxWidth: 280 });
-        
+
         policyMarkers.push({ marker, labelMarker });
       });
     }
@@ -2435,10 +2614,10 @@
       try {
         await loadPolicyData();
         createPolicyMarkers();
-        
+
         // Add click handler for policy layer toggle button
         policyLayerBtn.addEventListener('click', togglePolicyLayer);
-        
+
         console.log('Policy layer initialized');
       } catch (error) {
         console.error('Failed to initialize policy layer:', error);
@@ -2451,7 +2630,7 @@
     // =====================================================
     // ELECTORAL BOUNDARY LAYER FUNCTIONALITY
     // =====================================================
-    
+
     const ELECTORAL_DIVISIONS_PATH = "/data/electoral-divisions.geojson";
     const MP_VOTING_DATA_PATH = "/data/mp-lgbtiq-votes.json";
     let electoralLayerActive = false;
@@ -2561,17 +2740,17 @@
     function countIncidentsInDivision(layer) {
       let count = 0;
       const bounds = layer.getBounds();
-      
+
       // Get current incidents based on view
       const incidents = currentView !== 'cases' ? incidentsWithCoords.filter(incidentMatchesFilters) : [];
-      
+
       incidents.forEach(incident => {
         const point = L.latLng(incident.latitude, incident.longitude);
         if (bounds.contains(point)) {
           count++;
         }
       });
-      
+
       return count;
     }
 
@@ -2588,16 +2767,16 @@
       const props = feature.properties || {};
       const divisionName = props.Elect_div || props.name || props.NAME || 'Unknown Division';
       const state = props.State || props.state || DIVISION_STATE_MAP[divisionName] || '';
-      
+
       // Get MP data if available
       const mpData = mpVotingData ? mpVotingData[divisionName] : null;
-      
+
       let mpSection = '';
       if (mpData && mpData.current_mp) {
         const mp = mpData.current_mp;
         const alignmentColor = getAlignmentColor(mp.alignment_score);
         const dataPeriod = mpData.data_period || { start_year: 2017, end_year: 2025 };
-        
+
         // Build voting summary with all tracked bills
         let votingSummary = '';
         if (mpData.voting_history && mpData.voting_history.length > 0) {
@@ -2605,7 +2784,7 @@
             const voteValue = vote.vote || vote.vote_display || 'N/A';
             let voteColor = '#6b7280'; // gray default
             let voteIcon = '○';
-            
+
             if (voteValue === 'Yes' || voteValue === 'Opposed') {
               voteColor = '#2d9d6f'; voteIcon = '✓';
             } else if (voteValue === 'No' || voteValue === 'Supported') {
@@ -2613,7 +2792,7 @@
             } else if (voteValue === 'Abstained') {
               voteColor = '#e8985e'; voteIcon = '—';
             }
-            
+
             return `
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--color-border-light);">
                 <span style="font-size: 11px; color: var(--color-text-secondary); flex: 1;">${vote.short_name}</span>
@@ -2623,7 +2802,7 @@
               </div>
             `;
           }).join('');
-          
+
           votingSummary = `
             <div style="margin-top: 12px; background: var(--color-bg); border-radius: 8px; padding: 10px;">
               <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
@@ -2634,22 +2813,22 @@
             </div>
           `;
         }
-        
+
         // Get seat alignment if available
         const seatAlignment = mpData.seat_alignment || null;
         const seatColor = seatAlignment ? getAlignmentColor(seatAlignment.score) : alignmentColor;
-        
+
         // Info button with unique ID for this division
         const infoButtonId = `info-btn-${divisionName.replace(/\s+/g, '-').toLowerCase()}`;
         const infoModalId = `info-modal-${divisionName.replace(/\s+/g, '-').toLowerCase()}`;
-        
+
         // Info tooltip button (clickable) - using inline onclick for Leaflet popup compatibility
         const infoTooltip = `
           <button id="${infoButtonId}" onclick="(function(e){e.stopPropagation();e.preventDefault();const m=document.getElementById('${infoModalId}');if(m)m.style.display='flex';})(event)" style="background: none; border: none; padding: 2px; margin-left: 4px; cursor: help; display: inline-flex; align-items: center; vertical-align: middle; z-index: 10001;" aria-label="Explain alignment score" title="Click for explanation">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--color-text-muted);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           </button>
         `;
-        
+
         // Info modal content
         const infoModal = `
           <div id="${infoModalId}" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
@@ -2684,12 +2863,12 @@
             </div>
           </div>
         `;
-        
+
         // Data period display
-        const periodInfo = mpData.data_period && mpData.data_period.includes_previous_mp 
+        const periodInfo = mpData.data_period && mpData.data_period.includes_previous_mp
           ? `Includes previous MP: ${dataPeriod.start_year}-${mp.year_elected}, Current MP: ${mp.year_elected}-${dataPeriod.end_year}`
           : `Current MP voting record: ${mp.year_elected}-${dataPeriod.end_year}`;
-        
+
         mpSection = `
           ${infoModal}
           <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border-light);">
@@ -2752,9 +2931,9 @@
           </div>
         `;
       }
-      
+
       const stateDisplay = state ? `<div style="color: var(--color-text-muted); font-size: 13px; margin-bottom: 12px;">${state}</div>` : '';
-      
+
       return `
         <div class="popup-content" style="min-width: 280px; max-width: 320px;">
           <div class="popup-header">
@@ -2788,15 +2967,15 @@
       });
 
       // Click handler
-      layer.on('click', function(e) {
+      layer.on('click', function (e) {
         const incidentCount = countIncidentsInDivision(layer);
         const popupContent = createElectoralPopupContent(feature, incidentCount);
         layer.bindPopup(popupContent, {
           maxWidth: 300
         }).openPopup();
-        
+
         // Set up modal handlers after popup opens
-        layer.once('popupopen', function() {
+        layer.once('popupopen', function () {
           // Wait a bit for DOM to be ready
           setTimeout(() => {
             const divisionName = feature.properties.Elect_div || feature.properties.name || feature.properties.NAME || 'Unknown Division';
@@ -2804,7 +2983,7 @@
             const modal = document.getElementById(infoModalId);
             if (modal) {
               // Close on background click
-              modal.addEventListener('click', function(e) {
+              modal.addEventListener('click', function (e) {
                 if (e.target === modal) {
                   modal.style.display = 'none';
                 }
@@ -2823,12 +3002,12 @@
       });
 
       // Hover effects
-      layer.on('mouseover', function(e) {
+      layer.on('mouseover', function (e) {
         layer.setStyle(getElectoralHighlightStyle(feature));
         layer.bringToFront();
       });
 
-      layer.on('mouseout', function(e) {
+      layer.on('mouseout', function (e) {
         if (electoralLayer) {
           electoralLayer.resetStyle(layer);
         }
@@ -2839,22 +3018,22 @@
     async function loadElectoralDivisions() {
       try {
         console.log('Loading electoral divisions from:', ELECTORAL_DIVISIONS_PATH);
-        
+
         const response = await fetch(ELECTORAL_DIVISIONS_PATH);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
         const geojson = await response.json();
-        
+
         // Validate GeoJSON
         if (!geojson || (geojson.type !== 'FeatureCollection' && geojson.type !== 'Feature')) {
           throw new Error('Invalid GeoJSON format');
         }
 
         electoralData = geojson;
-        
+
         // Create the layer
         const layer = L.geoJSON(geojson, {
           style: getElectoralBoundaryStyle,
@@ -2863,7 +3042,7 @@
 
         const featureCount = geojson.features ? geojson.features.length : 1;
         console.log(`Electoral divisions layer loaded successfully with ${featureCount} divisions`);
-        
+
         return layer;
 
       } catch (error) {
@@ -2887,15 +3066,15 @@
           // Load federal layer
           if (!electoralLayer) {
             if (electoralLayerBtn) electoralLayerBtn.disabled = true;
-            
+
             const [layer] = await Promise.all([
               loadElectoralDivisions(),
               loadMPVotingData()
             ]);
-            
+
             electoralLayer = layer;
             if (electoralLayerBtn) electoralLayerBtn.disabled = false;
-            
+
             if (!electoralLayer) {
               alert('Failed to load federal electoral boundaries.');
               electoralLayerActive = false;
@@ -2904,12 +3083,12 @@
               return;
             }
           }
-          
+
           // Remove state layer if active
           if (stateElectoralLayer && map.hasLayer(stateElectoralLayer)) {
             map.removeLayer(stateElectoralLayer);
           }
-          
+
           electoralLayer.addTo(map);
           console.log('Federal electoral boundaries shown');
         } else {
@@ -2917,13 +3096,13 @@
           console.log(`Loading state layer for ${currentElectoralLevel}...`);
           if (!stateElectoralLayer) {
             if (electoralLayerBtn) electoralLayerBtn.disabled = true;
-            
+
             await loadStateMPVotingData();
             const layer = await loadStateElectoralDivisions(currentElectoralLevel);
-            
+
             stateElectoralLayer = layer;
             if (electoralLayerBtn) electoralLayerBtn.disabled = false;
-            
+
             if (!stateElectoralLayer) {
               alert(`Failed to load ${currentElectoralLevel} state electoral boundaries.`);
               electoralLayerActive = false;
@@ -2932,19 +3111,19 @@
               return;
             }
           }
-          
+
           // Remove federal layer if active
           if (electoralLayer && map.hasLayer(electoralLayer)) {
             map.removeLayer(electoralLayer);
           }
-          
+
           stateElectoralLayer.addTo(map);
-          
+
           // Zoom to state
           if (STATE_CENTERS[currentElectoralLevel]) {
             map.setView(STATE_CENTERS[currentElectoralLevel], 7);
           }
-          
+
           console.log(`${currentElectoralLevel} state electoral boundaries shown`);
         }
       } else {
@@ -2963,7 +3142,7 @@
     function initElectoralLayer() {
       electoralLayerBtn = document.getElementById('electoralLayerBtn');
       electoralLayerLegend = document.getElementById('electoralLayerLegend');
-      
+
       if (electoralLayerBtn) {
         electoralLayerBtn.addEventListener('click', toggleElectoralLayer);
         console.log('Electoral layer initialized');
@@ -2981,7 +3160,7 @@
     // =====================================================
     // STATE/TERRITORY ELECTORAL DIVISION FUNCTIONALITY
     // =====================================================
-    
+
     const STATE_GEOJSON_PATHS = {
       "NSW": "/data/state-electoral-divisions/nsw.geojson",
       "VIC": "/data/state-electoral-divisions/vic.geojson",
@@ -2992,7 +3171,7 @@
       "ACT": "/data/state-electoral-divisions/act.geojson",
       "NT": "/data/state-electoral-divisions/nt.geojson"
     };
-    
+
     const STATE_MP_DATA_PATH = "/data/state-mp-lgbtiq-votes.json";
     const STATE_CENTERS = {
       "NSW": [-32.0, 146.5],
@@ -3004,14 +3183,14 @@
       "ACT": [-35.5, 149.0],
       "NT": [-19.5, 133.5]
     };
-    
+
     let currentElectoralLevel = "federal";
     let stateElectoralLayer = null;
     let stateElectoralData = null;
     let stateMPVotingData = null;
     let stateSelect = null;
     // electoralLayerBtn is already declared above (line 2183)
-    
+
     // State division property name mappings
     const STATE_PROPERTY_MAPS = {
       "NSW": ["Elect_div", "E_div_numb", "NAME", "name"],
@@ -3023,7 +3202,7 @@
       "ACT": ["Elect_div", "E_div_numb", "NAME", "name"],
       "NT": ["Elect_div", "E_div_numb", "NAME", "name"]
     };
-    
+
     function getStateDivisionName(feature, stateCode) {
       const props = feature.properties || {};
       for (const propName of STATE_PROPERTY_MAPS[stateCode] || ["Elect_div", "NAME", "name"]) {
@@ -3033,7 +3212,7 @@
       }
       return `Unknown Division ${feature.id || ''}`;
     }
-    
+
     // Load state MP voting data
     async function loadStateMPVotingData() {
       try {
@@ -3041,7 +3220,7 @@
         if (!response.ok) throw new Error('Failed to load state MP data');
         const data = await response.json();
         stateMPVotingData = {};
-        
+
         // Index by state and division name
         Object.keys(data.states || {}).forEach(stateCode => {
           const stateData = data.states[stateCode];
@@ -3050,7 +3229,7 @@
             stateMPVotingData[stateCode][div.division_name] = div;
           });
         });
-        
+
         console.log('Loaded state MP voting data for', Object.keys(stateMPVotingData).length, 'states');
         return true;
       } catch (error) {
@@ -3058,12 +3237,12 @@
         return false;
       }
     }
-    
+
     // Create state electoral popup content
     function createStateElectoralPopupContent(feature, stateCode, incidentCount) {
       const divisionName = getStateDivisionName(feature, stateCode);
       const mpData = stateMPVotingData && stateMPVotingData[stateCode] ? stateMPVotingData[stateCode][divisionName] : null;
-      
+
       let mpSection = '';
       if (mpData && mpData.current_mp) {
         const mp = mpData.current_mp;
@@ -3071,7 +3250,7 @@
         const seatAlignment = mpData.seat_alignment || null;
         const seatColor = seatAlignment ? getAlignmentColor(seatAlignment.score) : alignmentColor;
         const dataPeriod = mpData.data_period || { start_year: 2010, end_year: 2025 };
-        
+
         // Build voting summary
         let votingSummary = '';
         if (mpData.voting_history && mpData.voting_history.length > 0) {
@@ -3079,7 +3258,7 @@
             const voteValue = vote.vote || vote.vote_display || 'N/A';
             let voteColor = '#6b7280';
             let voteIcon = '○';
-            
+
             if (voteValue === 'Yes' || voteValue === 'Opposed') {
               voteColor = '#2d9d6f'; voteIcon = '✓';
             } else if (voteValue === 'No' || voteValue === 'Supported') {
@@ -3087,7 +3266,7 @@
             } else if (voteValue === 'Abstained') {
               voteColor = '#e8985e'; voteIcon = '—';
             }
-            
+
             return `
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--color-border-light);">
                 <span style="font-size: 11px; color: var(--color-text-secondary); flex: 1;">${vote.short_name}</span>
@@ -3097,7 +3276,7 @@
               </div>
             `;
           }).join('');
-          
+
           votingSummary = `
             <div style="margin-top: 12px; background: var(--color-bg); border-radius: 8px; padding: 10px;">
               <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
@@ -3108,17 +3287,17 @@
             </div>
           `;
         }
-        
+
         // Info button IDs
         const infoButtonId = `state-info-btn-${stateCode}-${divisionName.replace(/\s+/g, '-').toLowerCase()}`;
         const infoModalId = `state-info-modal-${stateCode}-${divisionName.replace(/\s+/g, '-').toLowerCase()}`;
-        
+
         const infoTooltip = `
           <button id="${infoButtonId}" onclick="(function(e){e.stopPropagation();e.preventDefault();const m=document.getElementById('${infoModalId}');if(m)m.style.display='flex';})(event)" style="background: none; border: none; padding: 2px; margin-left: 4px; cursor: help; display: inline-flex; align-items: center; vertical-align: middle; z-index: 10001;" aria-label="Explain alignment score" title="Click for explanation">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--color-text-muted);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           </button>
         `;
-        
+
         const infoModal = `
           <div id="${infoModalId}" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
             <div style="background: var(--color-bg-alt); border-radius: 12px; padding: 20px; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
@@ -3142,7 +3321,7 @@
             </div>
           </div>
         `;
-        
+
         mpSection = `
           ${infoModal}
           <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border-light);">
@@ -3193,7 +3372,7 @@
           </div>
         `;
       }
-      
+
       return `
         <div class="popup-content" style="min-width: 280px; max-width: 320px;">
           <div class="popup-header">
@@ -3216,7 +3395,7 @@
         </div>
       `;
     }
-    
+
     // Load state electoral divisions
     async function loadStateElectoralDivisions(stateCode) {
       try {
@@ -3226,24 +3405,24 @@
           console.error(`No GeoJSON path defined for ${stateCode}`);
           throw new Error(`No GeoJSON path for ${stateCode}`);
         }
-        
+
         console.log(`Fetching GeoJSON from: ${geojsonPath}`);
         const response = await fetch(geojsonPath);
         if (!response.ok) {
           console.error(`Failed to fetch ${geojsonPath}: HTTP ${response.status}`);
           throw new Error(`HTTP ${response.status}`);
         }
-        
+
         const geojson = await response.json();
-        
+
         if (!geojson || (geojson.type !== 'FeatureCollection' && geojson.type !== 'Feature')) {
           console.error('Invalid GeoJSON format:', geojson);
           throw new Error('Invalid GeoJSON format');
         }
-        
+
         console.log(`Loaded GeoJSON for ${stateCode}:`, geojson.features ? geojson.features.length : 'single feature', 'features');
         stateElectoralData = geojson;
-        
+
         // Create layer with state-specific styling
         const layer = L.geoJSON(geojson, {
           style: {
@@ -3253,7 +3432,7 @@
             fillColor: 'transparent',
             fillOpacity: 0
           },
-          onEachFeature: function(feature, layer) {
+          onEachFeature: function (feature, layer) {
             // Tooltip
             const divisionName = getStateDivisionName(feature, stateCode);
             layer.bindTooltip(`<strong>${divisionName}</strong> (${stateCode})`, {
@@ -3261,16 +3440,16 @@
               direction: 'center',
               className: 'electoral-tooltip'
             });
-            
+
             // Click handler
-            layer.on('click', function(e) {
+            layer.on('click', function (e) {
               const incidentCount = countIncidentsInDivision(layer);
               layer.bindPopup(createStateElectoralPopupContent(feature, stateCode, incidentCount), {
                 maxWidth: 300
               }).openPopup();
-              
+
               // Set up modal handlers
-              layer.once('popupopen', function() {
+              layer.once('popupopen', function () {
                 setTimeout(() => {
                   const divisionName = getStateDivisionName(feature, stateCode);
                   const infoModalId = `state-info-modal-${stateCode}-${divisionName.replace(/\s+/g, '-').toLowerCase()}`;
@@ -3283,9 +3462,9 @@
                 }, 100);
               });
             });
-            
+
             // Hover effects
-            layer.on('mouseover', function(e) {
+            layer.on('mouseover', function (e) {
               layer.setStyle({
                 color: '#6d28d9',
                 weight: 3,
@@ -3295,34 +3474,34 @@
               });
               layer.bringToFront();
             });
-            
-            layer.on('mouseout', function(e) {
+
+            layer.on('mouseout', function (e) {
               if (stateElectoralLayer) {
                 stateElectoralLayer.resetStyle(layer);
               }
             });
           }
         });
-        
+
         console.log(`State electoral divisions loaded for ${stateCode}: ${geojson.features ? geojson.features.length : 1} divisions`);
         return layer;
-        
+
       } catch (error) {
         console.error(`Failed to load state electoral divisions for ${stateCode}:`, error);
         return null;
       }
     }
-    
+
     // Switch electoral level (federal vs state)
     async function switchElectoralLevel(level) {
       if (!map) {
         console.warn('Map not initialized, cannot switch electoral level');
         return;
       }
-      
+
       try {
         currentElectoralLevel = level;
-        
+
         // Hide federal layer if showing state, or vice versa
         if (electoralLayer && map.hasLayer(electoralLayer)) {
           map.removeLayer(electoralLayer);
@@ -3330,7 +3509,7 @@
         if (stateElectoralLayer && map.hasLayer(stateElectoralLayer)) {
           map.removeLayer(stateElectoralLayer);
         }
-        
+
         // Update button text
         if (electoralLayerBtn) {
           if (level === "federal") {
@@ -3342,7 +3521,7 @@
         if (electoralLayerLegend) {
           electoralLayerLegend.style.display = 'none';
         }
-        
+
         // If electoral layer button is active, load appropriate layer
         if (electoralLayerBtn && electoralLayerBtn.classList.contains('active')) {
           if (level === "federal") {
@@ -3364,7 +3543,7 @@
             if (layer) {
               stateElectoralLayer = layer;
               stateElectoralLayer.addTo(map);
-              
+
               // Zoom to state
               if (STATE_CENTERS[level]) {
                 map.setView(STATE_CENTERS[level], 7);
@@ -3376,32 +3555,32 @@
         console.error('Error switching electoral level:', error);
       }
     }
-    
+
     // Initialize state selector and handlers (after DOM is ready)
     function initStateSelector() {
       try {
         console.log('Initializing state selector...');
         stateSelect = document.getElementById('stateSelect');
         electoralLayerBtn = document.getElementById('electoralLayerBtn');
-        
+
         if (!stateSelect) {
           console.warn('State selector element not found');
           return;
         }
-        
+
         console.log('State selector found, setting up event handlers');
-        
+
         // State selector change handler
-        stateSelect.addEventListener('change', async function(e) {
+        stateSelect.addEventListener('change', async function (e) {
           try {
             if (!map) {
               console.warn('Map not initialized yet');
               return;
             }
-            
+
             const selectedLevel = e.target.value;
             console.log('State selector changed to:', selectedLevel);
-            
+
             // Remove any existing layers
             if (electoralLayer && map.hasLayer(electoralLayer)) {
               map.removeLayer(electoralLayer);
@@ -3409,10 +3588,10 @@
             if (stateElectoralLayer && map.hasLayer(stateElectoralLayer)) {
               map.removeLayer(stateElectoralLayer);
             }
-            
+
             // Switch to the selected level
             await switchElectoralLevel(selectedLevel);
-            
+
             // Automatically show boundaries for the selected level
             electoralLayerActive = true;
             if (electoralLayerBtn) {
@@ -3421,7 +3600,7 @@
             if (electoralLayerLegend) {
               electoralLayerLegend.style.display = 'block';
             }
-            
+
             // Load and show the appropriate layer
             if (selectedLevel === "federal") {
               // Load federal layer
@@ -3445,12 +3624,12 @@
               if (layer) {
                 stateElectoralLayer = layer;
                 stateElectoralLayer.addTo(map);
-                
+
                 // Zoom to state
                 if (STATE_CENTERS[selectedLevel]) {
                   map.setView(STATE_CENTERS[selectedLevel], 7);
                 }
-                
+
                 console.log(`${selectedLevel} state electoral boundaries displayed`);
               } else {
                 console.error(`Failed to load ${selectedLevel} state boundaries`);
@@ -3467,7 +3646,7 @@
             console.error('Error handling state selector change:', error);
           }
         });
-        
+
         // Initialize state MP data loading
         setTimeout(() => {
           loadStateMPVotingData().catch(err => {
@@ -3478,7 +3657,7 @@
         console.error('Error initializing state selector:', error);
       }
     }
-    
+
     // State selector is initialized in initElectoralLayer() function (line 2654)
 
     // =============================================
@@ -3492,9 +3671,9 @@
 
     function formatDate(dateValue) {
       if (!dateValue) return 'Date unknown';
-      
+
       let d = null;
-      
+
       // If it's already a Date object
       if (dateValue instanceof Date) {
         d = dateValue;
@@ -3514,16 +3693,16 @@
       } else {
         d = new Date(dateValue);
       }
-      
+
       if (!d || isNaN(d.getTime())) {
         return 'Date unknown';
       }
-      
+
       // Format as DD MM YYYY (Australian format)
       const day = String(d.getDate()).padStart(2, '0');
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const year = d.getFullYear();
-      
+
       return `${day} ${month} ${year}`;
     }
 
@@ -3562,9 +3741,9 @@
 
     function getRecentIncidents() {
       const validIncidents = incidentsWithCoords.filter(incident => {
-        return incident.title && 
-               !incident.title.toLowerCase().includes('[redacted]') &&
-               !incident.title.toLowerCase().includes('[flagged]');
+        return incident.title &&
+          !incident.title.toLowerCase().includes('[redacted]') &&
+          !incident.title.toLowerCase().includes('[flagged]');
       });
 
       const sorted = validIncidents.sort((a, b) => {
@@ -3583,7 +3762,7 @@
           }
           return new Date(0);
         };
-        
+
         const dateA = parseIncidentDate(a);
         const dateB = parseIncidentDate(b);
         return dateB - dateA;
@@ -3622,7 +3801,7 @@
           dateToFormat = incident.date || incident.source_date;
         }
         const date = formatDate(dateToFormat);
-        
+
         // Format news source URL for display
         let sourceDisplay = '';
         if (incident.url) {
@@ -3656,14 +3835,14 @@
       }).join('');
 
       recentIncidentsList.querySelectorAll('.recent-incident-card').forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
           const lat = parseFloat(this.dataset.lat);
           const lon = parseFloat(this.dataset.lon);
-          
+
           if (map) {
             // Center map on incident location
             map.setView([lat, lon], 14, { animate: true, duration: 0.5 });
-            
+
             // Find and open the marker popup after map animation
             setTimeout(() => {
               // Search through all markers in the cluster to find matching one
@@ -3752,9 +3931,9 @@
     // End Recent Incidents Widget Module
     // =============================================
   </script>
-  
+
   <!-- Resources Dropdown Script -->
   <script src="resources-dropdown.js"></script>
 </body>
-</html>
 
+</html>
