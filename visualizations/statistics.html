@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+  <meta name="description"
+    content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
   <title>Statistics Dashboard | Incidex Australia</title>
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://incidex.au/statistics.html">
   <meta property="og:title" content="Statistics Dashboard | Incidex Australia">
-  <meta property="og:description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+  <meta property="og:description"
+    content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
   <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://incidex.au/statistics.html">
   <meta property="twitter:title" content="Statistics Dashboard | Incidex Australia">
-  <meta property="twitter:description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
+  <meta property="twitter:description"
+    content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
   <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  
+
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
-  
+
   <style>
     /* Page-specific styles - Force light mode */
     html {
       background: var(--color-bg) !important;
     }
-    
+
     body {
       background: var(--color-bg) !important;
       color: var(--color-text) !important;
     }
-    
+
     .dashboard-layout {
       min-height: calc(100vh - var(--header-height));
       padding: var(--space-6);
@@ -123,17 +129,34 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .chart-card.full { grid-column: span 12; }
-    .chart-card.half { grid-column: span 6; }
-    .chart-card.third { grid-column: span 4; }
-    .chart-card.two-thirds { grid-column: span 8; }
+    .chart-card.full {
+      grid-column: span 12;
+    }
+
+    .chart-card.half {
+      grid-column: span 6;
+    }
+
+    .chart-card.third {
+      grid-column: span 4;
+    }
+
+    .chart-card.two-thirds {
+      grid-column: span 8;
+    }
 
     @media (max-width: 1200px) {
-      .chart-card.third { grid-column: span 6; }
-      .chart-card.two-thirds { grid-column: span 12; }
+      .chart-card.third {
+        grid-column: span 6;
+      }
+
+      .chart-card.two-thirds {
+        grid-column: span 12;
+      }
     }
 
     @media (max-width: 768px) {
+
       .chart-card.half,
       .chart-card.third,
       .chart-card.two-thirds {
@@ -332,9 +355,9 @@
       align-items: center;
       flex-wrap: wrap;
     }
-
   </style>
 </head>
+
 <body>
   <!-- Skip Link -->
   <a href="#main" class="skip-link">Skip to content</a>
@@ -343,32 +366,70 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
-        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+          class="logo-full" loading="eager">
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="map.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
           Map
         </a>
         <a href="policy_landscape.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
           Policy and Legislation
         </a>
         <a href="voting_records.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
           MP Voting
         </a>
         <a href="statistics.html" class="nav-link active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
           Statistics
+        </a>
+        <a href="database.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="9" x2="9" y2="21"></line>
+            <line x1="15" y1="9" x2="15" y2="21"></line>
+          </svg>
+          Database
         </a>
         <!-- Resources Dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
             Resources
-            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
               <path d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
@@ -376,42 +437,56 @@
             <!-- Know Your Rights Section -->
             <div class="dropdown-section">
               <div class="dropdown-section-title">
-                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                  </path>
                 </svg>
                 Legal Guides: Know Your Rights
               </div>
-              <a href="legal_guides.html" style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+              <a href="legal_guides.html"
+                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
                 <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
-                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
+                  guides for every Australian jurisdiction</div>
               </a>
               <!-- Jurisdiction Grid -->
               <div class="jurisdiction-grid">
-                <a href="legal_guides.html#commonwealth" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
                   <div class="jurisdiction-name">Commonwealth</div>
                 </a>
-                <a href="legal_guides.html#nsw" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
+                <a href="legal_guides.html#nsw" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
                   <div class="jurisdiction-name">NSW</div>
                 </a>
-                <a href="legal_guides.html#victoria" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
+                <a href="legal_guides.html#victoria" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
                   <div class="jurisdiction-name">VIC</div>
                 </a>
-                <a href="legal_guides.html#queensland" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
+                <a href="legal_guides.html#queensland" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
                   <div class="jurisdiction-name">QLD</div>
                 </a>
-                <a href="legal_guides.html#tasmania" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
                   <div class="jurisdiction-name">TAS</div>
                 </a>
-                <a href="legal_guides.html#sa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
+                <a href="legal_guides.html#sa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
                   <div class="jurisdiction-name">SA</div>
                 </a>
-                <a href="legal_guides.html#wa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
+                <a href="legal_guides.html#wa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
                   <div class="jurisdiction-name">WA</div>
                 </a>
-                <a href="legal_guides.html#nt" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
+                <a href="legal_guides.html#nt" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
                   <div class="jurisdiction-name">NT</div>
                 </a>
-                <a href="legal_guides.html#act" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
+                <a href="legal_guides.html#act" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
                   <div class="jurisdiction-name">ACT</div>
                 </a>
               </div>
@@ -420,7 +495,8 @@
             <div class="dropdown-section">
               <a href="resources.html" class="services-link">
                 <span>View All Support Services</span>
-                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M9 5l7 7-7 7"></path>
                 </svg>
               </a>
@@ -428,28 +504,50 @@
           </div>
         </div>
         <a href="report_incident.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
           Report
         </a>
         <a href="about.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           About
         </a>
         <a href="contact.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
           Contact
         </a>
       </nav>
 
       <div class="header-actions">
         <button class="btn btn-success btn-sm" id="exportPdf">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
           Download Report
         </button>
       </div>
 
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
   </header>
@@ -460,6 +558,7 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link active">Statistics</a>
+    <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
     <a href="about.html" class="nav-link">About</a>
@@ -542,7 +641,11 @@
     <!-- Key Insights -->
     <div class="insights-panel" id="insightsPanel">
       <h3 class="insights-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
         Key Insights
       </h3>
       <ul class="insights-list" id="insightsList">
@@ -556,7 +659,9 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
             Incidents Over Time
           </h3>
           <span class="badge badge-primary" id="trendBadge">Loading...</span>
@@ -570,7 +675,10 @@
       <div class="chart-card two-thirds">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
             Top 15 Locations by Incident Count
           </h3>
         </div>
@@ -582,7 +690,9 @@
       <div class="chart-card third">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            </svg>
             Distribution by State
           </h3>
         </div>
@@ -595,7 +705,11 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z">
+              </path>
+            </svg>
             Incident Density Heat Map
           </h3>
         </div>
@@ -606,7 +720,10 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
             Incident Types Breakdown
           </h3>
         </div>
@@ -619,7 +736,12 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
             Victim Demographics
           </h3>
         </div>
@@ -632,7 +754,11 @@
       <div class="chart-card third">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
             Severity Distribution
           </h3>
         </div>
@@ -645,7 +771,11 @@
       <div class="chart-card two-thirds">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
             Severity Trends Over Time
           </h3>
         </div>
@@ -658,7 +788,11 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
             Highest Severity Locations
           </h3>
         </div>
@@ -671,7 +805,12 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
             Incident Types by Year
           </h3>
         </div>
@@ -684,23 +823,38 @@
     <!-- ============ INCIDENT RATES SECTION ============ -->
     <div class="section-divider" id="incidentRatesSection">
       <h2>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
         Incident Rates by State/Territory
       </h2>
       <p>Per capita analysis based on LGBTI+ population estimates from ABS December 2024 Household Survey</p>
     </div>
 
     <!-- Caveat Banner -->
-    <div class="insights-panel" id="populationCaveat" style="background: linear-gradient(135deg, #e8985e 0%, #c97d41 100%); margin-bottom: var(--space-8);">
+    <div class="insights-panel" id="populationCaveat"
+      style="background: linear-gradient(135deg, #e8985e 0%, #c97d41 100%); margin-bottom: var(--space-8);">
       <h3 class="insights-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
         Important Note on Population Estimates
       </h3>
       <ul class="insights-list">
-        <li>Population figures based on <strong>ABS December 2024 Household Survey estimates</strong> (45,000+ respondents). These are estimates with confidence intervals, not exact counts.</li>
-        <li>Official 2026 Census data including sexual orientation and gender identity will be released in <strong>June 2027</strong>. At that time, all incident rates will be recalculated with official Census figures.</li>
-        <li>Current data allows for state-by-state comparison but should be considered preliminary pending Census release.</li>
-        <li>Source: <a href="https://www.abs.gov.au/statistics/people/people-and-communities/estimates-and-characteristics-lgbti-populations-australia" target="_blank" rel="noopener" style="color: white; text-decoration: underline;">Australian Bureau of Statistics - Estimates and Characteristics of LGBTI+ Populations in Australia (December 2024)</a></li>
+        <li>Population figures based on <strong>ABS December 2024 Household Survey estimates</strong> (45,000+
+          respondents). These are estimates with confidence intervals, not exact counts.</li>
+        <li>Official 2026 Census data including sexual orientation and gender identity will be released in <strong>June
+            2027</strong>. At that time, all incident rates will be recalculated with official Census figures.</li>
+        <li>Current data allows for state-by-state comparison but should be considered preliminary pending Census
+          release.</li>
+        <li>Source: <a
+            href="https://www.abs.gov.au/statistics/people/people-and-communities/estimates-and-characteristics-lgbti-populations-australia"
+            target="_blank" rel="noopener" style="color: white; text-decoration: underline;">Australian Bureau of
+            Statistics - Estimates and Characteristics of LGBTI+ Populations in Australia (December 2024)</a></li>
       </ul>
     </div>
 
@@ -734,7 +888,11 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
             Incident Rates per 1,000 LGBTI+ Population by State
           </h3>
           <span class="badge badge-primary" id="rateSortBadge">Sorted by Rate</span>
@@ -754,7 +912,11 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z">
+              </path>
+            </svg>
             Vulnerability Index by State
           </h3>
         </div>
@@ -770,7 +932,12 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
             LGBTI+ Population vs Incident Count
           </h3>
         </div>
@@ -783,7 +950,10 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
             State-by-State Incident Rate Analysis
           </h3>
           <span class="badge badge-neutral" id="stateCountBadge">8 states</span>
@@ -801,7 +971,10 @@
               </tr>
             </thead>
             <tbody id="stateRatesBody">
-              <tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading data...</td></tr>
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading
+                  data...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -811,7 +984,9 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
             Incident Rate Trends by State (2020-2025)
           </h3>
         </div>
@@ -826,10 +1001,13 @@
     <!-- ============ ELECTORATE STATISTICS SECTION ============ -->
     <div class="section-divider">
       <h2>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+          <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+        </svg>
         Electoral Division Statistics
       </h2>
-      <p class="section-description">Incident statistics broken down by federal and state/territory electoral divisions.</p>
+      <p class="section-description">Incident statistics broken down by federal and state/territory electoral divisions.
+      </p>
     </div>
 
     <div class="charts-grid">
@@ -837,7 +1015,11 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
             Federal Electoral Divisions
           </h3>
           <span class="badge badge-neutral" id="federalElectorateCount">Loading...</span>
@@ -854,7 +1036,10 @@
               </tr>
             </thead>
             <tbody id="federalElectorateBody">
-              <tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading data...</td></tr>
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading
+                  data...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -864,7 +1049,9 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+            </svg>
             State/Territory Electoral Divisions
           </h3>
           <span class="badge badge-neutral" id="stateElectorateCount">Loading...</span>
@@ -881,7 +1068,10 @@
               </tr>
             </thead>
             <tbody id="stateElectorateBody">
-              <tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading data...</td></tr>
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading
+                  data...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -892,7 +1082,12 @@
     <!-- Legal Cases Section -->
     <div class="section-divider">
       <h2>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+          <line x1="9" y1="9" x2="9.01" y2="9"></line>
+          <line x1="15" y1="9" x2="15.01" y2="9"></line>
+        </svg>
         Landmark Legal Cases
         <span class="badge badge-primary" id="totalCasesHeader">0</span>
       </h2>
@@ -955,7 +1150,16 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 21h18"></path>
+              <path d="M9 8h1"></path>
+              <path d="M9 12h1"></path>
+              <path d="M9 16h1"></path>
+              <path d="M14 8h1"></path>
+              <path d="M14 12h1"></path>
+              <path d="M14 16h1"></path>
+              <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+            </svg>
             Outcomes by Court Level
           </h3>
         </div>
@@ -967,7 +1171,12 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
             Cases Timeline
           </h3>
         </div>
@@ -979,7 +1188,10 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
             Key Issues Breakdown
           </h3>
         </div>
@@ -991,7 +1203,9 @@
       <div class="chart-card half">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
             Win Rate by Decade
           </h3>
         </div>
@@ -1004,7 +1218,13 @@
       <div class="chart-card full">
         <div class="chart-header">
           <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
             Legal Cases Database
           </h3>
           <span class="badge badge-neutral" id="caseCountBadge">0 cases</span>
@@ -1022,7 +1242,10 @@
               </tr>
             </thead>
             <tbody id="legalCasesBody">
-              <tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading cases...</td></tr>
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">Loading
+                  cases...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1037,11 +1260,13 @@
         <div class="footer-section">
           <div class="footer-logo">
             <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
-              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+                loading="lazy">
             </a>
           </div>
           <h4>About</h4>
-          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for
+            LGBTIQ+ Australians.</p>
         </div>
         <div class="footer-section">
           <h4>Quick Links</h4>
@@ -1072,9 +1297,20 @@
       <div class="footer-bottom">
         <p class="footer-copyright">&copy; 2024 Incidex Australia. Data updated: <span id="lastUpdated">-</span></p>
         <div class="footer-social">
-          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+              </path>
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg></a>
         </div>
       </div>
     </div>
@@ -1087,12 +1323,12 @@
   <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  
+
   <script>
     // Constants
     const DATA_PATH = '/data/incidents_in_progress.csv';
     const LEGAL_CASES_PATH = '/data/landmark_cases.csv?v=' + Date.now();
-    
+
     const COLORS = {
       primary: '#1a5f7a',
       secondary: '#e06055',
@@ -1224,7 +1460,7 @@
     function detectState(location) {
       if (!location) return 'Unknown';
       const loc = location.toLowerCase();
-      
+
       for (const [state, keywords] of Object.entries(AUSTRALIAN_STATES)) {
         for (const keyword of keywords) {
           if (loc.includes(keyword.toLowerCase())) {
@@ -1232,11 +1468,11 @@
           }
         }
       }
-      
+
       if (loc.includes('australia') && !loc.includes(',')) {
         return 'National';
       }
-      
+
       return 'Other';
     }
 
@@ -1257,10 +1493,10 @@
           allIncidents = results.data
             .filter(row => row.title && row.title.trim())
             .map(normalizeIncident);
-          
+
           console.log('Processed incidents:', allIncidents.length);
           filteredIncidents = [...allIncidents];
-          
+
           populateFilters();
           updateDashboard();
           const lastUpdatedEl = document.getElementById('lastUpdated');
@@ -1355,12 +1591,12 @@
       const now = new Date();
       const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
       const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
-      
+
       const last30 = filteredIncidents.filter(i => i.parsedDate && i.parsedDate >= thirtyDaysAgo).length;
       const prev30 = filteredIncidents.filter(i => i.parsedDate && i.parsedDate >= sixtyDaysAgo && i.parsedDate < thirtyDaysAgo).length;
-      
+
       document.getElementById('last30Days').textContent = last30.toLocaleString();
-      
+
       const trendEl = document.getElementById('monthlyTrend');
       if (prev30 === 0) {
         trendEl.className = 'stat-change';
@@ -1387,7 +1623,7 @@
       const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
       if (topType) {
         document.getElementById('commonType').textContent = topType[0].charAt(0).toUpperCase() + topType[0].slice(1).replace(/_/g, ' ');
-        document.getElementById('commonTypeCount').textContent = `${topType[1]} incidents (${(topType[1]/total*100).toFixed(1)}%)`;
+        document.getElementById('commonTypeCount').textContent = `${topType[1]} incidents (${(topType[1] / total * 100).toFixed(1)}%)`;
       }
 
       const locationCounts = {};
@@ -1411,14 +1647,14 @@
       const topIdentity = Object.entries(identityCounts).filter(([k]) => k !== 'unknown').sort((a, b) => b[1] - a[1])[0];
       if (topIdentity) {
         document.getElementById('targetedGroup').textContent = topIdentity[0].charAt(0).toUpperCase() + topIdentity[0].slice(1).replace(/_/g, ' ');
-        document.getElementById('targetedGroupCount').textContent = `${topIdentity[1]} incidents (${(topIdentity[1]/total*100).toFixed(1)}%)`;
+        document.getElementById('targetedGroupCount').textContent = `${topIdentity[1]} incidents (${(topIdentity[1] / total * 100).toFixed(1)}%)`;
       }
     }
 
     function updateInsights() {
       const insights = [];
       const total = filteredIncidents.length;
-      
+
       if (total === 0) {
         document.getElementById('insightsList').innerHTML = '<li>No data available for the selected filters.</li>';
         return;
@@ -1543,14 +1779,14 @@
       const sortedMonths = Object.keys(monthCounts).sort();
       const labels = sortedMonths.map(m => {
         const [year, month] = m.split('-');
-        return `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(month)-1]} ${year}`;
+        return `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][parseInt(month) - 1]} ${year}`;
       });
       const data = sortedMonths.map(m => monthCounts[m]);
 
       const badge = document.getElementById('trendBadge');
       if (data.length >= 3) {
-        const recent = data.slice(-3).reduce((a,b) => a+b, 0) / 3;
-        const earlier = data.slice(0, 3).reduce((a,b) => a+b, 0) / 3;
+        const recent = data.slice(-3).reduce((a, b) => a + b, 0) / 3;
+        const earlier = data.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
         if (earlier > 0) {
           const change = ((recent - earlier) / earlier * 100).toFixed(0);
           badge.textContent = change > 10 ? `↑ ${change}% increase` : change < -10 ? `↓ ${Math.abs(change)}% decrease` : 'Stable trend';
@@ -1602,7 +1838,7 @@
       });
 
       const sorted = Object.entries(locationCounts).sort((a, b) => b[1] - a[1]).slice(0, 15);
-      
+
       const ctx = document.getElementById('locationChart').getContext('2d');
       if (charts.location) charts.location.destroy();
 
@@ -1630,7 +1866,7 @@
       });
 
       const sorted = Object.entries(stateCounts).sort((a, b) => b[1] - a[1]);
-      
+
       const ctx = document.getElementById('stateChart').getContext('2d');
       if (charts.state) charts.state.destroy();
 
@@ -1657,7 +1893,7 @@
       });
 
       const sorted = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]);
-      
+
       const ctx = document.getElementById('typeChart').getContext('2d');
       if (charts.type) charts.type.destroy();
 
@@ -1687,7 +1923,7 @@
       });
 
       const sorted = Object.entries(identityCounts).sort((a, b) => b[1] - a[1]);
-      
+
       const ctx = document.getElementById('demographicsChart').getContext('2d');
       if (charts.demographics) charts.demographics.destroy();
 
@@ -1741,7 +1977,7 @@
       });
 
       const years = Object.keys(yearSeverity).sort();
-      
+
       const ctx = document.getElementById('severityTrendChart').getContext('2d');
       if (charts.severityTrend) charts.severityTrend.destroy();
 
@@ -1774,7 +2010,7 @@
       });
 
       const sorted = Object.entries(locationSeverity).sort((a, b) => b[1] - a[1]).slice(0, 10);
-      
+
       const ctx = document.getElementById('severityLocationChart').getContext('2d');
       if (charts.severityLocation) charts.severityLocation.destroy();
 
@@ -1797,7 +2033,7 @@
     function updateTypeYearChart() {
       const yearType = {};
       const allTypes = new Set();
-      
+
       filteredIncidents.forEach(i => {
         if (i.year && i.incident_type && i.incident_type !== 'unknown') {
           if (!yearType[i.year]) yearType[i.year] = {};
@@ -1882,7 +2118,7 @@
               judgmentUrl: row.judgment_url || '',
               outcome: (row.outcome || 'unknown').toLowerCase()
             }));
-          
+
           filteredLegalCases = [...allLegalCases];
           populateLegalFilters();
           updateLegalDashboard();
@@ -1945,11 +2181,11 @@
     function updateLegalStatCards() {
       const total = filteredLegalCases.length;
       const won = filteredLegalCases.filter(c => c.outcome === 'won').length;
-      
+
       document.getElementById('totalCases').textContent = total;
       document.getElementById('totalCasesHeader').textContent = allLegalCases.length;
       document.getElementById('casesWon').textContent = won;
-      document.getElementById('winRate').textContent = total > 0 ? `${((won/total)*100).toFixed(0)}% win rate` : '-';
+      document.getElementById('winRate').textContent = total > 0 ? `${((won / total) * 100).toFixed(0)}% win rate` : '-';
 
       const courtCounts = {};
       filteredLegalCases.forEach(c => courtCounts[c.court] = (courtCounts[c.court] || 0) + 1);
@@ -1983,7 +2219,7 @@
       });
 
       const courts = Object.keys(courtOutcomes);
-      
+
       const ctx = document.getElementById('courtOutcomeChart').getContext('2d');
       if (charts.courtOutcome) charts.courtOutcome.destroy();
 
@@ -2008,7 +2244,7 @@
       const yearCounts = {};
       filteredLegalCases.forEach(c => { if (c.year) yearCounts[c.year] = (yearCounts[c.year] || 0) + 1; });
       const years = Object.keys(yearCounts).sort();
-      
+
       const ctx = document.getElementById('casesTimelineChart').getContext('2d');
       if (charts.casesTimeline) charts.casesTimeline.destroy();
 
@@ -2026,7 +2262,7 @@
       const issueCounts = {};
       filteredLegalCases.forEach(c => c.keyIssues.forEach(i => issueCounts[i] = (issueCounts[i] || 0) + 1));
       const sorted = Object.entries(issueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-      
+
       const ctx = document.getElementById('keyIssuesChart').getContext('2d');
       if (charts.keyIssues) charts.keyIssues.destroy();
 
@@ -2052,7 +2288,7 @@
       });
 
       const decades = Object.keys(decadeStats).sort();
-      
+
       const ctx = document.getElementById('winRateDecadeChart').getContext('2d');
       if (charts.winRateDecade) charts.winRateDecade.destroy();
 
@@ -2131,7 +2367,7 @@
 
         pdf.setFontSize(10);
         pdf.setTextColor(90, 90, 90);
-        
+
         const stats = [
           `Total Incidents: ${document.getElementById('totalIncidents').textContent}`,
           `Last 30 Days: ${document.getElementById('last30Days').textContent}`,
@@ -2155,16 +2391,16 @@
     }
 
     // ============ INCIDENT RATES & POPULATION DATA ============
-    
+
     const POPULATION_DATA_PATH = '/data/lgbti_population.csv';
     const POLICY_DATA_PATH = '/data/policy_landscape.csv';
-    
+
     let populationData = [];
     let policyData = [];
     let stateIncidentRates = [];
     let currentRateSortField = 'rate';
     let currentRateSortDirection = 'desc';
-    
+
     const STATE_FULL_NAMES = {
       'NSW': 'New South Wales', 'VIC': 'Victoria', 'QLD': 'Queensland',
       'WA': 'Western Australia', 'SA': 'South Australia', 'TAS': 'Tasmania',
@@ -2227,7 +2463,7 @@
       if (populationData.length === 0 || filteredIncidents.length === 0) return;
 
       const stateCounts = {}, stateYearCounts = {}, stateSeverity = {};
-      
+
       filteredIncidents.forEach(incident => {
         const state = getStateFromLocation(incident.location);
         if (state) {
@@ -2249,21 +2485,21 @@
       const nationalRate = (totalIncidents / totalLgbtiPop) * 1000;
 
       stateIncidentRates = [];
-      
+
       populationData.forEach(pop => {
         if (pop.state_territory === 'National') return;
         const state = pop.state_territory;
         const incidents = stateCounts[state] || 0;
         const population = parseInt(pop.lgbti_population_estimate) || 0;
         if (population === 0) return;
-        
+
         const ratePer1000 = (incidents / population) * 1000;
         const vsNational = ((ratePer1000 - nationalRate) / nationalRate) * 100;
-        
+
         const severity = stateSeverity[state] || { low: 0, medium: 0, high: 0 };
         const severityTotal = severity.low + severity.medium + severity.high;
         const highSeverityPct = severityTotal > 0 ? (severity.high / severityTotal) * 100 : 0;
-        
+
         const yearCounts = stateYearCounts[state] || {};
         const years = Object.keys(yearCounts).sort();
         let trend = 0;
@@ -2272,12 +2508,12 @@
           const prevYear = yearCounts[years[years.length - 2]] || 0;
           if (prevYear > 0) trend = ((lastYear - prevYear) / prevYear) * 100;
         }
-        
+
         const policyScore = calculatePolicyScore(state);
         const maxRate = 5;
         const rateScore = Math.min(100, (ratePer1000 / maxRate) * 100);
         const vulnerabilityIndex = Math.round((rateScore * 0.40) + (highSeverityPct * 0.25) + (Math.min(100, Math.max(0, 50 + trend)) * 0.20) + ((100 - policyScore) * 0.15));
-        
+
         stateIncidentRates.push({
           state, fullName: STATE_FULL_NAMES[state] || state,
           incidents, population, percentage: parseFloat(pop.lgbti_percentage),
@@ -2286,7 +2522,7 @@
       });
 
       stateIncidentRates.sort((a, b) => b.ratePer1000 - a.ratePer1000);
-      
+
       updateRiskCards(nationalRate);
       updateIncidentRateChart();
       updateVulnerabilityChart();
@@ -2300,7 +2536,7 @@
       const highest = stateIncidentRates[0];
       const lowest = stateIncidentRates[stateIncidentRates.length - 1];
       const multiplier = lowest.ratePer1000 > 0 ? (highest.ratePer1000 / lowest.ratePer1000) : 0;
-      
+
       document.getElementById('highestRiskState').textContent = highest.state;
       document.getElementById('highestRiskRate').textContent = highest.ratePer1000.toFixed(2);
       document.getElementById('lowestRiskState').textContent = lowest.state;
@@ -2324,7 +2560,7 @@
       const nationalPop = populationData.find(p => p.state_territory === 'National');
       const totalIncidents = filteredIncidents.filter(i => getStateFromLocation(i.location)).length;
       const nationalRate = (totalIncidents / (parseInt(nationalPop?.lgbti_population_estimate) || 910600)) * 1000;
-      
+
       const colors = sortedData.map(s => {
         const diff = ((s.ratePer1000 - nationalRate) / nationalRate) * 100;
         if (diff > 10) return COLORS.danger + 'cc';
@@ -2343,7 +2579,8 @@
         },
         options: {
           ...getChartOptions('bar'),
-          plugins: { ...getChartOptions('bar').plugins, legend: { display: false },
+          plugins: {
+            ...getChartOptions('bar').plugins, legend: { display: false },
             tooltip: { callbacks: { afterLabel: (ctx) => { const d = sortedData[ctx.dataIndex]; return [`Incidents: ${d.incidents}`, `Population: ${d.population.toLocaleString()}`, `vs National: ${d.vsNational > 0 ? '+' : ''}${d.vsNational.toFixed(1)}%`]; } } }
           }
         }
@@ -2378,7 +2615,8 @@
       charts.popVsIncidents = new Chart(ctx, {
         type: 'scatter',
         data: { datasets: [{ label: 'States', data: stateIncidentRates.map(s => ({ x: s.population, y: s.incidents })), backgroundColor: CHART_COLORS.map(c => c + '99'), borderColor: CHART_COLORS, borderWidth: 2, pointRadius: 10, pointHoverRadius: 14 }] },
-        options: { ...getChartOptions('scatter'), plugins: { ...getChartOptions('scatter').plugins, legend: { display: false }, tooltip: { callbacks: { label: (ctx) => { const s = stateIncidentRates.find(st => st.population === ctx.raw.x); return s ? [s.fullName, `Pop: ${s.population.toLocaleString()}`, `Incidents: ${s.incidents}`, `Rate: ${s.ratePer1000.toFixed(2)}/1K`] : []; } } } },
+        options: {
+          ...getChartOptions('scatter'), plugins: { ...getChartOptions('scatter').plugins, legend: { display: false }, tooltip: { callbacks: { label: (ctx) => { const s = stateIncidentRates.find(st => st.population === ctx.raw.x); return s ? [s.fullName, `Pop: ${s.population.toLocaleString()}`, `Incidents: ${s.incidents}`, `Rate: ${s.ratePer1000.toFixed(2)}/1K`] : []; } } } },
           scales: { x: { ...getChartOptions('scatter').scales.x, title: { display: true, text: 'LGBTI+ Population', color: getThemeColors().text } }, y: { ...getChartOptions('scatter').scales.y, title: { display: true, text: 'Total Incidents', color: getThemeColors().text } } }
         }
       });
@@ -2389,13 +2627,13 @@
       const nationalPop = populationData.find(p => p.state_territory === 'National');
       const totalIncidents = filteredIncidents.filter(i => getStateFromLocation(i.location)).length;
       const nationalRate = (totalIncidents / (parseInt(nationalPop?.lgbti_population_estimate) || 910600)) * 1000;
-      
+
       tbody.innerHTML = stateIncidentRates.map(s => {
         const compColor = s.vsNational > 10 ? COLORS.danger : s.vsNational > -10 ? COLORS.warning : COLORS.success;
         const compBg = s.vsNational > 10 ? 'rgba(217,83,79,0.15)' : s.vsNational > -10 ? 'rgba(232,152,94,0.15)' : 'rgba(45,157,111,0.15)';
         const compText = s.vsNational > 10 ? '↑ Above' : s.vsNational > -10 ? '↔ Near' : '↓ Below';
         const vulnColor = s.vulnerabilityIndex >= 70 ? COLORS.danger : s.vulnerabilityIndex >= 50 ? COLORS.warning : s.vulnerabilityIndex >= 30 ? '#e8985e' : COLORS.success;
-        
+
         return `<tr>
           <td><strong>${s.state}</strong><br><span style="font-size: var(--text-xs); color: var(--color-text-muted);">${s.fullName}</span></td>
           <td>${s.incidents.toLocaleString()}</td>
@@ -2420,29 +2658,29 @@
 
     function updateRateTrendChart() {
       if (!stateIncidentRates || stateIncidentRates.length === 0) return;
-      
+
       const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
       const datasets = stateIncidentRates.slice(0, 6).map((state, i) => ({
         label: state.state,
-        data: years.map(year => { 
-          const incidents = (state.yearCounts && state.yearCounts[year]) ? state.yearCounts[year] : 0; 
-          return incidents > 0 ? (incidents / state.population) * 1000 : null; 
+        data: years.map(year => {
+          const incidents = (state.yearCounts && state.yearCounts[year]) ? state.yearCounts[year] : 0;
+          return incidents > 0 ? (incidents / state.population) * 1000 : null;
         }),
-        borderColor: CHART_COLORS[i], 
-        backgroundColor: CHART_COLORS[i] + '20', 
-        fill: false, 
-        tension: 0.3, 
+        borderColor: CHART_COLORS[i],
+        backgroundColor: CHART_COLORS[i] + '20',
+        fill: false,
+        tension: 0.3,
         spanGaps: true
       }));
 
       const ctx = document.getElementById('rateTrendChart');
       if (!ctx) return;
-      
+
       if (charts.rateTrend) charts.rateTrend.destroy();
-      charts.rateTrend = new Chart(ctx.getContext('2d'), { 
-        type: 'line', 
-        data: { labels: years, datasets }, 
-        options: getChartOptions('line') 
+      charts.rateTrend = new Chart(ctx.getContext('2d'), {
+        type: 'line',
+        data: { labels: years, datasets },
+        options: getChartOptions('line')
       });
     }
 
@@ -2500,7 +2738,7 @@
       // Federal electorates
       const federalCounts = {};
       const federalSeverity = {};
-      
+
       filteredIncidents.forEach(incident => {
         // Try to match incident to federal electorate
         const division = findElectorateForIncident(incident, 'federal');
@@ -2519,7 +2757,7 @@
         const severity = federalSeverity[division] || { high: 0, medium: 0, low: 0 };
         const totalSeverity = severity.high + severity.medium + severity.low;
         const highSeverityPct = totalSeverity > 0 ? (severity.high / totalSeverity) * 100 : 0;
-        
+
         // Estimate population (rough estimate based on average electorate size)
         const estimatedPop = 100000; // Average federal electorate size
         const ratePer1000 = (incidents / estimatedPop) * 1000;
@@ -2536,7 +2774,7 @@
       // State electorates
       const stateCounts = {};
       const stateSeverity = {};
-      
+
       filteredIncidents.forEach(incident => {
         const state = getStateFromLocation(incident.location);
         if (state && stateMPVotingData[state]) {
@@ -2559,7 +2797,7 @@
         const severity = stateSeverity[key] || { high: 0, medium: 0, low: 0 };
         const totalSeverity = severity.high + severity.medium + severity.low;
         const highSeverityPct = totalSeverity > 0 ? (severity.high / totalSeverity) * 100 : 0;
-        
+
         const estimatedPop = 50000; // Average state electorate size
         const ratePer1000 = (incidents / estimatedPop) * 1000;
 
@@ -2577,9 +2815,9 @@
 
     function findElectorateForIncident(incident, type, stateCode = null) {
       if (!incident.location) return null;
-      
+
       const location = incident.location.toLowerCase();
-      
+
       if (type === 'federal') {
         // Try to match by division name in location
         for (const divisionName in mpVotingData) {
@@ -2594,7 +2832,7 @@
           }
         }
       }
-      
+
       return null;
     }
 
@@ -2629,7 +2867,7 @@
             </td>
           </tr>
         `).join('') : '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">No data available</td></tr>';
-        
+
         document.getElementById('federalElectorateCount').textContent = `${sorted.length} divisions`;
       }
 
@@ -2663,7 +2901,7 @@
             </td>
           </tr>
         `).join('') : '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">No data available</td></tr>';
-        
+
         document.getElementById('stateElectorateCount').textContent = `${sorted.length} divisions`;
       }
     }
@@ -2679,8 +2917,8 @@
     }
 
     const originalUpdateDashboard = updateDashboard;
-    updateDashboard = function() { 
-      originalUpdateDashboard(); 
+    updateDashboard = function () {
+      originalUpdateDashboard();
       if (populationData.length > 0) calculateIncidentRates();
       if (mpVotingData && stateMPVotingData) calculateElectorateStatistics();
     };
@@ -2688,21 +2926,21 @@
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
-      
+
       // Event Listeners - add after DOM is ready
       if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
       if (applyFiltersBtn) applyFiltersBtn.addEventListener('click', applyFilters);
       if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetFilters);
       if (exportPdfBtn) exportPdfBtn.addEventListener('click', exportToPdf);
-      
+
       const applyLegalFiltersBtn = document.getElementById('applyLegalFilters');
       if (applyLegalFiltersBtn) applyLegalFiltersBtn.addEventListener('click', applyLegalFilters);
-      
+
       const resetLegalFiltersBtn = document.getElementById('resetLegalFilters');
       if (resetLegalFiltersBtn) resetLegalFiltersBtn.addEventListener('click', resetLegalFilters);
-      
+
       if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-      
+
       // Load data
       loadData();
       loadLegalCases();
@@ -2710,11 +2948,9 @@
       loadElectorateData();
     });
   </script>
-  
+
   <!-- Resources Dropdown Script -->
   <script src="resources-dropdown.js"></script>
 </body>
+
 </html>
-
-
-

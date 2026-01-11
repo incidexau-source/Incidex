@@ -17,7 +17,7 @@ from scripts.config import PHASE1_OUTPUT, CLEANED_OUTPUT, INTL_EXCLUSIONS, CLEAN
 FINAL_COLUMNS = [
     "title", "url", "incident_type", "date", "location", 
     "victim_identity", "description", "confidence", "severity", 
-    "source_name", "verified", "lat", "lng"
+    "source_name", "verified", "latitude", "longitude", "perpetrator_info"
 ]
 
 # Setup logging
@@ -78,10 +78,13 @@ def map_existing(df):
     
     if 'source_name' not in df.columns:
         df['source_name'] = "historical_discovery"
-    if 'lat' not in df.columns and 'latitude' in df.columns:
-        df = df.rename(columns={'latitude': 'lat', 'longitude': 'lng'})
-        
-    # Ensure all final columns exist
+
+    # Map lat/lng to latitude/longitude if needed
+    if 'latitude' not in df.columns and 'lat' in df.columns:
+        df = df.rename(columns={'lat': 'latitude', 'lng': 'longitude'})
+    
+    if 'perpetrator_info' not in df.columns:
+        df['perpetrator_info'] = ""
     for col in FINAL_COLUMNS:
         if col not in df.columns:
             df[col] = ""

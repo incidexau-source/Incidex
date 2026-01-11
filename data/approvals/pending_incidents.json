@@ -1,0 +1,18 @@
+[
+  {
+    "incident_type": "Homophobic Harassment/Verbal Abuse; Subsequent Online Hate Campaign",
+    "date_of_incident": null,
+    "location": "JJ Holland Park, Melbourne, Australia",
+    "victim_identity": "Brad Cresswell-Lee (queer man, newsreader for JOY FM)",
+    "description": "Brad Cresswell-Lee, a newsreader for JOY FM, was left shaken after experiencing a homophobic incident while in JJ Holland Park. Following this, he was targeted with online hate after sharing his initial experience publicly.",
+    "confidence_score": 0,
+    "notes": "The initial incident date is described as 'last week' relative to the article publication date. The incident involves both face-to-face harassment (in the park) and subsequent online hate.",
+    "article_url": "https://www.starobserver.com.au/news/melbourne-man-targeted-with-online-hate-after-sharing-homophobic-experience/240390",
+    "article_title": "Melbourne Man Targeted With Online Hate After Sharing Homophobic Experience",
+    "publication_date": "Wed, 07 Jan 2026 02:28:46 +0000",
+    "news_source": "Star Observer",
+    "approval_id": "7966fc483524c181",
+    "status": "pending",
+    "submitted_at": "2026-01-11T11:40:55.295751"
+  }
+]

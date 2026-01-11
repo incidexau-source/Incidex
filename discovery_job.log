@@ -1,47 +1,189 @@
-2026-01-10 18:38:53,724 - INFO - Loaded 117 entries from geocoding cache
-2026-01-10 18:38:53,738 - INFO - Loaded 295 existing incidents from C:\Users\Tom\OneDrive\Desktop\lgbtiq-hate-crime-map\data\incidents_in_progress.csv
-2026-01-10 18:38:53,739 - INFO - Scanning ABC News Australia - National
-2026-01-10 18:38:53,944 - INFO - Checking: Total fire ban extended for Victoria, as North Queensland awaits category two cyclone
-2026-01-10 18:38:56,700 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 18:39:41,849 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 18:41:11,992 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 18:43:27,169 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 18:46:27,210 - INFO - Checking: 'Catman' shares heartbreak after 'catastrophic' bushfire damage
-2026-01-10 18:46:29,357 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 18:47:14,544 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 18:48:44,707 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 18:50:59,883 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 18:53:59,886 - INFO - Checking: New concern brews for NSW firefighters during heatwave peak
-2026-01-10 18:54:02,035 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 18:54:47,183 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 18:56:17,335 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 18:58:32,488 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 19:01:32,490 - INFO - Checking: Harcourt community reeling after fire levels homes and businesses
-2026-01-10 19:01:34,653 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:02:19,807 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 19:03:49,958 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 19:06:05,119 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 19:09:05,121 - INFO - Checking: Cyclone Koji forms as category two system with landfall forecast Sunday morning
-2026-01-10 19:09:07,267 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:09:52,421 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 19:11:22,568 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 19:13:37,706 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 19:16:37,713 - INFO - Checking: New video emerges of ICE agent shooting woman in Minneapolis
-2026-01-10 19:16:39,963 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:17:25,276 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 19:18:55,557 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 19:21:10,727 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 19:24:10,753 - INFO - Checking: The rhetoric of the Trump administration has taken a chilling turn
-2026-01-10 19:24:12,958 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:24:58,453 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 19:26:28,737 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 19:28:43,887 - WARNING - 429 in filter. Waiting 180s...
-2026-01-10 19:31:43,893 - INFO - Checking: Former Adelaide Festival leaders label Palestinian author's exclusion 'grave mistake'
-2026-01-10 19:31:46,049 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:32:31,198 - WARNING - 429 in filter. Waiting 90s...
-2026-01-10 19:34:01,350 - WARNING - 429 in filter. Waiting 135s...
-2026-01-10 19:36:16,502 - WARNING - 429 in filter. Waiting 180s...
-
-2026-01-10 19:33:38,898 - INFO - Checking: Thousands affected as suspected copper thieves cut cables in cyclone warning zone
-2026-01-10 19:33:41,099 - WARNING - 429 in filter. Waiting 45s...
-2026-01-10 19:34:26,572 - WARNING - 429 in filter. Waiting 90s...
+2026-01-11 11:27:25,662 - INFO - Loaded 117 entries from geocoding cache
+2026-01-11 11:27:25,673 - INFO - Loaded 295 existing incidents from C:\Users\Tom\OneDrive\Desktop\lgbtiq-hate-crime-map\data\incidents_in_progress.csv
+2026-01-11 11:27:25,674 - INFO - Scanning ABC News Australia - National
+2026-01-11 11:27:25,926 - INFO - Checking: Live: Fire authorities seek US, Canadian help to fight Victorian bushfires; Cyclone Koji crosses Queensland coast
+2026-01-11 11:27:28,328 - INFO - Checking: Tropical Cyclone Koji crossing north Queensland coast south of Ayr
+2026-01-11 11:27:30,253 - INFO - Checking: Track Tropical Cyclone Koji live as it crosses Australia's coastline
+2026-01-11 11:27:32,092 - INFO - Checking: 'Only thing missing is my eight-year-old daughter': Father's chilling report
+2026-01-11 11:27:34,398 - INFO - Checking: Has Trump landed a dud with his Venezuelan oil play?
+2026-01-11 11:27:36,235 - INFO - Checking: The rhetoric of the Trump administration has taken a chilling turn
+2026-01-11 11:27:38,228 - INFO - Checking: Six dead, including child, in Mississippi shootings, suspect charged
+2026-01-11 11:27:51,291 - INFO - Checking: Christian sect investigated by the FBI under pressure to reveal wealth
+2026-01-11 11:28:04,328 - INFO - Checking: The ABC was granted access to Afghanistan. This is what we saw
+2026-01-11 11:28:17,379 - INFO - Checking: 'Disheartening': NT lipoedema sufferers forced interstate for treatment
+2026-01-11 11:28:30,502 - INFO - Checking: WA towns look to tackle overtourism as 'crazy' crowds pack car parks, beaches
+2026-01-11 11:28:32,570 - INFO - Checking: Challenges faced by police in hunt for alleged Mullewa gunman
+2026-01-11 11:28:35,007 - INFO - Checking: Mystery grips village after 'priceless' trophy fleeced from museum
+2026-01-11 11:28:37,345 - INFO - Checking: 'I would look like an alien': The rise of the 'Barbie nose' trend
+2026-01-11 11:28:39,174 - INFO - Checking: Arsenal shows support for Cooney-Cross in wake of mother's cancer diagnosis
+2026-01-11 11:28:41,168 - INFO - Checking: Khawaja stars as Heat thrash Thunder, Warner injured
+2026-01-11 11:28:43,305 - INFO - Checking: 'Significant' impact for community bands as funding applications rejected
+2026-01-11 11:28:56,368 - INFO - Checking: Wetland teeming with life in this remote Corner Country of NSW
+2026-01-11 11:29:09,448 - INFO - Checking: 1986 in music: The big albums turning 40 this year
+2026-01-11 11:29:22,496 - INFO - Checking: Ukrainian underdog sets up Sabalenka final with 55-minute annihilation
+2026-01-11 11:29:31,525 - INFO - Checking: Gauff beats Świątek but Poland advances to United Cup final
+2026-01-11 11:29:33,304 - INFO - Checking: From sermons to guitar solos: Indonesian priest's unlikely pulpit is rock'n'roll
+2026-01-11 11:29:35,420 - INFO - Checking: Hull anchors Australia to World Cross Country Championships gold
+2026-01-11 11:29:37,288 - INFO - Checking: Aussie bobsleigh star Walker claims historic win ahead of Winter Olympics
+2026-01-11 11:29:39,324 - INFO - Checking: Is spin bowling a dying art in Australian cricket?
+2026-01-11 11:29:41,261 - INFO - Scanning The Guardian Australia
+2026-01-11 11:29:41,520 - INFO - Checking: Queensland braces for more flooding as Tropical Cyclone Koji makes landfall
+2026-01-11 11:29:54,600 - INFO - Checking: Australia’s Cop31 chief negotiator plans to lobby petrostates on fossil fuel phaseout
+2026-01-11 11:30:07,656 - INFO - Checking: Watched, scared and trapped in an Australian visa nightmare, Kiran is one of India’s ‘abandoned brides’
+2026-01-11 11:30:20,736 - INFO - Checking: Call centre operator that won major Centrelink contract paid no corporate tax for two years
+2026-01-11 11:30:33,800 - INFO - Checking: ‘Not worth the risk’: Lana and Todd were due to get married – but instead spent the day at a bushfire shelter
+2026-01-11 11:30:36,319 - INFO - Checking: ‘It doesn’t really hit your socials’: is this Australia’s best kept sporting secret? | Sarah Guiney
+2026-01-11 11:30:38,327 - INFO - Checking: Australia news live: more than 30 bushfires burning across Victoria as premier warns of ‘another difficult day’
+2026-01-11 11:30:40,138 - INFO - Checking: ‘The fight of our lives’: Australian gun lobby’s campaign against tighter laws after Bondi massacre revealed
+2026-01-11 11:30:53,212 - INFO - Checking: Albanese's handling of the Bondi attack exposed his weaknesses. An inquiry will mean uncomfortable questions for Labor | Dan Jervis-Bardy
+2026-01-11 11:31:06,284 - INFO - Checking: Black Saturday-affected towns told to leave before predicted wind change causes ‘dangerous’ fire conditions – as it happened
+2026-01-11 11:31:20,042 - INFO - Checking: With a new leader and tired opponent, this should be the Victorian Liberals’ year – if not for self-inflicted wounds
+2026-01-11 11:31:33,100 - INFO - Checking: The deliciously delusional popularity of Toowoomba pasta – a viral seafood dish inexplicably named for my home town | Rebecca Shaw
+2026-01-11 11:31:46,167 - INFO - Checking: Was Albanese’s royal commission refusal cynical or considered? Either way, his backdown has come too late
+2026-01-11 11:31:59,239 - INFO - Checking: Trump is destroying the rules of international behaviour. Australia can – and must – act now | Allan Behm
+2026-01-11 11:32:12,334 - INFO - Checking: Footage shows bushfires surrounding Victorian farm as ‘catastrophic’ fires ravage state – video
+2026-01-11 11:32:25,390 - INFO - Checking: Three people unaccounted for after 'catastrophic' fires in Victoria – video
+2026-01-11 11:32:38,490 - INFO - Checking: Footage shows smoke billowing from Victoria bushfire outbreak near Euroa - video
+2026-01-11 11:32:51,609 - INFO - Checking: I'll be back! Lights back on at Lismore Cinemas, four years after devastating floods – video
+2026-01-11 11:33:04,701 - INFO - Checking: Usman Khawaja announces retirement from international cricket - video
+2026-01-11 11:33:17,763 - INFO - Checking: Fireworks light up Sydney Harbour Bridge on New Year's Eve as Australia ushers in 2026 – video
+2026-01-11 11:33:30,842 - INFO - Checking: The best photos of 2025, taken by Guardian Australia photographers – video
+2026-01-11 11:33:43,921 - INFO - Checking: 'No royal commission after Port Arthur': PM stands firm against Bondi shooting commission – video
+2026-01-11 11:33:57,001 - INFO - Scanning ABC News - VIC
+2026-01-11 11:33:57,317 - INFO - Scanning The Age
+2026-01-11 11:33:57,645 - INFO - Scanning ABC News - QLD
+2026-01-11 11:33:57,799 - INFO - Checking: From regional WA to the USA: Young rodeo hopefuls join mentoring program
+2026-01-11 11:34:10,888 - INFO - Checking: Inside the world of stringing tennis racquets
+2026-01-11 11:34:23,944 - INFO - Checking: Hull anchors Australia to World Cross Country Championships gold
+2026-01-11 11:34:36,994 - INFO - Checking: Arsenal shows support for Cooney-Cross in wake of mother's cancer diagnosis
+2026-01-11 11:34:50,059 - INFO - Checking: Gauff beats Świątek but Poland advances to United Cup final
+2026-01-11 11:35:03,137 - INFO - Checking: Is spin bowling a dying art in Australian cricket?
+2026-01-11 11:35:16,198 - INFO - Checking: Aussie bobsleigh star Walker claims historic win ahead of Winter Olympics
+2026-01-11 11:35:29,269 - INFO - Checking: Quiz: Can you beat our Aus Open quiz in straight sets?
+2026-01-11 11:35:42,342 - INFO - Checking: Khawaja stars as Heat thrash Thunder, Warner injured
+2026-01-11 11:35:55,406 - INFO - Checking: Aussies on top of moguls World Cup standings as Olympics loom
+2026-01-11 11:36:08,461 - INFO - Checking: Ukrainian underdog sets up Sabalenka final with 55-minute annihilation
+2026-01-11 11:36:21,528 - INFO - Checking: Jasmin loves speedway racing but her first reaction was 'absolutely not'
+2026-01-11 11:36:34,618 - INFO - Checking: Hollywood-backed Wrexham knocks Premier League side out of FA Cup
+2026-01-11 11:36:47,704 - INFO - Checking: Sabalenka defeats Keys in Australian Open final re-match
+2026-01-11 11:37:00,808 - INFO - Checking: Aussies exit United Cup and Poland advances to semis
+2026-01-11 11:37:13,885 - INFO - Checking: Barmy Army turns Ashes defeat into Australian tourism win
+2026-01-11 11:37:26,963 - INFO - Checking: Kyrgios says he will not be seeking an Aus Open wildcard
+2026-01-11 11:37:29,092 - INFO - Checking: Martinelli apologises for 'disgraceful' act towards injured Liverpool player
+2026-01-11 11:37:31,402 - INFO - Checking: How a horse-mad girl from the outback became queen of racing in Queensland
+2026-01-11 11:37:40,334 - INFO - Checking: 'Our world changed': Matildas star returns home to face family tragedy
+2026-01-11 11:37:53,410 - INFO - Checking: Joint gets Barty's backing with teenager's Aus Open milestone confirmed
+2026-01-11 11:37:57,999 - INFO - Checking: How the internet reacted to the fifth Ashes Test
+2026-01-11 11:38:00,048 - INFO - Checking: Last Aussie out of Brisbane International after Hijikata suffers three-set loss
+2026-01-11 11:38:02,047 - INFO - Checking: Harry Brook fined $60k for nightclub scuffle before pre-Ashes match
+2026-01-11 11:38:04,581 - INFO - Checking: Ashes report card: Australia and England player ratings
+2026-01-11 11:38:06,552 - INFO - Scanning Courier Mail
+2026-01-11 11:38:06,690 - INFO - Scanning ABC News - WA
+2026-01-11 11:38:07,015 - INFO - Scanning The West Australian
+2026-01-11 11:38:07,447 - INFO - Scanning ABC News - SA
+2026-01-11 11:38:07,711 - INFO - Scanning The Advertiser
+2026-01-11 11:38:07,852 - INFO - Scanning ABC News - TAS
+2026-01-11 11:38:08,083 - INFO - Scanning The Mercury
+2026-01-11 11:38:08,228 - INFO - Scanning ABC News - ACT
+2026-01-11 11:38:08,399 - INFO - Scanning The Canberra Times
+2026-01-11 11:38:08,541 - INFO - Checking: Anthony Albanese announces royal commission into Bondi terror attack
+2026-01-11 11:38:10,892 - INFO - Checking: As heatwave breaks, high-octane Summernats pushes on
+2026-01-11 11:38:13,146 - INFO - Checking: Man and woman sought over alleged theft in Gungahlin
+2026-01-11 11:38:15,147 - INFO - Checking: Digital access key to student participation as back to school costs add up
+2026-01-11 11:38:16,987 - INFO - Checking: Trump says US to 'run Venezuela' after Maduro captured
+2026-01-11 11:38:18,888 - INFO - Checking: Drivers question new 'flawed' cameras following thousands of fines
+2026-01-11 11:38:21,419 - INFO - Checking: ACM Agri launches first 'national stage' to celebrate the best in agriculture
+2026-01-11 11:38:23,107 - INFO - Checking: Canberra's biggest, brashest festival goes global
+2026-01-11 11:38:25,054 - INFO - Checking: 'Best option for gaining effective control': RFS to start backburning operation
+2026-01-11 11:38:27,394 - INFO - Checking: RFS crews battling bushfire near Kings Highway
+2026-01-11 11:38:29,487 - INFO - Checking: New pub 'here for the long run' in Canberra suburb bereft of bars
+2026-01-11 11:38:31,381 - INFO - Checking: 'Not normal fur': an uncomfortable solution to Australia's fox problem
+2026-01-11 11:38:33,327 - INFO - Checking: Five areas to keep an eye on as ACT politics heads into 2026
+2026-01-11 11:38:35,138 - INFO - Checking: The world's tiniest, least-macho car is a giant hit at Summernats
+2026-01-11 11:38:37,521 - INFO - Checking: The question I inevitably get asked at this time of year
+2026-01-11 11:38:39,570 - INFO - Checking: Nadgee Lake could be key to containing remote Far South Coast bushfire
+2026-01-11 11:38:41,398 - INFO - Checking: Motorist deliberately killed kangaroos in 'callous, inhumane, cruel' acts
+2026-01-11 11:38:44,061 - INFO - Checking: 'Burnout cloud above a city': Summernats 38 moves into gear amid sweltering heatwave
+2026-01-11 11:38:46,089 - INFO - Checking: Man pleads not guilty to raping, indecently assaulting woman known to him at party
+2026-01-11 11:38:49,051 - INFO - Checking: Look up! The high octane show taking over Summernats
+2026-01-11 11:38:51,152 - INFO - Scanning ABC News - NT
+2026-01-11 11:38:51,344 - INFO - Scanning PinkNews - LGBTIQ+ News
+2026-01-11 11:38:51,833 - INFO - Checking: 15 must-see LGBTQ+ shows we can’t wait to watch in 2026
+2026-01-11 11:38:54,360 - INFO - Checking: Trans people have always been here – and these incredible colourised photos prove it
+2026-01-11 11:38:56,374 - INFO - Checking: Kathryn Hahn tipped to play Mother Gothel in live-action Tangled and sapphics are going wild
+2026-01-11 11:38:58,797 - INFO - Checking: New DC Comics Universe character Featherweight confirmed to be trans
+2026-01-11 11:39:00,766 - INFO - Checking: AOC condemns ICE as ‘anti-civilian paramilitary organisation’ following death of Renee Nicole Good
+2026-01-11 11:39:03,559 - INFO - Checking: Bad Bunny was Spotify’s most-streamed artist in 2025 – here are 13 facts about him you need to know
+2026-01-11 11:39:06,138 - INFO - Checking: Celebrity Traitors’ Cat Burns gives breast reduction update in hospital bed photo
+2026-01-11 11:39:08,344 - INFO - Checking: Robyn releases new album Sexistential – but what does the title actually mean?
+2026-01-11 11:39:10,358 - INFO - Checking: Majority of Americans think Republicans have a transphobia problem
+2026-01-11 11:39:12,382 - INFO - Checking: International Rebel Dykes Day is for all those lesbians who ‘feel like outsiders’
+2026-01-11 11:39:14,903 - INFO - Checking: Everything you need to know about Cynthia Erivo’s West End show Dracula as first photos released
+2026-01-11 11:39:17,271 - INFO - Checking: Britney Spears vows to never perform in US for ‘extremely sensitive reasons’
+2026-01-11 11:39:19,598 - INFO - Checking: Exploring what ‘transmasculine non-binary’ means as XG’s Cocona comes out
+2026-01-11 11:39:21,740 - INFO - Checking: Audio app apologises after editing trans women out of interview with Heated Rivalry stars
+2026-01-11 11:39:24,667 - INFO - Checking: This is who the Heated Rivalry stars will be sitting with at the Golden Globes – we’re very jealous
+2026-01-11 11:39:27,169 - INFO - Checking: GoFundMe for Renee Good’s wife and son soars past $1million in just hours
+2026-01-11 11:39:30,171 - INFO - Checking: Wicked novel banned in Utah for ‘sensitive’ material: ‘Censorship makes schools more dangerous’
+2026-01-11 11:39:32,071 - INFO - Checking: Debunking the myth of ‘lesbian bed death’ – why this tired old concept needs to die out
+2026-01-11 11:39:34,415 - INFO - Checking: LGBTQ+ charities facing ‘incredibly tough environment’ in UK amid Trump’s DEI attacks
+2026-01-11 11:39:36,691 - INFO - Checking: Alan Cumming roasts ex-teacher at Hollywood star ceremony: ‘Who is on top and who is on bottom now?’
+2026-01-11 11:39:38,797 - INFO - Checking: Gay tennis player João Lucas Reis da Silva to make history at Australian Open
+2026-01-11 11:39:41,070 - INFO - Checking: LGBTQ+ Americans are Googling how to claim asylum in Canada following Renee Nicole Good’s death
+2026-01-11 11:39:43,087 - INFO - Checking: Rihanna enlists trans model Vivian Jenna Wilson for new Savage X Fenty campaign
+2026-01-11 11:39:45,285 - INFO - Checking: 16 celebrities and reality TV stars who turned to politics from Trump to Katie Price
+2026-01-11 11:39:47,539 - INFO - Checking: Heated Rivalry’s author addresses sexuality speculation
+2026-01-11 11:39:49,845 - INFO - Checking: University professor banned from teaching about Plato over ‘sexuality’ rules
+2026-01-11 11:39:52,289 - INFO - Checking: Drag Race UK vs. the World season three cast and release date confirmed
+2026-01-11 11:39:54,605 - INFO - Checking: Trump’s lesbian niece calls him out for ‘ignoring’ Capitol officers injured or killed on 6 January
+2026-01-11 11:39:57,271 - INFO - Checking: 9-1-1 showrunner divides fans with statement about ‘Buddie’: ‘Queerbaiting us again and again’
+2026-01-11 11:39:59,370 - INFO - Checking: RuPaul fans are obsessed with video of him laughing in man’s face
+2026-01-11 11:40:02,237 - INFO - Scanning Star Observer
+2026-01-11 11:40:02,842 - INFO - Checking: YungBlud Seen Partying Completely Naked In Sydney Harbour
+2026-01-11 11:40:05,696 - INFO - Checking: Over $1 Million Raised For Family Of ICE Shooting Victim Renee Good As New Footage Emerges
+2026-01-11 11:40:08,164 - INFO - Checking: Bob The Drag Queen Roasts Ginger Minj Over Her Controvsersial Press Tour
+2026-01-11 11:40:10,637 - INFO - Checking: Britney Spears Teases She Wants Return To Australia ‘Very Soon’
+2026-01-11 11:40:12,699 - INFO - Checking: Matildas Star Kyra Cooney-Cross Shares Heartbreaking Family Health News
+2026-01-11 11:40:15,087 - INFO - Checking: Who Is Virginia Bell, The Openly Gay Judge Heading Up The Bondi Attack Royal Commission?
+2026-01-11 11:40:17,737 - INFO - Checking: Heated Rivalry Star Hudson Williams Says Closeted Pro Athletes Are DMing Him
+2026-01-11 11:40:19,978 - INFO - Checking: Meet The Queens Of ‘Drag Race UK vs The World’ Season Three
+2026-01-11 11:40:22,052 - INFO - Checking: Robyn Vows To “Stay Horny” In Return To Music With ‘Sexistential’
+2026-01-11 11:40:24,323 - INFO - Checking: OPINION: Hate Of All Types Is On The Rise – We Need A Royal Commission To Address It All
+2026-01-11 11:40:27,401 - INFO - Relevant: OPINION: Hate Of All Types Is On The Rise – We Need A Royal Commission To Address It All
+2026-01-11 11:40:32,056 - ERROR - Error: list indices must be integers or slices, not str
+2026-01-11 11:40:32,057 - INFO - Checking: Queer Eye: Everything You Need To Know About The Final Season
+2026-01-11 11:40:33,944 - INFO - Checking: ‘They Killed My Wife’: Shock & Protest As ICE Agent Fatally Shoots Woman in Minneapolis
+2026-01-11 11:40:36,481 - INFO - Checking: Black, Fat & F**gy: A Born Diva, Milo Hartill Is Changing The Game
+2026-01-11 11:40:38,617 - INFO - Checking: Queer History Is Back In Style In Queensland’s ‘Make a Scene’ Exhibition
+2026-01-11 11:40:40,589 - INFO - Checking: Engorge-ous: Reuben Kaye Is Standing To Attention & Ready For The Opera House
+2026-01-11 11:40:42,995 - INFO - Checking: Disability and LGBTQ+ Advocates Call For Expanded Federal Hate Speech Laws
+2026-01-11 11:40:45,219 - INFO - Checking: Melbourne Man Targeted With Online Hate After Sharing Homophobic Experience
+2026-01-11 11:40:48,765 - INFO - Relevant: Melbourne Man Targeted With Online Hate After Sharing Homophobic Experience
+2026-01-11 11:40:55,219 - WARNING - Could not geocode: JJ Holland Park, Melbourne, Australia
+2026-01-11 11:40:55,245 - INFO - Checking 1 new incidents for duplicates...
+2026-01-11 11:40:55,294 - INFO - Deduplication complete: 1 unique, 0 duplicates, 0 consolidated
+2026-01-11 11:40:55,302 - INFO - Checking: Cher Tells Dax Shepard His Wife Could Do Better: “You Must Have Something That I Don’t See”
+2026-01-11 11:40:57,352 - INFO - Checking: Tyra Sanchez Claims To Be Seeking A Lawsuit Against RuPaul In Facebook Post
+2026-01-11 11:41:00,305 - INFO - Scanning Newcastle Herald
+2026-01-11 11:41:00,458 - INFO - Checking: Anthony Albanese announces royal commission into Bondi terror attack
+2026-01-11 11:41:03,586 - INFO - Checking: Firefighters battle overnight blaze on Hunter Expressway | live updates
+2026-01-11 11:41:05,656 - INFO - Checking: Police swarm scene after violent early-morning stabbing at Marketown
+2026-01-11 11:41:08,272 - INFO - Checking: 'Something for everyone': Suburban pubs thrive in changing nightlife scene
+2026-01-11 11:41:10,004 - INFO - Checking: Trump says US to 'run Venezuela' after Maduro captured
+2026-01-11 11:41:12,217 - INFO - Checking: 80kt winds and 8m swells: bravery remembered 10 years after Port Stephens tragedy
+2026-01-11 11:41:14,268 - INFO - Checking: ACM Agri launches first 'national stage' to celebrate the best in agriculture
+2026-01-11 11:41:15,856 - INFO - Checking: Temperatures pass 40 degrees in the Hunter as heatwave scorches
+2026-01-11 11:41:17,661 - INFO - Checking: Jack Ladder climbs new heights after dream session forges bleak beauty
+2026-01-11 11:41:20,044 - INFO - Checking: Decades-long mission to restore Charles Kingsford Smith to rarefied air
+2026-01-11 11:41:22,132 - INFO - Checking: Fire tears through house at Raymond Terrace
+2026-01-11 11:41:24,536 - INFO - Checking: Summer tragedy: boy drowns in backyard pool at Bobs Farm
+2026-01-11 11:41:26,709 - INFO - Checking: Controversial Lake Macquarie subdivision back on drawing board with more lots
+2026-01-11 11:41:29,222 - INFO - Checking: Clausen defends affordable housing project slated for Rail Bridge Row
+2026-01-11 11:41:31,152 - INFO - Checking: Relentlessly abused by her father, Nicole has shed the 'shame'. It was never hers to carry
+2026-01-11 11:41:33,694 - INFO - Checking: What area has the cheapest petrol in the Hunter?
+2026-01-11 11:41:35,756 - INFO - Checking: Apartment living driving uptick in housing approvals
+2026-01-11 11:41:37,564 - INFO - Checking: Inquiry must deliver real safety, not symbolism, says Newcastle rabbi
+2026-01-11 11:41:40,904 - INFO - Checking: The housing crisis means we have to accept developments we don't like
+2026-01-11 11:41:43,137 - INFO - Checking: Desert honky-tonk princess Brea Burns ready to expand her kingdom
+2026-01-11 11:41:45,422 - INFO - Scanning Gold Coast Bulletin
+2026-01-11 11:41:45,618 - INFO - Summary: {'processed': 162, 'date_matched': 161, 'relevant': 2, 'duplicates': 0, 'auto_published': 0, 'pending_review': 1, 'errors': 1}

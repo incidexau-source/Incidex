@@ -1,6 +1,6 @@
 LGBTIQ+ Hate Crime Data Cleanup Report
 ======================================
-Date: 2026-01-11 14:25:35.957631
+Date: 2026-01-11 16:08:53.887374
 
 - Total records processed: 310
 - International/Irrelevant removed: 104

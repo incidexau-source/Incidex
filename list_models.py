@@ -1,9 +1,14 @@
-﻿import os
-import google.generativeai as genai
+﻿
+from google import genai
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-api_key = os.getenv('GOOGLE_API_KEY')
-genai.configure(api_key=api_key)
+key = os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=key)
 
-print('Available models:')
-for model in genai.list_models():
-    print(f'  {model.name}')
+try:
+    for m in client.models.list():
+        print(m.name)
+except Exception as e:
+    print(f"Error: {e}")
