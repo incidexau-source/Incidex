@@ -4,30 +4,35 @@ on:
   schedule:
     - cron: '0 9 * * *'
   workflow_dispatch:
+    inputs:
+      skip_email_alerts:
+        description: 'Skip sending email alerts'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   monitor-rss:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
+
       - name: Run RSS Monitor
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: python scripts/rss_monitor.py
-      
+
       - name: Run Parliamentary Tracking
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -35,17 +40,61 @@ jobs:
           FORCE_PARLIAMENTARY_TRACKING: ${{ github.event_name == 'workflow_dispatch' && 'true' || '' }}
         run: |
           python scripts/run_parliamentary_tracking.py || echo "Parliamentary tracking completed with warnings"
-      
-      - name: Run Discord hate crime alerts
+
+      - name: Run Legal Cases Tracking
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/legal_cases_scraper.py || echo "Legal cases scraping completed with warnings"
+
+      - name: Send Email Alerts for Review
+        if: ${{ github.event.inputs.skip_email_alerts != 'true' }}
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          REVIEWER_EMAILS: ${{ secrets.REVIEWER_EMAILS }}
+          REPORT_SIGNING_KEY: ${{ secrets.REPORT_SIGNING_KEY }}
+          INCIDEX_BASE_URL: ${{ secrets.INCIDEX_BASE_URL }}
+        run: |
+          python scripts/unified_alerts.py --send-alerts
+
+      - name: Run Discord alerts (backup)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python hate_crime_alerts.py
-      
+        run: |
+          python hate_crime_alerts.py || echo "Discord alerts completed with warnings"
+
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/*.csv data/cache/*.json || true
-          git commit -m "Update parliamentary tracking data" || true
+          git add data/*.csv data/*.json || true
+          git commit -m "Daily update: RSS, Parliamentary, Legal tracking" || true
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git || true
+
+      - name: Generate Summary
+        run: |
+          echo "## Daily Tracking Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Data Files Updated" >> $GITHUB_STEP_SUMMARY
+          echo "- incidents_news_sourced.csv" >> $GITHUB_STEP_SUMMARY
+          echo "- parliamentary-bills.csv" >> $GITHUB_STEP_SUMMARY
+          echo "- legal-cases.csv" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Pending Review Files" >> $GITHUB_STEP_SUMMARY
+          if [ -f "data/incidents_pending_review.csv" ]; then
+            PENDING_INC=$(tail -n +2 data/incidents_pending_review.csv | grep -c "pending" || echo "0")
+            echo "- Incidents pending: $PENDING_INC" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "data/parliamentary_pending_review.csv" ]; then
+            PENDING_PARL=$(tail -n +2 data/parliamentary_pending_review.csv | grep -c "pending" || echo "0")
+            echo "- Parliamentary pending: $PENDING_PARL" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "data/legal_pending_review.csv" ]; then
+            PENDING_LEGAL=$(tail -n +2 data/legal_pending_review.csv | grep -c "pending" || echo "0")
+            echo "- Legal cases pending: $PENDING_LEGAL" >> $GITHUB_STEP_SUMMARY
+          fi
 
