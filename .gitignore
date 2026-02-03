@@ -17,6 +17,9 @@ ENV/
 .env
 .env.local
 
+# Supabase config with credentials
+visualizations/config.js
+
 # RSS Monitor cache files
 geocoding_cache.json
 

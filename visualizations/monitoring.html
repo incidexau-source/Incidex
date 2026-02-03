@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Real-time monitoring dashboard for LGBTIQ+ hate crime incidents across Australia.">
+  <title>Monitoring Dashboard | Incidex Australia</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incidex.au/monitoring.html">
+  <meta property="og:title" content="Monitoring Dashboard | Incidex Australia">
+  <meta property="og:description"
+    content="Real-time monitoring dashboard for LGBTIQ+ hate crime incidents across Australia.">
+  <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
+
+  <style>
+    body {
+      background: var(--color-bg) !important;
+      color: var(--color-text) !important;
+    }
+
+    .dashboard-layout {
+      min-height: calc(100vh - var(--header-height));
+      padding: var(--space-6);
+      max-width: var(--container-2xl);
+      margin: 0 auto;
+    }
+
+    .page-header {
+      margin-bottom: var(--space-6);
+    }
+
+    .page-title {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-1);
+    }
+
+    .page-subtitle {
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+    }
+
+    .updated-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-2);
+    }
+
+    .updated-badge .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .kpi-card {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi-label {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .kpi-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-text);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .kpi-detail {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    .kpi-card.accent-red .kpi-value { color: var(--color-danger, #d9534f); }
+    .kpi-card.accent-teal .kpi-value { color: var(--color-primary, #14b8a6); }
+    .kpi-card.accent-amber .kpi-value { color: #d97706; }
+
+    /* Charts Grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .chart-card {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chart-card.full { grid-column: span 12; }
+    .chart-card.half { grid-column: span 6; }
+    .chart-card.two-thirds { grid-column: span 8; }
+    .chart-card.one-third { grid-column: span 4; }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .chart-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+    }
+
+    .chart-title svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-primary);
+      vertical-align: -3px;
+      margin-right: 4px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+    }
+
+    .chart-container.short { height: 250px; }
+
+    /* Recent Feed */
+    .feed-list {
+      max-height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+
+    .feed-item:hover {
+      background: var(--color-bg);
+    }
+
+    .feed-date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      white-space: nowrap;
+      min-width: 72px;
+      padding-top: 2px;
+    }
+
+    .feed-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feed-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      line-height: var(--leading-snug);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .feed-location {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .severity-badge {
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .severity-badge.high { background: #fef2f2; color: #dc2626; }
+    .severity-badge.medium { background: #fffbeb; color: #d97706; }
+    .severity-badge.low { background: #ecfdf5; color: #059669; }
+
+    /* Map */
+    #monitorMap {
+      height: 450px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    /* State Table */
+    .state-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .state-table th,
+    .state-table td {
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .state-table th {
+      font-weight: var(--font-semibold);
+      color: var(--color-text-muted);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+
+    .state-table tr:hover td {
+      background: var(--color-bg);
+    }
+
+    /* Loading */
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12);
+      color: var(--color-text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .chart-card.two-thirds,
+      .chart-card.one-third {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .chart-card.half {
+        grid-column: span 12;
+      }
+
+      .dashboard-layout {
+        padding: var(--space-4);
+      }
+
+      .kpi-value {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== REAL-TIME MONITORING STYLES ===== */
+    .live-status-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: live-pulse 2s infinite;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    @keyframes live-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    .live-text {
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+
+    .refresh-status {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .refresh-countdown {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      padding: 2px 8px;
+      border-radius: var(--radius-md);
+    }
+
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .refresh-btn:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .refresh-btn.spinning svg {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .badge-live {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      animation: badge-pulse 2s infinite;
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    }
+
+    /* Activity Stream */
+    .activity-stream {
+      max-height: 350px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .activity-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8);
+      color: var(--color-text-muted);
+      gap: var(--space-2);
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--color-border);
+      background: var(--color-bg);
+      transition: all 0.3s ease;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .activity-item.new {
+      background: rgba(16, 185, 129, 0.1);
+      border-left-color: #10b981;
+    }
+
+    .activity-item.murder { border-left-color: #dc2626; }
+    .activity-item.assault { border-left-color: #d97706; }
+    .activity-item.discrimination { border-left-color: #3b82f6; }
+    .activity-item.hate_speech { border-left-color: #8b5cf6; }
+
+    .activity-time {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      min-width: 70px;
+      flex-shrink: 0;
+    }
+
+    .activity-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+      line-height: var(--leading-snug);
+      margin-bottom: 2px;
+    }
+
+    .activity-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .activity-type {
+      display: inline-block;
+      font-size: 0.625rem;
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      margin-left: var(--space-2);
+    }
+
+    .activity-type.murder { background: rgba(220, 38, 38, 0.1); color: #dc2626; }
+    .activity-type.assault { background: rgba(217, 119, 6, 0.1); color: #d97706; }
+    .activity-type.discrimination { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .activity-type.hate_speech { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+
+    /* News Feed */
+    .news-feed {
+      max-height: 350px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .news-item {
+      display: block;
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .news-item:hover {
+      border-color: var(--color-primary);
+      background: var(--color-bg);
+    }
+
+    .news-source {
+      font-size: 0.625rem;
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .news-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      line-height: var(--leading-snug);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .news-date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .news-empty {
+      text-align: center;
+      padding: var(--space-6);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    /* Update flash animation */
+    .kpi-card.updating {
+      animation: updateFlash 0.5s ease;
+    }
+
+    @keyframes updateFlash {
+      0%, 100% { background: var(--color-bg-alt); }
+      50% { background: rgba(16, 185, 129, 0.1); }
+    }
+
+    @media (max-width: 768px) {
+      .live-status-bar {
+        flex-wrap: wrap;
+      }
+
+      .refresh-status {
+        flex: 1 1 100%;
+        order: 3;
+        margin-top: var(--space-2);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip Link -->
+  <a href="#dashboard" class="skip-link">Skip to dashboard</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+          class="logo-full" loading="eager">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          MP Voting
+        </a>
+        <a href="statistics.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Statistics
+        </a>
+        <a href="monitoring.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Monitor
+        </a>
+        <a href="database.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="9" x2="9" y2="21"></line>
+            <line x1="15" y1="9" x2="15" y2="21"></line>
+          </svg>
+          Database
+        </a>
+        <!-- Resources Dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            Resources
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="nav-dropdown-menu" aria-hidden="true">
+            <div class="dropdown-section">
+              <div class="dropdown-section-title">
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                  </path>
+                </svg>
+                Legal Guides: Know Your Rights
+              </div>
+              <a href="legal_guides.html"
+                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+                <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
+                  guides for every Australian jurisdiction</div>
+              </a>
+              <div class="jurisdiction-grid">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"><div class="jurisdiction-name">Commonwealth</div></a>
+                <a href="legal_guides.html#nsw" class="jurisdiction-card"><div class="jurisdiction-name">NSW</div></a>
+                <a href="legal_guides.html#victoria" class="jurisdiction-card"><div class="jurisdiction-name">VIC</div></a>
+                <a href="legal_guides.html#queensland" class="jurisdiction-card"><div class="jurisdiction-name">QLD</div></a>
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card"><div class="jurisdiction-name">TAS</div></a>
+                <a href="legal_guides.html#sa" class="jurisdiction-card"><div class="jurisdiction-name">SA</div></a>
+                <a href="legal_guides.html#wa" class="jurisdiction-card"><div class="jurisdiction-name">WA</div></a>
+                <a href="legal_guides.html#nt" class="jurisdiction-card"><div class="jurisdiction-name">NT</div></a>
+                <a href="legal_guides.html#act" class="jurisdiction-card"><div class="jurisdiction-name">ACT</div></a>
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <a href="resources.html" class="services-link">
+                <span>View All Support Services</span>
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="report_incident.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Report
+        </a>
+        <a href="about.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          About
+        </a>
+        <a href="contact.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contact
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="monitoring.html" class="nav-link active">Monitor</a>
+    <a href="database.html" class="nav-link">Database</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report an Incident</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="dashboard" class="dashboard-layout">
+    <div class="page-header">
+      <h1 class="page-title">Monitoring Dashboard</h1>
+      <p class="page-subtitle">Real-time overview of LGBTIQ+ hate crime incidents across Australia</p>
+      <div class="live-status-bar">
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span class="live-text">LIVE</span>
+        </div>
+        <div class="refresh-status">
+          <span id="dataTimestamp">Loading...</span>
+          <span class="refresh-countdown">Next update in <span id="refreshCountdown">60</span>s</span>
+        </div>
+        <button class="refresh-btn" id="manualRefreshBtn" title="Refresh now">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Incidents</div>
+        <div class="kpi-value" id="kpiTotal">-</div>
+        <div class="kpi-detail" id="kpiTotalDetail">Loading...</div>
+      </div>
+      <div class="kpi-card accent-teal">
+        <div class="kpi-label">Last 12 Months</div>
+        <div class="kpi-value" id="kpiRecent">-</div>
+        <div class="kpi-detail" id="kpiRecentDetail"></div>
+      </div>
+      <div class="kpi-card accent-red">
+        <div class="kpi-label">High Severity</div>
+        <div class="kpi-value" id="kpiHigh">-</div>
+        <div class="kpi-detail" id="kpiHighDetail"></div>
+      </div>
+      <div class="kpi-card accent-amber">
+        <div class="kpi-label">Most Common Type</div>
+        <div class="kpi-value" id="kpiType" style="font-size: 1.5rem;">-</div>
+        <div class="kpi-detail" id="kpiTypeDetail"></div>
+      </div>
+    </div>
+
+    <!-- Live Activity Feed + News -->
+    <div class="charts-grid">
+      <div class="chart-card two-thirds">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            Live Activity Stream
+          </div>
+          <span class="badge badge-live">Live</span>
+        </div>
+        <div class="activity-stream" id="activityStream">
+          <div class="activity-loading">
+            <div class="loading-spinner"></div>
+            <p>Connecting to live feed...</p>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card one-third">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            LGBTIQ+ News
+          </div>
+        </div>
+        <div class="news-feed" id="newsFeed">
+          <div class="activity-loading">
+            <div class="loading-spinner"></div>
+            <p>Fetching news...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trend Chart -->
+    <div class="charts-grid">
+      <div class="chart-card full">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            Incidents Over Time
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Feed + Severity -->
+    <div class="charts-grid">
+      <div class="chart-card two-thirds">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Recent Incidents
+          </div>
+        </div>
+        <div class="feed-list" id="feedList">
+          <div class="loading-spinner">Loading incidents...</div>
+        </div>
+      </div>
+      <div class="chart-card one-third">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20"></path><path d="M12 2v20"></path></svg>
+            Severity Distribution
+          </div>
+        </div>
+        <div class="chart-container short">
+          <canvas id="severityChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Type + Victim Breakdown -->
+    <div class="charts-grid">
+      <div class="chart-card half">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Incident Type Breakdown
+          </div>
+        </div>
+        <div class="chart-container short">
+          <canvas id="typeChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card half">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Victim Identity Breakdown
+          </div>
+        </div>
+        <div class="chart-container short">
+          <canvas id="victimChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Geographic Map -->
+    <div class="charts-grid">
+      <div class="chart-card full">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            Geographic Distribution
+          </div>
+        </div>
+        <div id="monitorMap"></div>
+      </div>
+    </div>
+
+    <!-- State Table -->
+    <div class="charts-grid">
+      <div class="chart-card full">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="9" x2="9" y2="21"></line></svg>
+            State-by-State Summary
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="state-table" id="stateTable">
+            <thead>
+              <tr>
+                <th>State / Territory</th>
+                <th>Total Incidents</th>
+                <th>High Severity</th>
+                <th>Most Recent</th>
+              </tr>
+            </thead>
+            <tbody id="stateTableBody">
+              <tr><td colspan="4" style="text-align:center; color: var(--color-text-muted);">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+                loading="lazy">
+            </a>
+          </div>
+          <h4>About</h4>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for
+            LGBTIQ+ Australians.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="monitoring.html">Monitoring Dashboard</a></li>
+            <li><a href="resources.html">Support Resources</a></li>
+            <li><a href="about.html">About This Project</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Get Help</h4>
+          <ul>
+            <li><a href="tel:1800184527">QLife: 1800 184 527</a></li>
+            <li><a href="tel:131114">Lifeline: 13 11 14</a></li>
+            <li><a href="tel:000">Emergency: 000</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Subscribe for updates on new data and resources.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 Incidex Australia. Data updated: <span id="lastUpdated">-</span></p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <script src="resources-dropdown.js"></script>
+
+  <script>
+    // ===== REAL-TIME MONITORING DASHBOARD =====
+    const SEVERITY_COLORS = { high: '#dc2626', medium: '#d97706', low: '#059669' };
+    const REFRESH_INTERVAL = 60; // seconds
+    const NEWS_RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    const NEWS_FEEDS = [
+      'https://www.starobserver.com.au/feed',
+      'https://www.sbs.com.au/news/topic/lgbtqi/feed'
+    ];
+
+    const STATE_MAP = {
+      'new south wales': 'NSW', 'nsw': 'NSW',
+      'victoria': 'VIC', 'vic': 'VIC',
+      'queensland': 'QLD', 'qld': 'QLD',
+      'western australia': 'WA', 'wa': 'WA',
+      'south australia': 'SA', 'sa': 'SA',
+      'tasmania': 'TAS', 'tas': 'TAS',
+      'northern territory': 'NT', 'nt': 'NT',
+      'australian capital territory': 'ACT', 'act': 'ACT', 'canberra': 'ACT',
+      'australia-wide': 'National', 'australia': 'National'
+    };
+
+    // State
+    let allData = [];
+    let charts = {};
+    let map = null;
+    let markers = null;
+    let refreshCountdown = REFRESH_INTERVAL;
+    let countdownInterval = null;
+    let lastDataHash = '';
+
+    // DOM Elements
+    const timestampEl = document.getElementById('dataTimestamp');
+    const countdownEl = document.getElementById('refreshCountdown');
+    const refreshBtn = document.getElementById('manualRefreshBtn');
+    const activityStreamEl = document.getElementById('activityStream');
+    const newsFeedEl = document.getElementById('newsFeed');
+
+    // Utility Functions
+    function extractState(location) {
+      if (!location) return 'Unknown';
+      const loc = location.toLowerCase().trim();
+      for (const [key, val] of Object.entries(STATE_MAP)) {
+        if (loc.includes(key)) return val;
+      }
+      if (loc.includes('sydney') || loc.includes('newtown') || loc.includes('bondi')) return 'NSW';
+      if (loc.includes('melbourne') || loc.includes('abbotsford') || loc.includes('st kilda')) return 'VIC';
+      if (loc.includes('brisbane') || loc.includes('gold coast') || loc.includes('cairns')) return 'QLD';
+      if (loc.includes('perth') || loc.includes('northbridge')) return 'WA';
+      if (loc.includes('adelaide')) return 'SA';
+      if (loc.includes('hobart')) return 'TAS';
+      if (loc.includes('darwin')) return 'NT';
+      return 'Other';
+    }
+
+    function parseDate(dateStr) {
+      if (!dateStr || dateStr === 'not specified') return null;
+      const clean = dateStr.replace(/XX/g, '01');
+      const d = new Date(clean);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function timeAgo(date) {
+      if (!date) return 'Unknown';
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 1) return 'Just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHours < 24) return `${diffHours}h ago`;
+      if (diffDays < 7) return `${diffDays}d ago`;
+      if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+      return date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+    }
+
+    function hashData(data) {
+      return data.length + '-' + (data[0]?.title || '') + '-' + (data[data.length - 1]?.title || '');
+    }
+
+    // Data Loading
+    function loadData(isRefresh = false) {
+      const dataPath = '../data/incidents_in_progress.csv?v=' + Date.now();
+
+      if (refreshBtn) refreshBtn.classList.add('spinning');
+
+      Papa.parse(dataPath, {
+        header: true,
+        download: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          const data = results.data.filter(r => r.title && r.title.trim());
+          const newHash = hashData(data);
+
+          if (isRefresh && newHash !== lastDataHash) {
+            // New data detected - flash KPI cards
+            document.querySelectorAll('.kpi-card').forEach(card => {
+              card.classList.add('updating');
+              setTimeout(() => card.classList.remove('updating'), 500);
+            });
+          }
+
+          lastDataHash = newHash;
+          allData = data;
+
+          timestampEl.textContent = 'Updated ' + new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+          buildDashboard(data, isRefresh);
+
+          if (refreshBtn) refreshBtn.classList.remove('spinning');
+        },
+        error: function(err) {
+          console.error('Data load error:', err);
+          if (refreshBtn) refreshBtn.classList.remove('spinning');
+        }
+      });
+    }
+
+    // Activity Stream
+    function buildActivityStream(data) {
+      const dated = data.map(r => ({ ...r, _date: parseDate(r.date) }));
+      const sorted = dated.filter(r => r._date).sort((a, b) => b._date - a._date).slice(0, 15);
+
+      if (sorted.length === 0) {
+        activityStreamEl.innerHTML = '<div class="news-empty">No recent activity to display.</div>';
+        return;
+      }
+
+      activityStreamEl.innerHTML = sorted.map((r, i) => {
+        const type = (r.incident_type || 'other').toLowerCase().replace(/\s+/g, '_');
+        const typeClass = ['murder', 'assault', 'discrimination', 'hate_speech'].includes(type) ? type : '';
+        const isNew = i < 3;
+
+        return `
+          <div class="activity-item ${typeClass} ${isNew ? 'new' : ''}">
+            <span class="activity-time">${timeAgo(r._date)}</span>
+            <div class="activity-content">
+              <div class="activity-title">${r.title || 'Untitled incident'}</div>
+              <div class="activity-meta">
+                ${r.location || 'Unknown location'}
+                ${typeClass ? `<span class="activity-type ${typeClass}">${type.replace(/_/g, ' ')}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // News Feed
+    function loadNewsFeed() {
+      // Try to fetch from RSS feeds via rss2json API
+      const feedUrl = NEWS_RSS_API + encodeURIComponent(NEWS_FEEDS[0]);
+
+      fetch(feedUrl)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'ok' && data.items && data.items.length > 0) {
+            const items = data.items.slice(0, 6);
+            newsFeedEl.innerHTML = items.map(item => {
+              const pubDate = new Date(item.pubDate);
+              return `
+                <a href="${item.link}" target="_blank" rel="noopener" class="news-item">
+                  <div class="news-source">${data.feed?.title || 'LGBTIQ+ News'}</div>
+                  <div class="news-title">${item.title}</div>
+                  <div class="news-date">${timeAgo(pubDate)}</div>
+                </a>
+              `;
+            }).join('');
+          } else {
+            showFallbackNews();
+          }
+        })
+        .catch(() => {
+          showFallbackNews();
+        });
+    }
+
+    function showFallbackNews() {
+      // Show links to news sources when RSS fails
+      newsFeedEl.innerHTML = `
+        <div class="news-empty">
+          <p>Live news feed unavailable.</p>
+          <p style="margin-top: var(--space-3);">Visit these sources directly:</p>
+          <div style="margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
+            <a href="https://www.starobserver.com.au/" target="_blank" rel="noopener" class="news-item">
+              <div class="news-source">Star Observer</div>
+              <div class="news-title">Australia's LGBTIQ+ News Source</div>
+            </a>
+            <a href="https://www.sbs.com.au/news/topic/lgbtqi" target="_blank" rel="noopener" class="news-item">
+              <div class="news-source">SBS News</div>
+              <div class="news-title">LGBTQI Coverage</div>
+            </a>
+            <a href="https://qnews.com.au/" target="_blank" rel="noopener" class="news-item">
+              <div class="news-source">QNews</div>
+              <div class="news-title">Queensland LGBTIQ+ News</div>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    // Refresh Countdown
+    function startCountdown() {
+      refreshCountdown = REFRESH_INTERVAL;
+      if (countdownEl) countdownEl.textContent = refreshCountdown;
+
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      countdownInterval = setInterval(() => {
+        refreshCountdown--;
+        if (countdownEl) countdownEl.textContent = refreshCountdown;
+
+        if (refreshCountdown <= 0) {
+          loadData(true);
+          refreshCountdown = REFRESH_INTERVAL;
+        }
+      }, 1000);
+    }
+
+    // Build Dashboard
+    function buildDashboard(data, isRefresh = false) {
+      const now = new Date();
+      const oneYearAgo = new Date(now);
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+      const dated = data.map(r => ({ ...r, _date: parseDate(r.date) }));
+      const recent = dated.filter(r => r._date && r._date >= oneYearAgo);
+      const highSev = data.filter(r => (r.severity || '').toLowerCase() === 'high');
+
+      // Type counts
+      const typeCounts = {};
+      data.forEach(r => {
+        const t = (r.incident_type || 'unknown').toLowerCase().trim();
+        typeCounts[t] = (typeCounts[t] || 0) + 1;
+      });
+      const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
+
+      // Update KPIs
+      document.getElementById('kpiTotal').textContent = data.length;
+      document.getElementById('kpiTotalDetail').textContent = 'All recorded incidents';
+      document.getElementById('kpiRecent').textContent = recent.length;
+      document.getElementById('kpiRecentDetail').textContent = 'Since ' + oneYearAgo.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+      document.getElementById('kpiHigh').textContent = highSev.length;
+      document.getElementById('kpiHighDetail').textContent = ((highSev.length / data.length * 100) || 0).toFixed(0) + '% of all incidents';
+      if (topType) {
+        document.getElementById('kpiType').textContent = topType[0].charAt(0).toUpperCase() + topType[0].slice(1);
+        document.getElementById('kpiTypeDetail').textContent = topType[1] + ' incidents';
+      }
+
+      // Build Activity Stream
+      buildActivityStream(data);
+
+      // Load News Feed (only on initial load)
+      if (!isRefresh) {
+        loadNewsFeed();
+      }
+
+      // Build charts only on initial load
+      if (!isRefresh) {
+        buildCharts(data, dated);
+        buildMap(data);
+        buildStateTable(dated);
+      }
+
+      // Footer date
+      document.querySelectorAll('#lastUpdated').forEach(el => {
+        el.textContent = new Date().toLocaleDateString('en-AU');
+      });
+    }
+
+    function buildCharts(data, dated) {
+      // Trend Chart
+      const monthBuckets = {};
+      dated.forEach(r => {
+        if (!r._date) return;
+        const key = r._date.getFullYear() + '-' + String(r._date.getMonth() + 1).padStart(2, '0');
+        monthBuckets[key] = (monthBuckets[key] || 0) + 1;
+      });
+      const sortedMonths = Object.keys(monthBuckets).sort();
+      const monthLabels = sortedMonths.map(m => {
+        const [y, mo] = m.split('-');
+        return new Date(y, mo - 1).toLocaleDateString('en-AU', { month: 'short', year: '2-digit' });
+      });
+      const cutoff = new Date();
+      cutoff.setFullYear(cutoff.getFullYear() - 1);
+      const cutoffKey = cutoff.getFullYear() + '-' + String(cutoff.getMonth() + 1).padStart(2, '0');
+      const bgColors = sortedMonths.map(m => m >= cutoffKey ? 'rgba(20, 184, 166, 0.8)' : 'rgba(20, 184, 166, 0.25)');
+
+      charts.trend = new Chart(document.getElementById('trendChart'), {
+        type: 'bar',
+        data: {
+          labels: monthLabels,
+          datasets: [{
+            label: 'Incidents',
+            data: sortedMonths.map(m => monthBuckets[m]),
+            backgroundColor: bgColors,
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { precision: 0 } },
+            x: { ticks: { maxRotation: 45, autoSkip: true, maxTicksLimit: 24 } }
+          }
+        }
+      });
+
+      // Recent Feed (with relative timestamps)
+      const sortedByDate = dated.filter(r => r._date).sort((a, b) => b._date - a._date).slice(0, 20);
+      const feedEl = document.getElementById('feedList');
+      feedEl.innerHTML = '';
+      sortedByDate.forEach(r => {
+        const sev = (r.severity || 'low').toLowerCase();
+        const a = document.createElement('a');
+        a.className = 'feed-item';
+        a.href = r.url || '#';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = `
+          <span class="feed-date">${timeAgo(r._date)}</span>
+          <div class="feed-content">
+            <div class="feed-title">${r.title || 'Untitled'}</div>
+            <div class="feed-location">${r.location || 'Unknown location'}</div>
+          </div>
+          <span class="severity-badge ${sev}">${sev}</span>
+        `;
+        feedEl.appendChild(a);
+      });
+
+      // Severity Doughnut
+      const sevCounts = { high: 0, medium: 0, low: 0 };
+      data.forEach(r => {
+        const s = (r.severity || 'low').toLowerCase();
+        if (sevCounts[s] !== undefined) sevCounts[s]++;
+      });
+      charts.severity = new Chart(document.getElementById('severityChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['High', 'Medium', 'Low'],
+          datasets: [{
+            data: [sevCounts.high, sevCounts.medium, sevCounts.low],
+            backgroundColor: [SEVERITY_COLORS.high, SEVERITY_COLORS.medium, SEVERITY_COLORS.low],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          plugins: {
+            legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } }
+          }
+        }
+      });
+
+      // Type Bar Chart
+      const typeCounts = {};
+      data.forEach(r => {
+        const t = (r.incident_type || 'unknown').toLowerCase().trim();
+        typeCounts[t] = (typeCounts[t] || 0) + 1;
+      });
+      const typeEntries = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]);
+      charts.type = new Chart(document.getElementById('typeChart'), {
+        type: 'bar',
+        data: {
+          labels: typeEntries.map(e => e[0].charAt(0).toUpperCase() + e[0].slice(1)),
+          datasets: [{
+            data: typeEntries.map(e => e[1]),
+            backgroundColor: 'rgba(20, 184, 166, 0.7)',
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: { legend: { display: false } },
+          scales: { x: { beginAtZero: true, ticks: { precision: 0 } } }
+        }
+      });
+
+      // Victim Bar Chart
+      const victimCounts = {};
+      data.forEach(r => {
+        const v = (r.victim_identity || 'unknown').toLowerCase().trim();
+        victimCounts[v] = (victimCounts[v] || 0) + 1;
+      });
+      const victimEntries = Object.entries(victimCounts).sort((a, b) => b[1] - a[1]);
+      charts.victim = new Chart(document.getElementById('victimChart'), {
+        type: 'bar',
+        data: {
+          labels: victimEntries.map(e => e[0].charAt(0).toUpperCase() + e[0].slice(1)),
+          datasets: [{
+            data: victimEntries.map(e => e[1]),
+            backgroundColor: 'rgba(217, 119, 6, 0.7)',
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: { legend: { display: false } },
+          scales: { x: { beginAtZero: true, ticks: { precision: 0 } } }
+        }
+      });
+    }
+
+    function buildMap(data) {
+      map = L.map('monitorMap').setView([-25.5, 134], 4);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      markers = L.markerClusterGroup();
+      data.forEach(r => {
+        const lat = parseFloat(r.latitude);
+        const lng = parseFloat(r.longitude);
+        if (isNaN(lat) || isNaN(lng)) return;
+        const sev = (r.severity || 'low').toLowerCase();
+        const color = SEVERITY_COLORS[sev] || SEVERITY_COLORS.low;
+        const circle = L.circleMarker([lat, lng], {
+          radius: 7,
+          fillColor: color,
+          color: '#fff',
+          weight: 1.5,
+          fillOpacity: 0.85
+        });
+        circle.bindPopup(`
+          <strong>${r.title || 'Untitled'}</strong><br>
+          <small>${r.date || 'No date'} &middot; ${r.location || ''}</small><br>
+          <small>Severity: <b>${sev}</b> &middot; Type: ${r.incident_type || 'N/A'}</small>
+          ${r.url ? '<br><a href="' + r.url + '" target="_blank" rel="noopener">Source</a>' : ''}
+        `);
+        markers.addLayer(circle);
+      });
+      map.addLayer(markers);
+    }
+
+    function buildStateTable(dated) {
+      const stateData = {};
+      dated.forEach(r => {
+        const state = extractState(r.location);
+        if (!stateData[state]) stateData[state] = { total: 0, high: 0, latest: null };
+        stateData[state].total++;
+        if ((r.severity || '').toLowerCase() === 'high') stateData[state].high++;
+        if (r._date && (!stateData[state].latest || r._date > stateData[state].latest)) {
+          stateData[state].latest = r._date;
+        }
+      });
+
+      const stateOrder = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT', 'National', 'Other', 'Unknown'];
+      const tbody = document.getElementById('stateTableBody');
+      tbody.innerHTML = '';
+      stateOrder.forEach(state => {
+        const d = stateData[state];
+        if (!d) return;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${state}</strong></td>
+          <td>${d.total}</td>
+          <td>${d.high}</td>
+          <td>${d.latest ? timeAgo(d.latest) : '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load data
+      loadData(false);
+
+      // Start countdown timer
+      startCountdown();
+
+      // Manual refresh button
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+          loadData(true);
+          refreshCountdown = REFRESH_INTERVAL;
+        });
+      }
+
+      // Mobile menu toggle
+      document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+        const nav = document.getElementById('mobileNav');
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        nav.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+
+</html>

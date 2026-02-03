@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <meta name="description"
+    content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
   <title>Report an Incident | Incidex Australia</title>
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/ADGaqk0.png">
   <link rel="apple-touch-icon" href="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://incidex.au/report_incident.html">
   <meta property="og:title" content="Report an Incident | Incidex Australia">
-  <meta property="og:description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <meta property="og:description"
+    content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
   <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://incidex.au/report_incident.html">
   <meta property="twitter:title" content="Report an Incident | Incidex Australia">
-  <meta property="twitter:description" content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
+  <meta property="twitter:description"
+    content="Report an LGBTIQ+ hate crime or discrimination incident. Your anonymous report helps Incidex document incidents for advocacy purposes.">
   <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
-  
+  <link rel="stylesheet" href="animations.css">
+
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
   <style>
     /* ===== REPORT PAGE SPECIFIC STYLES - MATCHING LANDING PAGE ===== */
-    
+
     /* Dark Mode Toggle */
     .theme-toggle {
       position: fixed;
@@ -55,30 +66,30 @@
       transition: all var(--transition-fast);
       box-shadow: var(--shadow-sm);
     }
-    
+
     .theme-toggle:hover {
       border-color: var(--color-accent);
       box-shadow: var(--shadow-md);
     }
-    
+
     .theme-toggle svg {
       width: 20px;
       height: 20px;
       color: var(--color-text);
     }
-    
+
     .theme-toggle .icon-sun {
       display: block;
     }
-    
+
     .theme-toggle .icon-moon {
       display: none;
     }
-    
+
     [data-theme="dark"] .theme-toggle .icon-sun {
       display: none;
     }
-    
+
     [data-theme="dark"] .theme-toggle .icon-moon {
       display: block;
     }
@@ -93,7 +104,7 @@
       background: var(--color-bg);
       padding: var(--space-20) var(--space-8);
     }
-    
+
     .hero-content {
       position: relative;
       z-index: 1;
@@ -104,7 +115,7 @@
       flex-direction: column;
       align-items: center;
     }
-    
+
     .hero h1 {
       font-family: var(--font-heading);
       font-size: clamp(2.5rem, 5vw, 3rem);
@@ -116,18 +127,19 @@
       opacity: 0;
       animation: fadeInUp 0.6s var(--ease-standard) 0.4s forwards;
     }
-    
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .hero-subtitle {
       font-size: var(--text-lg);
       color: var(--color-text-secondary);
@@ -351,16 +363,24 @@
     }
 
     .form-label-enhanced .required::after {
-      content: '*';
+      content: ' (required)';
       color: var(--color-secondary);
-      margin-left: var(--space-1);
+      font-weight: var(--font-normal);
+      font-size: var(--text-xs);
+    }
+
+    .form-label-enhanced .optional::after {
+      content: ' (optional)';
+      color: var(--color-text-muted);
+      font-weight: var(--font-normal);
+      font-size: var(--text-xs);
     }
 
     /* Radio/Checkbox Groups */
     .options-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: var(--space-2);
+      gap: var(--space-3);
     }
 
     .option-card {
@@ -380,7 +400,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: var(--space-4);
+      padding: var(--space-5);
+      min-height: 140px;
+      min-width: 140px;
       background: var(--color-bg);
       border: 2px solid var(--color-border);
       border-radius: var(--radius-lg);
@@ -389,18 +411,22 @@
       transition: all var(--transition-fast);
     }
 
-    .option-card input:hover + .option-card-label {
+    .option-card input:hover+.option-card-label {
       border-color: var(--color-primary-light);
       background: var(--color-primary-50);
     }
 
-    .option-card input:checked + .option-card-label {
+    .option-card input:checked+.option-card-label {
+      border-width: 3px;
       border-color: var(--color-primary);
       background: var(--color-primary-50);
+      box-shadow: inset 0 0 0 2px var(--color-primary-100);
+      font-weight: 600;
     }
 
-    .option-card input:focus + .option-card-label {
-      box-shadow: var(--focus-ring);
+    .option-card input:focus+.option-card-label {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
     }
 
     .option-card-icon {
@@ -445,17 +471,17 @@
       transition: all var(--transition-fast);
     }
 
-    .toggle-option input:hover + .toggle-option-label {
+    .toggle-option input:hover+.toggle-option-label {
       border-color: var(--color-text-muted);
     }
 
-    .toggle-option input:checked + .toggle-option-label {
+    .toggle-option input:checked+.toggle-option-label {
       border-color: var(--color-primary);
       background: var(--color-primary);
       color: var(--color-text-inverse);
     }
 
-    .toggle-option input:focus + .toggle-option-label {
+    .toggle-option input:focus+.toggle-option-label {
       box-shadow: var(--focus-ring);
     }
 
@@ -474,11 +500,16 @@
     }
 
     .consent-checkbox input {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       flex-shrink: 0;
       accent-color: var(--color-success);
       cursor: pointer;
+    }
+
+    .consent-checkbox input:focus {
+      outline: 3px solid var(--color-success);
+      outline-offset: 2px;
     }
 
     .consent-text {
@@ -761,7 +792,7 @@
       align-items: flex-end;
       gap: var(--space-2);
     }
-    
+
     .emergency-btn {
       display: flex;
       align-items: center;
@@ -777,12 +808,12 @@
       cursor: pointer;
       transition: all var(--transition-fast);
     }
-    
+
     .emergency-btn:hover {
       filter: brightness(1.05);
       box-shadow: var(--shadow-lg);
     }
-    
+
     .emergency-panel {
       display: none;
       background: var(--color-bg-alt);
@@ -792,17 +823,24 @@
       box-shadow: var(--shadow-lg);
       width: 280px;
     }
-    
+
     .emergency-panel.open {
       display: block;
       animation: slideUp 0.3s var(--ease-standard);
     }
-    
+
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    
+
     .emergency-panel h4 {
       font-size: var(--text-sm);
       text-transform: uppercase;
@@ -811,7 +849,7 @@
       margin-bottom: var(--space-4);
       font-weight: 600;
     }
-    
+
     .emergency-panel-link {
       display: flex;
       align-items: center;
@@ -827,7 +865,7 @@
     .emergency-panel-link:last-child {
       margin-bottom: 0;
     }
-    
+
     .emergency-panel-link:hover {
       background: var(--color-bg-alt);
     }
@@ -836,13 +874,13 @@
       font-size: var(--text-sm);
       color: var(--color-text);
     }
-    
+
     .emergency-panel-link strong {
       font-family: var(--font-heading);
       font-size: var(--text-lg);
       color: var(--color-accent);
     }
-    
+
     @media (max-width: 640px) {
       .theme-toggle {
         top: calc(var(--header-height) + 12px);
@@ -850,30 +888,262 @@
         width: 40px;
         height: 40px;
       }
-      
+
       .hero {
         padding: var(--space-16) var(--space-4);
       }
-      
+
       .emergency-cta {
         bottom: 16px;
         right: 16px;
       }
-      
+
       .emergency-panel {
         width: calc(100vw - 2rem);
         max-width: 300px;
       }
     }
+
+    /* Demo Mode Banner */
+    .demo-mode-banner {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-bottom: 2px solid #f59e0b;
+      padding: var(--space-3) var(--space-6);
+    }
+
+    .demo-mode-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: #92400e;
+    }
+
+    .demo-mode-content svg {
+      flex-shrink: 0;
+      color: #f59e0b;
+    }
+
+    .demo-mode-content a {
+      color: #b45309;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    [data-theme="dark"] .demo-mode-banner {
+      background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+      border-color: #b45309;
+    }
+
+    [data-theme="dark"] .demo-mode-content {
+      color: #fef3c7;
+    }
+
+    [data-theme="dark"] .demo-mode-content svg {
+      color: #fbbf24;
+    }
+
+    [data-theme="dark"] .demo-mode-content a {
+      color: #fcd34d;
+    }
+
+    /* Crisis Support Banner */
+    .crisis-banner {
+      position: sticky;
+      top: var(--header-height);
+      z-index: calc(var(--z-fixed) - 1);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      border-bottom: 2px solid #c2410c;
+      padding: var(--space-4) var(--space-6);
+      box-shadow: var(--shadow-md);
+    }
+
+    .crisis-banner-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .crisis-icon {
+      width: 28px;
+      height: 28px;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .crisis-text {
+      color: #ffffff;
+      font-size: var(--text-sm);
+      line-height: 1.5;
+    }
+
+    .crisis-text strong {
+      display: block;
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+      font-weight: 600;
+    }
+
+    .crisis-link {
+      color: #ffffff;
+      text-decoration: underline;
+      font-weight: 600;
+      transition: opacity var(--transition-fast);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .crisis-link:hover,
+    .crisis-link:focus {
+      opacity: 0.85;
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+    }
+
+    /* Privacy Help Boxes */
+    .privacy-help {
+      background: linear-gradient(135deg, rgba(45, 157, 111, 0.05) 0%, rgba(26, 95, 122, 0.05) 100%);
+      border-left: 3px solid var(--color-primary);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .privacy-help strong {
+      color: var(--color-text);
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    /* Screen Reader Only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Enhanced Focus Indicators */
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+      border-color: var(--color-primary);
+    }
+
+    .toggle-option input:focus+.toggle-option-label {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Success Timeline */
+    .success-timeline {
+      margin-top: var(--space-8);
+      padding: var(--space-6);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .success-timeline h3 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-5);
+      text-align: center;
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .timeline-step {
+      text-align: center;
+    }
+
+    .timeline-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-2);
+      background: var(--color-primary-50);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .timeline-content strong {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .timeline-content p {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      .crisis-banner-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+      }
+
+      .crisis-text strong {
+        font-size: var(--text-sm);
+      }
+
+      .crisis-text {
+        font-size: var(--text-xs);
+      }
+
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .timeline-steps {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
+
 <body>
   <!-- Skip Link -->
   <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- Dark Mode Toggle -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -884,7 +1154,8 @@
       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
       <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
     </svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   </button>
@@ -893,36 +1164,77 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
-        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" class="logo-full" loading="eager">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+          class="logo-full" loading="eager">
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="map.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
           Map
         </a>
         <a href="policy_landscape.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
           Policy and Legislation
         </a>
         <a href="voting_records.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
           MP Voting
         </a>
         <a href="statistics.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
           Statistics
         </a>
+        <a href="monitoring.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Monitor
+        </a>
         <a href="database.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="9" x2="9" y2="21"></line><line x1="15" y1="9" x2="15" y2="21"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="9" x2="9" y2="21"></line>
+            <line x1="15" y1="9" x2="15" y2="21"></line>
+          </svg>
           Database
         </a>
         <!-- Resources Dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
             Resources
-            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; transition: transform 0.2s ease;">
+            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
               <path d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
@@ -930,42 +1242,56 @@
             <!-- Know Your Rights Section -->
             <div class="dropdown-section">
               <div class="dropdown-section-title">
-                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                  </path>
                 </svg>
                 Legal Guides: Know Your Rights
               </div>
-              <a href="legal_guides.html" style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
+              <a href="legal_guides.html"
+                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
                 <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
-                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical guides for every Australian jurisdiction</div>
+                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
+                  guides for every Australian jurisdiction</div>
               </a>
               <!-- Jurisdiction Grid -->
               <div class="jurisdiction-grid">
-                <a href="legal_guides.html#commonwealth" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
+                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
                   <div class="jurisdiction-name">Commonwealth</div>
                 </a>
-                <a href="legal_guides.html#nsw" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
+                <a href="legal_guides.html#nsw" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
                   <div class="jurisdiction-name">NSW</div>
                 </a>
-                <a href="legal_guides.html#victoria" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
+                <a href="legal_guides.html#victoria" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
                   <div class="jurisdiction-name">VIC</div>
                 </a>
-                <a href="legal_guides.html#queensland" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
+                <a href="legal_guides.html#queensland" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
                   <div class="jurisdiction-name">QLD</div>
                 </a>
-                <a href="legal_guides.html#tasmania" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
+                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
                   <div class="jurisdiction-name">TAS</div>
                 </a>
-                <a href="legal_guides.html#sa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
+                <a href="legal_guides.html#sa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
                   <div class="jurisdiction-name">SA</div>
                 </a>
-                <a href="legal_guides.html#wa" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
+                <a href="legal_guides.html#wa" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
                   <div class="jurisdiction-name">WA</div>
                 </a>
-                <a href="legal_guides.html#nt" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
+                <a href="legal_guides.html#nt" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
                   <div class="jurisdiction-name">NT</div>
                 </a>
-                <a href="legal_guides.html#act" class="jurisdiction-card" onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
+                <a href="legal_guides.html#act" class="jurisdiction-card"
+                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
                   <div class="jurisdiction-name">ACT</div>
                 </a>
               </div>
@@ -974,7 +1300,8 @@
             <div class="dropdown-section">
               <a href="resources.html" class="services-link">
                 <span>View All Support Services</span>
-                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M9 5l7 7-7 7"></path>
                 </svg>
               </a>
@@ -982,21 +1309,39 @@
           </div>
         </div>
         <a href="report_incident.html" class="nav-link active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
           Report
         </a>
         <a href="about.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           About
         </a>
         <a href="contact.html" class="nav-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
           Contact
         </a>
       </nav>
 
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
   </header>
@@ -1007,6 +1352,7 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="monitoring.html" class="nav-link">Monitor</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link active">Report an Incident</a>
@@ -1018,41 +1364,97 @@
   <section class="hero">
     <div class="hero-content">
       <h1>Report an Incident</h1>
-      <p class="hero-subtitle">Your report helps document LGBTIQ+ hate crimes for advocacy and awareness. All submissions are anonymous and encrypted.</p>
+      <p class="hero-subtitle">Your report helps document LGBTIQ+ hate crimes for advocacy and awareness. All
+        submissions are anonymous and encrypted.</p>
     </div>
   </section>
 
   <!-- Main Content -->
   <main id="main">
+    <!-- ARIA Live Region for Announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="formAnnouncements"></div>
+
+    <!-- Crisis Support Banner - Sticky -->
+    <div class="crisis-banner" role="complementary" aria-label="Crisis support resources">
+      <div class="crisis-banner-content">
+        <svg class="crisis-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+        <div class="crisis-text">
+          <strong>Need immediate support?</strong>
+          <span>If you're in danger or need urgent help: <a href="tel:000" class="crisis-link">000 (Emergency)</a> | <a
+              href="tel:1800737732" class="crisis-link">1800 RESPECT</a> | <a href="https://qlife.org.au/resources/chat"
+              target="_blank" rel="noopener" class="crisis-link">QLife Chat</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Mode Banner (shown when Supabase not configured) -->
+    <div class="demo-mode-banner" id="demoModeBanner" style="display: none;">
+      <div class="demo-mode-content">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span><strong>Demo Mode:</strong> Supabase not configured. Submissions will be stored locally only.
+          <a href="https://supabase.com" target="_blank" rel="noopener">Set up Supabase</a> to enable real submissions.</span>
+      </div>
+    </div>
+
     <div class="report-container">
 
       <!-- Disclaimer Banner -->
       <div class="disclaimer-banner">
         <div class="disclaimer-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
           Important Information
         </div>
         <div class="disclaimer-text">
-          <p><strong>You are not required to report to police.</strong> This portal is independent and community-led. Your report helps document hate crimes for advocacy purposes.</p>
-          <p>If you want police involvement, contact the <a href="tel:131444" class="police-link">Police Assistance Line: 131 444</a> or <a href="tel:000" class="police-link">Emergency: 000</a>.</p>
-          <p>Your submission will be fully encrypted and stored securely. Personal details are never shared without your explicit consent.</p>
+          <p><strong>You are not required to report to police.</strong> This portal is independent and community-led.
+            Your report helps document hate crimes for advocacy purposes.</p>
+          <p>If you want police involvement, contact the <a href="tel:131444" class="police-link">Police Assistance
+              Line: 131 444</a> or <a href="tel:000" class="police-link">Emergency: 000</a>.</p>
+          <p>Your submission will be fully encrypted and stored securely. Personal details are never shared without your
+            explicit consent.</p>
         </div>
-        
+
         <div class="privacy-badges">
           <span class="privacy-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 12 15 22 5"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 12 15 22 5"></polyline>
+            </svg>
             No IP Logging
           </span>
           <span class="privacy-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
             No Location Tracking
           </span>
           <span class="privacy-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
             SSL Encrypted
           </span>
           <span class="privacy-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
             Anonymized Public Data
           </span>
         </div>
@@ -1065,21 +1467,27 @@
           <div class="form-section">
             <div class="form-section-header">
               <div class="form-section-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                  </path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
               </div>
               <div>
                 <div class="form-section-title">Incident Details</div>
-                <div class="form-section-subtitle">Tell us what happened</div>
+                <div class="form-section-subtitle">Tell us what you experienced</div>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group-enhanced">
                 <div class="form-label-enhanced">
-                  <span class="label-text required">Date of Incident</span>
+                  <span class="label-text required">When did this happen?</span>
                 </div>
-                <input type="date" class="form-input" id="incidentDate" name="date" required max="">
-                <span class="form-hint">Can be recent or historical</span>
+                <input type="date" class="form-input" id="incidentDate" name="date" required max=""
+                  aria-describedby="dateHint dateError">
+                <span class="form-hint" id="dateHint">Can be recent or from the past</span>
                 <span class="field-error" id="dateError">Please enter the date of the incident</span>
               </div>
 
@@ -1104,28 +1512,39 @@
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
-                <span class="label-text required">Location</span>
+                <span class="label-text required">Where did this happen?</span>
               </div>
               <div class="form-row">
                 <div>
-                  <input type="text" class="form-input" id="suburb" name="suburb" placeholder="Suburb or city" required>
-                  <span class="form-hint">e.g., Sydney CBD, Brunswick</span>
+                  <input type="text" class="form-input" id="suburb" name="suburb" placeholder="Suburb or city" required
+                    aria-describedby="suburbHint locationError">
+                  <span class="form-hint" id="suburbHint">e.g., Sydney CBD, Brunswick</span>
                 </div>
                 <div>
-                  <input type="text" class="form-input" id="street" name="street" placeholder="Street (optional)">
-                  <span class="form-hint">Optional - helps with verification</span>
+                  <input type="text" class="form-input" id="street" name="street" placeholder="Street (optional)"
+                    aria-describedby="streetHint">
+                  <span class="form-hint" id="streetHint">Optional - helps with verification</span>
                 </div>
               </div>
-              <span class="field-error" id="locationError">Please enter at least the suburb/city</span>
+              <div class="privacy-help">
+                <strong>Privacy note:</strong> We only show the suburb on the public map, never exact addresses or
+                identifying details.
+              </div>
+              <span class="field-error" id="locationError" role="alert">Please enter at least the suburb/city</span>
             </div>
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
-                <span class="label-text required">Brief Description</span>
+                <span class="label-text required">Tell us what you experienced</span>
               </div>
-              <textarea class="form-textarea" id="description" name="description" rows="4" placeholder="Describe what happened. Include relevant details like time of day, circumstances, and any witnesses." required maxlength="2000"></textarea>
-              <div class="char-counter" id="descCharCounter">0 / 2000 characters</div>
-              <span class="field-error" id="descError">Please provide a brief description of the incident</span>
+              <textarea class="form-textarea" id="description" name="description" rows="4"
+                placeholder="Share as much or as little as you feel comfortable with. Include details like time of day, circumstances, and any witnesses if you wish."
+                required maxlength="2000" aria-describedby="descHint descCharCounter descError"></textarea>
+              <span class="form-hint" id="descHint">Your words help us understand and document patterns of hate
+                crimes</span>
+              <div class="char-counter" id="descCharCounter" aria-live="polite">0 / 2000 characters</div>
+              <span class="field-error" id="descError" role="alert">Please provide a description of what you
+                experienced</span>
             </div>
           </div>
 
@@ -1133,17 +1552,24 @@
           <div class="form-section">
             <div class="form-section-header">
               <div class="form-section-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
               </div>
               <div>
-                <div class="form-section-title">Victim Information</div>
-                <div class="form-section-subtitle">This helps us understand patterns</div>
+                <div class="form-section-title">About the Person Impacted</div>
+                <div class="form-section-subtitle">This helps us document patterns of hate crimes</div>
               </div>
             </div>
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
-                <span class="label-text required">Victim Identity</span>
+                <span class="label-text required">Who was impacted by this incident?</span>
+              </div>
+              <div class="privacy-help">
+                <strong>Why we ask:</strong> This information helps us understand which communities are most affected
+                and advocate for better protections.
               </div>
               <div class="options-grid">
                 <label class="option-card">
@@ -1203,7 +1629,7 @@
                   </span>
                 </label>
               </div>
-              <span class="field-error" id="identityError">Please select an option</span>
+              <span class="field-error" id="identityError" role="alert">Please select an option</span>
             </div>
           </div>
 
@@ -1211,7 +1637,9 @@
           <div class="form-section">
             <div class="form-section-header">
               <div class="form-section-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
               </div>
               <div>
                 <div class="form-section-title">Additional Information</div>
@@ -1221,8 +1649,10 @@
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
-                <span class="label-text">Was this reported to police?</span>
+                <span class="label-text optional">Have you told the police about this incident?</span>
               </div>
+              <span class="form-hint">It's completely okay if you haven't. Many people don't report to police, and your
+                experience is still valid and important.</span>
               <div class="toggle-group">
                 <label class="toggle-option">
                   <input type="radio" name="reported_to_police" value="yes">
@@ -1241,7 +1671,7 @@
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
-                <span class="label-text">Would you like us to share with advocacy organizations?</span>
+                <span class="label-text optional">Would you like us to share with advocacy organizations?</span>
               </div>
               <div class="toggle-group">
                 <label class="toggle-option">
@@ -1253,16 +1683,22 @@
                   <span class="toggle-option-label">No, keep private</span>
                 </label>
               </div>
-              <span class="form-hint">If yes, we may share anonymized details with organizations like ACON, Equality Australia, or state-based LGBTIQ+ groups.</span>
+              <span class="form-hint">If yes, we may share anonymized details with organizations like ACON, Equality
+                Australia, or state-based LGBTIQ+ groups to support advocacy efforts.</span>
             </div>
 
             <div class="form-group-enhanced">
               <div class="form-label-enhanced">
                 <span class="label-text">Your Contact</span>
-                <span class="label-optional">Optional</span>
               </div>
-              <input type="email" class="form-input" id="contact" name="contact" placeholder="Email address (only if you want follow-up)">
-              <span class="form-hint">We will only contact you if you request follow-up. Never shared publicly.</span>
+              <input type="email" class="form-input" id="contact" name="contact"
+                placeholder="Email address (only if you want follow-up)" aria-describedby="contactHint">
+              <span class="form-hint" id="contactHint">We will only contact you if you request follow-up. Never shared
+                publicly.</span>
+              <div class="privacy-help">
+                <strong>Your privacy:</strong> Contact details are stored separately from your report and are never
+                published or shared with third parties.
+              </div>
             </div>
           </div>
 
@@ -1270,7 +1706,10 @@
           <div class="form-section">
             <div class="form-section-header">
               <div class="form-section-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
               </div>
               <div>
                 <div class="form-section-title">Consent</div>
@@ -1279,19 +1718,25 @@
             </div>
 
             <div class="encryption-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
               Your submission is protected with SSL encryption
             </div>
 
             <div class="consent-box">
               <label class="consent-checkbox">
-                <input type="checkbox" id="consent" name="consent" required>
-                <span class="consent-text">
+                <input type="checkbox" id="consent" name="consent" required aria-describedby="consentText consentError">
+                <span class="consent-text" id="consentText">
                   <strong>I consent to this information being added to the public database (anonymized).</strong><br>
-                  I understand that my personal contact details will never be shared publicly. Only the incident date, location (suburb level), type, and general description will appear on the public map. The report will be marked as "Community Report (Unverified)" until verified against news sources.
+                  I understand that my personal contact details will never be shared publicly. Only the incident date,
+                  location (suburb level), type, and general description will appear on the public map. The report will
+                  be marked as "Community Report (Unverified)" until verified against news sources.
                 </span>
               </label>
-              <span class="field-error" id="consentError">You must provide consent to submit this report</span>
+              <span class="field-error" id="consentError" role="alert">You must provide consent to submit this
+                report</span>
             </div>
           </div>
 
@@ -1300,7 +1745,10 @@
             <div class="submit-actions">
               <button type="button" class="btn btn-tertiary" onclick="resetForm()">Clear Form</button>
               <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                  <path d="M22 2L11 13"></path>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                </svg>
                 Submit Report
               </button>
             </div>
@@ -1312,18 +1760,59 @@
       <div class="submission-result" id="successResult">
         <div class="result-success">
           <div class="result-icon">✅</div>
-          <h2 class="result-title">Thank You for Your Report</h2>
+          <h2 class="result-title">Thank you for trusting us with your story</h2>
           <p class="result-message">
-            Your incident has been recorded and will be reviewed. It will appear on the map as a "Community Report (Unverified)" until we can verify it against news sources.
+            Your report helps improve LGBTIQ+ safety across Australia. We've received your submission and will review it
+            carefully. Your courage in sharing this experience contributes to documenting hate crimes and advocating for
+            better protections.
           </p>
-          
+
+          <!-- What Happens Next Timeline -->
+          <div class="success-timeline">
+            <h3>What happens next?</h3>
+            <div class="timeline-steps">
+              <div class="timeline-step">
+                <div class="timeline-icon">✓</div>
+                <div class="timeline-content">
+                  <strong>Received</strong>
+                  <p>Your report is safely stored</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-icon">🔍</div>
+                <div class="timeline-content">
+                  <strong>Review (48 hours)</strong>
+                  <p>We check for verification sources</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-icon">📍</div>
+                <div class="timeline-content">
+                  <strong>Mapped</strong>
+                  <p>Added to public map (suburb level only)</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-icon">📊</div>
+                <div class="timeline-content">
+                  <strong>Advocacy</strong>
+                  <p>Used to improve LGBTIQ+ safety</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Support Resources -->
           <div class="support-resources">
             <h3 class="support-resources-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
               Support Services in Your Area
             </h3>
-            
+
             <div class="support-grid">
               <div class="support-card">
                 <div class="support-card-name">QLife</div>
@@ -1352,23 +1841,42 @@
             <div class="support-local-list" id="localResources">
               <a href="https://www.acon.org.au" target="_blank" rel="noopener" class="support-local-link">
                 ACON (NSW)
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
               </a>
               <a href="https://www.equalityaustralia.org.au" target="_blank" rel="noopener" class="support-local-link">
                 Equality Australia
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
               </a>
               <a href="https://www.switchboard.org.au" target="_blank" rel="noopener" class="support-local-link">
                 Switchboard (VIC)
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
               </a>
               <a href="https://www.quac.org.au" target="_blank" rel="noopener" class="support-local-link">
                 QuAC (QLD)
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
               </a>
               <a href="resources.html" class="support-local-link">
                 View All Resources
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </a>
             </div>
           </div>
@@ -1389,11 +1897,13 @@
         <div class="footer-section">
           <div class="footer-logo">
             <a href="index.html" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
-              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia" loading="lazy">
+              <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex - LGBTIQ+ Hate Crime Mapping Australia"
+                loading="lazy">
             </a>
           </div>
           <h4>About</h4>
-          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for LGBTIQ+ Australians.</p>
+          <p>Incidex documents incidents and legal cases to support advocacy, awareness, and community safety for
+            LGBTIQ+ Australians.</p>
         </div>
         <div class="footer-section">
           <h4>Quick Links</h4>
@@ -1424,6 +1934,19 @@
   </footer>
 
   <script>
+    // Initialize Supabase Client
+    let supabase = null;
+    if (window.SUPABASE_CONFIG && window.isSupabaseConfigured && window.isSupabaseConfigured()) {
+      supabase = window.supabase.createClient(
+        window.SUPABASE_CONFIG.url,
+        window.SUPABASE_CONFIG.anonKey
+      );
+      console.log('Supabase initialized successfully');
+    } else {
+      console.warn('Supabase not configured. Form submissions will be stored locally only.');
+      console.warn('To enable Supabase, update config.js with your project credentials.');
+    }
+
     // Form Elements
     const form = document.getElementById('incidentForm');
     const formContainer = document.getElementById('formContainer');
@@ -1439,17 +1962,17 @@
     dateInput.max = new Date().toISOString().split('T')[0];
 
     // Character counter for description
-    descriptionField.addEventListener('input', function() {
+    descriptionField.addEventListener('input', function () {
       const count = this.value.length;
       const max = 2000;
       charCounter.textContent = `${count} / ${max} characters`;
-      
+
       if (count > max * 0.9) {
         charCounter.classList.add('warning');
       } else {
         charCounter.classList.remove('warning');
       }
-      
+
       if (count >= max) {
         charCounter.classList.add('error');
       } else {
@@ -1460,11 +1983,11 @@
     // Dark Mode Toggle
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
-    
+
     // Check for saved theme preference or default to light mode
     const currentTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', currentTheme);
-    
+
     themeToggle.addEventListener('click', () => {
       const currentTheme = html.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1473,7 +1996,7 @@
     });
 
     // Mobile menu toggle
-    mobileMenuBtn.addEventListener('click', function() {
+    mobileMenuBtn.addEventListener('click', function () {
       mobileNav.classList.toggle('active');
       const isOpen = mobileNav.classList.contains('active');
       mobileMenuBtn.setAttribute('aria-expanded', isOpen);
@@ -1499,7 +2022,8 @@
     // Form Validation
     function validateForm() {
       let isValid = true;
-      
+      const errors = [];
+
       // Clear previous errors
       document.querySelectorAll('.field-error').forEach(el => el.classList.remove('show'));
       document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
@@ -1508,7 +2032,11 @@
       if (!dateInput.value) {
         document.getElementById('dateError').classList.add('show');
         dateInput.classList.add('error');
+        dateInput.setAttribute('aria-invalid', 'true');
+        errors.push('When did this happen');
         isValid = false;
+      } else {
+        dateInput.setAttribute('aria-invalid', 'false');
       }
 
       // Incident type validation
@@ -1516,7 +2044,11 @@
       if (!incidentType.value) {
         document.getElementById('typeError').classList.add('show');
         incidentType.classList.add('error');
+        incidentType.setAttribute('aria-invalid', 'true');
+        errors.push('Incident type');
         isValid = false;
+      } else {
+        incidentType.setAttribute('aria-invalid', 'false');
       }
 
       // Location validation
@@ -1524,20 +2056,29 @@
       if (!suburb.value.trim()) {
         document.getElementById('locationError').classList.add('show');
         suburb.classList.add('error');
+        suburb.setAttribute('aria-invalid', 'true');
+        errors.push('Location');
         isValid = false;
+      } else {
+        suburb.setAttribute('aria-invalid', 'false');
       }
 
       // Description validation
       if (!descriptionField.value.trim()) {
         document.getElementById('descError').classList.add('show');
         descriptionField.classList.add('error');
+        descriptionField.setAttribute('aria-invalid', 'true');
+        errors.push('Description');
         isValid = false;
+      } else {
+        descriptionField.setAttribute('aria-invalid', 'false');
       }
 
       // Victim identity validation
       const victimIdentity = document.querySelector('input[name="victim_identity"]:checked');
       if (!victimIdentity) {
         document.getElementById('identityError').classList.add('show');
+        errors.push('Who was impacted');
         isValid = false;
       }
 
@@ -1545,72 +2086,127 @@
       const consent = document.getElementById('consent');
       if (!consent.checked) {
         document.getElementById('consentError').classList.add('show');
+        consent.setAttribute('aria-invalid', 'true');
+        errors.push('Consent');
         isValid = false;
+      } else {
+        consent.setAttribute('aria-invalid', 'false');
+      }
+
+      // Announce errors to screen readers
+      const announcements = document.getElementById('formAnnouncements');
+      if (!isValid && announcements) {
+        announcements.textContent = `Form has ${errors.length} error${errors.length > 1 ? 's' : ''}: ${errors.join(', ')}. Please correct and try again.`;
+
+        // Focus first invalid field
+        const firstError = document.querySelector('.form-input.error, .form-select.error, .form-textarea.error');
+        if (firstError) {
+          firstError.focus();
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else if (announcements) {
+        announcements.textContent = '';
       }
 
       return isValid;
     }
 
     // Form Submission
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       if (!validateForm()) {
-        // Scroll to first error
-        const firstError = document.querySelector('.field-error.show');
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
         return;
       }
+
+      // Add aria-busy state
+      form.setAttribute('aria-busy', 'true');
 
       // Disable submit button and show loading
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+      submitBtn.setAttribute('aria-label', 'Submitting report, please wait');
 
-      // Gather form data
-      const formData = {
+      // Gather form data for Supabase
+      const submissionData = {
         date: dateInput.value,
-        location: document.getElementById('suburb').value + (document.getElementById('street').value ? ', ' + document.getElementById('street').value : ''),
+        location: document.getElementById('suburb').value,
+        street: document.getElementById('street').value || null,
         incident_type: document.getElementById('incidentType').value,
         victim_identity: document.querySelector('input[name="victim_identity"]:checked').value,
         description: descriptionField.value,
         reported_to_police: document.querySelector('input[name="reported_to_police"]:checked')?.value || 'prefer_not_say',
         consent_share: document.querySelector('input[name="consent_share"]:checked')?.value || 'no',
-        contact: document.getElementById('contact').value || '',
-        consent: 'yes',
-        verified: 'false',
-        submitted_at: new Date().toISOString(),
-        source: 'community_report'
+        contact_email: document.getElementById('contact').value || null
       };
 
       try {
-        // In a real implementation, this would POST to a server endpoint
-        // For now, we'll simulate the submission and store to localStorage
-        // The server would handle writing to the CSV
-        
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Store in localStorage for demonstration (in production, this goes to server)
-        const reports = JSON.parse(localStorage.getItem('community_reports') || '[]');
-        reports.push(formData);
-        localStorage.setItem('community_reports', JSON.stringify(reports));
+        if (supabase) {
+          // Submit to Supabase database
+          const { data, error } = await supabase
+            .from('incident_submissions')
+            .insert([submissionData]);
 
-        // Show success
+          if (error) {
+            console.error('Supabase error:', error);
+            throw new Error(error.message || 'Failed to submit report');
+          }
+
+          console.log('Report submitted to Supabase:', data);
+        } else {
+          // Fallback: Store in localStorage if Supabase not configured
+          console.warn('Supabase not configured - storing locally');
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+          const reports = JSON.parse(localStorage.getItem('community_reports') || '[]');
+          reports.push({ ...submissionData, submitted_at: new Date().toISOString(), status: 'pending' });
+          localStorage.setItem('community_reports', JSON.stringify(reports));
+        }
+
+        // Remove aria-busy
+        form.setAttribute('aria-busy', 'false');
+
+        // Show success with ARIA
         formContainer.style.display = 'none';
+        formContainer.setAttribute('aria-hidden', 'true');
         successResult.classList.add('show');
-        
+        successResult.setAttribute('aria-hidden', 'false');
+
+        // Announce success
+        const announcements = document.getElementById('formAnnouncements');
+        if (announcements) {
+          announcements.textContent = 'Report submitted successfully. Thank you for trusting us with your story.';
+        }
+
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        console.log('Report submitted:', formData);
+        // Focus on success heading for screen readers
+        setTimeout(() => {
+          const successTitle = successResult.querySelector('.result-title');
+          if (successTitle) {
+            successTitle.setAttribute('tabindex', '-1');
+            successTitle.focus();
+          }
+        }, 100);
+
+        console.log('Report submitted:', submissionData);
       } catch (error) {
         console.error('Submission error:', error);
+
+        // Remove aria-busy
+        form.setAttribute('aria-busy', 'false');
+
+        // Announce error
+        const announcements = document.getElementById('formAnnouncements');
+        if (announcements) {
+          announcements.textContent = 'There was an error submitting your report. Please try again.';
+        }
+
         alert('There was an error submitting your report. Please try again.');
-        
+
         // Re-enable submit button
         submitBtn.disabled = false;
+        submitBtn.setAttribute('aria-label', 'Submit report');
         submitBtn.innerHTML = `
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
           Submit Report
@@ -1632,14 +2228,14 @@
       resetForm();
       formContainer.style.display = 'block';
       successResult.classList.remove('show');
-      
+
       // Reset submit button
       submitBtn.disabled = false;
       submitBtn.innerHTML = `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
         Submit Report
       `;
-      
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1652,10 +2248,21 @@
       }
     }
 
+    // Show demo mode banner if Supabase not configured
+    function checkSupabaseConfig() {
+      const banner = document.getElementById('demoModeBanner');
+      if (banner && !supabase) {
+        banner.style.display = 'block';
+      }
+    }
+
     // Initialize
-    document.addEventListener('DOMContentLoaded', checkURLParams);
+    document.addEventListener('DOMContentLoaded', () => {
+      checkURLParams();
+      checkSupabaseConfig();
+    });
   </script>
-  
+
   <!-- Emergency CTA -->
   <div class="emergency-cta">
     <div class="emergency-panel" id="emergencyPanel">
@@ -1675,17 +2282,17 @@
     </div>
     <button class="emergency-btn" id="emergencyBtn" aria-label="Emergency contacts">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        <path
+          d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+        </path>
       </svg>
       Need Help?
     </button>
   </div>
-  
+
   <!-- Resources Dropdown Script -->
   <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
 </body>
+
 </html>
-
-
-
-

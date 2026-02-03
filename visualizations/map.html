@@ -5,8 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Incidex - Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
-  <title>Incidex | Interactive Incident Map</title>
+    content="Interactive map showing 200+ documented LGBTIQ+ hate crimes and 50+ landmark legal cases across Australia. Filter by type, severity, date and location.">
+  <meta name="keywords" content="LGBTIQ+ hate crimes map, Australia, gay bashing locations, transphobic attacks, hate crime data, incident tracker">
+  <meta name="author" content="Incidex Australia">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#14B8A6">
+
+  <title>Interactive Map | Incidex - LGBTIQ+ Hate Crime Mapping Australia</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
@@ -15,19 +20,28 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://incidex.au/">
-  <meta property="og:title" content="Incidex | Interactive Incident Map">
+  <meta property="og:url" content="https://incidex.au/map">
+  <meta property="og:title" content="Interactive Map | Incidex - LGBTIQ+ Hate Crimes Australia">
   <meta property="og:description"
-    content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
+    content="Explore 200+ documented LGBTIQ+ hate crimes across Australia on an interactive map. Filter by incident type, severity, date and location. Supporting data-driven advocacy.">
   <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Incidex interactive map showing LGBTIQ+ hate crimes across Australia">
+  <meta property="og:site_name" content="Incidex Australia">
+  <meta property="og:locale" content="en_AU">
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://incidex.au/">
-  <meta property="twitter:title" content="Incidex | Interactive Incident Map">
-  <meta property="twitter:description"
-    content="Interactive map tracking LGBTIQ+ incidents and landmark legal cases across Australia. Supporting advocacy, awareness, and community safety.">
-  <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://incidex.au/map">
+  <meta name="twitter:title" content="Interactive Map | Incidex - LGBTIQ+ Hate Crimes Australia">
+  <meta name="twitter:description"
+    content="Explore 200+ documented LGBTIQ+ hate crimes across Australia on an interactive map. Data-driven advocacy for a safer future.">
+  <meta name="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
+  <meta name="twitter:image:alt" content="Incidex interactive map showing LGBTIQ+ hate crimes across Australia">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://incidex.au/map">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +60,7 @@
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
 
   <style>
     /* Page-specific styles */
@@ -1117,6 +1132,363 @@
       }
     }
 
+    /* ===== MOBILE OPTIMIZATION STYLES ===== */
+
+    /* Mobile View Toggle */
+    .mobile-view-toggle {
+      display: none;
+      position: fixed;
+      top: calc(var(--header-height) + var(--space-3));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: var(--z-fixed);
+      background: var(--color-bg);
+      border-radius: var(--radius-full);
+      padding: 4px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border);
+    }
+
+    .mobile-view-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-muted);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mobile-view-btn.active {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .mobile-view-btn:not(.active):hover {
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+    }
+
+    /* Mobile List View */
+    .mobile-list-view {
+      display: none;
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-bg);
+      z-index: var(--z-dropdown);
+      flex-direction: column;
+    }
+
+    .mobile-list-view.active {
+      display: flex;
+    }
+
+    .mobile-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      padding-top: calc(var(--space-4) + 50px); /* Space for toggle */
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border-light);
+      flex-shrink: 0;
+    }
+
+    .mobile-list-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .mobile-list-count span {
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+    }
+
+    .form-select-small {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .mobile-list-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-3);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-list-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12);
+      color: var(--color-text-muted);
+      gap: var(--space-2);
+    }
+
+    /* Mobile Incident Card */
+    .mobile-incident-card {
+      display: block;
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border-light);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-incident-card:active {
+      transform: scale(0.98);
+      background: var(--color-bg);
+    }
+
+    .mobile-incident-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .mobile-incident-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      line-height: var(--leading-snug);
+      flex: 1;
+    }
+
+    .mobile-incident-severity {
+      flex-shrink: 0;
+      font-size: 0.625rem;
+      font-weight: var(--font-bold);
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .mobile-incident-severity.high {
+      background: rgba(220, 38, 38, 0.1);
+      color: #dc2626;
+    }
+
+    .mobile-incident-severity.medium {
+      background: rgba(217, 119, 6, 0.1);
+      color: #d97706;
+    }
+
+    .mobile-incident-severity.low {
+      background: rgba(5, 150, 105, 0.1);
+      color: #059669;
+    }
+
+    .mobile-incident-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .mobile-incident-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .mobile-incident-meta-item svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .mobile-incident-type {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      background: var(--color-bg);
+      border-radius: var(--radius-full);
+      color: var(--color-text-secondary);
+      text-transform: capitalize;
+    }
+
+    /* Mobile Bottom Sheet for Details */
+    .mobile-detail-sheet {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 70vh;
+      background: var(--color-bg);
+      border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+      z-index: var(--z-modal);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-detail-sheet.open {
+      display: block;
+      transform: translateY(0);
+    }
+
+    .mobile-detail-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--color-border);
+      border-radius: 2px;
+      margin: var(--space-3) auto var(--space-4);
+    }
+
+    .mobile-detail-content {
+      padding: 0 var(--space-5) var(--space-6);
+      max-height: calc(70vh - 60px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-detail-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .mobile-detail-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .mobile-detail-section {
+      margin-bottom: var(--space-4);
+    }
+
+    .mobile-detail-label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .mobile-detail-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .mobile-detail-actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .mobile-detail-actions .btn {
+      flex: 1;
+    }
+
+    /* Mobile Filter Button Improvements */
+    @media (max-width: 768px) {
+      .mobile-view-toggle {
+        display: flex;
+      }
+
+      .map-area {
+        padding-top: 50px; /* Space for toggle when in map view */
+      }
+
+      .filter-toggle-btn {
+        bottom: var(--space-4);
+        left: var(--space-4);
+        transform: none;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-sm);
+      }
+
+      .map-controls {
+        bottom: var(--space-4);
+        right: var(--space-4);
+      }
+
+      .map-controls .btn-icon {
+        width: 44px;
+        height: 44px;
+      }
+
+      /* Hide non-essential controls on mobile */
+      .state-selector {
+        display: none;
+      }
+
+      /* Improve touch targets */
+      .form-select,
+      .form-input {
+        min-height: 48px;
+        font-size: 16px; /* Prevent zoom on iOS */
+      }
+
+      .btn {
+        min-height: 48px;
+      }
+
+      /* Better popups on mobile */
+      .leaflet-popup-content-wrapper {
+        max-width: calc(100vw - 60px);
+      }
+
+      .popup-content {
+        padding: var(--space-4);
+      }
+
+      .popup-title {
+        font-size: var(--text-base);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mobile-view-btn {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-xs);
+      }
+
+      .mobile-incident-card {
+        padding: var(--space-3);
+      }
+
+      .mobile-incident-title {
+        font-size: var(--text-sm);
+      }
+
+      .mobile-list-header {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: stretch;
+      }
+    }
+
     .electoral-legend-disclaimer {
       margin-top: var(--space-3);
       padding-top: var(--space-3);
@@ -1175,6 +1547,13 @@
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
           Statistics
+        </a>
+        <a href="monitoring.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Monitor
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1325,6 +1704,7 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="monitoring.html" class="nav-link">Monitor</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
@@ -1495,9 +1875,62 @@
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+    <!-- Mobile View Toggle -->
+    <div class="mobile-view-toggle" id="mobileViewToggle">
+      <button class="mobile-view-btn active" data-view="map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+        </svg>
+        Map
+      </button>
+      <button class="mobile-view-btn" data-view="list">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+        List
+      </button>
+    </div>
+
+    <!-- Mobile List View -->
+    <section class="mobile-list-view" id="mobileListView">
+      <div class="mobile-list-header">
+        <div class="mobile-list-count">
+          <span id="mobileListCount">0</span> incidents
+        </div>
+        <div class="mobile-list-sort">
+          <select id="mobileListSort" class="form-select-small">
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="severity">By severity</option>
+            <option value="location">By location</option>
+          </select>
+        </div>
+      </div>
+      <div class="mobile-list-content" id="mobileListContent">
+        <div class="mobile-list-loading">
+          <div class="loading-spinner"></div>
+          <p>Loading incidents...</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Map Area -->
-    <section class="map-area">
+    <section class="map-area" id="mapArea">
       <div id="map" role="application" aria-label="Interactive map showing LGBTIQ+ hate crimes and legal cases"></div>
+
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" id="mapLoadingOverlay">
+        <div class="loading-spinner large"></div>
+        <div class="loading-text">Loading incident data...</div>
+        <div class="loading-progress">
+          <div class="loading-progress-bar" id="loadingProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
 
       <!-- State/Territory Selector -->
       <div class="state-selector" id="stateSelector">
@@ -1787,6 +2220,8 @@
         }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 
         console.log('Map created, adding tile layer...');
+        // Expose map globally for mobile view toggle
+        window.map = map;
 
         // Light map tiles
         L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -2277,6 +2712,8 @@
               .filter(i => i.latitude && i.longitude);
 
             populateIncidentTypes(incidentsRaw.map(normalizeIncident));
+            // Expose incidents data globally for mobile list view
+            window.incidentsData = incidentsWithCoords;
             // Refresh recent incidents widget and auto-show it
             if (typeof refreshRecentIncidentsWidget === 'function') {
               setTimeout(() => {
@@ -2401,25 +2838,54 @@
 
     // Initialize
     async function initializeApp() {
+      const loadingOverlay = document.getElementById('mapLoadingOverlay');
+      const progressBar = document.getElementById('loadingProgressBar');
+
+      function updateProgress(percent, text) {
+        if (progressBar) progressBar.style.width = percent + '%';
+        const loadingText = loadingOverlay?.querySelector('.loading-text');
+        if (loadingText && text) loadingText.textContent = text;
+      }
+
+      function hideLoading() {
+        if (loadingOverlay) loadingOverlay.classList.add('hidden');
+      }
+
       try {
+        updateProgress(10, 'Initializing map...');
         initializeMap();
 
         setTimeout(async () => {
           if (statusText) {
             statusText.textContent = "Loading data...";
           }
+          updateProgress(30, 'Loading incident data...');
 
           try {
-            await Promise.all([loadIncidents(), loadCases()]);
+            await loadIncidents();
+            updateProgress(60, 'Loading legal cases...');
+            await loadCases();
+            updateProgress(90, 'Rendering markers...');
+
             if (statusText) {
               statusText.textContent = `Loaded ${incidentsWithCoords.length.toLocaleString()} incidents and ${casesWithCoords.length.toLocaleString()} legal cases.`;
             }
             renderMarkers();
+            updateProgress(100, 'Complete!');
+
+            // Render mobile list if function exists
+            if (typeof window.renderMobileList === 'function') {
+              window.renderMobileList();
+            }
+
+            // Hide loading overlay with slight delay for smooth transition
+            setTimeout(hideLoading, 300);
           } catch (error) {
             console.error('Error loading data:', error);
             if (statusText) {
               statusText.textContent = "Error loading data. Make sure the server is running.";
             }
+            hideLoading();
           }
         }, 300);
       } catch (error) {
@@ -2427,6 +2893,7 @@
         if (statusText) {
           statusText.textContent = "Error initializing map. Please refresh the page.";
         }
+        hideLoading();
       }
     }
 
@@ -3930,10 +4397,158 @@
     // =============================================
     // End Recent Incidents Widget Module
     // =============================================
+
+    // =============================================
+    // Mobile View Toggle & List View Module
+    // =============================================
+    (function() {
+      const mobileViewToggle = document.getElementById('mobileViewToggle');
+      const mobileListView = document.getElementById('mobileListView');
+      const mapArea = document.getElementById('mapArea');
+      const mobileListContent = document.getElementById('mobileListContent');
+      const mobileListCount = document.getElementById('mobileListCount');
+      const mobileListSort = document.getElementById('mobileListSort');
+      const viewBtns = document.querySelectorAll('.mobile-view-btn');
+
+      if (!mobileViewToggle) return;
+
+      let currentMobileView = 'map';
+
+      // View toggle handlers
+      viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          if (view === currentMobileView) return;
+
+          viewBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentMobileView = view;
+
+          if (view === 'list') {
+            mobileListView.classList.add('active');
+            mapArea.style.display = 'none';
+            renderMobileList();
+          } else {
+            mobileListView.classList.remove('active');
+            mapArea.style.display = 'block';
+            // Trigger map resize
+            if (window.map) {
+              setTimeout(() => window.map.invalidateSize(), 100);
+            }
+          }
+        });
+      });
+
+      // Sort change handler
+      if (mobileListSort) {
+        mobileListSort.addEventListener('change', renderMobileList);
+      }
+
+      // Render mobile list
+      function renderMobileList() {
+        if (!mobileListContent || !window.incidentsData) {
+          mobileListContent.innerHTML = '<div class="mobile-list-loading"><p>No data available</p></div>';
+          return;
+        }
+
+        let incidents = [...window.incidentsData].filter(i => i.title);
+        const sortBy = mobileListSort ? mobileListSort.value : 'date-desc';
+
+        // Sort incidents
+        incidents.sort((a, b) => {
+          switch (sortBy) {
+            case 'date-desc':
+              return (new Date(b.date || 0)) - (new Date(a.date || 0));
+            case 'date-asc':
+              return (new Date(a.date || 0)) - (new Date(b.date || 0));
+            case 'severity':
+              const sevOrder = { high: 0, medium: 1, low: 2 };
+              return (sevOrder[a.severity?.toLowerCase()] || 3) - (sevOrder[b.severity?.toLowerCase()] || 3);
+            case 'location':
+              return (a.location || '').localeCompare(b.location || '');
+            default:
+              return 0;
+          }
+        });
+
+        if (mobileListCount) {
+          mobileListCount.textContent = incidents.length;
+        }
+
+        if (incidents.length === 0) {
+          mobileListContent.innerHTML = '<div class="mobile-list-loading"><p>No incidents match your filters</p></div>';
+          return;
+        }
+
+        mobileListContent.innerHTML = incidents.map(incident => {
+          const sev = (incident.severity || 'low').toLowerCase();
+          const type = (incident.incident_type || 'Unknown').replace(/_/g, ' ');
+          const date = incident.date ? new Date(incident.date).toLocaleDateString('en-AU', {
+            day: 'numeric', month: 'short', year: 'numeric'
+          }) : 'Unknown date';
+          const location = incident.location || 'Unknown location';
+
+          return `
+            <a href="${incident.url || '#'}" class="mobile-incident-card" target="_blank" rel="noopener" data-incident-id="${incident.id || ''}">
+              <div class="mobile-incident-card-header">
+                <div class="mobile-incident-title">${escapeHtml(incident.title)}</div>
+                <span class="mobile-incident-severity ${sev}">${sev}</span>
+              </div>
+              <div class="mobile-incident-meta">
+                <span class="mobile-incident-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  ${date}
+                </span>
+                <span class="mobile-incident-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  ${escapeHtml(location)}
+                </span>
+                <span class="mobile-incident-type">${type}</span>
+              </div>
+            </a>
+          `;
+        }).join('');
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // Expose for external use
+      window.renderMobileList = renderMobileList;
+
+      // Auto-render when data loads
+      const checkDataInterval = setInterval(() => {
+        if (window.incidentsData && window.incidentsData.length > 0) {
+          clearInterval(checkDataInterval);
+          if (currentMobileView === 'list') {
+            renderMobileList();
+          }
+        }
+      }, 500);
+
+      // Clear interval after 30 seconds to prevent memory leak
+      setTimeout(() => clearInterval(checkDataInterval), 30000);
+    })();
+    // =============================================
+    // End Mobile View Toggle Module
+    // =============================================
   </script>
 
   <!-- Resources Dropdown Script -->
   <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
 </body>
 
 </html>

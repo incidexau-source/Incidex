@@ -42,6 +42,7 @@
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
 
   <style>
     /* Page-specific styles - Force light mode */
@@ -355,6 +356,339 @@
       align-items: center;
       flex-wrap: wrap;
     }
+
+    /* ============ TIMELINE STYLES ============ */
+    .timeline-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-6);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .timeline-filter-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .timeline-filter-group .form-label {
+      margin-bottom: 0;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .timeline-view-toggles {
+      display: flex;
+      gap: 2px;
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      padding: 2px;
+      border: 1px solid var(--color-border-light);
+    }
+
+    .timeline-view-btn {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .timeline-view-btn:hover {
+      color: var(--color-text);
+      background: var(--color-bg-alt);
+    }
+
+    .timeline-view-btn.active {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .timeline-jump {
+      min-width: 140px;
+    }
+
+    .timeline-stats {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .timeline-stat {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .timeline-stat strong {
+      color: var(--color-primary);
+      font-weight: var(--font-semibold);
+    }
+
+    .timeline-wrapper {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-container {
+      position: relative;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: var(--space-4);
+    }
+
+    .timeline-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .timeline-container::-webkit-scrollbar-track {
+      background: var(--color-bg);
+      border-radius: 4px;
+    }
+
+    .timeline-container::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: 4px;
+    }
+
+    .timeline-container::-webkit-scrollbar-thumb:hover {
+      background: var(--color-text-muted);
+    }
+
+    .timeline-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12);
+      color: var(--color-text-muted);
+    }
+
+    .timeline-year-group {
+      margin-bottom: var(--space-8);
+    }
+
+    .timeline-year-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-4);
+      background: var(--color-bg-alt);
+      border-bottom: 2px solid var(--color-primary);
+    }
+
+    .timeline-year {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+      font-family: var(--font-display);
+    }
+
+    .timeline-year-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+    }
+
+    .timeline-year-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--color-bg);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .timeline-year-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .timeline-incidents {
+      position: relative;
+      padding-left: var(--space-8);
+    }
+
+    .timeline-incidents::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--color-primary) 0%, var(--color-border-light) 100%);
+    }
+
+    .timeline-incident {
+      position: relative;
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .timeline-incident:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+    }
+
+    .timeline-incident::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-8) + 4px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--color-bg-alt);
+      box-shadow: 0 0 0 2px var(--color-primary);
+    }
+
+    .timeline-incident.type-murder::before { background: #d9534f; box-shadow: 0 0 0 2px #d9534f; }
+    .timeline-incident.type-assault::before { background: #e8985e; box-shadow: 0 0 0 2px #e8985e; }
+    .timeline-incident.type-discrimination::before { background: #5bc0de; box-shadow: 0 0 0 2px #5bc0de; }
+    .timeline-incident.type-hate_speech::before { background: #d4a5d4; box-shadow: 0 0 0 2px #d4a5d4; }
+    .timeline-incident.type-other::before { background: #8a8a8a; box-shadow: 0 0 0 2px #8a8a8a; }
+
+    .timeline-incident-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .timeline-incident-title {
+      font-weight: var(--font-semibold);
+      color: var(--color-text);
+      font-size: var(--text-sm);
+      line-height: var(--leading-snug);
+    }
+
+    .timeline-incident-date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .timeline-incident-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+    }
+
+    .timeline-incident-location {
+      color: var(--color-text-secondary);
+    }
+
+    .timeline-incident-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: var(--font-medium);
+      text-transform: capitalize;
+    }
+
+    .timeline-incident-type.murder { background: rgba(217, 83, 79, 0.15); color: #d9534f; }
+    .timeline-incident-type.assault { background: rgba(232, 152, 94, 0.15); color: #c97d41; }
+    .timeline-incident-type.discrimination { background: rgba(91, 192, 222, 0.15); color: #31a7c2; }
+    .timeline-incident-type.hate_speech { background: rgba(212, 165, 212, 0.15); color: #b07eb0; }
+    .timeline-incident-type.other { background: rgba(138, 138, 138, 0.15); color: #6a6a6a; }
+
+    .timeline-empty {
+      text-align: center;
+      padding: var(--space-12);
+      color: var(--color-text-muted);
+    }
+
+    .timeline-legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-8);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .legend-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-muted);
+    }
+
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .timeline-filter-group {
+        justify-content: space-between;
+      }
+
+      .timeline-stats {
+        justify-content: center;
+      }
+
+      .timeline-incident-header {
+        flex-direction: column;
+      }
+
+      .timeline-incident-date {
+        order: -1;
+      }
+    }
   </style>
 </head>
 
@@ -406,6 +740,13 @@
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
           Statistics
+        </a>
+        <a href="monitoring.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Monitor
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -558,6 +899,7 @@
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
     <a href="statistics.html" class="nav-link active">Statistics</a>
+    <a href="monitoring.html" class="nav-link">Monitor</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
@@ -609,7 +951,7 @@
 
     <!-- Key Statistics Cards -->
     <div class="stats-grid" id="statsCards">
-      <div class="stat-card">
+      <div class="stat-card card-glow reveal">
         <div class="stat-label">Total Incidents</div>
         <div class="stat-value" id="totalIncidents">-</div>
         <div class="stat-detail">All recorded incidents</div>
@@ -820,6 +1162,67 @@
       </div>
     </div>
 
+    <!-- ============ INTERACTIVE TIMELINE SECTION ============ -->
+    <div class="section-divider" id="timelineSection">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        Interactive Timeline
+      </h2>
+      <p>Explore incidents chronologically - scroll through 50+ years of documented hate crimes</p>
+    </div>
+
+    <!-- Timeline Controls -->
+    <div class="timeline-controls">
+      <div class="timeline-filter-group">
+        <label class="form-label">View by:</label>
+        <div class="timeline-view-toggles">
+          <button class="timeline-view-btn active" data-view="year">Year</button>
+          <button class="timeline-view-btn" data-view="decade">Decade</button>
+          <button class="timeline-view-btn" data-view="all">All</button>
+        </div>
+      </div>
+      <div class="timeline-filter-group">
+        <label class="form-label">Jump to:</label>
+        <select class="form-select timeline-jump" id="timelineJump">
+          <option value="">Select year...</option>
+        </select>
+      </div>
+      <div class="timeline-stats">
+        <span class="timeline-stat">
+          <strong id="timelineTotal">0</strong> incidents
+        </span>
+        <span class="timeline-stat">
+          <strong id="timelineYearSpan">0</strong> years documented
+        </span>
+      </div>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="timeline-wrapper">
+      <div class="timeline-container" id="timelineContainer">
+        <!-- Timeline content will be generated by JavaScript -->
+        <div class="timeline-loading">
+          <div class="loading-spinner"></div>
+          <p>Loading timeline...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline Legend -->
+    <div class="timeline-legend">
+      <span class="legend-title">Incident Types:</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-dot" style="background: #d9534f;"></span> Murder</span>
+        <span class="legend-item"><span class="legend-dot" style="background: #e8985e;"></span> Assault</span>
+        <span class="legend-item"><span class="legend-dot" style="background: #5bc0de;"></span> Discrimination</span>
+        <span class="legend-item"><span class="legend-dot" style="background: #d4a5d4;"></span> Hate Speech</span>
+        <span class="legend-item"><span class="legend-dot" style="background: #8a8a8a;"></span> Other</span>
+      </div>
+    </div>
+
     <!-- ============ INCIDENT RATES SECTION ============ -->
     <div class="section-divider" id="incidentRatesSection">
       <h2>
@@ -860,7 +1263,7 @@
 
     <!-- Risk Summary Cards -->
     <div class="stats-grid" id="riskCardsGrid">
-      <div class="stat-card" style="border-left: 4px solid var(--color-error);">
+      <div class="stat-card card-glow reveal" style="border-left: 4px solid var(--color-error);">
         <div class="stat-label">🚨 Highest Risk State</div>
         <div class="stat-value" id="highestRiskState">Loading...</div>
         <div class="stat-detail"><span id="highestRiskRate">-</span> per 1,000 LGBTI+</div>
@@ -875,7 +1278,7 @@
         <div class="stat-value" id="riskMultiplier">-</div>
         <div class="stat-detail" id="riskMultiplierLabel">-</div>
       </div>
-      <div class="stat-card" style="border-left: 4px solid var(--color-primary);">
+      <div class="stat-card card-glow reveal" style="border-left: 4px solid var(--color-primary);">
         <div class="stat-label">🇦🇺 National Average</div>
         <div class="stat-value" id="nationalAvgRate">-</div>
         <div class="stat-detail">incidents per 1,000 LGBTI+</div>
@@ -1123,7 +1526,7 @@
 
     <!-- Legal Cases Stats -->
     <div class="stats-grid" id="legalStatsCards">
-      <div class="stat-card">
+      <div class="stat-card card-glow reveal">
         <div class="stat-label">Total Cases</div>
         <div class="stat-value" id="totalCases">-</div>
         <div class="stat-detail">Landmark decisions</div>
@@ -1138,7 +1541,7 @@
         <div class="stat-value" id="highestCourt">-</div>
         <div class="stat-detail" id="highestCourtCount">-</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card card-glow reveal">
         <div class="stat-label">Most Common Issue</div>
         <div class="stat-value" id="commonIssue">-</div>
         <div class="stat-detail" id="commonIssueCount">-</div>
@@ -2921,7 +3324,189 @@
       originalUpdateDashboard();
       if (populationData.length > 0) calculateIncidentRates();
       if (mpVotingData && stateMPVotingData) calculateElectorateStatistics();
+      updateTimeline();
     };
+
+    // ============ TIMELINE FUNCTIONALITY ============
+    let currentTimelineView = 'year';
+
+    function updateTimeline() {
+      const container = document.getElementById('timelineContainer');
+      if (!container) return;
+
+      // Sort incidents by date (newest first for better UX)
+      const sortedIncidents = [...filteredIncidents]
+        .filter(i => i.parsedDate)
+        .sort((a, b) => b.parsedDate - a.parsedDate);
+
+      if (sortedIncidents.length === 0) {
+        container.innerHTML = '<div class="timeline-empty"><p>No incidents with valid dates to display.</p></div>';
+        return;
+      }
+
+      // Update stats
+      const totalEl = document.getElementById('timelineTotal');
+      const yearSpanEl = document.getElementById('timelineYearSpan');
+      if (totalEl) totalEl.textContent = sortedIncidents.length;
+
+      const years = [...new Set(sortedIncidents.map(i => i.year))].filter(y => y).sort();
+      if (yearSpanEl && years.length > 0) {
+        yearSpanEl.textContent = (years[years.length - 1] - years[0] + 1);
+      }
+
+      // Populate jump dropdown
+      const jumpSelect = document.getElementById('timelineJump');
+      if (jumpSelect) {
+        const currentVal = jumpSelect.value;
+        jumpSelect.innerHTML = '<option value="">Select year...</option>';
+        years.sort((a, b) => b - a).forEach(year => {
+          const opt = document.createElement('option');
+          opt.value = year;
+          opt.textContent = year;
+          jumpSelect.appendChild(opt);
+        });
+        jumpSelect.value = currentVal;
+      }
+
+      // Find max incidents per year for the progress bar
+      const yearCounts = {};
+      sortedIncidents.forEach(i => {
+        if (i.year) yearCounts[i.year] = (yearCounts[i.year] || 0) + 1;
+      });
+      const maxYearCount = Math.max(...Object.values(yearCounts));
+
+      // Group by view type
+      let groups;
+      if (currentTimelineView === 'decade') {
+        groups = groupByDecade(sortedIncidents);
+      } else if (currentTimelineView === 'all') {
+        groups = { 'All Incidents': sortedIncidents };
+      } else {
+        groups = groupByYear(sortedIncidents);
+      }
+
+      // Render timeline
+      let html = '';
+      for (const [groupKey, incidents] of Object.entries(groups)) {
+        const barWidth = currentTimelineView === 'year'
+          ? (yearCounts[groupKey] / maxYearCount * 100)
+          : (incidents.length / sortedIncidents.length * 100);
+
+        html += `
+          <div class="timeline-year-group" data-group="${groupKey}">
+            <div class="timeline-year-header">
+              <span class="timeline-year">${groupKey}</span>
+              <span class="timeline-year-count">${incidents.length} incident${incidents.length !== 1 ? 's' : ''}</span>
+              <div class="timeline-year-bar">
+                <div class="timeline-year-bar-fill" style="width: ${barWidth}%"></div>
+              </div>
+            </div>
+            <div class="timeline-incidents">
+              ${incidents.slice(0, 50).map(incident => renderTimelineIncident(incident)).join('')}
+              ${incidents.length > 50 ? `<div class="timeline-incident" style="text-align: center; cursor: default;"><em>+ ${incidents.length - 50} more incidents...</em></div>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+
+      // Add click handlers for incidents
+      container.querySelectorAll('.timeline-incident[data-url]').forEach(el => {
+        el.addEventListener('click', () => {
+          const url = el.dataset.url;
+          if (url) window.open(url, '_blank');
+        });
+      });
+    }
+
+    function groupByYear(incidents) {
+      const groups = {};
+      incidents.forEach(i => {
+        if (i.year) {
+          if (!groups[i.year]) groups[i.year] = [];
+          groups[i.year].push(i);
+        }
+      });
+      // Sort by year descending
+      return Object.fromEntries(
+        Object.entries(groups).sort((a, b) => b[0] - a[0])
+      );
+    }
+
+    function groupByDecade(incidents) {
+      const groups = {};
+      incidents.forEach(i => {
+        if (i.year) {
+          const decade = Math.floor(i.year / 10) * 10 + 's';
+          if (!groups[decade]) groups[decade] = [];
+          groups[decade].push(i);
+        }
+      });
+      // Sort by decade descending
+      return Object.fromEntries(
+        Object.entries(groups).sort((a, b) => parseInt(b[0]) - parseInt(a[0]))
+      );
+    }
+
+    function renderTimelineIncident(incident) {
+      const type = (incident.incident_type || 'other').replace(/\s+/g, '_');
+      const typeClass = ['murder', 'assault', 'discrimination', 'hate_speech'].includes(type) ? type : 'other';
+      const typeDisplay = type.replace(/_/g, ' ');
+
+      const date = incident.parsedDate
+        ? incident.parsedDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+        : 'Unknown date';
+
+      const location = incident.location || 'Unknown location';
+      const title = incident.title || 'Untitled incident';
+      const url = incident.url || '';
+
+      return `
+        <div class="timeline-incident type-${typeClass}" ${url ? `data-url="${url}"` : ''}>
+          <div class="timeline-incident-header">
+            <span class="timeline-incident-title">${escapeHtml(title)}</span>
+            <span class="timeline-incident-date">${date}</span>
+          </div>
+          <div class="timeline-incident-meta">
+            <span class="timeline-incident-location">${escapeHtml(location)}</span>
+            <span class="timeline-incident-type ${typeClass}">${typeDisplay}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function initTimelineControls() {
+      // View toggle buttons
+      document.querySelectorAll('.timeline-view-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.timeline-view-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentTimelineView = btn.dataset.view;
+          updateTimeline();
+        });
+      });
+
+      // Jump to year
+      const jumpSelect = document.getElementById('timelineJump');
+      if (jumpSelect) {
+        jumpSelect.addEventListener('change', () => {
+          const year = jumpSelect.value;
+          if (year) {
+            const targetGroup = document.querySelector(`.timeline-year-group[data-group="${year}"]`);
+            if (targetGroup) {
+              targetGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      }
+    }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
@@ -2941,6 +3526,9 @@
 
       if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
+      // Initialize timeline controls
+      initTimelineControls();
+
       // Load data
       loadData();
       loadLegalCases();
@@ -2951,6 +3539,7 @@
 
   <!-- Resources Dropdown Script -->
   <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
 </body>
 
 </html>

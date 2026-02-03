@@ -1,0 +1,563 @@
+/* ==========================================================================
+   Incidex — Premium Animation & Enhancement Layer
+   Webflow-inspired modern interactions, transitions, and visual polish
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Page Load Transition
+   -------------------------------------------------------------------------- */
+
+body {
+  opacity: 0;
+  animation: pageLoad 0.6s var(--ease-standard) 0.1s forwards;
+}
+
+@keyframes pageLoad {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Top progress bar on page load */
+.page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+  z-index: 9999;
+  animation: progressBar 0.8s var(--ease-standard) forwards;
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes progressBar {
+  0%   { width: 0; opacity: 1; }
+  80%  { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-Triggered Reveal Animations
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard), filter 0.7s var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-blur {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(15px);
+  transition: opacity 0.8s var(--ease-standard), filter 0.8s var(--ease-standard), transform 0.8s var(--ease-standard);
+  will-change: opacity, filter, transform;
+}
+
+.reveal-blur.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Staggered reveal delays for child elements */
+.reveal-stagger > *:nth-child(1)  { transition-delay: 0.00s; }
+.reveal-stagger > *:nth-child(2)  { transition-delay: 0.07s; }
+.reveal-stagger > *:nth-child(3)  { transition-delay: 0.14s; }
+.reveal-stagger > *:nth-child(4)  { transition-delay: 0.21s; }
+.reveal-stagger > *:nth-child(5)  { transition-delay: 0.28s; }
+.reveal-stagger > *:nth-child(6)  { transition-delay: 0.35s; }
+.reveal-stagger > *:nth-child(7)  { transition-delay: 0.42s; }
+.reveal-stagger > *:nth-child(8)  { transition-delay: 0.49s; }
+.reveal-stagger > *:nth-child(9)  { transition-delay: 0.56s; }
+.reveal-stagger > *:nth-child(10) { transition-delay: 0.63s; }
+
+/* --------------------------------------------------------------------------
+   Enhanced Card Hover Effects
+   -------------------------------------------------------------------------- */
+
+/* 3D tilt-ready card (JS adds transform via mousemove) */
+.card-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.3s var(--ease-standard), box-shadow 0.3s var(--ease-standard);
+}
+
+/* Glow border on hover */
+.card-glow {
+  position: relative;
+  transition: transform 0.35s var(--ease-standard), box-shadow 0.35s var(--ease-standard);
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-accent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-standard);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.card-glow:hover::before {
+  opacity: 0.15;
+}
+
+.card-glow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(20, 184, 166, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .card-glow:hover {
+  box-shadow: 0 12px 32px rgba(94, 234, 212, 0.1), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced feature card hover */
+.feature-card {
+  transition: transform 0.35s var(--ease-standard), box-shadow 0.35s var(--ease-standard), border-color 0.35s var(--ease-standard);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-accent-100);
+}
+
+[data-theme="dark"] .feature-card:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1) rotate(-3deg);
+  transition: transform 0.35s var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Glassmorphism
+   -------------------------------------------------------------------------- */
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(15, 15, 15, 0.7);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Enhanced sticky header glass */
+.site-header {
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  background: rgba(250, 250, 250, 0.75) !important;
+  transition: box-shadow 0.3s var(--ease-standard);
+}
+
+[data-theme="dark"] .site-header {
+  background: rgba(15, 15, 15, 0.75) !important;
+}
+
+.site-header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .site-header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Glass emergency panel */
+.emergency-panel {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* --------------------------------------------------------------------------
+   Modern Button Effects
+   -------------------------------------------------------------------------- */
+
+/* Shimmer sweep on primary buttons */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s var(--ease-standard);
+}
+
+.btn-primary:hover::after {
+  left: 100%;
+}
+
+/* Press scale */
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Arrow slide on CTAs */
+.btn-hero-primary svg,
+.btn-hero-secondary svg,
+.feature-link svg {
+  transition: transform 0.3s var(--ease-standard);
+}
+
+.btn-hero-primary:hover svg,
+.btn-hero-secondary:hover svg {
+  transform: translateX(3px);
+}
+
+/* Magnetic button effect (JS adds inline transform) */
+.btn-magnetic {
+  transition: transform 0.2s var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Typography Enhancements
+   -------------------------------------------------------------------------- */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .text-gradient {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #99F6E4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Word-by-word reveal for hero headings */
+.text-reveal .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: wordReveal 0.5s var(--ease-standard) forwards;
+}
+
+@keyframes wordReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Decorative Hero Elements
+   -------------------------------------------------------------------------- */
+
+.hero-orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-accent);
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--color-accent-light);
+  bottom: -80px;
+  left: -80px;
+  animation-delay: -7s;
+}
+
+.hero-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: #d4a5d4;
+  top: 40%;
+  left: 60%;
+  animation-delay: -14s;
+}
+
+[data-theme="dark"] .hero-orb {
+  opacity: 0.08;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(20px, -30px) scale(1.05); }
+  50%      { transform: translate(-15px, 20px) scale(0.95); }
+  75%      { transform: translate(25px, 10px) scale(1.02); }
+}
+
+/* Dot grid pattern */
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme="dark"] .hero-dots {
+  opacity: 0.15;
+}
+
+/* --------------------------------------------------------------------------
+   Section Dividers
+   -------------------------------------------------------------------------- */
+
+.section-divider-rainbow {
+  height: 3px;
+  background: var(--gradient-rainbow);
+  border: none;
+  margin: 0;
+  opacity: 0.6;
+}
+
+.section-divider-subtle {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  border: none;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Enhanced Nav Link Underline
+   -------------------------------------------------------------------------- */
+
+.nav-link::after {
+  transition: width 0.3s var(--ease-standard), opacity 0.3s var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-triggered Counter Animation
+   -------------------------------------------------------------------------- */
+
+.counter-animate {
+  transition: opacity 0.5s var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Enhanced Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-rainbow);
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   Form Focus Glow
+   -------------------------------------------------------------------------- */
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  box-shadow: 0 0 0 3px var(--color-accent-50), 0 0 16px rgba(20, 184, 166, 0.1);
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus {
+  box-shadow: 0 0 0 3px var(--color-accent-50), 0 0 16px rgba(94, 234, 212, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Table Row Hover Glow
+   -------------------------------------------------------------------------- */
+
+.table tbody tr {
+  transition: background 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard);
+}
+
+.table tbody tr:hover {
+  background: var(--color-accent-50);
+}
+
+/* --------------------------------------------------------------------------
+   Smooth Image Hover
+   -------------------------------------------------------------------------- */
+
+.img-hover-zoom {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s var(--ease-standard);
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* --------------------------------------------------------------------------
+   Badge Pulse (for "live" or "updated daily" indicators)
+   -------------------------------------------------------------------------- */
+
+.badge-pulse {
+  position: relative;
+}
+
+.badge-pulse::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50%      { opacity: 0.7; box-shadow: 0 0 0 6px transparent; }
+}
+
+/* --------------------------------------------------------------------------
+   Smooth Sidebar Transitions
+   -------------------------------------------------------------------------- */
+
+.sidebar-panel {
+  transition: right 0.4s var(--ease-standard), box-shadow 0.4s var(--ease-standard);
+}
+
+.sidebar-panel.open {
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .sidebar-panel.open {
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+    opacity: 1;
+  }
+
+  .page-progress {
+    display: none;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale,
+  .reveal-blur {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .hero-orb {
+    animation: none;
+  }
+
+  .text-reveal .word {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .btn-primary::after {
+    display: none;
+  }
+
+  .card-glow:hover {
+    transform: none;
+  }
+
+  .feature-card:hover {
+    transform: none;
+  }
+
+  .feature-card:hover .feature-icon {
+    transform: none;
+  }
+}

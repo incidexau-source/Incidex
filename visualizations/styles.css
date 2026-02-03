@@ -1701,6 +1701,48 @@ p:last-child {
   }
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  z-index: 100;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-overlay .loading-text {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.loading-overlay .loading-progress {
+  width: 200px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.loading-overlay .loading-progress-bar {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
 /* --------------------------------------------------------------------------
    Transitions & Animations
    -------------------------------------------------------------------------- */
@@ -2060,8 +2102,16 @@ a:focus-visible {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Footer Dark Background (ensure visible on all themes)
+   -------------------------------------------------------------------------- */
 
+.site-footer {
+  background: #1A1A1A;
+}
 
-
+[data-theme="dark"] .site-footer {
+  background: #0A0A0A;
+}
 
 
