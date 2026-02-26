@@ -20,7 +20,7 @@ print("DEBUG: Setting up paths and config...")
 
 # Get the directory where this script is located
 BASE_DIR = Path(__file__).parent.absolute()
-PORT = 8000
+PORT = 8080
 
 print(f"DEBUG: BASE_DIR = {BASE_DIR}")
 print(f"DEBUG: PORT = {PORT}")

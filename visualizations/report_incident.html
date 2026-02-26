@@ -1196,7 +1196,7 @@
           </svg>
           MP Voting
         </a>
-        <a href="statistics.html" class="nav-link">
+        <a href="monitoring.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -1205,12 +1205,12 @@
           </svg>
           Statistics
         </a>
-        <a href="monitoring.html" class="nav-link">
+        <a href="legal_cases.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
-          Monitor
+          Legal Cases
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1351,8 +1351,8 @@
     <a href="map.html" class="nav-link">Map</a>
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
-    <a href="statistics.html" class="nav-link">Statistics</a>
-    <a href="monitoring.html" class="nav-link">Monitor</a>
+    <a href="monitoring.html" class="nav-link">Statistics</a>
+    <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link active">Report an Incident</a>
@@ -1503,6 +1503,8 @@
                   <option value="hate_speech">Hate Speech</option>
                   <option value="threat">Threats / Intimidation</option>
                   <option value="discrimination">Discrimination</option>
+                  <option value="sexual_violence">Sexual Violence / Assault</option>
+                  <option value="conversion_practices">Conversion Practices / Therapy</option>
                   <option value="online">Online Abuse / Doxxing</option>
                   <option value="other">Other</option>
                 </select>
@@ -1591,6 +1593,13 @@
                   <span class="option-card-label">
                     <span class="option-card-icon">🏳️‍⚧️</span>
                     <span class="option-card-text">Trans</span>
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="victim_identity" value="non_binary">
+                  <span class="option-card-label">
+                    <span class="option-card-icon">⚧️</span>
+                    <span class="option-card-text">Non-binary</span>
                   </span>
                 </label>
                 <label class="option-card">
@@ -1909,7 +1918,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="map.html">Interactive Map</a></li>
-            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="monitoring.html">Statistics</a></li>
             <li><a href="resources.html">Support Resources</a></li>
             <li><a href="report_incident.html">Report an Incident</a></li>
           </ul>
@@ -1935,16 +1944,12 @@
 
   <script>
     // Initialize Supabase Client
-    let supabase = null;
+    let supabaseClient = null;
     if (window.SUPABASE_CONFIG && window.isSupabaseConfigured && window.isSupabaseConfigured()) {
-      supabase = window.supabase.createClient(
+      supabaseClient = window.supabase.createClient(
         window.SUPABASE_CONFIG.url,
         window.SUPABASE_CONFIG.anonKey
       );
-      console.log('Supabase initialized successfully');
-    } else {
-      console.warn('Supabase not configured. Form submissions will be stored locally only.');
-      console.warn('To enable Supabase, update config.js with your project credentials.');
     }
 
     // Form Elements
@@ -2114,6 +2119,7 @@
     // Form Submission
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      e.stopPropagation();
 
       if (!validateForm()) {
         return;
@@ -2141,22 +2147,19 @@
       };
 
       try {
-        if (supabase) {
+        if (supabaseClient) {
           // Submit to Supabase database
-          const { data, error } = await supabase
+          const { data, error } = await supabaseClient
             .from('incident_submissions')
-            .insert([submissionData]);
+            .insert([submissionData])
+            .select();
 
           if (error) {
-            console.error('Supabase error:', error);
             throw new Error(error.message || 'Failed to submit report');
           }
-
-          console.log('Report submitted to Supabase:', data);
         } else {
           // Fallback: Store in localStorage if Supabase not configured
-          console.warn('Supabase not configured - storing locally');
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+          await new Promise(resolve => setTimeout(resolve, 1000));
           const reports = JSON.parse(localStorage.getItem('community_reports') || '[]');
           reports.push({ ...submissionData, submitted_at: new Date().toISOString(), status: 'pending' });
           localStorage.setItem('community_reports', JSON.stringify(reports));
@@ -2189,7 +2192,6 @@
           }
         }, 100);
 
-        console.log('Report submitted:', submissionData);
       } catch (error) {
         console.error('Submission error:', error);
 

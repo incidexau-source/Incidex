@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Panel | Incidex</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  <style>
+    :root {
+      --color-bg: #f8fafc;
+      --color-bg-alt: #ffffff;
+      --color-text: #1e293b;
+      --color-text-muted: #64748b;
+      --color-border: #e2e8f0;
+      --color-primary: #1a5f7a;
+      --color-success: #059669;
+      --color-warning: #d97706;
+      --color-error: #dc2626;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .admin-header {
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--color-text);
+    }
+
+    .admin-logo img {
+      height: 32px;
+    }
+
+    .admin-logo span {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .admin-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .admin-user-email {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-success {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-danger {
+      background: var(--color-error);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      background: var(--color-bg);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-border);
+    }
+
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    /* Login Container */
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 2rem;
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .login-container h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .login-container p {
+      color: var(--color-text-muted);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.375rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    .login-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--color-error);
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
+    /* Main Content */
+    .admin-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--color-bg-alt);
+      padding: 1.25rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+    }
+
+    .stat-card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .stat-card-value.pending { color: var(--color-warning); }
+    .stat-card-value.approved { color: var(--color-success); }
+    .stat-card-value.rejected { color: var(--color-error); }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .admin-tab {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+    }
+
+    .admin-tab:hover {
+      color: var(--color-text);
+    }
+
+    .admin-tab.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .admin-tab .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--color-warning);
+      color: white;
+      border-radius: 10px;
+      margin-left: 0.5rem;
+    }
+
+    /* Submissions Table */
+    .submissions-table {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .table-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .table-content {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .submission-card {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      transition: background 0.2s;
+    }
+
+    .submission-card:last-child {
+      border-bottom: none;
+    }
+
+    .submission-card:hover {
+      background: #f8fafc;
+    }
+
+    .submission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .submission-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .submission-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      border-radius: 9999px;
+    }
+
+    .status-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-badge.approved {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-badge.rejected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .submission-type {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #e0f2fe;
+      color: #0369a1;
+      border-radius: 4px;
+      text-transform: capitalize;
+    }
+
+    .submission-identity {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #fae8ff;
+      color: #a21caf;
+      border-radius: 4px;
+      text-transform: capitalize;
+    }
+
+    .submission-description {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .submission-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .submission-notes {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .submission-notes input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    .submission-notes input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--color-text-muted);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1rem;
+      color: var(--color-text);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-text-muted);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.25rem;
+      background: var(--color-text);
+      color: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success {
+      background: var(--color-success);
+    }
+
+    .toast.error {
+      background: var(--color-error);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .admin-header {
+        padding: 1rem;
+      }
+
+      .admin-main {
+        padding: 1rem;
+      }
+
+      .submission-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .submission-notes {
+        min-width: 100%;
+      }
+    }
+
+    /* Hidden */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-container">
+    <h1>Admin Login</h1>
+    <p>Sign in to manage incident submissions</p>
+
+    <div id="loginError" class="login-error"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" class="form-input" required placeholder="admin@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-input" required placeholder="Your password">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+        Sign In
+      </button>
+    </form>
+
+    <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--color-text-muted); text-align: center;">
+      Create an admin user in Supabase Dashboard → Authentication → Users
+    </p>
+  </div>
+
+  <!-- Admin Panel (hidden until logged in) -->
+  <div id="adminPanel" class="hidden">
+    <header class="admin-header">
+      <a href="index.html" class="admin-logo">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex">
+        <span>Admin Panel</span>
+      </a>
+      <div class="admin-user">
+        <span class="admin-user-email" id="userEmail"></span>
+        <button class="btn btn-secondary btn-sm" onclick="signOut()">Sign Out</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <!-- Stats -->
+      <div class="admin-stats">
+        <div class="stat-card">
+          <div class="stat-card-label">Pending Review</div>
+          <div class="stat-card-value pending" id="statPending">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Approved</div>
+          <div class="stat-card-value approved" id="statApproved">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Rejected</div>
+          <div class="stat-card-value rejected" id="statRejected">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Total Submissions</div>
+          <div class="stat-card-value" id="statTotal">-</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-status="pending" onclick="filterByStatus('pending')">
+          Pending <span class="badge" id="pendingBadge">0</span>
+        </button>
+        <button class="admin-tab" data-status="approved" onclick="filterByStatus('approved')">
+          Approved
+        </button>
+        <button class="admin-tab" data-status="rejected" onclick="filterByStatus('rejected')">
+          Rejected
+        </button>
+        <button class="admin-tab" data-status="all" onclick="filterByStatus('all')">
+          All
+        </button>
+      </div>
+
+      <!-- Submissions -->
+      <div class="submissions-table">
+        <div class="table-header">
+          <h2>Incident Submissions</h2>
+          <button class="btn btn-secondary btn-sm" onclick="loadSubmissions()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            Refresh
+          </button>
+        </div>
+        <div class="table-content" id="submissionsContainer">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 0.5rem;">Loading submissions...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // Initialize Supabase
+    let supabaseClient = null;
+    let currentUser = null;
+    let allSubmissions = [];
+    let currentFilter = 'pending';
+
+    if (window.SUPABASE_CONFIG && window.isSupabaseConfigured()) {
+      supabaseClient = window.supabase.createClient(
+        window.SUPABASE_CONFIG.url,
+        window.SUPABASE_CONFIG.anonKey
+      );
+      console.log('Supabase client initialized');
+    } else {
+      alert('Supabase not configured. Please update config.js');
+    }
+
+    // Check auth state on load
+    async function checkAuth() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        currentUser = session.user;
+        showAdminPanel();
+      }
+    }
+
+    // Login form handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+
+      errorEl.classList.remove('show');
+      console.log('Attempting login with:', email);
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        console.log('Login response:', { data, error });
+
+        if (error) {
+          console.error('Login error:', error);
+          errorEl.textContent = error.message;
+          errorEl.classList.add('show');
+          return;
+        }
+
+        currentUser = data.user;
+        showAdminPanel();
+      } catch (err) {
+        console.error('Login exception:', err);
+        errorEl.textContent = 'Login failed: ' + err.message;
+        errorEl.classList.add('show');
+      }
+    });
+
+    // Sign out
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminPanel').classList.add('hidden');
+    }
+
+    // Show admin panel
+    function showAdminPanel() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+      document.getElementById('userEmail').textContent = currentUser.email;
+      loadSubmissions();
+    }
+
+    // Load submissions
+    async function loadSubmissions() {
+      const container = document.getElementById('submissionsContainer');
+      container.innerHTML = '<div class="loading"><div class="spinner"></div><p style="margin-top: 0.5rem;">Loading...</p></div>';
+
+      const { data, error } = await supabaseClient
+        .from('incident_submissions')
+        .select('*')
+        .order('submitted_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<div class="empty-state"><h3>Error loading submissions</h3><p>${error.message}</p></div>`;
+        return;
+      }
+
+      allSubmissions = data || [];
+      updateStats();
+      renderSubmissions();
+    }
+
+    // Update stats
+    function updateStats() {
+      const pending = allSubmissions.filter(s => s.status === 'pending').length;
+      const approved = allSubmissions.filter(s => s.status === 'approved').length;
+      const rejected = allSubmissions.filter(s => s.status === 'rejected').length;
+
+      document.getElementById('statPending').textContent = pending;
+      document.getElementById('statApproved').textContent = approved;
+      document.getElementById('statRejected').textContent = rejected;
+      document.getElementById('statTotal').textContent = allSubmissions.length;
+      document.getElementById('pendingBadge').textContent = pending;
+    }
+
+    // Filter by status
+    function filterByStatus(status) {
+      currentFilter = status;
+
+      // Update tab styles
+      document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.status === status);
+      });
+
+      renderSubmissions();
+    }
+
+    // Render submissions
+    function renderSubmissions() {
+      const container = document.getElementById('submissionsContainer');
+
+      let filtered = allSubmissions;
+      if (currentFilter !== 'all') {
+        filtered = allSubmissions.filter(s => s.status === currentFilter);
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <h3>No ${currentFilter === 'all' ? '' : currentFilter} submissions</h3>
+            <p>${currentFilter === 'pending' ? 'All caught up!' : 'Nothing here yet.'}</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(submission => `
+        <div class="submission-card" data-id="${submission.id}">
+          <div class="submission-header">
+            <div class="submission-meta">
+              <span class="status-badge ${submission.status}">${submission.status}</span>
+              <span class="submission-type">${(submission.incident_type || 'unknown').replace(/_/g, ' ')}</span>
+              <span class="submission-identity">${submission.victim_identity || 'not specified'}</span>
+              <span class="submission-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                ${submission.date || 'No date'}
+              </span>
+              <span class="submission-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                ${submission.location || 'Unknown'}${submission.street ? ', ' + submission.street : ''}
+              </span>
+              <span class="submission-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ${formatDate(submission.submitted_at)}
+              </span>
+            </div>
+          </div>
+
+          <div class="submission-description">${escapeHtml(submission.description || 'No description provided')}</div>
+
+          ${submission.contact_email ? `<p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Contact: ${submission.contact_email}</p>` : ''}
+
+          <div class="submission-actions">
+            ${submission.status === 'pending' ? `
+              <button class="btn btn-success btn-sm" onclick="updateStatus('${submission.id}', 'approved')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Approve
+              </button>
+              <button class="btn btn-danger btn-sm" onclick="updateStatus('${submission.id}', 'rejected')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                Reject
+              </button>
+            ` : `
+              <button class="btn btn-secondary btn-sm" onclick="updateStatus('${submission.id}', 'pending')">
+                Reset to Pending
+              </button>
+            `}
+            <div class="submission-notes">
+              <input
+                type="text"
+                placeholder="Add reviewer notes..."
+                value="${escapeHtml(submission.reviewer_notes || '')}"
+                onchange="updateNotes('${submission.id}', this.value)"
+              >
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Update status
+    async function updateStatus(id, newStatus) {
+      const { error } = await supabaseClient
+        .from('incident_submissions')
+        .update({
+          status: newStatus,
+          reviewed_at: new Date().toISOString()
+        })
+        .eq('id', id);
+
+      if (error) {
+        showToast('Error updating status: ' + error.message, 'error');
+        return;
+      }
+
+      // Update local data
+      const submission = allSubmissions.find(s => s.id === id);
+      if (submission) {
+        submission.status = newStatus;
+        submission.reviewed_at = new Date().toISOString();
+      }
+
+      updateStats();
+      renderSubmissions();
+      showToast(`Submission ${newStatus}`, 'success');
+    }
+
+    // Update notes
+    async function updateNotes(id, notes) {
+      const { error } = await supabaseClient
+        .from('incident_submissions')
+        .update({ reviewer_notes: notes })
+        .eq('id', id);
+
+      if (error) {
+        showToast('Error saving notes: ' + error.message, 'error');
+        return;
+      }
+
+      // Update local data
+      const submission = allSubmissions.find(s => s.id === id);
+      if (submission) {
+        submission.reviewer_notes = notes;
+      }
+
+      showToast('Notes saved', 'success');
+    }
+
+    // Helper: Format date
+    function formatDate(dateStr) {
+      if (!dateStr) return 'Unknown';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-AU', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Helper: Escape HTML
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Toast notification
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Initialize
+    if (supabaseClient) {
+      checkAuth();
+    }
+  </script>
+</body>
+</html>

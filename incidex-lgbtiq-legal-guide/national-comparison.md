@@ -1,6 +1,6 @@
 # National Comparison: LGBTIQ+ Discrimination & Vilification Laws in Australia
 
-**Last updated: 31 December 2025**
+**Last updated: 19 February 2026**
 
 This table compares LGBTIQ+ anti-discrimination and vilification protections across all Australian jurisdictions. It translates complex legal differences into plain English to help you understand your rights depending on where you live or work.
 
@@ -12,7 +12,7 @@ This table compares LGBTIQ+ anti-discrimination and vilification protections acr
 |--------------|-------------------|-----------------|-------------------------------|---------------|
 | **Commonwealth** | ✓ | ⚠️ Unclear | ✓ Intersex Status | Basic national floor, but terminology is becoming outdated. |
 | **NSW** | ⚠️ Gay/Lesbian only | ⚠️ Binary only | ❌ NOT protected | **Weakest in Australia.** Bi, Pan, Non-Binary, and Intersex people have no clear protection. |
-| **Victoria** | ✓ | ✓ | ✓ Sex Characteristics | Strong, modern protections for all identities. |
+| **Victoria** | ✓ | ✓ | ✓ Sex Characteristics + Medical Safeguards (2026) | Strong, modern protections for all identities. First state to legislate intersex medical safeguards. |
 | **Queensland** | ✓ | ✓ | ✓ Sex Characteristics | **Gold Standard (New).** 2024 reforms made these the most inclusive definitions. |
 | **WA** | ✓ | ⚠️ Binary only | ❌ NOT protected | Significant gaps for Non-Binary and Intersex people. Reforms are long overdue. |
 | **SA** | ✓ | ⚠️ Unclear | ✓ Intersex Status | Moderate protections; terminology lags behind modern standards. |
@@ -79,7 +79,7 @@ This table compares LGBTIQ+ anti-discrimination and vilification protections acr
 3. **Queensland:** Recent 2024 reforms have propelled QLD to the top tier for inclusivity and vilification laws.
 
 ### 🟡 AMBER: Moderate / Gaps
-4. **Victoria:** Strong discrimination laws but let down by a total lack of vilification protections.
+4. **Victoria:** Strong discrimination laws with historic intersex medical safeguards (2026), but let down by a total lack of vilification protections.
 5. **NT:** Good modern laws, but recent 2025 amendments re-introducing exemptions are a concern.
 6. **SA:** Protections exist but terminology is dated and religious exemptions remain broad.
 
@@ -90,12 +90,13 @@ This table compares LGBTIQ+ anti-discrimination and vilification protections acr
 
 ---
 
-## Key Reforms (2024-2025)
+## Key Reforms (2024-2026)
+- **VIC (Feb 2026):** Historic **Health Safeguards for People Born with Variations in Sex Characteristics Act 2025** passed (24-15). Victoria is the first Australian state to protect intersex children from unnecessary medical interventions. Establishes independent expert panel with lived experience representatives.
 - **QLD (April 2024):** Massive update to include Sex Characteristics and inclusive Gender Identity.
 - **VIC (Sept 2025):** Updated definitions to ensure Non-Binary people are clearly protected.
 - **NT (Oct 2025):** Re-introduced some religious exemptions, slightly weakening the 2023 gains.
-- **WA (Pending):** Reforms promised for years remain stalled as of December 2025.
+- **WA (Pending):** Reforms promised for years remain stalled as of February 2026.
 
 ---
 
-*This comparison is based on legislation in force as at 31 December 2025. For detailed information about a specific jurisdiction, see the individual factsheets and JSON schemas.*
+*This comparison is based on legislation in force as at 19 February 2026. For detailed information about a specific jurisdiction, see the individual factsheets and JSON schemas.*

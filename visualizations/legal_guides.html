@@ -19,6 +19,7 @@
     <!-- Shared Styles -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
 
   <style>
     /* ===== LEGAL GUIDES PAGE SPECIFIC STYLES ===== */
@@ -549,9 +550,16 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                     MP Voting
                 </a>
-        <a href="statistics.html" class="nav-link">
+        <a href="monitoring.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           Statistics
+        </a>
+        <a href="legal_cases.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Legal Cases
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="9" x2="9" y2="21"></line><line x1="15" y1="9" x2="15" y2="21"></line></svg>
@@ -616,7 +624,8 @@
     <a href="map.html" class="nav-link">Map</a>
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
-    <a href="statistics.html" class="nav-link">Statistics</a>
+    <a href="monitoring.html" class="nav-link">Statistics</a>
+    <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="legal_guides.html" class="nav-link active">Legal Guides</a>
     <a href="resources.html" class="nav-link">Resources</a>
@@ -690,6 +699,7 @@
   </footer>
 
   <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
     // Policy scoring system (same as policy_landscape.html)
@@ -894,11 +904,11 @@
       },
       victoria: {
         name: "Victoria", rating: "🟡 AMBER", ratingClass: "amber",
-        summary: "Strong discrimination laws but let down by a total lack of vilification protections.",
+        summary: "Strong discrimination laws with historic intersex medical safeguards (2026), but let down by a total lack of vilification protections.",
         protected: {
           sexualOrientation: { status: "✅", text: "Sexual Orientation" },
           genderIdentity: { status: "✅", text: "Gender Identity (inc. non-binary)" },
-          intersex: { status: "✅", text: "Sex Characteristics" },
+          intersex: { status: "✅", text: "Sex Characteristics + Medical Safeguards (2026)" },
           vilification: { status: "❌", text: "No Vilification Protections" },
           conversionPractices: { status: "✅", text: "Conversion Practices Ban (2021)" }
         },
@@ -906,7 +916,7 @@
         limitations: ["No vilification protections despite government promises for years."],
         exemptions: "Narrow - Religious exemptions narrowed in 2021. Students and teachers are protected.",
         contact: { body: "Victorian Equal Opportunity and Human Rights Commission", phone: "1300 292 153", email: "enquiries@veohrc.vic.gov.au", website: "humanrights.vic.gov.au" },
-        comprehensive: "Victoria has strong protections for LGBTIQ+ people but lacks vilification protections."
+        comprehensive: "Victoria has strong protections for LGBTIQ+ people including historic intersex medical safeguards passed in February 2026 (first Australian state), but lacks vilification protections."
       },
       nt: {
         name: "Northern Territory", rating: "🟡 AMBER", ratingClass: "amber",
@@ -1094,7 +1104,7 @@
       victoria: {
         primaryAct: "Equal Opportunity Act 2010 (Vic)",
         primaryActUrl: "https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
-        otherActs: ["Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic)"],
+        otherActs: ["Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic)", "Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic) - intersex medical protections, passed 19 February 2026"],
         sexualOrientation: {
           definition: "Sexual orientation means a person's emotional, affectional and sexual attraction to, or intimate or sexual relations with, persons of a different gender or the same gender or more than one gender",
           source: "Equal Opportunity Act 2010 (Vic), s 4",
@@ -1109,8 +1119,15 @@
         },
         intersex: {
           definition: "Sex characteristics means a person's physical features relating to sex, including: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features, whether or not the person has undergone medical intervention",
-          source: "Equal Opportunity Act 2010 (Vic), s 4",
-          yearAdded: 2021
+          source: "Equal Opportunity Act 2010 (Vic), s 4; Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic)",
+          yearAdded: 2021,
+          medicalSafeguards: {
+            act: "Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic)",
+            passed: "19 February 2026",
+            vote: "24-15 (Legislative Council)",
+            summary: "Restricts unnecessary medical procedures on intersex children. Establishes independent expert panel. First Australian state to legislate these protections.",
+            url: "https://www.legislation.vic.gov.au/bills/health-safeguards-people-born-variations-sex-characteristics-bill-2025"
+          }
         },
         employment: {
           source: "Equal Opportunity Act 2010 (Vic), Part 4"

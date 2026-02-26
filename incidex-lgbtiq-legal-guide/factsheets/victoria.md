@@ -1,12 +1,12 @@
 # Know Your Rights: LGBTIQ+ Discrimination & Vilification (Victoria)
 
-**Last updated: 31 December 2025**
+**Last updated: 19 February 2026**
 
 ---
 
 ## Overall Rating: 🟡 AMBER
 
-Victoria has strong protections for LGBTIQ+ people with comprehensive coverage of sexual orientation, gender identity, and sex characteristics. Religious exemptions were significantly narrowed in 2021, providing much better protection in schools and services. However, Victoria **lacks vilification protections** for LGBTIQ+ people despite long-standing promises, which prevents it from being rated Green.
+Victoria has strong protections for LGBTIQ+ people with comprehensive coverage of sexual orientation, gender identity, and sex characteristics. Religious exemptions were significantly narrowed in 2021, providing much better protection in schools and services. In February 2026, Victoria became the **first Australian state** to pass historic intersex medical safeguards legislation, protecting intersex children from unnecessary medical interventions. However, Victoria **lacks vilification protections** for LGBTIQ+ people despite long-standing promises, which prevents it from being rated Green.
 
 ---
 
@@ -37,17 +37,19 @@ Victoria has strong protections for LGBTIQ+ people with comprehensive coverage o
 
 **Limitations:** None. Victoria updated its definition in September 2025 to be clearly inclusive of non-binary and gender diverse people.
 
-### Sex Characteristics: ✅ Protected
+### Sex Characteristics: ✅ Protected + Medical Safeguards (2026)
 
-**What this means:** You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy). This includes intersex status.
+**What this means:** You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy). This includes intersex status. Additionally, intersex children are now protected from unnecessary medical interventions under the **Health Safeguards for People Born with Variations in Sex Characteristics Act 2025**, passed 19 February 2026.
 
 **Real-world examples:**
 - You cannot be denied medical care based on being intersex.
 - An employer cannot ask invasive questions about your body.
 - You cannot be excluded from school activities because of sex characteristics.
 - A gym cannot refuse you membership because you are intersex.
+- Intersex children cannot be subjected to unnecessary surgeries to alter their sex characteristics without their consent.
+- An independent expert panel (with lived experience representatives) must oversee treatment plans for intersex children.
 
-**Limitations:** None. Victoria is a leader in this protection, having added "sex characteristics" in February 2021.
+**Limitations:** None. Victoria is a national leader in this protection, having added "sex characteristics" in February 2021 and becoming the **first Australian state** (second jurisdiction after ACT) to legislate intersex medical safeguards in February 2026.
 
 ---
 
@@ -145,8 +147,8 @@ You can lodge a complaint with the **Victorian Equal Opportunity and Human Right
 
 ## Key Takeaway
 
-Victoria is a leader in discrimination law, especially with its recent 2021 and 2025 reforms. You have very strong protections in schools and workplaces. However, the total lack of vilification (hate speech) laws remains a major gap that the community is still fighting to close.
+Victoria is a leader in discrimination law, especially with its 2021, 2025, and 2026 reforms. You have very strong protections in schools and workplaces, and the historic 2026 intersex medical safeguards legislation makes Victoria a world leader in protecting intersex children's bodily autonomy. However, the total lack of vilification (hate speech) laws remains a major gap that the community is still fighting to close.
 
 ---
 
-*This factsheet is based on the Equal Opportunity Act 2010 (Vic) as at 31 December 2025. It provides general information only and is not legal advice.*
+*This factsheet is based on the Equal Opportunity Act 2010 (Vic) and the Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic) as at 19 February 2026. It provides general information only and is not legal advice.*

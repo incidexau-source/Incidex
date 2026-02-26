@@ -14,6 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
   <style>
     :root {
       --incident-assault: #d9534f;
@@ -394,6 +395,16 @@
     .type-murder {
       background: rgba(139, 0, 0, 0.15);
       color: var(--incident-murder);
+    }
+
+    .type-conversion_practices {
+      background: rgba(139, 92, 246, 0.15);
+      color: #8b5cf6;
+    }
+
+    .type-sexual_violence {
+      background: rgba(237, 100, 166, 0.15);
+      color: #ed64a6;
     }
 
     .type-other {
@@ -859,7 +870,7 @@
           </svg>
           MP Voting
         </a>
-        <a href="statistics.html" class="nav-link">
+        <a href="monitoring.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -867,6 +878,13 @@
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
           Statistics
+        </a>
+        <a href="legal_cases.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Legal Cases
         </a>
         <a href="database.html" class="nav-link active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1205,6 +1223,7 @@
   </footer>
 
   <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
   <script>
     // State
     let allIncidents = [];
@@ -1273,6 +1292,7 @@
                 title: row.title || row.Title || '',
                 latitude: parseFloat(row.latitude || row.Latitude) || null,
                 longitude: parseFloat(row.longitude || row.Longitude) || null,
+                cross_reference: row.cross_reference || '',
                 verification: (row.url || row.URL) ? 'verified' : 'unverified'
               };
             });
@@ -1534,6 +1554,7 @@
         <div class="detail-item"><div class="detail-label">State</div><div class="detail-value">${inc.state}</div></div>
         <div class="detail-item"><div class="detail-label">Victim Identity</div><div class="detail-value">${formatLabel(inc.victim_identity)}</div></div>
         <div class="detail-item"><div class="detail-label">Severity</div><div class="detail-value"><span class="severity-indicator severity-${inc.severity}"></span>${formatLabel(inc.severity)}</div></div>
+        ${inc.cross_reference ? `<div class="detail-item"><div class="detail-label">Cross-References</div><div class="detail-value" style="font-size: 12px; color: #6b7280;">${escapeHtml(inc.cross_reference)}</div></div>` : ''}
       `;
       document.getElementById('modalDescription').innerHTML = `<p>${escapeHtml(inc.description)}</p>`;
       document.getElementById('viewOnMap').href = inc.latitude && inc.longitude ? `map.html?lat=${inc.latitude}&lng=${inc.longitude}&zoom=15` : 'map.html';

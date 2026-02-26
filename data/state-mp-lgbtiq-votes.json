@@ -3,8 +3,8 @@
     "title": "Australian State/Territory MPs LGBTIQ+ Voting Records",
     "description": "Comprehensive voting records on LGBTIQ+ issues for all state and territory electoral divisions",
     "version": "1.0",
-    "last_updated": "2025-12-10",
-    "data_period": "2010-2025",
+    "last_updated": "2026-02-25",
+    "data_period": "2010-2026",
     "states_covered": [
       "NSW",
       "VIC",
@@ -144,6 +144,18 @@
         "description": "First LGBTIQA+ Community Commissioner in Australia",
         "pro_lgbtiq_vote": "Yes",
         "weight": 1
+      },
+      {
+        "id": "health_safeguards_intersex_2025",
+        "name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+        "short_name": "Intersex Health Safeguards 2025",
+        "year": 2026,
+        "date": "2026-02-19",
+        "outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+        "house": "Both Houses",
+        "description": "Victoria becomes the first Australian state to restrict non-essential surgical and hormonal interventions on intersex children until they can make informed decisions for themselves. Independent assessment panels oversee proposed treatment plans. Supported by Labor, Greens, Animal Justice Party, Legalise Cannabis, Hunters Shooters and Fishers, and One Nation. 15 upper house members voted against.",
+        "pro_lgbtiq_vote": "Yes",
+        "weight": 3
       }
     ],
     "QLD": [
@@ -3524,7 +3536,7 @@
       "state_name": "Victoria",
       "house": "Legislative Assembly",
       "total_divisions": 38,
-      "bills_tracked": 5,
+      "bills_tracked": 6,
       "divisions": [
         {
           "state": "VIC",
@@ -3593,6 +3605,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -3677,6 +3699,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -3763,6 +3795,16 @@
               "vote_display": "Abstained",
               "bill_outcome": "Established",
               "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -3847,6 +3889,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -3933,6 +3985,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -4017,6 +4079,16 @@
               "vote": "Abstained",
               "vote_display": "Abstained",
               "bill_outcome": "Established",
+              "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": false
             }
           ],
@@ -4103,6 +4175,16 @@
               "vote_display": "Yes",
               "bill_outcome": "Established",
               "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -4187,6 +4269,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -4273,6 +4365,16 @@
               "vote_display": "Abstained",
               "bill_outcome": "Established",
               "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -4357,6 +4459,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -4443,6 +4555,16 @@
               "vote_display": "Abstained",
               "bill_outcome": "Established",
               "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -4527,6 +4649,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -4613,6 +4745,16 @@
               "vote_display": "Yes",
               "bill_outcome": "Established",
               "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -4698,6 +4840,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -4792,6 +4944,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -4886,6 +5048,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -4970,6 +5142,16 @@
               "vote": "Abstained",
               "vote_display": "Abstained",
               "bill_outcome": "Established",
+              "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": false
             }
           ],
@@ -5056,6 +5238,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -5141,6 +5333,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -5226,6 +5428,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -5319,6 +5531,16 @@
               "vote": "Abstained",
               "vote_display": "Abstained",
               "bill_outcome": "Established",
+              "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": false
             }
           ],
@@ -5414,6 +5636,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -5508,6 +5740,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -5593,6 +5835,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -5678,6 +5930,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -5763,6 +6025,16 @@
               "vote_display": "Abstained",
               "bill_outcome": "Established",
               "pro_lgbtiq": false
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -5847,6 +6119,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -5942,6 +6224,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6027,6 +6319,16 @@
               "vote_display": "Yes",
               "bill_outcome": "Established",
               "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6111,6 +6413,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -6206,6 +6518,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6300,6 +6622,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6384,6 +6716,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -6470,6 +6812,16 @@
               "vote_display": "Yes",
               "bill_outcome": "Established",
               "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6554,6 +6906,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],
@@ -6640,6 +7002,16 @@
               "vote_display": "Yes",
               "bill_outcome": "Established",
               "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": true
             }
           ],
           "seat_alignment": {
@@ -6725,6 +7097,16 @@
               "vote_display": "Not in Parliament",
               "bill_outcome": "Established",
               "pro_lgbtiq": null
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "No",
+              "vote_display": "No",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
+              "pro_lgbtiq": false
             }
           ],
           "seat_alignment": {
@@ -6809,6 +7191,16 @@
               "vote": "Yes",
               "vote_display": "Yes",
               "bill_outcome": "Established",
+              "pro_lgbtiq": true
+            },
+            {
+              "bill_id": "health_safeguards_intersex_2025",
+              "bill_name": "Health Safeguards for People Born with Variations in Sex Characteristics Bill 2025",
+              "short_name": "Intersex Health Safeguards 2025",
+              "year": 2026,
+              "vote": "Yes",
+              "vote_display": "Yes",
+              "bill_outcome": "Passed (Lower House: unanimously; Upper House: 24–15)",
               "pro_lgbtiq": true
             }
           ],

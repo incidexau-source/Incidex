@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Real-time monitoring dashboard for LGBTIQ+ hate crime incidents across Australia.">
-  <title>Monitoring Dashboard | Incidex Australia</title>
+    content="Statistics and analysis dashboard for LGBTIQ+ hate crime incidents across Australia.">
+  <title>Statistics | Incidex Australia</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
@@ -16,9 +16,9 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://incidex.au/monitoring.html">
-  <meta property="og:title" content="Monitoring Dashboard | Incidex Australia">
+  <meta property="og:title" content="Statistics | Incidex Australia">
   <meta property="og:description"
-    content="Real-time monitoring dashboard for LGBTIQ+ hate crime incidents across Australia.">
+    content="Statistics and analysis dashboard for LGBTIQ+ hate crime incidents across Australia.">
   <meta property="og:image" content="https://i.imgur.com/ADGaqk0.png">
 
   <!-- Fonts -->
@@ -37,6 +37,10 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
   <link rel="stylesheet" href="animations.css">
+
+  <!-- Supabase Client for community submissions -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
 
   <style>
     body {
@@ -624,7 +628,7 @@
           </svg>
           MP Voting
         </a>
-        <a href="statistics.html" class="nav-link">
+        <a href="monitoring.html" class="nav-link active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -633,12 +637,12 @@
           </svg>
           Statistics
         </a>
-        <a href="monitoring.html" class="nav-link active">
+        <a href="legal_cases.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
-          Monitor
+          Legal Cases
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -749,8 +753,8 @@
     <a href="map.html" class="nav-link">Map</a>
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
-    <a href="statistics.html" class="nav-link">Statistics</a>
-    <a href="monitoring.html" class="nav-link active">Monitor</a>
+    <a href="monitoring.html" class="nav-link active">Statistics</a>
+    <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
@@ -761,8 +765,8 @@
   <!-- Main Content -->
   <main id="dashboard" class="dashboard-layout">
     <div class="page-header">
-      <h1 class="page-title">Monitoring Dashboard</h1>
-      <p class="page-subtitle">Real-time overview of LGBTIQ+ hate crime incidents across Australia</p>
+      <h1 class="page-title">Statistics</h1>
+      <p class="page-subtitle">Comprehensive statistics and analysis of LGBTIQ+ hate crime incidents across Australia</p>
       <div class="live-status-bar">
         <div class="live-indicator">
           <span class="live-dot"></span>
@@ -802,39 +806,6 @@
         <div class="kpi-label">Most Common Type</div>
         <div class="kpi-value" id="kpiType" style="font-size: 1.5rem;">-</div>
         <div class="kpi-detail" id="kpiTypeDetail"></div>
-      </div>
-    </div>
-
-    <!-- Live Activity Feed + News -->
-    <div class="charts-grid">
-      <div class="chart-card two-thirds">
-        <div class="chart-header">
-          <div class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-            Live Activity Stream
-          </div>
-          <span class="badge badge-live">Live</span>
-        </div>
-        <div class="activity-stream" id="activityStream">
-          <div class="activity-loading">
-            <div class="loading-spinner"></div>
-            <p>Connecting to live feed...</p>
-          </div>
-        </div>
-      </div>
-      <div class="chart-card one-third">
-        <div class="chart-header">
-          <div class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-            LGBTIQ+ News
-          </div>
-        </div>
-        <div class="news-feed" id="newsFeed">
-          <div class="activity-loading">
-            <div class="loading-spinner"></div>
-            <p>Fetching news...</p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -965,8 +936,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="map.html">Interactive Map</a></li>
-            <li><a href="statistics.html">Statistics</a></li>
-            <li><a href="monitoring.html">Monitoring Dashboard</a></li>
+            <li><a href="monitoring.html">Statistics</a></li>
             <li><a href="resources.html">Support Resources</a></li>
             <li><a href="about.html">About This Project</a></li>
           </ul>
@@ -1008,13 +978,19 @@
 
   <script>
     // ===== REAL-TIME MONITORING DASHBOARD =====
+
+    // Initialize Supabase for community submissions
+    let supabaseClient = null;
+    if (window.SUPABASE_CONFIG && window.isSupabaseConfigured && window.isSupabaseConfigured()) {
+      supabaseClient = window.supabase.createClient(
+        window.SUPABASE_CONFIG.url,
+        window.SUPABASE_CONFIG.anonKey
+      );
+      console.log('Supabase connected - will include approved community submissions');
+    }
+
     const SEVERITY_COLORS = { high: '#dc2626', medium: '#d97706', low: '#059669' };
     const REFRESH_INTERVAL = 60; // seconds
-    const NEWS_RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
-    const NEWS_FEEDS = [
-      'https://www.starobserver.com.au/feed',
-      'https://www.sbs.com.au/news/topic/lgbtqi/feed'
-    ];
 
     const STATE_MAP = {
       'new south wales': 'NSW', 'nsw': 'NSW',
@@ -1041,8 +1017,6 @@
     const timestampEl = document.getElementById('dataTimestamp');
     const countdownEl = document.getElementById('refreshCountdown');
     const refreshBtn = document.getElementById('manualRefreshBtn');
-    const activityStreamEl = document.getElementById('activityStream');
-    const newsFeedEl = document.getElementById('newsFeed');
 
     // Utility Functions
     function extractState(location) {
@@ -1088,6 +1062,39 @@
       return data.length + '-' + (data[0]?.title || '') + '-' + (data[data.length - 1]?.title || '');
     }
 
+    // Load approved community submissions from Supabase
+    async function loadCommunitySubmissions() {
+      if (!supabaseClient) return [];
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('incident_submissions')
+          .select('*')
+          .eq('status', 'approved');
+
+        if (error) {
+          console.warn('Could not load community submissions:', error.message);
+          return [];
+        }
+
+        // Convert Supabase format to match CSV format
+        return (data || []).map(sub => ({
+          title: `Community Report: ${(sub.incident_type || 'incident').replace(/_/g, ' ')} in ${sub.location}`,
+          date: sub.date,
+          location: sub.location + (sub.street ? ', ' + sub.street : ''),
+          incident_type: sub.incident_type,
+          severity: 'medium',
+          description: sub.description,
+          victim_identity: sub.victim_identity,
+          url: '',
+          source: 'community_report'
+        }));
+      } catch (err) {
+        console.warn('Error loading community submissions:', err);
+        return [];
+      }
+    }
+
     // Data Loading
     function loadData(isRefresh = false) {
       const dataPath = '../data/incidents_in_progress.csv?v=' + Date.now();
@@ -1098,8 +1105,16 @@
         header: true,
         download: true,
         skipEmptyLines: true,
-        complete: function(results) {
-          const data = results.data.filter(r => r.title && r.title.trim());
+        complete: async function(results) {
+          let data = results.data.filter(r => r.title && r.title.trim());
+
+          // Also load approved community submissions from Supabase
+          const communitySubmissions = await loadCommunitySubmissions();
+          if (communitySubmissions.length > 0) {
+            console.log(`Including ${communitySubmissions.length} approved community submissions`);
+            data = [...data, ...communitySubmissions];
+          }
+
           const newHash = hashData(data);
 
           if (isRefresh && newHash !== lastDataHash) {
@@ -1123,89 +1138,6 @@
           if (refreshBtn) refreshBtn.classList.remove('spinning');
         }
       });
-    }
-
-    // Activity Stream
-    function buildActivityStream(data) {
-      const dated = data.map(r => ({ ...r, _date: parseDate(r.date) }));
-      const sorted = dated.filter(r => r._date).sort((a, b) => b._date - a._date).slice(0, 15);
-
-      if (sorted.length === 0) {
-        activityStreamEl.innerHTML = '<div class="news-empty">No recent activity to display.</div>';
-        return;
-      }
-
-      activityStreamEl.innerHTML = sorted.map((r, i) => {
-        const type = (r.incident_type || 'other').toLowerCase().replace(/\s+/g, '_');
-        const typeClass = ['murder', 'assault', 'discrimination', 'hate_speech'].includes(type) ? type : '';
-        const isNew = i < 3;
-
-        return `
-          <div class="activity-item ${typeClass} ${isNew ? 'new' : ''}">
-            <span class="activity-time">${timeAgo(r._date)}</span>
-            <div class="activity-content">
-              <div class="activity-title">${r.title || 'Untitled incident'}</div>
-              <div class="activity-meta">
-                ${r.location || 'Unknown location'}
-                ${typeClass ? `<span class="activity-type ${typeClass}">${type.replace(/_/g, ' ')}</span>` : ''}
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // News Feed
-    function loadNewsFeed() {
-      // Try to fetch from RSS feeds via rss2json API
-      const feedUrl = NEWS_RSS_API + encodeURIComponent(NEWS_FEEDS[0]);
-
-      fetch(feedUrl)
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'ok' && data.items && data.items.length > 0) {
-            const items = data.items.slice(0, 6);
-            newsFeedEl.innerHTML = items.map(item => {
-              const pubDate = new Date(item.pubDate);
-              return `
-                <a href="${item.link}" target="_blank" rel="noopener" class="news-item">
-                  <div class="news-source">${data.feed?.title || 'LGBTIQ+ News'}</div>
-                  <div class="news-title">${item.title}</div>
-                  <div class="news-date">${timeAgo(pubDate)}</div>
-                </a>
-              `;
-            }).join('');
-          } else {
-            showFallbackNews();
-          }
-        })
-        .catch(() => {
-          showFallbackNews();
-        });
-    }
-
-    function showFallbackNews() {
-      // Show links to news sources when RSS fails
-      newsFeedEl.innerHTML = `
-        <div class="news-empty">
-          <p>Live news feed unavailable.</p>
-          <p style="margin-top: var(--space-3);">Visit these sources directly:</p>
-          <div style="margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
-            <a href="https://www.starobserver.com.au/" target="_blank" rel="noopener" class="news-item">
-              <div class="news-source">Star Observer</div>
-              <div class="news-title">Australia's LGBTIQ+ News Source</div>
-            </a>
-            <a href="https://www.sbs.com.au/news/topic/lgbtqi" target="_blank" rel="noopener" class="news-item">
-              <div class="news-source">SBS News</div>
-              <div class="news-title">LGBTQI Coverage</div>
-            </a>
-            <a href="https://qnews.com.au/" target="_blank" rel="noopener" class="news-item">
-              <div class="news-source">QNews</div>
-              <div class="news-title">Queensland LGBTIQ+ News</div>
-            </a>
-          </div>
-        </div>
-      `;
     }
 
     // Refresh Countdown
@@ -1254,14 +1186,6 @@
       if (topType) {
         document.getElementById('kpiType').textContent = topType[0].charAt(0).toUpperCase() + topType[0].slice(1);
         document.getElementById('kpiTypeDetail').textContent = topType[1] + ' incidents';
-      }
-
-      // Build Activity Stream
-      buildActivityStream(data);
-
-      // Load News Feed (only on initial load)
-      if (!isRefresh) {
-        loadNewsFeed();
       }
 
       // Build charts only on initial load

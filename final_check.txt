@@ -1,0 +1,142 @@
+﻿Total incidents: 244
+
+=== EXACT URL DUPLICATES ===
+
+URL: https://www.sbs.com.au/voices/creative/out-of-sight-the-untold-story-of-adelaides-gay-hate-murders/v
+  Row 225: 2001-12-24 | Ken Doig murdered at gay beat in Toowoomba on Christmas Eve
+  Row 226: 2004-12-08 | Robert Woodland found dead near Adelaide gay beat in suspected hate crime
+
+URL: https://www.thepinknews.com/2011/03/28/australian-gay-man-pleads-guilty-to-erotic-asphyxia-murder/
+  Row 238: 2005-02-01 | Shaine Moore strangled to death by ex-boyfriend in Adelaide
+  Row 242: 2009-09-01 | Luke Noonan strangled by repeat killer David Fraser in Adelaide
+
+=== SAME DATE INCIDENTS (potential duplicates) ===
+
+Date: 2009-09-01
+  Row 241: Anthony Cawsey fatally stabbed in suspected gay hate crime in Centennial Pa | Centennial Park, Sydney, New South Wales
+  Row 242: Luke Noonan strangled by repeat killer David Fraser in Adelaide | Adelaide, South Australia
+
+Date: 2017-03-01
+  Row 230: Sydney drag queens rescue man from homophobic attack on Oxford Street | Oxford Street, Surry Hills, Sydney, New 
+  Row 231: Gay men attacked at Footscray Park beat in Melbourne | Footscray Park, Melbourne, Victoria
+
+Date: 2017-11-20
+  Row 34: Perth youths plead guilty to gay bashing men they baited on Grindr | Perth
+  Row 44: Police defend not warning the LGBTI community about gay bashings | Darlinghurst
+
+Date: 2019-04-01
+  Row 88: You Wont Believe Brunei New Laws Effective April 3rd ; Read Them Here : Gay | Brunei
+  Row 89: SA Police appeal for information over unsolved  gay bashing  murders of two | Adelaide
+
+Date: 2019-07-15
+  Row 97: Woman punched unconscious after telling man who followed her from nightclub | London
+  Row 98: Eric Michels murder : Chemsex serial killer drug dealer found guilty of kil | Surrey
+
+Date: 2019-08-18
+  Row 101: Owen Jones : Left - wing commentator attacked in  blatant premeditated assa | London pub
+  Row 102: the dog on the tucker box ... | Your Democracy | Gundagai
+
+Date: 2019-08-21
+  Row 99: Ex - Die Antwoord Crew Member Says Video Shows  Homophobic Attack   | Cape Town
+  Row 100: Festivales estadounidenses cancelan al dúo sudafricano Die Antwoord por ata | Adelaida, Australia
+
+Date: 2019-09-22
+  Row 62: Over 100 attend vigil for murdered trans tourist Mhelody Bruno | Riverina region
+  Row 129: Trans Woman Mhelody Bruno Failed By Australia Justice System | Wagga Wagga
+
+Date: 2019-12-10
+  Row 39: Man suffered horrific head injury in  homophobic  attack after kissing some | bar in Sydney
+  Row 69: Belfast man hospitalised after  homophobe see him kissing a man in a bar | Belfast
+
+Date: 2021-03-04
+  Row 127: Sikhs Attacked In Australia Over Alleged Support To Farmer Protests : Here  | Sydney
+  Row 128: Tensions over Indian farm laws in Australia , Sikhs attacked in Sydney | Sydney
+
+Date: 2021-11-19
+  Row 1: Andy Meddick transgender daughter Kielan attacked on the street | news . co | Geelong, Victoria
+  Row 46: Man Sentenced To Six And A Half Years In Prison Over Perth Gay Bashings | Perth
+  Row 57: Beaten and handcuffed for wearing a woman outfit | Sydney CBD
+  Row 66: Victorian MP Trans Daughter Attacked Over Pandemic Bill , Hospitalised | Victorian suburb (specific location not 
+
+Date: 2021-11-26
+  Row 50:   Straight  Man Stabs Gay Man For Refusing To Reciprocate Oral Sex | Darlinghurst
+  Row 68: Gay couple attacked by masked gang in terrifying Bury street robbery | Bury
+
+Date: 2022-11-02
+  Row 185: Commission investigates four decades of unsolved anti - gay killings in Aus | Sydney, NSW (inquiry)
+  Row 186:   The last chance for truth : NSW LGBTQI+ hate crimes inquiry begins | NSW LGBTQI+ hate crimes inquiry
+  Row 187: Australia investigates hate crimes against LGBTI from 1970 to 2010 | Darlinghurst
+  Row 188: NSW inquiry into murders of LGBTQ+ people  may be the last chance for the t | Sydney, NSW (inquiry)
+
+Date: 2022-12-08
+  Row 76: Drag Event In Melbourne Postponed After Protests Threats From Neo - Nazis | Melbourne
+  Row 193: Gay Nightclub Shooter Charged With 305 Criminal Counts Including Murder And | Club Q
+
+Date: 2023-02-23
+  Row 153: Four LGBT Cambridge Students Attacked , One in Hospital | University of Cambridge
+  Row 196: Trans women bashed and robbed in Melbourne as Police investigate if it a  h | Melbourne CBD
+  Row 199: Homophobic Vandals Deface WorldPride Mural In Sydney CBD | Wynyard station, Sydney CBD
+
+Date: 2025-01-01
+  Row 12: Victoria Grindr attacks - 30+ arrested for targeting gay men | Melbourne, Victoria
+  Row 206: Sydney teens luring and robbing gay men in homophobic dating app attacks | Sydney, New South Wales
+
+Date: 2025-05-10
+  Row 15: More arrests in Victoria over gay dating app attacks | Melbourne area, Victoria
+  Row 16:   Deport Queer : Shocking graffiti in WA Great Southern region | Great Southern region
+
+Date: 2025-06-03
+  Row 17: Big Brother star David Graham used a vile homophobic slur before assaulting | farm in unspecified location
+  Row 18: Victorian man sentenced for attacks on men he met on Grindr says TikTok vig | Sunshine West, Melbourne
+
+Date: 2025-08-27
+  Row 22: Ex - police officer pleads not guilty to murder of gay Sydney couple | Sydney
+  Row 23: Court finds Anti - trans campaigner Kirralie Smith unlawfully vilified two  | New South Wales Civil and Administrative
+
+Date: 2025-11-01
+  Row 217: NRL star Reece Walsh subjected to homophobic abuse over nail polish in Engl | Liverpool, England (Australian athlete)
+  Row 224: Transgender person assaulted by group of youths on Gold Coast tram | Broadbeach, Gold Coast, Queensland
+
+Date: 2025-11-04
+  Row 24: Community Condemns Attack On Transgender Person On The Gold Coast | Gold Coast
+  Row 73: Queensland police investigate assault on transgender person | Gold Coast, Queensland
+
+=== SIMILAR TITLES (first 30 chars match) ===
+None found.
+
+=== SAME COORDINATES + SAME DATE ===
+
+(-33.8688, 151.2093) on 2025-08-27:
+  Row 22: Ex - police officer pleads not guilty to murder of gay Sydney couple
+  Row 23: Court finds Anti - trans campaigner Kirralie Smith unlawfully vilified two trans
+
+(-28.0167, 153.4) on 2025-11-04:
+  Row 24: Community Condemns Attack On Transgender Person On The Gold Coast
+  Row 73: Queensland police investigate assault on transgender person
+
+(-33.8698439, 151.2082848) on 2021-03-04:
+  Row 127: Sikhs Attacked In Australia Over Alleged Support To Farmer Protests : Here What 
+  Row 128: Tensions over Indian farm laws in Australia , Sikhs attacked in Sydney
+
+(-33.8688, 151.2093) on 2022-11-02:
+  Row 185: Commission investigates four decades of unsolved anti - gay killings in Australi
+  Row 186:   The last chance for truth : NSW LGBTQI+ hate crimes inquiry begins
+  Row 188: NSW inquiry into murders of LGBTQ+ people  may be the last chance for the truth 
+
+=== SAME EVENT DIFFERENT SOURCES (same date + overlapping location words) ===
+
+Date 2021-03-04, shared location words: {'sydney'}
+  Row 127: Sikhs Attacked In Australia Over Alleged Support To Farmer P
+  Row 128: Tensions over Indian farm laws in Australia , Sikhs attacked
+
+Date 2022-11-02, shared location words: {'sydney', 'nsw (inquiry)'}
+  Row 185: Commission investigates four decades of unsolved anti - gay 
+  Row 188: NSW inquiry into murders of LGBTQ+ people  may be the last c
+
+Date 2025-08-27, shared location words: {'sydney'}
+  Row 22: Ex - police officer pleads not guilty to murder of gay Sydne
+  Row 23: Court finds Anti - trans campaigner Kirralie Smith unlawfull
+
+Date 2025-11-04, shared location words: {'gold coast'}
+  Row 24: Community Condemns Attack On Transgender Person On The Gold 
+  Row 73: Queensland police investigate assault on transgender person

@@ -67,3 +67,22 @@ BEGIN
   RAISE NOTICE 'Incidex incident_submissions table created successfully!';
   RAISE NOTICE 'You can now accept submissions from the Report Incident form.';
 END $$;
+
+-- ============================================
+-- RUN THIS SEPARATELY IF TABLE ALREADY EXISTS
+-- ============================================
+-- If you already have the table and just need to fix permissions:
+
+-- DROP POLICY IF EXISTS "Allow public inserts" ON incident_submissions;
+-- DROP POLICY IF EXISTS "Allow admin select" ON incident_submissions;
+-- DROP POLICY IF EXISTS "Allow admin update" ON incident_submissions;
+-- DROP POLICY IF EXISTS "Enable insert for anonymous users" ON incident_submissions;
+
+-- CREATE POLICY "Enable insert for anonymous users" ON incident_submissions
+--   FOR INSERT WITH CHECK (true);
+
+-- CREATE POLICY "Enable read for authenticated users" ON incident_submissions
+--   FOR SELECT TO authenticated USING (true);
+
+-- CREATE POLICY "Enable update for authenticated users" ON incident_submissions
+--   FOR UPDATE TO authenticated USING (true);

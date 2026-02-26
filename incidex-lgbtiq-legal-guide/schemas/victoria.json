@@ -1,14 +1,15 @@
 {
     "jurisdiction": "VICTORIA",
     "country": "Australia",
-    "last_updated": "2025-12-31",
-    "last_reviewed": "2025-12-31",
+    "last_updated": "2026-02-19",
+    "last_reviewed": "2026-02-19",
     "legislation": {
         "primary_act": "Equal Opportunity Act 2010 (Vic)",
         "primary_act_citation": "Vic Act No. 16 of 2010",
         "primary_act_url": "https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
         "other_relevant_acts": [
-            "Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic) - narrowed religious exemptions"
+            "Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic) - narrowed religious exemptions",
+            "Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic) - protects intersex children from unnecessary medical interventions (passed 19 February 2026)"
         ]
     },
     "protected_attributes": {
@@ -35,7 +36,25 @@
             "definition_in_act": "Sex characteristics means a person's physical features relating to sex, including: (a) chromosomes; (b) genes; (c) hormones; (d) genitals; (e) other physical features, whether or not the person has undergone medical intervention",
             "year_added": 2021,
             "source": "Equal Opportunity Act 2010 (Vic), s 4",
-            "notes": "Victoria added 'sex characteristics' in February 2021, replacing the need for 'intersex status' protection"
+            "notes": "Victoria added 'sex characteristics' in February 2021, replacing the need for 'intersex status' protection",
+            "medical_safeguards": {
+                "act": "Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic)",
+                "bill_number": 601239,
+                "date_introduced": "2025-12-02",
+                "date_passed_assembly": "2026-02-05",
+                "date_passed_council": "2026-02-19",
+                "council_vote": "24-15",
+                "introduced_by": ["Hon Mary-Anne Thomas (Legislative Assembly)", "Hon Ingrid Stitt (Legislative Council)"],
+                "key_provisions": [
+                    "Restricts permanent or hard-to-reverse medical treatments altering sex characteristics of intersex children or adults unable to consent",
+                    "Establishes independent expert panel comprising individuals with lived experience and specialists in medicine, human rights, ethics, mental health, and law",
+                    "Panel oversees medical treatment plans for intersex children and others lacking capacity to consent",
+                    "Provides additional support mechanisms for parents and clinicians",
+                    "Preserves parental/caregiver consent for medically necessary treatments"
+                ],
+                "significance": "Victoria is the first Australian state and second jurisdiction (after the ACT) to enshrine protections against unnecessary medical interventions on intersex children. Joins a handful of countries worldwide with such protections.",
+                "url": "https://www.legislation.vic.gov.au/bills/health-safeguards-people-born-variations-sex-characteristics-bill-2025"
+            }
         }
     },
     "discrimination_coverage": {
@@ -132,6 +151,7 @@
     ],
     "key_points_summary": [
         "Sexual orientation, gender identity and sex characteristics are all protected attributes (strongest protections in Australia)",
+        "Historic intersex medical safeguards legislation passed 19 February 2026 - first Australian state to protect intersex children from unnecessary medical interventions",
         "Religious exemptions significantly narrowed in 2021 - religious schools can only discriminate on basis of religious belief, not sexual orientation or gender identity, in employment and student selection",
         "Religious organisations can still discriminate on grounds of sexual orientation and gender identity in non-government-funded service provision",
         "No vilification protections for LGBTIQ+ people (only race and religion protected)",
@@ -165,14 +185,16 @@
                 "limitations": "None - Victoria updated the definition in September 2025 to be more inclusive of non-binary and gender diverse people. Religious schools reformed in 2021 can only discriminate based on religious belief, not gender identity."
             },
             "sex_characteristics": {
-                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy).",
+                "what_this_means": "You cannot be discriminated against based on physical sex characteristics (chromosomes, hormones, anatomy). Additionally, intersex children are now protected from unnecessary medical interventions under the Health Safeguards for People Born with Variations in Sex Characteristics Act 2025.",
                 "real_world_examples": [
                     "You cannot be denied medical care based on being intersex",
                     "An employer cannot ask invasive questions about your body",
                     "You cannot be excluded from school activities because of sex characteristics",
-                    "A gym cannot refuse you membership because you are intersex"
+                    "A gym cannot refuse you membership because you are intersex",
+                    "Intersex children cannot be subjected to unnecessary medical procedures to alter their sex characteristics without their consent (from 2026)",
+                    "An independent expert panel must oversee treatment plans for intersex children"
                 ],
-                "limitations": "None - Victoria added sex characteristics protection in February 2021, making it one of the strongest protections in Australia."
+                "limitations": "None - Victoria added sex characteristics protection in February 2021 and passed historic intersex medical safeguards in February 2026, making it the strongest protection in Australia."
             }
         },
         "protected_areas_explained": {
@@ -250,6 +272,7 @@
             "rating_explanation": "Victoria has strong protections for LGBTIQ+ people with comprehensive coverage of sexual orientation, gender identity, and sex characteristics. Religious exemptions were significantly narrowed in 2021. However, Victoria lacks vilification protections for LGBTIQ+ people despite long-standing promises.",
             "strengths": [
                 "Sexual orientation, gender identity, and sex characteristics all protected (strongest in Australia)",
+                "First Australian state to legislate intersex medical safeguards (Health Safeguards for People Born with Variations in Sex Characteristics Act 2025, passed February 2026)",
                 "Religious exemptions significantly narrowed in 2021 - religious schools can only discriminate based on religious belief, not LGBTIQ+ status",
                 "No small employer exemption",
                 "Positive duty on organisations to prevent discrimination (introduced 2025)",
@@ -266,7 +289,8 @@
         "primary_legislation": [
             "Equal Opportunity Act 2010 (Vic) - https://www.legislation.vic.gov.au/in-force/acts/equal-opportunity-act-2010",
             "Equal Opportunity (Religious Exceptions) Amendment Act 2021 (Vic)",
-            "Racial and Religious Tolerance Act 2001 (Vic)"
+            "Racial and Religious Tolerance Act 2001 (Vic)",
+            "Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic) - https://www.legislation.vic.gov.au/bills/health-safeguards-people-born-variations-sex-characteristics-bill-2025"
         ],
         "official_guides": [
             "Victorian Equal Opportunity and Human Rights Commission - https://www.humanrights.vic.gov.au"

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landmark Legal Cases | Incidex</title>
+  <meta name="description" content="Landmark legal cases shaping LGBTIQ+ rights in Australia — searchable database with outcomes, court levels, key issues and significance.">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/ADGaqk0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources-dropdown.css">
+  <link rel="stylesheet" href="animations.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    /* ── Page-specific variables ── */
+    :root {
+      --lc-won:     #22c55e;
+      --lc-lost:    #ef4444;
+      --lc-ongoing: #6366f1;
+      --lc-primary: #6366f1;
+      --lc-secondary: #8b5cf6;
+      --bg-page:    #f8fafc;
+      --bg-card:    #ffffff;
+      --bg-alt:     #f1f5f9;
+      --text:       #0f172a;
+      --text-sub:   #475569;
+      --text-muted: #94a3b8;
+      --border:     #e2e8f0;
+      --shadow-md:  0 4px 12px rgba(15,23,42,0.08);
+      --shadow-lg:  0 10px 25px rgba(15,23,42,0.12);
+      --radius-sm:  8px;
+      --radius-md:  12px;
+      --radius-lg:  16px;
+    }
+
+    /* ── Layout ── */
+    .page-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem clamp(1rem, 3vw, 2rem);
+    }
+
+    .page-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      padding: 2.5rem clamp(1rem, 3vw, 2rem);
+    }
+
+    .page-hero h1 {
+      margin: 0 0 0.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      background: linear-gradient(90deg, #f1f5f9, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      border: 1px solid var(--border);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 150px;
+    }
+
+    .filter-group label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: var(--bg-alt);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+      outline: 2px solid var(--lc-primary);
+      outline-offset: 2px;
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-end;
+      padding-bottom: 0;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--lc-primary); color: #fff; }
+    .btn-primary:hover { background: #4f46e5; }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+
+    /* ── Stats cards ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .stat-card.purple::before { background: linear-gradient(90deg,#6366f1,#8b5cf6); }
+    .stat-card.green::before  { background: linear-gradient(90deg,#22c55e,#10b981); }
+    .stat-card.red::before    { background: linear-gradient(90deg,#ef4444,#f87171); }
+    .stat-card.blue::before   { background: linear-gradient(90deg,#3b82f6,#60a5fa); }
+
+    .stat-card .sc-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-card .sc-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .stat-card .sc-detail {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── Charts ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+    }
+
+    .chart-card.full  { grid-column: span 12; }
+    .chart-card.half  { grid-column: span 6; }
+
+    @media (max-width: 900px) {
+      .chart-card.half { grid-column: span 12; }
+    }
+
+    .chart-card h3 {
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: var(--lc-primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .chart-container { position: relative; height: 300px; }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 0.7rem 0.9rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table th {
+      font-weight: 600;
+      color: var(--text-sub);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+      z-index: 1;
+    }
+
+    .data-table tr:hover { background: var(--bg-alt); }
+
+    .outcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .outcome-badge.won     { background: rgba(34,197,94,0.12);  color: #16a34a; }
+    .outcome-badge.lost    { background: rgba(239,68,68,0.12);  color: #dc2626; }
+    .outcome-badge.ongoing { background: rgba(99,102,241,0.12); color: #4f46e5; }
+
+    .issue-tag {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      background: var(--bg-alt);
+      color: var(--text-sub);
+      margin: 0.1rem;
+    }
+
+    .case-link {
+      color: var(--lc-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .case-link:hover { text-decoration: underline; }
+
+    .case-significance {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      line-height: 1.4;
+      max-width: 280px;
+    }
+
+    /* ── Search bar ── */
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-row input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 1rem;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: var(--bg-card);
+      color: var(--text);
+    }
+
+    .search-row input:focus {
+      outline: 2px solid var(--lc-primary);
+      outline-offset: 2px;
+    }
+
+    /* ── Section divider ── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 1.25rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* ── Loading ── */
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site header (matches map.html) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo" title="Incidex - LGBTIQ+ Hate Crime Mapping Australia">
+        <img src="https://i.imgur.com/ADGaqk0.png" alt="Incidex" class="logo-full" loading="eager">
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="map.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          Map
+        </a>
+        <a href="policy_landscape.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Policy and Legislation
+        </a>
+        <a href="voting_records.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          MP Voting
+        </a>
+        <a href="legal_cases.html" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Legal Cases
+        </a>
+        <a href="monitoring.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Statistics
+        </a>
+        <a href="database.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          Database
+        </a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <h1>⚖️ Landmark Legal Cases <span id="totalCasesHeader" style="font-size:1rem;background:rgba(255,255,255,0.15);padding:0.2rem 0.7rem;border-radius:999px;vertical-align:middle;">0</span></h1>
+    <p>Key court decisions shaping LGBTIQ+ rights in Australia (1994–2024)</p>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Court Level</label>
+        <select id="filterCourtLevel">
+          <option value="all">All Courts</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Outcome</label>
+        <select id="filterOutcome">
+          <option value="all">All Outcomes</option>
+          <option value="won">Won</option>
+          <option value="lost">Lost</option>
+          <option value="ongoing">Ongoing</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Key Issue</label>
+        <select id="filterKeyIssue">
+          <option value="all">All Issues</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>From Year</label>
+        <input type="number" id="filterYearFrom" placeholder="e.g. 1994" min="1900" max="2030">
+      </div>
+      <div class="filter-group">
+        <label>To Year</label>
+        <input type="number" id="filterYearTo" placeholder="e.g. 2024" min="1900" max="2030">
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-primary" id="applyFiltersBtn">Apply</button>
+        <button class="btn btn-secondary" id="resetFiltersBtn">Reset</button>
+      </div>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="stats-grid">
+      <div class="stat-card purple">
+        <div class="sc-label">Total Cases</div>
+        <div class="sc-value" id="scTotal">—</div>
+        <div class="sc-detail">landmark decisions</div>
+      </div>
+      <div class="stat-card green">
+        <div class="sc-label">Cases Won</div>
+        <div class="sc-value" id="scWon">—</div>
+        <div class="sc-detail" id="scWinRate">—</div>
+      </div>
+      <div class="stat-card red">
+        <div class="sc-label">Cases Lost</div>
+        <div class="sc-value" id="scLost">—</div>
+        <div class="sc-detail" id="scLostRate">—</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="sc-label">Most Common Issue</div>
+        <div class="sc-value" id="scTopIssue" style="font-size:1.1rem;line-height:1.3;">—</div>
+        <div class="sc-detail" id="scTopIssueCount">—</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card half">
+        <h3>🏛️ Outcomes by Court Level</h3>
+        <div class="chart-container"><canvas id="courtOutcomeChart"></canvas></div>
+      </div>
+      <div class="chart-card half">
+        <h3>📅 Cases Timeline</h3>
+        <div class="chart-container"><canvas id="casesTimelineChart"></canvas></div>
+      </div>
+      <div class="chart-card half">
+        <h3>🏷️ Key Issues Breakdown</h3>
+        <div class="chart-container"><canvas id="keyIssuesChart"></canvas></div>
+      </div>
+      <div class="chart-card half">
+        <h3>📈 Win Rate by Decade</h3>
+        <div class="chart-container"><canvas id="winRateDecadeChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="chart-card full">
+      <h3>
+        📋 Cases Database
+        <span class="badge" id="caseCountBadge">0 cases</span>
+      </h3>
+
+      <!-- Search -->
+      <div class="search-row">
+        <input type="text" id="tableSearch" placeholder="🔍 Search by case name, court, issue or significance…">
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="legalCasesTable">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Case Name</th>
+              <th>Court</th>
+              <th>Key Issues</th>
+              <th>Outcome</th>
+              <th>Significance</th>
+            </tr>
+          </thead>
+          <tbody id="legalCasesBody">
+            <tr><td colspan="6" class="loading-state">Loading cases…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /page-content -->
+
+  <footer class="site-footer" style="text-align:center;padding:1.5rem;font-size:0.85rem;color:#94a3b8;border-top:1px solid #e2e8f0;">
+    Incidex · Landmark Legal Cases · Data: <code>landmark_cases.csv</code>
+  </footer>
+
+  <script>
+    const CASES_PATH = '/data/landmark_cases.csv?v=' + Date.now();
+
+    const COLORS = {
+      primary:   '#6366f1',
+      secondary: '#8b5cf6',
+      success:   '#22c55e',
+      warning:   '#f97316',
+      danger:    '#ef4444',
+      blue:      '#3b82f6',
+      pink:      '#ec4899',
+      cyan:      '#06b6d4',
+      amber:     '#f59e0b',
+      emerald:   '#10b981',
+      rose:      '#f43f5e',
+      indigo:    '#4f46e5'
+    };
+
+    const CHART_COLORS = [
+      COLORS.primary, COLORS.danger, COLORS.warning, COLORS.success,
+      COLORS.pink, COLORS.blue, COLORS.cyan, COLORS.amber,
+      COLORS.emerald, COLORS.rose, COLORS.indigo, COLORS.secondary
+    ];
+
+    function getChartOptions(type) {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: type !== 'bar',
+            labels: { color: '#0f172a', font: { family: 'Inter, system-ui, sans-serif' } }
+          },
+          tooltip: {
+            backgroundColor: '#fff',
+            titleColor: '#0f172a',
+            bodyColor: '#0f172a',
+            borderColor: '#e2e8f0',
+            borderWidth: 1
+          }
+        },
+        scales: (type === 'bar' || type === 'line') ? {
+          x: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } },
+          y: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' }, beginAtZero: true }
+        } : undefined
+      };
+    }
+
+    const charts = {};
+    let allCases = [];
+    let filteredCases = [];
+
+    // ── Load data ──────────────────────────────────────────────
+    Papa.parse(CASES_PATH, {
+      header: true,
+      download: true,
+      skipEmptyLines: true,
+      complete(results) {
+        allCases = results.data
+          .filter(r => r.case_name && r.case_name.trim())
+          .map(r => ({
+            name:        r.case_name || 'Unknown Case',
+            court:       r.court_level || 'Unknown',
+            year:        parseInt(r.year_decided) || null,
+            location:    r.location || '',
+            keyIssues:   (r.key_issues || '').split(',').map(s => s.trim()).filter(Boolean),
+            summary:     r.summary || '',
+            significance: r.significance || '',
+            url:         r.judgment_url || '',
+            outcome:     (r.outcome || 'unknown').toLowerCase()
+          }));
+
+        filteredCases = [...allCases];
+        document.getElementById('totalCasesHeader').textContent = allCases.length;
+        populateFilters();
+        render();
+      },
+      error(err) { console.error('Failed to load cases:', err); }
+    });
+
+    // ── Populate filter dropdowns ───────────────────────────────
+    function populateFilters() {
+      const courts = [...new Set(allCases.map(c => c.court))].filter(Boolean).sort();
+      const courtSel = document.getElementById('filterCourtLevel');
+      courts.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c; o.textContent = c;
+        courtSel.appendChild(o);
+      });
+
+      const issues = new Set();
+      allCases.forEach(c => c.keyIssues.forEach(i => issues.add(i)));
+      const issueSel = document.getElementById('filterKeyIssue');
+      Array.from(issues).sort().forEach(i => {
+        const o = document.createElement('option');
+        o.value = i;
+        o.textContent = i.charAt(0).toUpperCase() + i.slice(1).replace(/_/g, ' ');
+        issueSel.appendChild(o);
+      });
+    }
+
+    // ── Apply / reset filters ──────────────────────────────────
+    function applyFilters() {
+      const court   = document.getElementById('filterCourtLevel').value;
+      const outcome = document.getElementById('filterOutcome').value;
+      const issue   = document.getElementById('filterKeyIssue').value;
+      const fromYr  = parseInt(document.getElementById('filterYearFrom').value) || null;
+      const toYr    = parseInt(document.getElementById('filterYearTo').value) || null;
+      const search  = document.getElementById('tableSearch').value.toLowerCase();
+
+      filteredCases = allCases.filter(c => {
+        if (court   !== 'all' && c.court   !== court)              return false;
+        if (outcome !== 'all' && c.outcome !== outcome)            return false;
+        if (issue   !== 'all' && !c.keyIssues.includes(issue))     return false;
+        if (fromYr  && c.year && c.year < fromYr)                  return false;
+        if (toYr    && c.year && c.year > toYr)                    return false;
+        if (search) {
+          const hay = [c.name, c.court, c.significance, ...c.keyIssues].join(' ').toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+      render();
+    }
+
+    function resetFilters() {
+      document.getElementById('filterCourtLevel').value = 'all';
+      document.getElementById('filterOutcome').value    = 'all';
+      document.getElementById('filterKeyIssue').value   = 'all';
+      document.getElementById('filterYearFrom').value   = '';
+      document.getElementById('filterYearTo').value     = '';
+      document.getElementById('tableSearch').value      = '';
+      filteredCases = [...allCases];
+      render();
+    }
+
+    document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
+    document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+    document.getElementById('tableSearch').addEventListener('input', applyFilters);
+
+    // ── Render all ─────────────────────────────────────────────
+    function render() {
+      renderStatCards();
+      renderCourtOutcomeChart();
+      renderTimelineChart();
+      renderKeyIssuesChart();
+      renderWinRateDecadeChart();
+      renderTable();
+    }
+
+    // ── Stat cards ─────────────────────────────────────────────
+    function renderStatCards() {
+      const total   = filteredCases.length;
+      const won     = filteredCases.filter(c => c.outcome === 'won').length;
+      const lost    = filteredCases.filter(c => c.outcome === 'lost').length;
+
+      document.getElementById('scTotal').textContent   = total;
+      document.getElementById('scWon').textContent     = won;
+      document.getElementById('scLost').textContent    = lost;
+      document.getElementById('scWinRate').textContent = total > 0
+        ? `${((won / total) * 100).toFixed(0)}% win rate` : '—';
+      document.getElementById('scLostRate').textContent = total > 0
+        ? `${((lost / total) * 100).toFixed(0)}% of decided cases` : '—';
+
+      const issueCounts = {};
+      filteredCases.forEach(c => c.keyIssues.forEach(i => {
+        issueCounts[i] = (issueCounts[i] || 0) + 1;
+      }));
+      const top = Object.entries(issueCounts).sort((a, b) => b[1] - a[1])[0];
+      if (top) {
+        document.getElementById('scTopIssue').textContent     = top[0].charAt(0).toUpperCase() + top[0].slice(1).replace(/_/g, ' ');
+        document.getElementById('scTopIssueCount').textContent = `${top[1]} cases`;
+      }
+    }
+
+    // ── Court outcome chart ────────────────────────────────────
+    function renderCourtOutcomeChart() {
+      const courtOutcomes = {};
+      filteredCases.forEach(c => {
+        if (!courtOutcomes[c.court]) courtOutcomes[c.court] = { won: 0, lost: 0, ongoing: 0 };
+        if (c.outcome === 'won')         courtOutcomes[c.court].won++;
+        else if (c.outcome === 'lost')   courtOutcomes[c.court].lost++;
+        else                             courtOutcomes[c.court].ongoing++;
+      });
+      const courtOrder = ['High Court', 'Federal Court', 'Full Family Court', 'Family Court'];
+      const courts = Object.keys(courtOutcomes).sort((a, b) => {
+        const ia = courtOrder.findIndex(x => a.includes(x));
+        const ib = courtOrder.findIndex(x => b.includes(x));
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+      const ctx = document.getElementById('courtOutcomeChart').getContext('2d');
+      if (charts.courtOutcome) charts.courtOutcome.destroy();
+      charts.courtOutcome = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: courts.map(c => c.replace(' Court', '').replace('Supreme', 'Sup.')),
+          datasets: [
+            { label: 'Won',     data: courts.map(c => courtOutcomes[c].won),     backgroundColor: COLORS.success + 'cc', borderColor: COLORS.success,  borderWidth: 1 },
+            { label: 'Lost',    data: courts.map(c => courtOutcomes[c].lost),    backgroundColor: COLORS.danger  + 'cc', borderColor: COLORS.danger,   borderWidth: 1 },
+            { label: 'Ongoing', data: courts.map(c => courtOutcomes[c].ongoing), backgroundColor: COLORS.primary + 'cc', borderColor: COLORS.primary,  borderWidth: 1 }
+          ]
+        },
+        options: { ...getChartOptions('bar'), scales: { x: { stacked: true, ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } }, y: { stacked: true, ticks: { color: '#475569' }, grid: { color: '#e2e8f0' }, beginAtZero: true } } }
+      });
+    }
+
+    // ── Timeline chart ─────────────────────────────────────────
+    function renderTimelineChart() {
+      const yearCounts = {};
+      filteredCases.forEach(c => { if (c.year) yearCounts[c.year] = (yearCounts[c.year] || 0) + 1; });
+      const years = Object.keys(yearCounts).sort();
+      const ctx = document.getElementById('casesTimelineChart').getContext('2d');
+      if (charts.timeline) charts.timeline.destroy();
+      charts.timeline = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: years,
+          datasets: [{ label: 'Cases decided', data: years.map(y => yearCounts[y]), backgroundColor: COLORS.secondary + 'cc', borderColor: COLORS.secondary, borderWidth: 1 }]
+        },
+        options: getChartOptions('bar')
+      });
+    }
+
+    // ── Key issues doughnut ────────────────────────────────────
+    function renderKeyIssuesChart() {
+      const issueCounts = {};
+      filteredCases.forEach(c => c.keyIssues.forEach(i => { issueCounts[i] = (issueCounts[i] || 0) + 1; }));
+      const sorted = Object.entries(issueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const ctx = document.getElementById('keyIssuesChart').getContext('2d');
+      if (charts.keyIssues) charts.keyIssues.destroy();
+      charts.keyIssues = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: sorted.map(([i]) => i.charAt(0).toUpperCase() + i.slice(1).replace(/_/g, ' ')),
+          datasets: [{ data: sorted.map(([, n]) => n), backgroundColor: CHART_COLORS.slice(0, sorted.length), borderWidth: 2, borderColor: '#fff' }]
+        },
+        options: { ...getChartOptions('doughnut'), cutout: '40%' }
+      });
+    }
+
+    // ── Win rate by decade ─────────────────────────────────────
+    function renderWinRateDecadeChart() {
+      const decadeStats = {};
+      filteredCases.forEach(c => {
+        if (!c.year) return;
+        const d = Math.floor(c.year / 10) * 10;
+        if (!decadeStats[d]) decadeStats[d] = { won: 0, total: 0 };
+        decadeStats[d].total++;
+        if (c.outcome === 'won') decadeStats[d].won++;
+      });
+      const decades = Object.keys(decadeStats).sort();
+      const ctx = document.getElementById('winRateDecadeChart').getContext('2d');
+      if (charts.winRate) charts.winRate.destroy();
+      charts.winRate = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: decades.map(d => `${d}s`),
+          datasets: [{
+            label: 'Win rate %',
+            data: decades.map(d => decadeStats[d].total > 0 ? ((decadeStats[d].won / decadeStats[d].total) * 100).toFixed(0) : 0),
+            borderColor: COLORS.success, backgroundColor: COLORS.success + '20',
+            fill: true, tension: 0.3, pointRadius: 6, pointHoverRadius: 8
+          }]
+        },
+        options: { ...getChartOptions('line'), scales: { x: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } }, y: { ticks: { color: '#475569', callback: v => v + '%' }, grid: { color: '#e2e8f0' }, beginAtZero: true, max: 100 } } }
+      });
+    }
+
+    // ── Table ──────────────────────────────────────────────────
+    function renderTable() {
+      const tbody = document.getElementById('legalCasesBody');
+      document.getElementById('caseCountBadge').textContent = `${filteredCases.length} cases`;
+
+      if (filteredCases.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="loading-state">No cases match the current filters.</td></tr>';
+        return;
+      }
+
+      const sorted = [...filteredCases].sort((a, b) => (b.year || 0) - (a.year || 0));
+
+      const outcomeLabel = { won: '✓ Won', lost: '✗ Lost', ongoing: '… Ongoing' };
+
+      tbody.innerHTML = sorted.map(c => `
+        <tr>
+          <td style="font-weight:600;color:#6366f1;">${c.year || '—'}</td>
+          <td>${c.url
+            ? `<a href="${c.url}" target="_blank" rel="noopener" class="case-link">${c.name}</a>`
+            : c.name
+          }</td>
+          <td style="white-space:nowrap;">${c.court}</td>
+          <td>${c.keyIssues.map(i => `<span class="issue-tag">${i}</span>`).join('')}</td>
+          <td><span class="outcome-badge ${c.outcome}">${outcomeLabel[c.outcome] || c.outcome}</span></td>
+          <td class="case-significance">${c.significance}</td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

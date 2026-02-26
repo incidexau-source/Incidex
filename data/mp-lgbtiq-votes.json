@@ -3,8 +3,8 @@
     "title": "Australian Federal MPs LGBTIQ+ Voting Records",
     "description": "Comprehensive voting records on LGBTIQ+ issues for all 151 federal electoral divisions",
     "version": "2.0",
-    "last_updated": "2025-12-10",
-    "data_period": "2017-2025",
+    "last_updated": "2026-02-25",
+    "data_period": "2017-2026",
     "total_divisions": 151,
     "sources": [
       {
@@ -158,15 +158,23 @@
       "division_name": "Banks",
       "state": "NSW",
       "current_mp": {
-        "name": "David Coleman",
-        "party": "Liberal",
-        "year_elected": 2013,
-        "alignment_score": 60,
-        "alignment_label": "Mixed",
-        "alignment_color": "#f59e0b",
+        "name": "Zhi Soon",
+        "party": "Labor",
+        "year_elected": 2025,
+        "alignment_score": 95,
+        "alignment_label": "Strong Supporter",
+        "alignment_color": "#10b981",
         "notes": null
       },
       "previous_mps": [
+        {
+          "name": "David Coleman",
+          "party": "Liberal",
+          "years_held": "2013-2025",
+          "alignment_score": 60,
+          "alignment_label": "Mixed",
+          "alignment_color": "#f59e0b"
+        },
         {
           "name": "Daryl Melham",
           "party": "Labor",
@@ -4641,15 +4649,23 @@
       "division_name": "Deakin",
       "state": "VIC",
       "current_mp": {
-        "name": "Michael Sukkar",
-        "party": "Liberal",
-        "year_elected": 2013,
-        "alignment_score": 60,
-        "alignment_label": "Mixed",
-        "alignment_color": "#f59e0b",
+        "name": "Matt Gregg",
+        "party": "Labor",
+        "year_elected": 2025,
+        "alignment_score": 95,
+        "alignment_label": "Strong Supporter",
+        "alignment_color": "#10b981",
         "notes": null
       },
       "previous_mps": [
+        {
+          "name": "Michael Sukkar",
+          "party": "Liberal",
+          "years_held": "2013-2025",
+          "alignment_score": 60,
+          "alignment_label": "Mixed",
+          "alignment_color": "#f59e0b"
+        },
         {
           "name": "Mike Symon",
           "party": "Labor",
@@ -6113,15 +6129,23 @@
       "division_name": "Maribyrnong",
       "state": "VIC",
       "current_mp": {
-        "name": "Bill Shorten",
+        "name": "Natalie Hutchins",
         "party": "Labor",
-        "year_elected": 2007,
+        "year_elected": 2025,
         "alignment_score": 95,
         "alignment_label": "Strong Supporter",
         "alignment_color": "#10b981",
         "notes": null
       },
       "previous_mps": [
+        {
+          "name": "Bill Shorten",
+          "party": "Labor",
+          "years_held": "2007-2025",
+          "alignment_score": 95,
+          "alignment_label": "Strong Supporter",
+          "alignment_color": "#10b981"
+        },
         {
           "name": "Bob Sercombe",
           "party": "Labor",
@@ -6271,15 +6295,23 @@
       "division_name": "Melbourne",
       "state": "VIC",
       "current_mp": {
-        "name": "Adam Bandt",
-        "party": "Greens",
-        "year_elected": 2010,
-        "alignment_score": 100,
+        "name": "Sarah Witty",
+        "party": "Labor",
+        "year_elected": 2025,
+        "alignment_score": 95,
         "alignment_label": "Strong Supporter",
         "alignment_color": "#10b981",
-        "notes": "Greens Leader"
+        "notes": null
       },
       "previous_mps": [
+        {
+          "name": "Adam Bandt",
+          "party": "Greens",
+          "years_held": "2010-2025",
+          "alignment_score": 100,
+          "alignment_label": "Strong Supporter",
+          "alignment_color": "#10b981"
+        },
         {
           "name": "Lindsay Tanner",
           "party": "Labor",
@@ -7061,15 +7093,23 @@
       "division_name": "Brisbane",
       "state": "QLD",
       "current_mp": {
-        "name": "Stephen Bates",
-        "party": "Greens",
-        "year_elected": 2022,
-        "alignment_score": 100,
+        "name": "Madonna Jarrett",
+        "party": "Labor",
+        "year_elected": 2025,
+        "alignment_score": 95,
         "alignment_label": "Strong Supporter",
         "alignment_color": "#10b981",
-        "notes": "Evans openly gay"
+        "notes": null
       },
       "previous_mps": [
+        {
+          "name": "Stephen Bates",
+          "party": "Greens",
+          "years_held": "2022-2025",
+          "alignment_score": 100,
+          "alignment_label": "Strong Supporter",
+          "alignment_color": "#10b981"
+        },
         {
           "name": "Trevor Evans",
           "party": "Liberal",
@@ -7298,15 +7338,23 @@
       "division_name": "Dickson",
       "state": "QLD",
       "current_mp": {
-        "name": "Peter Dutton",
-        "party": "Liberal",
-        "year_elected": 2001,
-        "alignment_score": 60,
-        "alignment_label": "Mixed",
-        "alignment_color": "#f59e0b",
-        "notes": "Opposition Leader"
+        "name": "Ali France",
+        "party": "Labor",
+        "year_elected": 2025,
+        "alignment_score": 95,
+        "alignment_label": "Strong Supporter",
+        "alignment_color": "#10b981",
+        "notes": null
       },
       "previous_mps": [
+        {
+          "name": "Peter Dutton",
+          "party": "Liberal",
+          "years_held": "2001-2025",
+          "alignment_score": 60,
+          "alignment_label": "Mixed",
+          "alignment_color": "#f59e0b"
+        },
         {
           "name": "Cheryl Kernot",
           "party": "Labor",

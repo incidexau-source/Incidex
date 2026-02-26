@@ -32,10 +32,11 @@ logger = logging.getLogger(__name__)
 # Used for pre-filtering to reduce GPT-4 API costs
 HATE_CRIME_KEYWORDS = [
     # Identity terms
-    "lgbtiq", "lgbti", "lgbtq", "lgbt", "queer", "gay", "lesbian", 
+    "lgbtiq", "lgbti", "lgbtq", "lgbt", "queer", "gay", "lesbian",
     "transgender", "trans", "bisexual", "bisexuality", "intersex",
     "same-sex", "same sex", "gender diverse", "gender-diverse",
-    
+    "non-binary", "nonbinary", "non binary", "genderqueer", "genderfluid",
+
     # Crime/incident terms
     "hate crime", "hate-crime", "assault", "attack", "attacked",
     "harassment", "harassed", "vandalism", "vandalized", "vandalised",
@@ -43,10 +44,16 @@ HATE_CRIME_KEYWORDS = [
     "abuse", "abused", "violence", "violent", "victim", "targeted",
     "homophobic", "transphobic", "biphobic", "anti-gay", "anti-lgbt",
     "anti-lgbtiq", "anti-trans", "slur", "verbal abuse",
-    
+
+    # Conversion practices terms
+    "conversion therapy", "conversion practice", "conversion treatment",
+    "gay conversion", "reparative therapy", "ex-gay", "pray the gay away",
+    "sexual orientation change", "gender identity change",
+
     # Location/context terms (Australia-specific)
     "sydney", "melbourne", "brisbane", "perth", "adelaide", "canberra",
     "darlinghurst", "oxford street", "newtown", "fitzroy", "surry hills",
+    "pride", "rainbow", "drag",
 ]
 
 
@@ -59,6 +66,8 @@ INCIDENT_TYPES = [
     "threat",            # Threats of harm
     "sexual_violence",   # Sexual assault/harassment
     "discrimination",    # Discrimination (legal context)
+    "conversion_practices",  # Conversion therapy/practices
+    "murder",            # Fatal hate crimes
     "other",             # Other hate-motivated incidents
 ]
 
@@ -69,9 +78,11 @@ VICTIM_IDENTITIES = [
     "lesbian",
     "trans_man",
     "trans_woman",
-    "gender_diverse",    # Non-binary, genderqueer, etc.
+    "non_binary",        # Non-binary individuals specifically
+    "gender_diverse",    # Genderqueer, genderfluid, etc.
     "bisexual",
     "queer",
+    "intersex",          # Intersex individuals
     "general_lgbtiq",   # General LGBTIQ+ community/event
     "unknown",           # Identity not specified
 ]
@@ -362,9 +373,9 @@ NEVER use generic terms like "not specified", "Australia", or leave blank.
 
 DATE: Extract the incident date in YYYY-MM-DD format, or null if not mentioned.
 
-INCIDENT_TYPE: One of: assault, harassment, vandalism, hate_speech, threat, sexual_violence, discrimination, other
+INCIDENT_TYPE: One of: assault, harassment, vandalism, hate_speech, threat, sexual_violence, discrimination, conversion_practices, murder, other
 
-VICTIM_IDENTITY: One of: gay_man, lesbian, trans_man, trans_woman, gender_diverse, bisexual, queer, general_lgbtiq, unknown
+VICTIM_IDENTITY: One of: gay_man, lesbian, trans_man, trans_woman, non_binary, gender_diverse, bisexual, queer, intersex, general_lgbtiq, unknown
 
 DESCRIPTION: 2-3 sentence summary of what happened (use past tense, be factual)
 
@@ -373,8 +384,8 @@ CONFIDENCE: Your confidence level (0.0 to 1.0) that this is a hate crime inciden
 Return ONLY valid JSON in this exact format (no markdown, no explanation):
 {{
     "is_hate_crime": true/false,
-    "incident_type": "assault|harassment|vandalism|hate_speech|threat|sexual_violence|discrimination|other",
-    "victim_identity": "gay_man|lesbian|trans_man|trans_woman|gender_diverse|bisexual|queer|general_lgbtiq|unknown",
+    "incident_type": "assault|harassment|vandalism|hate_speech|threat|sexual_violence|discrimination|conversion_practices|murder|other",
+    "victim_identity": "gay_man|lesbian|trans_man|trans_woman|non_binary|gender_diverse|bisexual|queer|intersex|general_lgbtiq|unknown",
     "location": "MOST SPECIFIC location available",
     "date_of_incident": "YYYY-MM-DD or null",
     "description": "2-3 sentence summary",

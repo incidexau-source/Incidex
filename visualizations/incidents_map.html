@@ -33,6 +33,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="resources-dropdown.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
     
     <style>
       :root {
@@ -770,8 +772,8 @@
       /* Recent Incidents Widget */
       .recent-incidents-widget {
         position: absolute;
-        bottom: 80px;
-        left: 20px;
+        top: 1rem;
+        left: 1rem;
         width: 320px;
         max-width: calc(100vw - 40px);
         max-height: 500px;
@@ -934,6 +936,16 @@
         color: var(--accent-blue);
       }
 
+      .badge-murder {
+        background: rgba(127, 29, 29, 0.3);
+        color: #dc2626;
+      }
+
+      .badge-conversion {
+        background: rgba(139, 92, 246, 0.2);
+        color: #8b5cf6;
+      }
+
       .badge-other {
         background: rgba(148, 163, 184, 0.2);
         color: var(--text-secondary);
@@ -970,8 +982,8 @@
 
       .recent-incidents-toggle {
         position: absolute;
-        bottom: 80px;
-        left: 20px;
+        top: 1rem;
+        left: 1rem;
         width: 40px;
         height: 40px;
         border-radius: 8px;
@@ -1008,11 +1020,242 @@
         .recent-incidents-widget {
           width: calc(100vw - 40px);
           max-height: 400px;
-          bottom: 60px;
+          top: 4rem; /* clear the mobile sidebar toggle */
         }
         .recent-incidents-toggle {
-          bottom: 60px;
+          top: 4rem;
         }
+      }
+
+      /* ── Feature 1: NOTE callout boxes ── */
+      .note-callout {
+        background: rgba(251, 191, 36, 0.1);
+        border-left: 3px solid #fbbf24;
+        border-radius: 0 6px 6px 0;
+        padding: 6px 10px;
+        margin-bottom: 7px;
+        font-size: 0.76rem;
+        color: #fcd34d;
+        display: flex;
+        gap: 7px;
+        align-items: flex-start;
+        line-height: 1.5;
+      }
+      .note-callout-icon { font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+
+      /* ── Feature 3: Timeline year slider ── */
+      .timeline-slider-wrap { padding: 0.15rem 0 0.5rem; }
+      .timeline-year-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--accent-purple);
+        margin-bottom: 5px;
+      }
+      .timeline-histogram {
+        display: flex;
+        align-items: flex-end;
+        gap: 1px;
+        height: 38px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 2px;
+      }
+      .hist-bar {
+        flex: 1;
+        background: var(--accent-purple);
+        opacity: 0.2;
+        border-radius: 1px 1px 0 0;
+        min-height: 2px;
+        transition: opacity 0.15s;
+        cursor: default;
+      }
+      .hist-bar.active { opacity: 0.8; }
+      .slider-dual-track {
+        position: relative;
+        height: 24px;
+        display: flex;
+        align-items: center;
+      }
+      .slider-track-bg {
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        background: var(--border-color);
+        border-radius: 2px;
+      }
+      .slider-track-fill {
+        position: absolute;
+        height: 4px;
+        background: var(--accent-purple);
+        border-radius: 2px;
+        pointer-events: none;
+      }
+      .slider-dual-track input[type="range"] {
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+      .slider-dual-track input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px; height: 16px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        border: 2px solid white;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+        pointer-events: all;
+        cursor: pointer;
+      }
+      .slider-dual-track input[type="range"]::-moz-range-thumb {
+        width: 16px; height: 16px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        border: 2px solid white;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+        pointer-events: all;
+        cursor: pointer;
+        border-style: solid;
+      }
+
+      /* ── Feature 5: Shape legend additions ── */
+      .legend-shape { display: inline-block; flex-shrink: 0; }
+      .shape-diamond {
+        width: 11px; height: 11px;
+        background: currentColor;
+        transform: rotate(45deg);
+        border-radius: 1px;
+      }
+      .shape-triangle {
+        width: 0; height: 0;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 12px solid currentColor;
+      }
+      .shape-square {
+        width: 11px; height: 11px;
+        background: currentColor;
+        border-radius: 2px;
+      }
+      .shape-hex {
+        width: 12px; height: 12px;
+        background: currentColor;
+        clip-path: polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+      }
+
+      /* Electoral boundary panel */
+      .electoral-panel {
+        position: absolute;
+        left: 1rem;
+        top: 3.5rem; /* sits just below the recent incidents toggle */
+        z-index: 1001;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.75rem;
+        width: 230px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+        font-family: var(--font-body);
+      }
+      .electoral-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.6rem;
+      }
+      .electoral-panel-header span {
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: var(--text-primary);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .electoral-panel-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 1.15rem;
+        padding: 0;
+        line-height: 1;
+        transition: color 0.15s;
+      }
+      .electoral-panel-close:hover { color: var(--text-primary); }
+      .boundary-type-options {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+      }
+      .boundary-type-btn {
+        flex: 1;
+        padding: 0.4rem 0.2rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 0.73rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: var(--font-body);
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .boundary-type-btn:hover {
+        background: var(--bg-card-hover);
+        color: var(--text-primary);
+      }
+      .boundary-type-btn.active {
+        background: var(--accent-purple);
+        color: white;
+        border-color: var(--accent-purple);
+      }
+      .state-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.3rem;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-color);
+      }
+      .state-badge {
+        padding: 0.35rem 0.1rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 0.68rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: var(--font-body);
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.03em;
+      }
+      .state-badge:hover {
+        background: var(--bg-card-hover);
+        color: var(--text-primary);
+        border-color: #2c5aa0;
+      }
+      .state-badge.active {
+        background: #2c5aa0;
+        color: white;
+        border-color: #2c5aa0;
+      }
+      .electoral-panel-hint {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin: 0.5rem 0 0;
+        text-align: center;
+        min-height: 1em;
+        line-height: 1.4;
       }
     </style>
   </head>
@@ -1023,7 +1266,7 @@
         <p class="intro">Interactive map with clustering • Click clusters to expand</p>
       </div>
       <div class="header-actions">
-        <a href="statistics_dashboard.html" class="header-btn secondary">📊 Statistics</a>
+        <a href="monitoring.html" class="header-btn secondary">📊 Statistics</a>
         <!-- Resources Dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle header-btn primary" aria-expanded="false" aria-haspopup="true">
@@ -1160,10 +1403,19 @@
             </div>
 
             <div class="filter-section">
-              <h3>Date Range</h3>
-              <div class="date-range">
-                <input type="date" id="startDate" placeholder="From">
-                <input type="date" id="endDate" placeholder="To">
+              <h3>Year Range</h3>
+              <div class="timeline-slider-wrap">
+                <div class="timeline-year-labels">
+                  <span id="sliderStartLabel">1970</span>
+                  <span id="sliderEndLabel">2026</span>
+                </div>
+                <div class="timeline-histogram" id="timelineHistogram"></div>
+                <div class="slider-dual-track">
+                  <div class="slider-track-bg"></div>
+                  <div class="slider-track-fill" id="sliderTrackFill"></div>
+                  <input type="range" id="yearSliderStart" min="1970" max="2026" value="1970">
+                  <input type="range" id="yearSliderEnd"   min="1970" max="2026" value="2026">
+                </div>
               </div>
             </div>
 
@@ -1213,8 +1465,32 @@
           <button class="map-control-btn" id="zoomAll" title="Show all markers">🔍</button>
           <button class="map-control-btn" id="toggleHeatmap" title="Toggle heatmap">🔥</button>
           <button class="map-control-btn" id="toggleClustering" title="Toggle clustering">📍</button>
-          <button class="map-control-btn" id="toggleElectoral" title="Toggle Electoral Divisions">🗳️</button>
+          <button class="map-control-btn" id="toggleElectoral" title="Electoral Boundaries">🗳️</button>
           <button class="map-control-btn" id="recentIncidentsToggle" title="Show recent incidents" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">📋</button>
+        </div>
+
+        <!-- Electoral Boundary Panel -->
+        <div class="electoral-panel" id="electoralPanel" style="display:none;">
+          <div class="electoral-panel-header">
+            <span>Electoral Boundaries</span>
+            <button class="electoral-panel-close" id="electoralPanelClose" aria-label="Close panel">×</button>
+          </div>
+          <div class="boundary-type-options">
+            <button class="boundary-type-btn active" data-type="off">Off</button>
+            <button class="boundary-type-btn" data-type="federal">Federal</button>
+            <button class="boundary-type-btn" data-type="state">State / Territory</button>
+          </div>
+          <div class="state-grid" id="stateBadgeGrid" style="display:none;">
+            <button class="state-badge" data-state="ACT">ACT</button>
+            <button class="state-badge" data-state="NSW">NSW</button>
+            <button class="state-badge" data-state="NT">NT</button>
+            <button class="state-badge" data-state="QLD">QLD</button>
+            <button class="state-badge" data-state="SA">SA</button>
+            <button class="state-badge" data-state="TAS">TAS</button>
+            <button class="state-badge" data-state="VIC">VIC</button>
+            <button class="state-badge" data-state="WA">WA</button>
+          </div>
+          <p class="electoral-panel-hint" id="electoralPanelHint">Select a boundary type above</p>
         </div>
 
         <!-- Legend -->
@@ -1247,8 +1523,17 @@
             </div>
             <div class="legend-item" id="electoralLegendItem" style="display: none;">
               <div class="legend-marker" style="border: 2px solid #2c5aa0; background: transparent;"></div>
-              <span>Electoral Division</span>
+              <span id="electoralLegendLabel">Electoral Division</span>
             </div>
+          </div>
+          <div class="legend-title" style="margin-top:10px;">Incident Type</div>
+          <div class="legend-items">
+            <div class="legend-item"><span class="legend-shape" style="color:#94a3b8;"><div class="shape-diamond"></div></span><span>Murder</span></div>
+            <div class="legend-item"><span class="legend-shape" style="color:#94a3b8;"><div class="legend-marker circle" style="background:#94a3b8;width:10px;height:10px;"></div></span><span>Assault</span></div>
+            <div class="legend-item"><span class="legend-shape" style="color:#94a3b8;"><div class="shape-triangle"></div></span><span>Threat / Harassment</span></div>
+            <div class="legend-item"><span class="legend-shape" style="color:#94a3b8;"><div class="shape-square"></div></span><span>Vandalism / Hate speech</span></div>
+            <div class="legend-item"><span class="legend-shape" style="color:#94a3b8;"><div class="shape-hex"></div></span><span>Conversion / Discrimination</span></div>
+            <div class="legend-item"><span style="font-size:0.65rem;color:var(--text-muted);font-style:italic;margin-top:4px;display:block;">Dashed outline = location approximate</span></div>
           </div>
         </div>
 
@@ -1319,6 +1604,12 @@
       let showHeatmap = false;
       let clusteringEnabled = true;
       let showElectoralBoundaries = false;
+      // Electoral panel state
+      let boundaryMode = 'off';        // 'off' | 'federal' | 'state'
+      let activeBoundaryState = null;  // 'NSW' | 'VIC' etc.
+      let stateElectoralLayers = {};   // cache: { NSW: L.GeoJSON, ... }
+      let stateVotingData = null;      // cache: { NSW: { divName: {...} }, ... }
+      let electoralPanelOpen = false;
 
       // DOM Elements
       const showIncidentsCheckbox = document.getElementById('showIncidents');
@@ -1328,8 +1619,8 @@
       const courtLevelFilter = document.getElementById('courtLevelFilter');
       const outcomeFilter = document.getElementById('outcomeFilter');
       const keyIssueFilter = document.getElementById('keyIssueFilter');
-      const startDateInput = document.getElementById('startDate');
-      const endDateInput = document.getElementById('endDate');
+      const yearSliderStart = document.getElementById('yearSliderStart');
+      const yearSliderEnd   = document.getElementById('yearSliderEnd');
       const statusText = document.getElementById('statusText');
       const markerCountEl = document.getElementById('markerCount');
       const listItems = document.getElementById('listItems');
@@ -1886,49 +2177,224 @@
       }
 
       /**
-       * Toggles the electoral boundaries layer visibility
+       * Toggles the electoral boundary panel open/closed
        */
-      async function toggleElectoralBoundaries() {
-        const btn = document.getElementById('toggleElectoral');
+      function toggleElectoralBoundaries() {
+        electoralPanelOpen = !electoralPanelOpen;
+        const panel = document.getElementById('electoralPanel');
+        panel.style.display = electoralPanelOpen ? 'block' : 'none';
+        document.getElementById('toggleElectoral').classList.toggle('active',
+          electoralPanelOpen || boundaryMode !== 'off');
+      }
+
+      /**
+       * Load state MP voting data (all states, cached)
+       */
+      async function loadStateMPVotingData() {
+        if (stateVotingData) return true;
+        try {
+          const response = await fetch('/data/state-mp-lgbtiq-votes.json?v=' + Date.now());
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const data = await response.json();
+          stateVotingData = {};
+          for (const [code, info] of Object.entries(data.states || {})) {
+            stateVotingData[code] = {};
+            (info.divisions || []).forEach(div => {
+              stateVotingData[code][div.division_name] = div;
+            });
+          }
+          console.log('Loaded state MP voting data for states:', Object.keys(stateVotingData));
+          return true;
+        } catch (e) {
+          console.error('Failed to load state MP voting data:', e);
+          return false;
+        }
+      }
+
+      /**
+       * Load a state's electoral GeoJSON (cached per state)
+       */
+      async function loadStateElectoralDivisions(stateCode) {
+        const path = '/data/state-electoral-divisions/' + stateCode.toLowerCase() + '.geojson';
+        try {
+          const response = await fetch(path + '?v=' + Date.now());
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const geojson = await response.json();
+          const layer = L.geoJSON(geojson, {
+            style: getElectoralBoundaryStyle,
+            onEachFeature: onEachStateElectoralFeature
+          });
+          console.log('Loaded', stateCode, 'state electoral layer');
+          return layer;
+        } catch (e) {
+          console.error('Failed to load state electoral divisions for', stateCode, e);
+          return null;
+        }
+      }
+
+      /**
+       * Event handlers for state electoral features
+       */
+      function onEachStateElectoralFeature(feature, layer) {
+        const props = feature.properties || {};
+        const divisionName = props.Elect_div || props.name || props.NAME || 'Unknown';
+        layer.bindTooltip('<strong>' + divisionName + '</strong>', {
+          sticky: true, className: 'electoral-tooltip'
+        });
+        layer.on('click', function() {
+          const incidentCount = countIncidentsInDivision(layer);
+          const votingEntry = stateVotingData && activeBoundaryState
+            ? (stateVotingData[activeBoundaryState] || {})[divisionName]
+            : null;
+          layer.bindPopup(createStateElectoralPopupContent(feature, incidentCount, votingEntry), {
+            maxWidth: 380, className: 'electoral-popup'
+          }).openPopup();
+        });
+        layer.on('mouseover', function() {
+          layer.setStyle(getElectoralHighlightStyle(feature));
+          layer.bringToFront();
+        });
+        layer.on('mouseout', function() {
+          if (activeBoundaryState && stateElectoralLayers[activeBoundaryState]) {
+            stateElectoralLayers[activeBoundaryState].resetStyle(layer);
+          }
+        });
+      }
+
+      /**
+       * Popup content for a state electorate
+       */
+      function createStateElectoralPopupContent(feature, incidentCount, mpData) {
+        const props = feature.properties || {};
+        const divisionName = props.Elect_div || props.name || props.NAME || 'Unknown Division';
+        const mp = mpData && mpData.current_mp ? mpData.current_mp : null;
+        const score = mp ? mp.alignment_score : null;
+        const color = score !== null ? getAlignmentColor(score) : '#94a3b8';
+        const label = mp ? (mp.alignment_label || 'Unknown') : 'No data';
+        const mpName = mp ? mp.name : 'Unknown';
+        const party = mp ? mp.party : 'Unknown';
+        return `
+          <div class="electoral-popup-content">
+            <h4 style="margin:0 0 4px;">${divisionName}</h4>
+            <div class="popup-location">🏛 State Electorate &middot; ${activeBoundaryState || ''}</div>
+            <div style="margin:8px 0;padding:6px 10px;background:rgba(0,0,0,0.2);border-radius:6px;">
+              <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:2px;">Current MP</div>
+              <div style="font-weight:600;">${mpName}</div>
+              <div style="font-size:0.8rem;color:#94a3b8;">${party}</div>
+            </div>
+            ${score !== null ? `
+            <div style="margin:8px 0;padding:6px 10px;background:rgba(0,0,0,0.2);border-radius:6px;">
+              <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:4px;">LGBTIQ+ Alignment</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;color:#fff;">${score}</div>
+                <span style="color:${color};font-weight:600;">${label}</span>
+              </div>
+            </div>` : ''}
+            <div style="font-size:0.75rem;color:#94a3b8;margin-top:6px;">
+              📊 ${incidentCount} incident${incidentCount !== 1 ? 's' : ''} in this electorate
+            </div>
+          </div>
+        `;
+      }
+
+      /**
+       * Switch active boundary type (off / federal / state)
+       */
+      async function switchBoundaryType(type) {
+        // Update pill UI
+        document.querySelectorAll('.boundary-type-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.type === type);
+        });
+
+        const stateGrid = document.getElementById('stateBadgeGrid');
+        const hint = document.getElementById('electoralPanelHint');
         const legendItem = document.getElementById('electoralLegendItem');
-        
-        if (showElectoralBoundaries) {
-          // Hide the layer
-          if (electoralLayer && map.hasLayer(electoralLayer)) {
-            map.removeLayer(electoralLayer);
-          }
-          showElectoralBoundaries = false;
-          btn.classList.remove('active');
+        const legendLabel = document.getElementById('electoralLegendLabel');
+
+        // Remove any visible boundary layer
+        if (electoralLayer && map.hasLayer(electoralLayer)) map.removeLayer(electoralLayer);
+        if (activeBoundaryState && stateElectoralLayers[activeBoundaryState] &&
+            map.hasLayer(stateElectoralLayers[activeBoundaryState])) {
+          map.removeLayer(stateElectoralLayers[activeBoundaryState]);
+        }
+        showElectoralBoundaries = false;
+
+        if (type === 'off') {
+          boundaryMode = 'off';
+          activeBoundaryState = null;
+          stateGrid.style.display = 'none';
+          hint.textContent = 'Electoral boundaries hidden';
           if (legendItem) legendItem.style.display = 'none';
-          console.log('Electoral boundaries hidden');
-        } else {
-          // Show the layer (load if not already loaded)
+          document.getElementById('toggleElectoral').classList.remove('active');
+
+        } else if (type === 'federal') {
+          boundaryMode = 'federal';
+          activeBoundaryState = null;
+          stateGrid.style.display = 'none';
+          hint.textContent = '⏳ Loading federal boundaries…';
           if (!electoralLayer) {
-            btn.textContent = '⏳';
-            btn.disabled = true;
-            
-            // Load both electoral boundaries and MP voting data
-            const [layer] = await Promise.all([
-              loadElectoralDivisions(),
-              loadMPVotingData()
-            ]);
-            
+            const [layer] = await Promise.all([loadElectoralDivisions(), loadMPVotingData()]);
             electoralLayer = layer;
-            
-            btn.textContent = '🗳️';
-            btn.disabled = false;
-            
-            if (!electoralLayer) {
-              alert('Failed to load electoral boundaries. Please check that the GeoJSON file exists at ../data/electoral-divisions.geojson');
-              return;
-            }
           }
-          
-          electoralLayer.addTo(map);
-          showElectoralBoundaries = true;
-          btn.classList.add('active');
-          if (legendItem) legendItem.style.display = 'flex';
-          console.log('Electoral boundaries shown');
+          if (electoralLayer) {
+            electoralLayer.addTo(map);
+            showElectoralBoundaries = true;
+            if (legendItem) { legendItem.style.display = 'flex'; if (legendLabel) legendLabel.textContent = 'Federal Electorate'; }
+            hint.textContent = '151 federal electorates (AEC 2022)';
+          } else {
+            hint.textContent = '⚠ Failed to load federal boundaries';
+          }
+          document.getElementById('toggleElectoral').classList.add('active');
+
+        } else if (type === 'state') {
+          boundaryMode = 'state';
+          stateGrid.style.display = 'grid';
+          // Reset state badges
+          document.querySelectorAll('.state-badge').forEach(b => b.classList.remove('active'));
+          hint.textContent = 'Select a state or territory';
+          if (legendItem) legendItem.style.display = 'none';
+          document.getElementById('toggleElectoral').classList.add('active');
+        }
+      }
+
+      /**
+       * Show electoral boundaries for a specific state
+       */
+      async function showStateBoundary(stateCode) {
+        const hint = document.getElementById('electoralPanelHint');
+        const legendItem = document.getElementById('electoralLegendItem');
+        const legendLabel = document.getElementById('electoralLegendLabel');
+
+        // Remove previous state layer
+        if (activeBoundaryState && stateElectoralLayers[activeBoundaryState] &&
+            map.hasLayer(stateElectoralLayers[activeBoundaryState])) {
+          map.removeLayer(stateElectoralLayers[activeBoundaryState]);
+        }
+
+        // Update badge UI
+        document.querySelectorAll('.state-badge').forEach(b => {
+          b.classList.toggle('active', b.dataset.state === stateCode);
+        });
+
+        activeBoundaryState = stateCode;
+        hint.textContent = '⏳ Loading ' + stateCode + ' electorates…';
+
+        // Load voting data once
+        if (!stateVotingData) await loadStateMPVotingData();
+
+        // Load & cache state layer
+        if (!stateElectoralLayers[stateCode]) {
+          const layer = await loadStateElectoralDivisions(stateCode);
+          if (layer) stateElectoralLayers[stateCode] = layer;
+        }
+
+        if (stateElectoralLayers[stateCode]) {
+          stateElectoralLayers[stateCode].addTo(map);
+          if (legendItem) { legendItem.style.display = 'flex'; if (legendLabel) legendLabel.textContent = stateCode + ' Electorate'; }
+          const count = stateElectoralLayers[stateCode].getLayers().length;
+          hint.textContent = count + ' ' + stateCode + ' electorates loaded';
+        } else {
+          hint.textContent = '⚠ Failed to load ' + stateCode + ' boundaries';
         }
       }
 
@@ -2028,15 +2494,74 @@
         });
       }
 
-      // Populate filter dropdowns
+      // ── Feature 1: format [NOTE: ...] as amber callout boxes ──
+      function formatDescription(text) {
+        if (!text) return '';
+        return text.replace(/\[NOTE: ([^\]]+)\]/g, function(_, content) {
+          return '<div class="note-callout"><span class="note-callout-icon">⚠</span><span>' + content + '</span></div>';
+        });
+      }
+
+      // ── Feature 3: timeline slider logic ──
+      function updateSliderUI() {
+        const start = parseInt(yearSliderStart.value);
+        const end   = parseInt(yearSliderEnd.value);
+        const min   = parseInt(yearSliderStart.min);
+        const max   = parseInt(yearSliderStart.max);
+        const pct   = v => ((v - min) / (max - min)) * 100;
+        document.getElementById('sliderStartLabel').textContent = start;
+        document.getElementById('sliderEndLabel').textContent   = end;
+        const fill = document.getElementById('sliderTrackFill');
+        if (fill) { fill.style.left = pct(start) + '%'; fill.style.width = (pct(end) - pct(start)) + '%'; }
+        document.querySelectorAll('.hist-bar').forEach(bar => {
+          bar.classList.toggle('active', +bar.dataset.year >= start && +bar.dataset.year <= end);
+        });
+      }
+
+      function buildHistogram() {
+        const el = document.getElementById('timelineHistogram');
+        if (!el) return;
+        const counts = {};
+        allIncidents.forEach(i => { if (i.parsedDate) { const y = i.parsedDate.getFullYear(); counts[y] = (counts[y]||0)+1; } });
+        const maxC = Math.max(1, ...Object.values(counts));
+        el.innerHTML = '';
+        for (let y = 1970; y <= 2026; y++) {
+          const c = counts[y] || 0;
+          const bar = document.createElement('div');
+          bar.className = 'hist-bar';
+          bar.dataset.year = y;
+          bar.style.height = (c > 0 ? Math.max(3, Math.round((c/maxC)*34)) : 2) + 'px';
+          bar.title = y + ': ' + c + ' incident' + (c !== 1 ? 's' : '');
+          el.appendChild(bar);
+        }
+        updateSliderUI();
+      }
+
+      yearSliderStart.addEventListener('input', () => {
+        if (+yearSliderStart.value > +yearSliderEnd.value) yearSliderStart.value = yearSliderEnd.value;
+        updateSliderUI();
+      });
+      yearSliderEnd.addEventListener('input', () => {
+        if (+yearSliderEnd.value < +yearSliderStart.value) yearSliderEnd.value = yearSliderStart.value;
+        updateSliderUI();
+      });
+
+      // ── Feature 2: Populate filter dropdowns with counts ──
       function populateIncidentFilters() {
-        const types = [...new Set(allIncidents.map(i => i.incidentType))].filter(t => t !== 'unknown').sort();
+        const types = [...new Set(allIncidents.map(i => i.incidentType))].filter(t => t && t !== 'unknown').sort();
         types.forEach(type => {
+          const count = allIncidents.filter(i => i.incidentType === type).length;
           const opt = document.createElement('option');
           opt.value = type;
-          opt.textContent = type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
+          opt.textContent = type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ') + ' (' + count + ')';
           incidentTypeFilter.appendChild(opt);
         });
+        ['low','medium','high'].forEach(sev => {
+          const count = allIncidents.filter(i => i.severity === sev).length;
+          const opt = severityFilter.querySelector('option[value="' + sev + '"]');
+          if (opt) opt.textContent = sev.charAt(0).toUpperCase() + sev.slice(1) + ' (' + count + ')';
+        });
+        buildHistogram();
       }
 
       function populateLegalFilters() {
@@ -2069,15 +2594,15 @@
         const court = courtLevelFilter.value;
         const outcome = outcomeFilter.value;
         const keyIssue = keyIssueFilter.value;
-        const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
-        const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+        const startYear = parseInt(yearSliderStart.value) || null;
+        const endYear   = parseInt(yearSliderEnd.value)   || null;
 
         // Filter incidents
         filteredIncidents = showIncidents ? allIncidents.filter(i => {
           if (incidentType !== 'all' && i.incidentType !== incidentType) return false;
           if (severity !== 'all' && i.severity !== severity) return false;
-          if (startDate && i.parsedDate && i.parsedDate < startDate) return false;
-          if (endDate && i.parsedDate && i.parsedDate > endDate) return false;
+          if (startYear && i.parsedDate && i.parsedDate.getFullYear() < startYear) return false;
+          if (endYear   && i.parsedDate && i.parsedDate.getFullYear() > endYear)   return false;
           return true;
         }) : [];
 
@@ -2086,8 +2611,8 @@
           if (court !== 'all' && c.court !== court) return false;
           if (outcome !== 'all' && c.outcome !== outcome) return false;
           if (keyIssue !== 'all' && !c.keyIssues.includes(keyIssue)) return false;
-          if (startDate && c.parsedDate && c.parsedDate < startDate) return false;
-          if (endDate && c.parsedDate && c.parsedDate > endDate) return false;
+          if (startYear && c.parsedDate && c.parsedDate.getFullYear() < startYear) return false;
+          if (endYear   && c.parsedDate && c.parsedDate.getFullYear() > endYear)   return false;
           return true;
         }) : [];
 
@@ -2104,29 +2629,48 @@
         refreshRecentIncidentsWidget();
       }
 
-      // Create incident marker
+      // ── Feature 5: incident marker shapes by type ──
       function createIncidentMarker(incident) {
-        const color = COLORS[incident.severity] || COLORS.medium;
-        
+        const color   = COLORS[incident.severity] || COLORS.medium;
+        const isApprox = incident.location && incident.location.toLowerCase().includes('exact location unknown');
+        const opacity  = isApprox ? 0.42 : 0.92;
+        const border   = isApprox
+          ? 'border:2px dashed rgba(255,255,255,0.45);'
+          : 'border:2px solid rgba(255,255,255,0.85);';
+        const shadow   = isApprox ? '' : 'box-shadow:0 2px 6px rgba(0,0,0,0.5);';
+        const base     = `background:${color};${border}${shadow}opacity:${opacity};`;
+
+        let inner;
+        switch (incident.incidentType) {
+          case 'murder':
+            inner = `<div style="width:15px;height:15px;${base}transform:rotate(45deg);border-radius:2px;"></div>`;
+            break;
+          case 'threat':
+          case 'harassment':
+            inner = `<div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:17px solid ${color};opacity:${opacity};filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));"></div>`;
+            break;
+          case 'vandalism':
+          case 'hate_speech':
+            inner = `<div style="width:16px;height:16px;${base}border-radius:3px;"></div>`;
+            break;
+          case 'conversion':
+          case 'discrimination':
+            inner = `<div style="width:18px;height:18px;${base}clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);"></div>`;
+            break;
+          default: // assault & unknown → circle
+            inner = `<div style="width:17px;height:17px;${base}border-radius:50%;"></div>`;
+        }
+
         const icon = L.divIcon({
           className: 'custom-marker',
-          html: `<div style="
-            width: 20px;
-            height: 20px;
-            background: ${color};
-            border: 2px solid white;
-            border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-          "></div>`,
+          html: `<div style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;">${inner}</div>`,
           iconSize: [20, 20],
           iconAnchor: [10, 10]
         });
 
         const marker = L.marker([incident.lat, incident.lon], { icon });
-        
         marker.bindPopup(() => createIncidentPopup(incident), { maxWidth: 350 });
         marker.on('mouseover', function() { this.openPopup(); });
-        
         return marker;
       }
 
@@ -2161,18 +2705,26 @@
         return marker;
       }
 
-      // Create popup content
+      // Create popup content (Feature 1: NOTE callouts applied via formatDescription)
       function createIncidentPopup(incident) {
+        const rawDesc = incident.description || '';
+        // Truncate the non-NOTE portion to keep popups manageable
+        const notePattern = /(\[NOTE: [^\]]+\]\s*)*/;
+        const notePart  = (rawDesc.match(/^(\[NOTE: [^\]]+\]\s*)+/) || [''])[0];
+        const bodyPart  = rawDesc.slice(notePart.length);
+        const truncBody = bodyPart.length > 220 ? bodyPart.slice(0, 220) + '…' : bodyPart;
+        const descHtml  = formatDescription(notePart + truncBody);
+
         return `
           <div class="popup-content">
             <div class="popup-title">${incident.title}</div>
             <div class="popup-location">📍 ${incident.location}</div>
             <div class="popup-details">
-              <strong>Type:</strong> ${incident.incidentType}<br>
+              <strong>Type:</strong> ${incident.incidentType.replace(/_/g,' ')}<br>
               <strong>Severity:</strong> ${incident.severity}<br>
               <strong>Date:</strong> ${incident.date || 'Unknown'}<br>
               <strong>Victim Group:</strong> ${incident.victimIdentity}<br>
-              ${incident.description ? `<strong>Description:</strong> ${incident.description.slice(0, 200)}${incident.description.length > 200 ? '...' : ''}` : ''}
+              ${descHtml ? '<br>' + descHtml : ''}
             </div>
             ${incident.url ? `<a href="${incident.url}" target="_blank" class="popup-link">Read source →</a>` : ''}
           </div>
@@ -2338,8 +2890,9 @@
         courtLevelFilter.value = 'all';
         outcomeFilter.value = 'all';
         keyIssueFilter.value = 'all';
-        startDateInput.value = '';
-        endDateInput.value = '';
+        yearSliderStart.value = yearSliderStart.min;
+        yearSliderEnd.value   = yearSliderEnd.max;
+        updateSliderUI();
         applyFilters();
       }
 
@@ -2396,8 +2949,19 @@
         }
       });
 
-      // Electoral boundaries toggle
+      // Electoral boundary panel toggle
       document.getElementById('toggleElectoral').addEventListener('click', toggleElectoralBoundaries);
+      document.getElementById('electoralPanelClose').addEventListener('click', function() {
+        document.getElementById('electoralPanel').style.display = 'none';
+        electoralPanelOpen = false;
+        document.getElementById('toggleElectoral').classList.toggle('active', boundaryMode !== 'off');
+      });
+      document.querySelectorAll('.boundary-type-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() { switchBoundaryType(btn.dataset.type); });
+      });
+      document.querySelectorAll('.state-badge').forEach(function(btn) {
+        btn.addEventListener('click', function() { showStateBoundary(btn.dataset.state); });
+      });
 
       // Mobile sidebar toggle
       const sidebar = document.getElementById('sidebar');
@@ -2458,7 +3022,9 @@
           'hate_speech': { className: 'badge-hate_speech', label: 'Hate Speech' },
           'threat': { className: 'badge-threat', label: 'Threat' },
           'discrimination': { className: 'badge-discrimination', label: 'Discrimination' },
-          'murder': { className: 'badge-assault', label: 'Murder' }
+          'murder': { className: 'badge-murder', label: 'Murder' },
+          'sexual_violence': { className: 'badge-assault', label: 'Sexual Violence' },
+          'conversion_practices': { className: 'badge-conversion', label: 'Conversion Practices' }
         };
         return badges[type] || { className: 'badge-other', label: type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ') };
       }
@@ -2787,5 +3353,6 @@
     
     <!-- Resources Dropdown Script -->
     <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
   </body>
 </html>

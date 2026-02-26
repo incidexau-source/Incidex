@@ -33,6 +33,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="resources-dropdown.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
     <style>
       :root {
         --bg-primary: #f8fafc;
@@ -579,7 +581,8 @@
       <div class="header-actions">
         <a href="map.html" class="nav-link">🗺️ Map</a>
         <a href="policy_landscape.html" class="nav-link">📋 Policy</a>
-        <a href="statistics.html" class="nav-link">📊 Statistics</a>
+        <a href="monitoring.html" class="nav-link">📊 Statistics</a>
+        <a href="legal_cases.html" class="nav-link">⚖️ Legal Cases</a>
         <!-- Resources Dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
@@ -1097,6 +1100,7 @@
         low: COLORS.success,
         medium: COLORS.warning,
         high: COLORS.danger,
+        critical: '#7f1d1d',
         unknown: '#94a3b8'
       };
 
@@ -1976,7 +1980,11 @@
           threat: COLORS.warning,
           vandalism: COLORS.primary,
           hate_speech: COLORS.pink,
-          harassment: COLORS.secondary
+          harassment: COLORS.secondary,
+          murder: '#7f1d1d',
+          conversion_practices: '#8b5cf6',
+          sexual_violence: '#ed64a6',
+          discrimination: '#38b2ac'
         };
 
         const ctx = document.getElementById('typeYearChart').getContext('2d');
@@ -3206,6 +3214,7 @@
     
     <!-- Resources Dropdown Script -->
     <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
   </body>
 </html>
 

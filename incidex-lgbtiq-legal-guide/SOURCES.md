@@ -51,6 +51,15 @@ This document lists all sources used in creating the Incidex LGBTIQ+ Legal Guide
 - URL: https://www.legislation.vic.gov.au/in-force/acts/racial-and-religious-tolerance-act-2001
 - Note: Vilification protections for race and religion only, NOT LGBTIQ+
 
+**Health Safeguards for People Born with Variations in Sex Characteristics Act 2025 (Vic)**
+- URL: https://www.legislation.vic.gov.au/bills/health-safeguards-people-born-variations-sex-characteristics-bill-2025
+- Bill number: 601239
+- Introduced: 2 December 2025 by Hon Mary-Anne Thomas (Assembly) and Hon Ingrid Stitt (Council)
+- Passed Assembly: 5 February 2026
+- Passed Council: 19 February 2026 (24-15)
+- Key provisions: Restricts unnecessary medical procedures on intersex children; establishes independent expert panel; provides support for patients and families
+- Significance: Victoria is the first Australian state (second jurisdiction after ACT) to legislate intersex medical safeguards
+
 ### Queensland
 
 **Anti-Discrimination Act 1991 (Qld)**

@@ -38,6 +38,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="resources-dropdown.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
     <style>
       :root {
         --bg-dark: #0c0f1a;
@@ -689,6 +691,7 @@
         low: "#68d391",
         medium: "#f6e05e",
         high: "#fc8181",
+        critical: "#7f1d1d",
       };
 
       const COURT_COLORS = {
@@ -767,6 +770,28 @@
         return Number.isNaN(parsed.getTime()) ? null : parsed;
       }
 
+      function formatIncidentType(type) {
+        const labels = {
+          'assault': 'Assault', 'harassment': 'Harassment', 'vandalism': 'Vandalism',
+          'hate_speech': 'Hate Speech', 'threat': 'Threat', 'discrimination': 'Discrimination',
+          'murder': 'Murder', 'sexual_violence': 'Sexual Violence',
+          'conversion_practices': 'Conversion Practices', 'other': 'Other'
+        };
+        const key = (type || 'other').trim().toLowerCase();
+        return labels[key] || type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      }
+
+      function formatVictimIdentity(identity) {
+        const labels = {
+          'gay_man': 'Gay Man', 'lesbian': 'Lesbian', 'trans_man': 'Trans Man',
+          'trans_woman': 'Trans Woman', 'non_binary': 'Non-binary',
+          'gender_diverse': 'Gender Diverse', 'bisexual': 'Bisexual', 'queer': 'Queer',
+          'intersex': 'Intersex', 'general_lgbtiq': 'General LGBTIQ+', 'unknown': 'Not specified'
+        };
+        const key = (identity || 'unknown').trim().toLowerCase();
+        return labels[key] || identity.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      }
+
       // Normalize incident data
       function normalizeIncident(row) {
         const latStr = (row.latitude || row.lat || "").toString().trim();
@@ -789,6 +814,7 @@
           severity: (row.severity || "unknown").trim().toLowerCase(),
           severity_label: row.severity || "Unknown",
           perpetrator_info: row.perpetrator_info || "Not mentioned",
+          cross_reference: row.cross_reference || "",
           latitude: Number.isFinite(lat) ? lat : null,
           longitude: Number.isFinite(lon) ? lon : null,
         };
@@ -878,21 +904,26 @@
       // Create incident marker
       function createIncidentMarker(incident) {
         const color = SEVERITY_COLORS[incident.severity] || "#9f7aea";
-        
+        const isApproxLocation = incident.location && incident.location.includes("exact location unknown");
+
         const marker = L.circleMarker([incident.latitude, incident.longitude], {
-          radius: 8,
-          weight: 2,
+          radius: isApproxLocation ? 6 : 8,
+          weight: isApproxLocation ? 1 : 2,
           color: color,
           fillColor: color,
-          fillOpacity: 0.7,
+          fillOpacity: isApproxLocation ? 0.35 : 0.7,
+          dashArray: isApproxLocation ? "4 4" : null,
         });
+
+        const typeLabel = formatIncidentType(incident.incident_type);
+        const identityLabel = formatVictimIdentity(incident.victim_identity);
 
         const popup = `
           <div class="popup-title">${incident.title}</div>
           <div class="popup-subtitle">${incident.location}</div>
           <div>
             <span class="popup-badge badge-${incident.severity}">${incident.severity_label}</span>
-            <span class="popup-badge" style="background: rgba(159, 122, 234, 0.2); color: #9f7aea;">${incident.incident_type_label}</span>
+            <span class="popup-badge" style="background: rgba(159, 122, 234, 0.2); color: #9f7aea;">${typeLabel}</span>
           </div>
           <div class="popup-section">
             <div class="popup-section-title">Date</div>
@@ -900,7 +931,7 @@
           </div>
           <div class="popup-section">
             <div class="popup-section-title">Victim Group</div>
-            ${incident.victim_identity}
+            ${identityLabel}
           </div>
           <div class="popup-section">
             <div class="popup-section-title">Description</div>
@@ -910,6 +941,12 @@
             <div class="popup-section">
               <div class="popup-section-title">Perpetrator Info</div>
               ${incident.perpetrator_info}
+            </div>
+          ` : ""}
+          ${incident.cross_reference ? `
+            <div class="popup-section">
+              <div class="popup-section-title">Cross-References</div>
+              <div style="font-size: 12px; color: #6b7280;">${incident.cross_reference}</div>
             </div>
           ` : ""}
           ${incident.url ? `
@@ -1173,6 +1210,7 @@
     
     <!-- Resources Dropdown Script -->
     <script src="resources-dropdown.js"></script>
+  <script src="interactions.js"></script>
   </body>
 </html>
 

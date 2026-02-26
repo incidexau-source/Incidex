@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=monitoring.html">
   <meta name="description"
     content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
   <title>Statistics Dashboard | Incidex Australia</title>
@@ -43,6 +44,10 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
   <link rel="stylesheet" href="animations.css">
+
+  <!-- Supabase Client for community submissions -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
 
   <style>
     /* Page-specific styles - Force light mode */
@@ -568,10 +573,14 @@
       box-shadow: 0 0 0 2px var(--color-primary);
     }
 
-    .timeline-incident.type-murder::before { background: #d9534f; box-shadow: 0 0 0 2px #d9534f; }
+    .timeline-incident.type-murder::before { background: #7f1d1d; box-shadow: 0 0 0 2px #7f1d1d; }
     .timeline-incident.type-assault::before { background: #e8985e; box-shadow: 0 0 0 2px #e8985e; }
     .timeline-incident.type-discrimination::before { background: #5bc0de; box-shadow: 0 0 0 2px #5bc0de; }
     .timeline-incident.type-hate_speech::before { background: #d4a5d4; box-shadow: 0 0 0 2px #d4a5d4; }
+    .timeline-incident.type-conversion_practices::before { background: #8b5cf6; box-shadow: 0 0 0 2px #8b5cf6; }
+    .timeline-incident.type-sexual_violence::before { background: #ed64a6; box-shadow: 0 0 0 2px #ed64a6; }
+    .timeline-incident.type-harassment::before { background: #e06055; box-shadow: 0 0 0 2px #e06055; }
+    .timeline-incident.type-threat::before { background: #e8985e; box-shadow: 0 0 0 2px #e8985e; }
     .timeline-incident.type-other::before { background: #8a8a8a; box-shadow: 0 0 0 2px #8a8a8a; }
 
     .timeline-incident-header {
@@ -617,10 +626,14 @@
       text-transform: capitalize;
     }
 
-    .timeline-incident-type.murder { background: rgba(217, 83, 79, 0.15); color: #d9534f; }
+    .timeline-incident-type.murder { background: rgba(127, 29, 29, 0.15); color: #dc2626; }
     .timeline-incident-type.assault { background: rgba(232, 152, 94, 0.15); color: #c97d41; }
     .timeline-incident-type.discrimination { background: rgba(91, 192, 222, 0.15); color: #31a7c2; }
     .timeline-incident-type.hate_speech { background: rgba(212, 165, 212, 0.15); color: #b07eb0; }
+    .timeline-incident-type.conversion_practices { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+    .timeline-incident-type.sexual_violence { background: rgba(237, 100, 166, 0.15); color: #ed64a6; }
+    .timeline-incident-type.harassment { background: rgba(224, 96, 85, 0.15); color: #e06055; }
+    .timeline-incident-type.threat { background: rgba(232, 152, 94, 0.15); color: #c97d41; }
     .timeline-incident-type.other { background: rgba(138, 138, 138, 0.15); color: #6a6a6a; }
 
     .timeline-empty {
@@ -732,7 +745,7 @@
           </svg>
           MP Voting
         </a>
-        <a href="statistics.html" class="nav-link active">
+        <a href="monitoring.html" class="nav-link active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -741,12 +754,12 @@
           </svg>
           Statistics
         </a>
-        <a href="monitoring.html" class="nav-link">
+        <a href="legal_cases.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
-          Monitor
+          Legal Cases
         </a>
         <a href="database.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -898,8 +911,8 @@
     <a href="map.html" class="nav-link">Map</a>
     <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
     <a href="voting_records.html" class="nav-link">MP Voting</a>
-    <a href="statistics.html" class="nav-link active">Statistics</a>
-    <a href="monitoring.html" class="nav-link">Monitor</a>
+    <a href="monitoring.html" class="nav-link active">Statistics</a>
+    <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
@@ -1675,7 +1688,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="map.html">Interactive Map</a></li>
-            <li><a href="statistics.html">Statistics</a></li>
+            <li><a href="monitoring.html">Statistics</a></li>
             <li><a href="resources.html">Support Resources</a></li>
             <li><a href="about.html">About This Project</a></li>
           </ul>
@@ -1728,6 +1741,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
+    // Initialize Supabase for community submissions
+    let supabaseClient = null;
+    if (window.SUPABASE_CONFIG && window.isSupabaseConfigured && window.isSupabaseConfigured()) {
+      supabaseClient = window.supabase.createClient(
+        window.SUPABASE_CONFIG.url,
+        window.SUPABASE_CONFIG.anonKey
+      );
+      console.log('Supabase connected - will include approved community submissions');
+    }
+
     // Constants
     const DATA_PATH = '/data/incidents_in_progress.csv?v=' + Date.now();
     const LEGAL_CASES_PATH = '/data/landmark_cases.csv?v=' + Date.now();
@@ -1752,6 +1775,7 @@
       low: COLORS.success,
       medium: COLORS.warning,
       high: COLORS.danger,
+      critical: '#7f1d1d',
       unknown: COLORS.muted
     };
 
@@ -1886,18 +1910,63 @@
       return suburb.length > 30 ? suburb.slice(0, 30) + '...' : suburb;
     }
 
-    function loadData() {
+    // Load approved community submissions from Supabase
+    async function loadCommunitySubmissions() {
+      if (!supabaseClient) return [];
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('incident_submissions')
+          .select('*')
+          .eq('status', 'approved');
+
+        if (error) {
+          console.warn('Could not load community submissions:', error.message);
+          return [];
+        }
+
+        // Convert Supabase format to match CSV format
+        return (data || []).map(sub => ({
+          title: `Community Report: ${sub.incident_type.replace(/_/g, ' ')} in ${sub.location}`,
+          date: sub.date,
+          location: sub.location + (sub.street ? ', ' + sub.street : ''),
+          incident_type: sub.incident_type,
+          severity: 'medium',
+          description: sub.description,
+          victim_identity: sub.victim_identity,
+          url: '',
+          latitude: sub.latitude,
+          longitude: sub.longitude,
+          source: 'community_report',
+          verified: 'community'
+        }));
+      } catch (err) {
+        console.warn('Error loading community submissions:', err);
+        return [];
+      }
+    }
+
+    async function loadData() {
       Papa.parse(DATA_PATH, {
         header: true,
         download: true,
         skipEmptyLines: true,
-        complete: (results) => {
+        complete: async (results) => {
           console.log('CSV loaded successfully, rows:', results.data.length);
-          allIncidents = results.data
+          let csvIncidents = results.data
             .filter(row => row.title && row.title.trim())
             .map(normalizeIncident);
 
-          console.log('Processed incidents:', allIncidents.length);
+          // Also load approved community submissions from Supabase
+          const communitySubmissions = await loadCommunitySubmissions();
+          if (communitySubmissions.length > 0) {
+            console.log(`Loaded ${communitySubmissions.length} approved community submissions`);
+            const normalizedCommunity = communitySubmissions.map(normalizeIncident);
+            csvIncidents = [...csvIncidents, ...normalizedCommunity];
+          }
+
+          allIncidents = csvIncidents;
+          console.log('Total processed incidents:', allIncidents.length);
           filteredIncidents = [...allIncidents];
 
           populateFilters();
@@ -2447,7 +2516,7 @@
 
       const years = Object.keys(yearType).sort();
       const types = Array.from(allTypes);
-      const typeColors = { assault: COLORS.danger, threat: COLORS.warning, vandalism: COLORS.primary, hate_speech: COLORS.accent, harassment: COLORS.secondary };
+      const typeColors = { assault: COLORS.danger, threat: COLORS.warning, vandalism: COLORS.primary, hate_speech: COLORS.accent, harassment: COLORS.secondary, murder: '#7f1d1d', conversion_practices: '#8b5cf6', sexual_violence: '#ed64a6', discrimination: '#38b2ac' };
 
       const ctx = document.getElementById('typeYearChart').getContext('2d');
       if (charts.typeYear) charts.typeYear.destroy();
