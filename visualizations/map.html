@@ -2232,8 +2232,8 @@
 
   <script>
     // Configuration
-    const INCIDENTS_PATH = "/data/incidents_in_progress.csv?v=" + Date.now();
-    const CASES_PATH = "/data/landmark_cases.csv?v=" + Date.now();
+    const INCIDENTS_PATH = "../data/incidents_in_progress.csv?v=" + Date.now();
+    const CASES_PATH = "../data/landmark_cases.csv?v=" + Date.now();
     const DEFAULT_CENTER = [-25.2744, 133.7751];
     const DEFAULT_ZOOM = 4;
 
@@ -3269,7 +3269,7 @@
     // POLICY LAYER FUNCTIONALITY
     // =====================================================
 
-    const POLICY_DATA_PATH = "/data/policy_landscape.csv";
+    const POLICY_DATA_PATH = "../data/policy_landscape.csv";
     let policyLayerActive = false;
     let policyData = [];
     let policyMarkers = [];
@@ -3440,8 +3440,8 @@
     // ELECTORAL BOUNDARY LAYER FUNCTIONALITY
     // =====================================================
 
-    const ELECTORAL_DIVISIONS_PATH = "/data/electoral-divisions.geojson";
-    const MP_VOTING_DATA_PATH = "/data/mp-lgbtiq-votes.json";
+    const ELECTORAL_DIVISIONS_PATH = "../data/electoral-divisions.geojson";
+    const MP_VOTING_DATA_PATH = "../data/mp-lgbtiq-votes.json";
     let electoralLayerActive = false;
     let electoralLayer = null;
     let electoralData = null;
@@ -3971,17 +3971,17 @@
     // =====================================================
 
     const STATE_GEOJSON_PATHS = {
-      "NSW": "/data/state-electoral-divisions/nsw.geojson",
-      "VIC": "/data/state-electoral-divisions/vic.geojson",
-      "QLD": "/data/state-electoral-divisions/qld.geojson",
-      "WA": "/data/state-electoral-divisions/wa.geojson",
-      "SA": "/data/state-electoral-divisions/sa.geojson",
-      "TAS": "/data/state-electoral-divisions/tas.geojson",
-      "ACT": "/data/state-electoral-divisions/act.geojson",
-      "NT": "/data/state-electoral-divisions/nt.geojson"
+      "NSW": "../data/state-electoral-divisions/nsw.geojson",
+      "VIC": "../data/state-electoral-divisions/vic.geojson",
+      "QLD": "../data/state-electoral-divisions/qld.geojson",
+      "WA": "../data/state-electoral-divisions/wa.geojson",
+      "SA": "../data/state-electoral-divisions/sa.geojson",
+      "TAS": "../data/state-electoral-divisions/tas.geojson",
+      "ACT": "../data/state-electoral-divisions/act.geojson",
+      "NT": "../data/state-electoral-divisions/nt.geojson"
     };
 
-    const STATE_MP_DATA_PATH = "/data/state-mp-lgbtiq-votes.json";
+    const STATE_MP_DATA_PATH = "../data/state-mp-lgbtiq-votes.json";
     const STATE_CENTERS = {
       "NSW": [-32.0, 146.5],
       "VIC": [-37.0, 144.5],

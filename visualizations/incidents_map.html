@@ -1575,8 +1575,8 @@
     
     <script>
       // Configuration
-      const DATA_PATH = "/data/incidents_in_progress.csv?v=" + Date.now();
-      const LEGAL_CASES_PATH = "/data/landmark_cases.csv?v=" + Date.now();
+      const DATA_PATH = "../data/incidents_in_progress.csv?v=" + Date.now();
+      const LEGAL_CASES_PATH = "../data/landmark_cases.csv?v=" + Date.now();
       const DEFAULT_CENTER = [-25.2744, 133.7751];
       const DEFAULT_ZOOM = 4;
 
@@ -1684,8 +1684,8 @@
       // =============================================
       // Electoral Boundary Layer Module
       // =============================================
-      const ELECTORAL_DIVISIONS_PATH = "/data/electoral-divisions.geojson";
-      const MP_VOTING_DATA_PATH = "/data/mp-lgbtiq-votes.json";
+      const ELECTORAL_DIVISIONS_PATH = "../data/electoral-divisions.geojson";
+      const MP_VOTING_DATA_PATH = "../data/mp-lgbtiq-votes.json";
       
       // MP voting data (loaded dynamically)
       let mpVotingData = null;
@@ -2193,7 +2193,7 @@
       async function loadStateMPVotingData() {
         if (stateVotingData) return true;
         try {
-          const response = await fetch('/data/state-mp-lgbtiq-votes.json?v=' + Date.now());
+          const response = await fetch('../data/state-mp-lgbtiq-votes.json?v=' + Date.now());
           if (!response.ok) throw new Error('HTTP ' + response.status);
           const data = await response.json();
           stateVotingData = {};
@@ -2215,7 +2215,7 @@
        * Load a state's electoral GeoJSON (cached per state)
        */
       async function loadStateElectoralDivisions(stateCode) {
-        const path = '/data/state-electoral-divisions/' + stateCode.toLowerCase() + '.geojson';
+        const path = '../data/state-electoral-divisions/' + stateCode.toLowerCase() + '.geojson';
         try {
           const response = await fetch(path + '?v=' + Date.now());
           if (!response.ok) throw new Error('HTTP ' + response.status);

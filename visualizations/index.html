@@ -3201,7 +3201,7 @@
       }
 
       // Load actual incident count from CSV and get latest date + state heatmap
-      fetch('/data/incidents_in_progress.csv')
+      fetch('../data/incidents_in_progress.csv')
         .then(response => response.text())
         .then(async data => {
           const lines = data.trim().split('\n');
@@ -3266,7 +3266,7 @@
         });
 
       // Load actual case count from CSV
-      fetch('/data/landmark_cases.csv')
+      fetch('../data/landmark_cases.csv')
         .then(response => response.text())
         .then(data => {
           const lines = data.trim().split('\n');
@@ -3278,7 +3278,7 @@
         });
 
       // Load actual resource count from CSV
-      fetch('/data/resources_by_location.csv')
+      fetch('../data/resources_by_location.csv')
         .then(response => response.text())
         .then(data => {
           const lines = data.trim().split('\n');
@@ -3783,7 +3783,7 @@
 
       if (!alertsListEl) return;
 
-      fetch('/data/incidents_in_progress.csv')
+      fetch('../data/incidents_in_progress.csv')
         .then(response => response.text())
         .then(data => {
           const lines = data.trim().split('\n');
@@ -3937,7 +3937,7 @@
       let currentView = 'day';
 
       // Load incidents data
-      fetch('/data/incidents_in_progress.csv')
+      fetch('../data/incidents_in_progress.csv')
         .then(response => response.text())
         .then(data => {
           const lines = data.trim().split('\n');
