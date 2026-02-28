@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "source": "NSW Police Force via ABC News",
+    "source_url": "https://www.abc.net.au/news/2026-02-27/nsw-lgbt-hate-data-released-ahead-of-mardi-gras/106394004",
+    "published_date": "2026-02-27",
+    "description": "NSW Police hate crime data by suburb released ahead of Sydney Mardi Gras 2026. Represents officially recorded LGBT hate crime offences per suburb for the period January 2023 to October 2025.",
+    "data_type": "police_aggregate",
+    "data_period_start": "2023-01-01",
+    "data_period_end": "2025-10-31",
+    "data_period_label": "January 2023 – October 2025",
+    "state": "NSW",
+    "total_offences": 169,
+    "last_updated": "2026-02-27"
+  },
+  "suburbs": [
+    {
+      "suburb": "Strathfield",
+      "state": "NSW",
+      "offences": 23,
+      "latitude": -33.8762,
+      "longitude": 151.0935
+    },
+    {
+      "suburb": "Terrigal",
+      "state": "NSW",
+      "offences": 21,
+      "latitude": -33.4516,
+      "longitude": 151.4434
+    },
+    {
+      "suburb": "Wollongong",
+      "state": "NSW",
+      "offences": 20,
+      "latitude": -34.4278,
+      "longitude": 150.8931
+    },
+    {
+      "suburb": "Sydney",
+      "state": "NSW",
+      "offences": 18,
+      "latitude": -33.8688,
+      "longitude": 151.2093
+    },
+    {
+      "suburb": "Darlinghurst",
+      "state": "NSW",
+      "offences": 17,
+      "latitude": -33.8784,
+      "longitude": 151.2227
+    },
+    {
+      "suburb": "Marayong",
+      "state": "NSW",
+      "offences": 15,
+      "latitude": -33.7671,
+      "longitude": 150.9556
+    },
+    {
+      "suburb": "Wamberal",
+      "state": "NSW",
+      "offences": 10,
+      "latitude": -33.4444,
+      "longitude": 151.4419
+    },
+    {
+      "suburb": "Belfield",
+      "state": "NSW",
+      "offences": 9,
+      "latitude": -33.9087,
+      "longitude": 151.0842
+    },
+    {
+      "suburb": "Dee Why",
+      "state": "NSW",
+      "offences": 9,
+      "latitude": -33.7483,
+      "longitude": 151.2876
+    },
+    {
+      "suburb": "Erowal Bay",
+      "state": "NSW",
+      "offences": 9,
+      "latitude": -35.0737,
+      "longitude": 150.7130
+    },
+    {
+      "suburb": "Hurlstone Park",
+      "state": "NSW",
+      "offences": 9,
+      "latitude": -33.9091,
+      "longitude": 151.1209
+    },
+    {
+      "suburb": "Redfern",
+      "state": "NSW",
+      "offences": 9,
+      "latitude": -33.8938,
+      "longitude": 151.2054
+    }
+  ]
+}
