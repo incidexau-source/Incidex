@@ -34,6 +34,12 @@
         // Click/tap support for toggle (mobile & accessibility)
         if (toggle) {
             toggle.addEventListener('click', function (e) {
+                // On touch/mobile devices, navigate directly to resources.html
+                // instead of trying to open a dropdown (avoids two-tap confusion)
+                if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 768) {
+                    window.location.href = 'resources.html';
+                    return;
+                }
                 e.stopPropagation();
                 toggleDropdown();
             });
