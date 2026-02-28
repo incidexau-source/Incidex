@@ -342,8 +342,30 @@
     @media (max-width: 768px) {
       .leaflet-popup-content {
         width: auto !important;
-        min-width: 240px;
-        max-width: calc(100vw - 64px) !important;
+        min-width: 200px;
+        max-width: calc(100vw - 48px) !important;
+      }
+
+      .leaflet-popup-content-wrapper {
+        max-height: 60vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .popup-content {
+        padding: var(--space-3);
+      }
+
+      .popup-title {
+        font-size: var(--text-sm);
+      }
+
+      .popup-section-title {
+        font-size: 10px;
+      }
+
+      .popup-section-content {
+        font-size: var(--text-xs);
       }
     }
 
@@ -2858,7 +2880,14 @@
         </div>
       `;
 
-      marker.bindPopup(popup, { maxWidth: 350, minWidth: 320 });
+      const isMobile = window.innerWidth <= 768;
+      marker.bindPopup(popup, {
+        maxWidth: isMobile ? window.innerWidth - 48 : 350,
+        minWidth: isMobile ? 200 : 320,
+        autoPan: true,
+        autoPanPaddingTopLeft: isMobile ? L.point(10, 80) : L.point(5, 5),
+        autoPanPaddingBottomRight: isMobile ? L.point(10, 20) : L.point(5, 5)
+      });
       return marker;
     }
 
@@ -2933,7 +2962,14 @@
         </div>
       `;
 
-      marker.bindPopup(popup, { maxWidth: 350, minWidth: 320 });
+      const isMobileCase = window.innerWidth <= 768;
+      marker.bindPopup(popup, {
+        maxWidth: isMobileCase ? window.innerWidth - 48 : 350,
+        minWidth: isMobileCase ? 200 : 320,
+        autoPan: true,
+        autoPanPaddingTopLeft: isMobileCase ? L.point(10, 80) : L.point(5, 5),
+        autoPanPaddingBottomRight: isMobileCase ? L.point(10, 20) : L.point(5, 5)
+      });
       return marker;
     }
 
