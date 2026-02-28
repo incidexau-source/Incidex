@@ -37,9 +37,6 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
     rel="stylesheet">
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="resources-dropdown.css">
@@ -205,15 +202,6 @@
 
     .chart-container.short {
       height: 250px;
-    }
-
-    /* Heat Map */
-    #heatmap {
-      height: 500px;
-      width: 100%;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      background: var(--color-bg);
     }
 
     /* Insights Panel */
@@ -1056,21 +1044,6 @@
         </div>
       </div>
 
-      <!-- Heat Map -->
-      <div class="chart-card full">
-        <div class="chart-header">
-          <h3 class="chart-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z">
-              </path>
-            </svg>
-            Incident Density Heat Map
-          </h3>
-        </div>
-        <div id="heatmap"></div>
-      </div>
-
       <!-- Incident Types -->
       <div class="chart-card half">
         <div class="chart-header">
@@ -1890,8 +1863,6 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -1951,9 +1922,6 @@
     let allLegalCases = [];
     let filteredLegalCases = [];
     let charts = {};
-    let heatmapLayer = null;
-    let heatmap = null;
-
     // DOM Elements
     const filterType = document.getElementById('filterType');
     const filterSeverity = document.getElementById('filterSeverity');
@@ -2208,7 +2176,6 @@
       updateSeverityTrendChart();
       updateSeverityLocationChart();
       updateTypeYearChart();
-      updateHeatmap();
     }
 
     function updateStatCards() {
@@ -2691,32 +2658,6 @@
         },
         options: getChartOptions('line')
       });
-    }
-
-    function updateHeatmap() {
-      if (!heatmap) {
-        heatmap = L.map('heatmap').setView([-25.2744, 133.7751], 4);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OpenStreetMap &copy; CARTO'
-        }).addTo(heatmap);
-      }
-
-      if (heatmapLayer) heatmap.removeLayer(heatmapLayer);
-
-      const heatData = filteredIncidents
-        .filter(i => i.latitude && i.longitude)
-        .map(i => [i.latitude, i.longitude, i.severity === 'high' ? 1 : i.severity === 'medium' ? 0.6 : 0.3]);
-
-      if (heatData.length > 0) {
-        heatmapLayer = L.heatLayer(heatData, {
-          radius: 25,
-          blur: 15,
-          maxZoom: 10,
-          gradient: { 0.2: COLORS.success, 0.5: COLORS.warning, 0.8: COLORS.danger, 1: '#c0392b' }
-        }).addTo(heatmap);
-      }
-
-      setTimeout(() => heatmap.invalidateSize(), 100);
     }
 
     // Legal Cases (abbreviated)

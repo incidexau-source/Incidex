@@ -339,6 +339,14 @@
       max-width: 320px;
     }
 
+    @media (max-width: 768px) {
+      .leaflet-popup-content {
+        width: auto !important;
+        min-width: 240px;
+        max-width: calc(100vw - 64px) !important;
+      }
+    }
+
     .leaflet-popup-tip {
       background: var(--color-bg-alt);
       border: 1px solid var(--color-border);
@@ -1442,25 +1450,32 @@
       }
 
       .filter-toggle-btn {
+        left: 50%;
+        transform: translateX(-50%);
         bottom: var(--space-4);
-        left: var(--space-4);
-        transform: none;
-        padding: var(--space-3) var(--space-4);
-        font-size: var(--text-sm);
+        white-space: nowrap;
       }
 
       .map-controls {
-        bottom: var(--space-4);
-        right: var(--space-4);
+        bottom: calc(var(--space-4) + 52px);
+        top: auto;
+        right: var(--space-3);
       }
 
       .map-controls .btn-icon {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
       }
 
       /* Hide non-essential controls on mobile */
       .state-selector {
+        display: none;
+      }
+
+      /* Hide complex layer buttons on mobile */
+      #policyLayerBtn,
+      #electoralLayerBtn,
+      #nswPoliceBtn {
         display: none;
       }
 
@@ -1486,6 +1501,11 @@
 
       .popup-title {
         font-size: var(--text-base);
+      }
+
+      .filters-sidebar {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
       }
     }
 
@@ -1615,13 +1635,6 @@
       border-style: solid;
     }
 
-    /* ── Feature 4: Heatmap button active state ── */
-    #heatmapBtn.active {
-      background: var(--color-primary) !important;
-      color: #fff !important;
-      border-color: var(--color-primary) !important;
-    }
-
     /* ── Feature 5: marker shape legend ── */
     .shape-legend-section { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); }
     .shape-legend-item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 4px; }
@@ -1631,6 +1644,26 @@
     .shape-swatch.triangle{ width:0; height:0; background:none; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #6b7280; }
     .shape-swatch.square  { border-radius: 2px; }
     .shape-swatch.hex     { clip-path: polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); }
+
+    /* ── Sidebar close button ── */
+    .sidebar-close-btn {
+      display: none;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) 0 var(--space-3);
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: var(--space-3);
+    }
+    @media (max-width: 1024px) {
+      .sidebar-close-btn { display: flex; }
+    }
   </style>
 </head>
 
@@ -1850,6 +1883,10 @@
   <main class="page-layout">
     <!-- Filters Sidebar -->
     <aside class="filters-sidebar" id="filtersSidebar">
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close filters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        Close
+      </button>
       <!-- Dataset Toggle (hidden — legal cases moved to legal_cases.html) -->
       <div class="filter-section" style="display:none;">
         <h3>View Data</h3>
@@ -2141,15 +2178,6 @@
             </path>
           </svg>
         </button>
-        <button class="btn btn-tertiary btn-icon" id="heatmapBtn" title="Toggle heatmap view"
-          aria-label="Toggle heatmap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" width="20" height="20">
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"></path>
-            <path d="M12 6c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4"></path>
-            <circle cx="12" cy="10" r="2" fill="currentColor"></circle>
-          </svg>
-        </button>
         <button class="btn btn-tertiary btn-icon" id="policyLayerBtn" title="Toggle Policy Landscape"
           aria-label="Toggle policy layer overlay">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -2253,7 +2281,6 @@
   <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
@@ -2282,8 +2309,6 @@
     let map, incidentsCluster, casesCluster;
     let incidentsRaw = [], incidentsWithCoords = [];
     let casesRaw = [], casesWithCoords = [];
-    let heatmapLayer = null;
-    let showHeatmap = false;
     let nswPoliceData = [];
     let nswPoliceMarkers = [];
     let nswPoliceLayerActive = false;
@@ -2330,30 +2355,6 @@
         el.appendChild(bar);
       }
       updateSliderUI();
-    }
-
-    // ── Feature 4: heatmap toggle ──
-    function toggleHeatmap() {
-      showHeatmap = !showHeatmap;
-      const btn = document.getElementById('heatmapBtn');
-      if (showHeatmap) {
-        incidentsCluster.clearLayers();
-        const points = incidentsWithCoords
-          .filter(incidentMatchesFilters)
-          .map(i => [i.latitude, i.longitude,
-            i.severity === 'critical' ? 1.0 : i.severity === 'high' ? 0.8 : i.severity === 'medium' ? 0.5 : 0.3]);
-        if (points.length > 0) {
-          heatmapLayer = L.heatLayer(points, {
-            radius: 30, blur: 20, maxZoom: 12,
-            gradient: {0.2: '#22c55e', 0.5: '#f97316', 0.8: '#ef4444', 1.0: '#7f1d1d'}
-          }).addTo(map);
-        }
-        if (btn) btn.classList.add('active');
-      } else {
-        if (heatmapLayer) { map.removeLayer(heatmapLayer); heatmapLayer = null; }
-        renderMarkers();
-        if (btn) btn.classList.remove('active');
-      }
     }
 
     // Create custom cluster icon function for incidents
@@ -2428,10 +2429,6 @@
       if (+yearSliderEnd.value < +yearSliderStart.value) yearSliderEnd.value = yearSliderStart.value;
       updateSliderUI();
     });
-
-    // Wire heatmap button
-    const heatmapBtn = document.getElementById('heatmapBtn');
-    if (heatmapBtn) heatmapBtn.addEventListener('click', toggleHeatmap);
 
     // Case filter elements
     const courtLevelFilter = document.getElementById("courtLevelFilter");
@@ -3003,7 +3000,6 @@
       if (yearSliderStart) { yearSliderStart.value = yearSliderStart.min; }
       if (yearSliderEnd)   { yearSliderEnd.value   = yearSliderEnd.max; }
       updateSliderUI();
-      if (showHeatmap) { toggleHeatmap(); } // exit heatmap mode on reset
       renderMarkers();
     }
 
@@ -3221,6 +3217,9 @@
     filterToggleBtn.addEventListener("click", toggleFiltersSidebar);
     sidebarOverlay.addEventListener("click", closeFiltersSidebar);
     mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeFiltersSidebar);
 
     // Global search
     document.getElementById("globalSearch").addEventListener("input", (e) => {
@@ -4784,14 +4783,16 @@
 
     function refreshRecentIncidentsWidget() {
       populateRecentIncidentsWidget();
-      // Auto-show widget if it's hidden and we have incidents
-      if (recentIncidentsWidget && recentIncidentsWidget.classList.contains('hidden')) {
-        const recentIncidents = getRecentIncidents();
-        if (recentIncidents.length > 0) {
-          // Show widget automatically after a short delay
-          setTimeout(() => {
-            showRecentIncidentsWidget();
-          }, 500);
+      // Auto-show widget if it's hidden and we have incidents (desktop only)
+      if (window.innerWidth > 768) {
+        if (recentIncidentsWidget && recentIncidentsWidget.classList.contains('hidden')) {
+          const recentIncidents = getRecentIncidents();
+          if (recentIncidents.length > 0) {
+            // Show widget automatically after a short delay
+            setTimeout(() => {
+              showRecentIncidentsWidget();
+            }, 500);
+          }
         }
       }
     }
