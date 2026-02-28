@@ -31,8 +31,13 @@
             });
         }
 
-        // Keyboard support for toggle (accessibility)
+        // Click/tap support for toggle (mobile & accessibility)
         if (toggle) {
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleDropdown();
+            });
+
             toggle.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -42,6 +47,13 @@
                 }
             });
         }
+
+        // Close dropdown when tapping outside on mobile
+        document.addEventListener('click', function (e) {
+            if (!dropdown.contains(e.target)) {
+                closeDropdown();
+            }
+        });
 
         // Toggle comparison table
         if (comparisonToggle) {

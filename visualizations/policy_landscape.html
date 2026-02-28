@@ -1398,10 +1398,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
           Parliament Activity
         </button>
-        <button class="view-tab" data-view="comparison">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
-          State/Territory Comparison
-        </button>
         <button class="view-tab" data-view="state-comparison">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           State Comparison
@@ -1528,18 +1524,6 @@
         </div>
       </div>
 
-      <!-- State/Territory Comparison View -->
-      <div class="comparison-view" id="comparisonView">
-        <div class="comparison-content">
-          <div class="comparison-header">
-            <h1>State & Territory Comparison</h1>
-            <p class="comparison-subtitle">
-              Compare LGBTIQ+ voting records, policy progress, and reform status across all Australian states and territories.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <!-- State Comparison View (from state_comparison.html) -->
       <div class="comparison-view" id="stateComparisonView" style="display: none;">
         <iframe src="state_comparison.html" style="width: 100%; height: calc(100vh - var(--header-height) - 80px); border: none; display: block;"></iframe>
@@ -1661,7 +1645,6 @@
     const policyScoreText = document.getElementById('policyScoreText');
     const panelCloseBtn = document.getElementById('panelCloseBtn');
     const panelBackBtn = document.getElementById('panelBackBtn');
-    const comparisonView = document.getElementById('comparisonView');
     const stateComparisonView = document.getElementById('stateComparisonView');
 
     // Initialize map
@@ -2906,9 +2889,6 @@
       mapView.classList.toggle('active', view === 'map');
       mapView.style.display = view === 'map' ? 'flex' : 'none';
 
-      comparisonView.classList.toggle('active', view === 'comparison');
-      comparisonView.style.display = view === 'comparison' ? 'block' : 'none';
-
       stateComparisonView.classList.toggle('active', view === 'state-comparison');
       stateComparisonView.style.display = view === 'state-comparison' ? 'block' : 'none';
 
@@ -2920,10 +2900,6 @@
 
       if (view === 'map' && map) {
         setTimeout(() => map.invalidateSize(), 100);
-      }
-
-      if (view === 'comparison') {
-        renderComparisonTab();
       }
 
       // state-comparison view uses iframe, no render needed
