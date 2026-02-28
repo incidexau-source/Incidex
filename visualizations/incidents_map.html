@@ -1463,7 +1463,6 @@
         <!-- Map Controls -->
         <div class="map-controls">
           <button class="map-control-btn" id="zoomAll" title="Show all markers">🔍</button>
-          <button class="map-control-btn" id="toggleHeatmap" title="Toggle heatmap">🔥</button>
           <button class="map-control-btn" id="toggleClustering" title="Toggle clustering">📍</button>
           <button class="map-control-btn" id="toggleElectoral" title="Electoral Boundaries">🗳️</button>
           <button class="map-control-btn" id="recentIncidentsToggle" title="Show recent incidents" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">📋</button>
@@ -1537,12 +1536,6 @@
           </div>
         </div>
 
-        <!-- View Toggle -->
-        <div class="view-toggle">
-          <button class="view-toggle-btn active" data-view="markers">Markers</button>
-          <button class="view-toggle-btn" data-view="heatmap">Heatmap</button>
-        </div>
-
         <!-- Status Bar -->
         <div class="status-bar">
           <span id="statusText">Loading...</span>
@@ -1570,7 +1563,6 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     
     <script>
@@ -1593,7 +1585,6 @@
       let map;
       let incidentClusterGroup;
       let legalClusterGroup;
-      let heatmapLayer;
       let electoralLayer = null;
       let electoralData = null;
       let allIncidents = [];
@@ -1601,7 +1592,6 @@
       let filteredIncidents = [];
       let filteredLegalCases = [];
       let allMarkerData = [];
-      let showHeatmap = false;
       let clusteringEnabled = true;
       let showElectoralBoundaries = false;
       // Electoral panel state
@@ -2758,43 +2748,19 @@
         legalClusterGroup.clearLayers();
         incidentMarkersMap.clear(); // Clear marker references
 
-        if (heatmapLayer) {
-          map.removeLayer(heatmapLayer);
-          heatmapLayer = null;
-        }
+        // Show markers
+        filteredIncidents.forEach(incident => {
+          const marker = createIncidentMarker(incident);
+          incidentClusterGroup.addLayer(marker);
+          // Store marker reference for highlighting
+          const key = `${incident.lat.toFixed(4)},${incident.lon.toFixed(4)}`;
+          incidentMarkersMap.set(key, marker);
+        });
 
-        if (showHeatmap) {
-          // Show heatmap
-          const heatData = allMarkerData.map(m => [m.lat, m.lon, 0.5]);
-          if (heatData.length > 0) {
-            heatmapLayer = L.heatLayer(heatData, {
-              radius: 25,
-              blur: 15,
-              maxZoom: 10,
-              gradient: {
-                0.2: '#22c55e',
-                0.4: '#fcd34d',
-                0.6: '#f97316',
-                0.8: '#ef4444',
-                1: '#dc2626'
-              }
-            }).addTo(map);
-          }
-        } else {
-          // Show markers
-          filteredIncidents.forEach(incident => {
-            const marker = createIncidentMarker(incident);
-            incidentClusterGroup.addLayer(marker);
-            // Store marker reference for highlighting
-            const key = `${incident.lat.toFixed(4)},${incident.lon.toFixed(4)}`;
-            incidentMarkersMap.set(key, marker);
-          });
-
-          filteredLegalCases.forEach(legalCase => {
-            const marker = createLegalMarker(legalCase);
-            legalClusterGroup.addLayer(marker);
-          });
-        }
+        filteredLegalCases.forEach(legalCase => {
+          const marker = createLegalMarker(legalCase);
+          legalClusterGroup.addLayer(marker);
+        });
 
         // Fit bounds
         if (allMarkerData.length > 0) {
@@ -2906,34 +2872,12 @@
         });
       });
 
-      // View toggle
-      document.querySelectorAll('.view-toggle-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          showHeatmap = btn.dataset.view === 'heatmap';
-          updateMap();
-        });
-      });
-
       // Map controls
       document.getElementById('zoomAll').addEventListener('click', () => {
         if (allMarkerData.length > 0) {
           const bounds = L.latLngBounds(allMarkerData.map(m => [m.lat, m.lon]));
           map.fitBounds(bounds.pad(0.1));
         }
-      });
-
-      document.getElementById('toggleHeatmap').addEventListener('click', () => {
-        showHeatmap = !showHeatmap;
-        document.getElementById('toggleHeatmap').classList.toggle('active', showHeatmap);
-        document.querySelectorAll('.view-toggle-btn').forEach(btn => {
-          btn.classList.toggle('active', 
-            (showHeatmap && btn.dataset.view === 'heatmap') ||
-            (!showHeatmap && btn.dataset.view === 'markers')
-          );
-        });
-        updateMap();
       });
 
       document.getElementById('toggleClustering').addEventListener('click', () => {

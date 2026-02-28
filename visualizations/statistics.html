@@ -1655,17 +1655,17 @@
     <div class="stats-grid">
       <div class="stat-card card-glow reveal" style="border-left: 4px solid #6366f1;">
         <div class="stat-label">Total Recorded Offences</div>
-        <div class="stat-value" style="color:#6366f1;">169</div>
+        <div class="stat-value" id="nswPoliceTotalOffences" style="color:#6366f1;">169</div>
         <div class="stat-detail">Across 12 suburbs in NSW</div>
       </div>
       <div class="stat-card" style="border-left: 4px solid #6366f1;">
         <div class="stat-label">Highest Single Suburb</div>
-        <div class="stat-value" style="color:#6366f1;">23</div>
+        <div class="stat-value" id="nswPoliceHighestSuburb" style="color:#6366f1;">23 (Strathfield)</div>
         <div class="stat-detail">Strathfield, NSW</div>
       </div>
       <div class="stat-card" style="border-left: 4px solid #6366f1;">
         <div class="stat-label">Suburbs Reported</div>
-        <div class="stat-value" style="color:#6366f1;">12</div>
+        <div class="stat-value" id="nswPoliceSuburbCount" style="color:#6366f1;">12</div>
         <div class="stat-detail">Named locations with offences</div>
       </div>
       <div class="stat-card" style="border-left: 4px solid #6366f1;">
@@ -1697,92 +1697,7 @@
                 <th>Share of Total</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td><strong>Strathfield</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:100px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:23px"></span>23</span></td>
-                <td>13.6%</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td><strong>Terrigal</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:91px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:21px"></span>21</span></td>
-                <td>12.4%</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td><strong>Wollongong</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:87px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:20px"></span>20</span></td>
-                <td>11.8%</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td><strong>Sydney</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:78px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:18px"></span>18</span></td>
-                <td>10.7%</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td><strong>Darlinghurst</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:74px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:17px"></span>17</span></td>
-                <td>10.1%</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td><strong>Marayong</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:65px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:15px"></span>15</span></td>
-                <td>8.9%</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td><strong>Wamberal</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:43px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:10px"></span>10</span></td>
-                <td>5.9%</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td><strong>Belfield</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:39px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:9px"></span>9</span></td>
-                <td>5.3%</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td><strong>Dee Why</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:39px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:9px"></span>9</span></td>
-                <td>5.3%</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td><strong>Erowal Bay</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:39px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:9px"></span>9</span></td>
-                <td>5.3%</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td><strong>Hurlstone Park</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:39px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:9px"></span>9</span></td>
-                <td>5.3%</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td><strong>Redfern</strong></td>
-                <td>NSW</td>
-                <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:39px;max-width:100px;height:8px;background:#6366f1;border-radius:4px;min-width:9px"></span>9</span></td>
-                <td>5.3%</td>
-              </tr>
-            </tbody>
+            <tbody id="nswPoliceTableBody"></tbody>
           </table>
         </div>
         <p style="margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6;">
@@ -1867,6 +1782,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
+    const NSW_POLICE_DATA_PATH = '../data/nsw-police-hate-crimes.json';
+
     // Initialize Supabase for community submissions
     let supabaseClient = null;
     if (window.SUPABASE_CONFIG && window.isSupabaseConfigured && window.isSupabaseConfigured()) {
@@ -3673,6 +3590,45 @@
       }
     }
 
+    async function loadAndRenderNSWPoliceStats() {
+      try {
+        const response = await fetch(NSW_POLICE_DATA_PATH);
+        const data = await response.json();
+        const suburbs = data.suburbs || [];
+        const total = suburbs.reduce((sum, s) => sum + s.offences, 0);
+        const highest = suburbs.reduce((max, s) => s.offences > max.offences ? s : max, suburbs[0]);
+
+        // Update stat cards
+        const totalEl = document.getElementById('nswPoliceTotalOffences');
+        if (totalEl) totalEl.textContent = total.toLocaleString();
+        const highestEl = document.getElementById('nswPoliceHighestSuburb');
+        if (highestEl) highestEl.textContent = `${highest.offences} (${highest.suburb})`;
+        const suburbsEl = document.getElementById('nswPoliceSuburbCount');
+        if (suburbsEl) suburbsEl.textContent = suburbs.length;
+
+        // Render suburb table dynamically
+        const tableBody = document.getElementById('nswPoliceTableBody');
+        if (tableBody) {
+          const maxOffences = highest.offences;
+          tableBody.innerHTML = suburbs
+            .sort((a, b) => b.offences - a.offences)
+            .map(s => `
+              <tr>
+                <td>${s.suburb}</td>
+                <td>${s.offences}</td>
+                <td>
+                  <div style="background:#e0e7ff;border-radius:4px;height:12px;width:100%">
+                    <div style="background:#6366f1;border-radius:4px;height:12px;width:${Math.round((s.offences/maxOffences)*100)}%"></div>
+                  </div>
+                </td>
+              </tr>
+            `).join('');
+        }
+      } catch (err) {
+        console.warn('Could not load NSW Police stats:', err);
+      }
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
@@ -3699,6 +3655,7 @@
       loadLegalCases();
       loadPopulationData();
       loadElectorateData();
+      loadAndRenderNSWPoliceStats();
     });
   </script>
 

@@ -25,11 +25,8 @@
     <meta property="twitter:description" content="Comprehensive statistics and analytics dashboard for LGBTIQ+ hate crimes and legal cases in Australia.">
     <meta property="twitter:image" content="https://i.imgur.com/ADGaqk0.png">
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="resources-dropdown.css">
@@ -382,13 +379,6 @@
 
       .chart-container.short {
         height: 250px;
-      }
-
-      /* Heat Map */
-      #heatmap {
-        height: 350px;
-        border-radius: var(--radius-sm);
-        background: var(--bg-tertiary);
       }
 
       /* Data Table */
@@ -765,12 +755,6 @@
           </div>
         </div>
 
-        <!-- Heat Map -->
-        <div class="chart-card full">
-          <h3>🔥 Incident Density Heat Map</h3>
-          <div id="heatmap"></div>
-        </div>
-
         <!-- Incident Types -->
         <div class="chart-card half">
           <h3>📋 Incident Types Breakdown</h3>
@@ -1121,9 +1105,6 @@
       let allLegalCases = [];
       let filteredLegalCases = [];
       let charts = {};
-      let heatmapLayer = null;
-      let heatmap = null;
-
       // DOM Elements
       const filterType = document.getElementById('filterType');
       const filterSeverity = document.getElementById('filterSeverity');
@@ -1337,7 +1318,6 @@
         updateSeverityTrendChart();
         updateSeverityLocationChart();
         updateTypeYearChart();
-        updateHeatmap();
       }
 
       // Stat Cards
@@ -2005,42 +1985,6 @@
           },
           options: getChartOptions('', 'line')
         });
-      }
-
-      // Heat Map
-      function updateHeatmap() {
-        const heatmapEl = document.getElementById('heatmap');
-        
-        if (!heatmap) {
-          heatmap = L.map('heatmap').setView([-25.2744, 133.7751], 4);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap'
-          }).addTo(heatmap);
-        }
-
-        if (heatmapLayer) {
-          heatmap.removeLayer(heatmapLayer);
-        }
-
-        const heatData = filteredIncidents
-          .filter(i => i.latitude && i.longitude)
-          .map(i => [i.latitude, i.longitude, i.severity === 'high' ? 1 : i.severity === 'medium' ? 0.6 : 0.3]);
-
-        if (heatData.length > 0) {
-          heatmapLayer = L.heatLayer(heatData, {
-            radius: 25,
-            blur: 15,
-            maxZoom: 10,
-            gradient: {
-              0.2: '#22c55e',
-              0.5: '#f97316',
-              0.8: '#ef4444',
-              1: '#dc2626'
-            }
-          }).addTo(heatmap);
-        }
-
-        setTimeout(() => heatmap.invalidateSize(), 100);
       }
 
       // PDF Export

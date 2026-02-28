@@ -715,13 +715,6 @@
       border-color: var(--color-primary);
     }
 
-    /* NSW Police Data Layer Toggle Styles */
-    #nswPoliceBtn.active {
-      background: #6366f1;
-      color: var(--color-text-inverse);
-      border-color: #4338ca;
-    }
-
     .policy-layer-legend {
       position: absolute;
       top: var(--space-4);
@@ -1474,8 +1467,7 @@
 
       /* Hide complex layer buttons on mobile */
       #policyLayerBtn,
-      #electoralLayerBtn,
-      #nswPoliceBtn {
+      #electoralLayerBtn {
         display: none;
       }
 
@@ -1644,6 +1636,41 @@
     .shape-swatch.triangle{ width:0; height:0; background:none; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #6b7280; }
     .shape-swatch.square  { border-radius: 2px; }
     .shape-swatch.hex     { clip-path: polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); }
+
+    /* ── Data Source filter pills ── */
+    .source-toggle {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .source-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .source-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .source-btn.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+    .source-btn[data-source="nsw_police"].active {
+      background: #6366f1;
+      border-color: #4338ca;
+    }
 
     /* ── Sidebar close button ── */
     .sidebar-close-btn {
@@ -1902,6 +1929,21 @@
         <h3>Incident Filters</h3>
 
         <div class="form-group">
+          <label>Data Source</label>
+          <div class="source-toggle" id="sourceToggle">
+            <button class="source-btn active" data-source="all">All Sources</button>
+            <button class="source-btn" data-source="open_source">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              Open Source
+            </button>
+            <button class="source-btn" data-source="nsw_police">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              NSW Police
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-label" for="incidentTypeFilter">Incident Type</label>
           <select class="form-select" id="incidentTypeFilter">
             <option value="all">All types</option>
@@ -2051,18 +2093,6 @@
         </p>
       </div>
 
-      <div class="legend-section" id="nswPoliceLegend" style="display: none;">
-        <h3 style="margin-bottom: var(--space-3);">NSW Police Data</h3>
-        <div class="legend-grid">
-          <div class="legend-item" id="policeLegendItem" style="display:none">
-            <span style="width:12px;height:12px;border-radius:50%;background:#6366f1;display:inline-block;margin-right:6px"></span>
-            NSW Police Data
-          </div>
-        </div>
-        <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); line-height: 1.5;">
-          Circle size indicates number of recorded hate offences (January 2023 – October 2025). Source: NSW Police Force via ABC News, Feb 2026.
-        </p>
-      </div>
     </aside>
 
     <!-- Sidebar Overlay -->
@@ -2195,12 +2225,6 @@
             <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
           </svg>
         </button>
-        <button class="btn btn-tertiary btn-icon" id="nswPoliceBtn" title="NSW Police Data" onclick="toggleNSWPoliceLayer()"
-          aria-label="Toggle NSW Police hate crime data layer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-        </button>
         <button class="btn btn-tertiary btn-icon" id="recentIncidentsToggle" title="Show recent incidents"
           aria-label="Show recent incidents">📋</button>
       </div>
@@ -2310,8 +2334,7 @@
     let incidentsRaw = [], incidentsWithCoords = [];
     let casesRaw = [], casesWithCoords = [];
     let nswPoliceData = [];
-    let nswPoliceMarkers = [];
-    let nswPoliceLayerActive = false;
+    let activeSourceFilter = 'all';
 
     // ── Feature 1: format [NOTE: ...] as amber callout boxes ──
     function formatDescription(text) {
@@ -2595,6 +2618,8 @@
         cross_reference: row.cross_reference || "",
         latitude: Number.isFinite(lat) ? lat : null,
         longitude: Number.isFinite(lon) ? lon : null,
+        data_source: row.data_source || 'open_source',
+        offences: row.offences ? parseInt(row.offences) : null,
       };
     }
 
@@ -2662,6 +2687,10 @@
 
     // Filter functions
     function incidentMatchesFilters(incident) {
+      // Data source filter
+      if (activeSourceFilter === 'open_source' && incident.data_source === 'nsw_police') return false;
+      if (activeSourceFilter === 'nsw_police' && incident.data_source !== 'nsw_police') return false;
+
       const selectedType     = incidentTypeFilter.value;
       const selectedSeverity = severityFilter.value;
       const startYear = yearSliderStart ? parseInt(yearSliderStart.value) : null;
@@ -2694,6 +2723,39 @@
 
     // ── Feature 5: incident marker shapes by type ──
     function createIncidentMarker(incident) {
+      // NSW Police aggregate data — distinct shield-style marker
+      if (incident.data_source === 'nsw_police') {
+        const size = Math.max(22, Math.min(40, 18 + Math.sqrt(incident.offences || 9) * 2.5));
+        const icon = L.divIcon({
+          className: '',
+          html: `<div style="
+            width:${size}px;height:${size}px;
+            background:#6366f1;
+            border:2.5px solid #4338ca;
+            border-radius:50% 50% 50% 0;
+            transform:rotate(-45deg);
+            box-shadow:0 2px 8px rgba(99,102,241,0.5);
+            display:flex;align-items:center;justify-content:center;
+          "><span style="transform:rotate(45deg);color:#fff;font-size:${Math.round(size*0.38)}px;font-weight:700;line-height:1;">${incident.offences}</span></div>`,
+          iconSize: [size, size],
+          iconAnchor: [size/2, size],
+        });
+        const marker = L.marker([incident.latitude, incident.longitude], { icon });
+        marker.bindPopup(`
+          <div style="min-width:220px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:#6366f1;color:#fff;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.5px">NSW POLICE DATA</span>
+            </div>
+            <h3 style="margin:0 0 8px;font-size:15px;font-weight:600">${incident.location}</h3>
+            <p style="margin:0 0 6px;font-size:14px"><strong>${incident.offences} recorded hate offences</strong></p>
+            <p style="margin:0 0 4px;font-size:12px;color:#6b7280"><strong>Period:</strong> January 2023 – October 2025</p>
+            <p style="margin:0 0 8px;font-size:12px;color:#6b7280">Official NSW Police Force data. Individual incident details not publicly available.</p>
+            <a href="${incident.url}" target="_blank" rel="noopener" style="font-size:12px;color:#6366f1">Source: ABC News, Feb 2026 ↗</a>
+          </div>
+        `);
+        return marker;
+      }
+
       const color    = SEVERITY_COLORS[incident.severity] || SEVERITY_COLORS.unknown;
       const isApprox = incident.location && incident.location.includes("exact location unknown");
       const opacity  = isApprox ? 0.42 : 0.9;
@@ -3126,56 +3188,38 @@
         const response = await fetch(NSW_POLICE_DATA_PATH);
         const data = await response.json();
         nswPoliceData = data.suburbs || [];
-        console.log(`Loaded ${nswPoliceData.length} NSW police data suburbs`);
+
+        // Convert each suburb to a normalized incident and add to the main pipeline
+        const policeIncidents = nswPoliceData.map(suburb => ({
+          title: `NSW Police: ${suburb.offences} recorded LGBT hate offences — ${suburb.suburb}`,
+          url: 'https://www.abc.net.au/news/2026-02-27/nsw-lgbt-hate-data-released-ahead-of-mardi-gras/106394004',
+          source_date: '2026-02-27',
+          incident_type: 'police_aggregate',
+          incident_type_label: 'Police Aggregate Data',
+          date: '2023-01-01',
+          parsedDate: new Date('2023-01-01'),
+          location: `${suburb.suburb}, NSW`,
+          victim_identity: 'general_lgbtiq',
+          description: `NSW Police Force recorded ${suburb.offences} LGBT hate crime offences in ${suburb.suburb} between January 2023 and October 2025. This is an official aggregate count — individual incident details are not publicly available. Source: ABC News, 27 February 2026.`,
+          severity: 'unknown',
+          severity_label: 'Police Data',
+          perpetrator_info: 'Not specified (aggregate data)',
+          cross_reference: 'NSW Police Force via ABC News, Feb 2026',
+          latitude: suburb.latitude,
+          longitude: suburb.longitude,
+          data_source: 'nsw_police',
+          offences: suburb.offences,
+        }));
+
+        // Merge into the main data arrays
+        incidentsRaw = [...incidentsRaw, ...policeIncidents];
+        incidentsWithCoords = [...incidentsWithCoords, ...policeIncidents.filter(i => i.latitude && i.longitude)];
+        window.incidentsData = incidentsWithCoords;
+
+        console.log(`Integrated ${policeIncidents.length} NSW Police suburb hotspots into incidents`);
       } catch (err) {
         console.warn('Could not load NSW police data:', err);
       }
-    }
-
-    function renderNSWPoliceLayer() {
-      // Remove existing police markers
-      nswPoliceMarkers.forEach(m => map.removeLayer(m));
-      nswPoliceMarkers = [];
-
-      if (!nswPoliceLayerActive || !nswPoliceData.length) return;
-
-      nswPoliceData.forEach(suburb => {
-        const radius = Math.max(12, Math.sqrt(suburb.offences) * 6);
-        const circle = L.circleMarker([suburb.latitude, suburb.longitude], {
-          radius: radius,
-          fillColor: '#6366f1',
-          color: '#4338ca',
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.7
-        });
-
-        circle.bindPopup(`
-          <div style="min-width:200px">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-              <span style="background:#6366f1;color:#fff;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600">NSW POLICE DATA</span>
-            </div>
-            <h3 style="margin:0 0 6px;font-size:15px">${suburb.suburb}, NSW</h3>
-            <p style="margin:0 0 4px"><strong>Recorded hate offences:</strong> ${suburb.offences}</p>
-            <p style="margin:0 0 4px;font-size:11px;color:#6b7280"><strong>Period:</strong> January 2023 – October 2025</p>
-            <p style="margin:0;font-size:11px;color:#6b7280">Source: NSW Police Force via ABC News, Feb 2026</p>
-          </div>
-        `);
-
-        circle.addTo(map);
-        nswPoliceMarkers.push(circle);
-      });
-    }
-
-    function toggleNSWPoliceLayer() {
-      nswPoliceLayerActive = !nswPoliceLayerActive;
-      const btn = document.getElementById('nswPoliceBtn');
-      if (btn) btn.classList.toggle('active', nswPoliceLayerActive);
-      const legendSection = document.getElementById('nswPoliceLegend');
-      if (legendSection) legendSection.style.display = nswPoliceLayerActive ? 'block' : 'none';
-      const legendItem = document.getElementById('policeLegendItem');
-      if (legendItem) legendItem.style.display = nswPoliceLayerActive ? 'flex' : 'none';
-      renderNSWPoliceLayer();
     }
 
     // Mobile sidebar toggle
@@ -3220,6 +3264,16 @@
 
     const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
     if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeFiltersSidebar);
+
+    // Data source filter buttons
+    document.querySelectorAll('.source-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSourceFilter = btn.dataset.source;
+        renderMarkers();
+      });
+    });
 
     // Global search
     document.getElementById("globalSearch").addEventListener("input", (e) => {
@@ -3298,7 +3352,9 @@
             updateProgress(90, 'Rendering markers...');
 
             if (statusText) {
-              statusText.textContent = `Loaded ${incidentsWithCoords.length.toLocaleString()} incidents and ${casesWithCoords.length.toLocaleString()} legal cases.`;
+              const policeCount = incidentsWithCoords.filter(i => i.data_source === 'nsw_police').length;
+              const openSourceCount = incidentsWithCoords.filter(i => i.data_source !== 'nsw_police').length;
+              statusText.textContent = `Loaded ${openSourceCount.toLocaleString()} open-source incidents + ${policeCount} NSW Police hotspots.`;
             }
             renderMarkers();
             updateProgress(100, 'Complete!');
