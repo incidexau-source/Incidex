@@ -1475,6 +1475,8 @@
               <option value="Second Reading">Second Reading</option>
               <option value="Passed">Passed</option>
               <option value="Ongoing">Ongoing</option>
+              <option value="Report Tabled">Report Tabled</option>
+              <option value="Pending">Pending</option>
               <option value="Lapsed">Lapsed</option>
             </select>
           </div>
@@ -2033,9 +2035,11 @@
       }
 
       grid.innerHTML = filteredBills.map(bill => {
-        const statusClass = bill.status.includes('Passed') ? 'badge-success' : 
+        const statusClass = bill.status.includes('Passed') ? 'badge-success' :
                            bill.status.includes('Lapsed') ? 'badge-neutral' :
-                           bill.status.includes('Ongoing') ? 'badge-warning' : 'badge-primary';
+                           bill.status.includes('Ongoing') ? 'badge-warning' :
+                           bill.status.includes('Report Tabled') ? 'badge-warning' :
+                           bill.status.includes('Pending') ? 'badge-neutral' : 'badge-primary';
 
         return `
           <div class="bill-card">
