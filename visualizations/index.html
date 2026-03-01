@@ -54,7 +54,6 @@
 
   <!-- Shared Styles -->
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="resources-dropdown.css">
   <link rel="stylesheet" href="animations.css">
 
   <!-- Supabase Client for community submissions -->
@@ -1756,19 +1755,6 @@
       50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
     }
 
-    .news-au-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: var(--text-xs);
-      font-weight: var(--font-semibold);
-      color: var(--color-primary);
-      background: var(--color-accent-50);
-      border: 1px solid var(--color-border);
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
-    }
-
     /* Activity Stream - Landing */
     .landing-activity-stream {
       max-height: 320px;
@@ -1861,52 +1847,6 @@
       color: var(--color-text-muted);
       gap: var(--space-2);
       font-size: var(--text-sm);
-    }
-
-    /* News Feed - Landing */
-    .landing-news-feed {
-      max-height: 320px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .landing-news-item {
-      display: block;
-      padding: var(--space-3);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--color-border-light);
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.2s ease;
-    }
-
-    .landing-news-item:hover {
-      border-color: var(--color-primary);
-      background: var(--color-bg-alt);
-    }
-
-    .landing-news-source {
-      font-size: 0.6rem;
-      font-weight: var(--font-semibold);
-      text-transform: uppercase;
-      color: var(--color-primary);
-      margin-bottom: var(--space-1);
-      letter-spacing: 0.05em;
-    }
-
-    .landing-news-title {
-      font-size: var(--text-sm);
-      font-weight: var(--font-medium);
-      line-height: var(--leading-snug);
-      color: var(--color-text);
-      margin-bottom: var(--space-1);
-    }
-
-    .landing-news-date {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
     }
 
     .landing-news-empty {
@@ -2021,91 +1961,19 @@
           </svg>
           Database
         </a>
-        <!-- Resources Dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle nav-link" aria-expanded="false" aria-haspopup="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-            Resources
-            <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round"
-              style="width: 16px; height: 16px; transition: transform 0.2s ease;">
-              <path d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="nav-dropdown-menu" aria-hidden="true">
-            <!-- Know Your Rights Section -->
-            <div class="dropdown-section">
-              <div class="dropdown-section-title">
-                <svg class="dropdown-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path
-                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
-                  </path>
-                </svg>
-                Legal Guides: Know Your Rights
-              </div>
-              <a href="legal_guides.html"
-                style="display: block; padding: 0.75rem; margin-bottom: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; text-decoration: none; transition: background 0.2s ease;">
-                <div style="font-weight: 700; color: #1e40af; font-size: 0.875rem;">LGBTIQ+ Legal Factsheets</div>
-                <div style="font-size: 0.625rem; color: #2563eb; font-weight: 500; margin-top: 0.25rem;">Practical
-                  guides for every Australian jurisdiction</div>
-              </a>
-              <!-- Jurisdiction Grid -->
-              <div class="jurisdiction-grid">
-                <a href="legal_guides.html#commonwealth" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('commonwealth'); }">
-                  <div class="jurisdiction-name">Commonwealth</div>
-                </a>
-                <a href="legal_guides.html#nsw" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nsw'); }">
-                  <div class="jurisdiction-name">NSW</div>
-                </a>
-                <a href="legal_guides.html#victoria" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('vic'); }">
-                  <div class="jurisdiction-name">VIC</div>
-                </a>
-                <a href="legal_guides.html#queensland" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('qld'); }">
-                  <div class="jurisdiction-name">QLD</div>
-                </a>
-                <a href="legal_guides.html#tasmania" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('tas'); }">
-                  <div class="jurisdiction-name">TAS</div>
-                </a>
-                <a href="legal_guides.html#sa" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('sa'); }">
-                  <div class="jurisdiction-name">SA</div>
-                </a>
-                <a href="legal_guides.html#wa" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('wa'); }">
-                  <div class="jurisdiction-name">WA</div>
-                </a>
-                <a href="legal_guides.html#nt" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('nt'); }">
-                  <div class="jurisdiction-name">NT</div>
-                </a>
-                <a href="legal_guides.html#act" class="jurisdiction-card"
-                  onclick="if(window.openJurisdictionModal) { window.openJurisdictionModal('act'); }">
-                  <div class="jurisdiction-name">ACT</div>
-                </a>
-              </div>
-            </div>
-            <!-- Support Services Section -->
-            <div class="dropdown-section">
-              <a href="resources.html" class="services-link">
-                <span>View All Support Services</span>
-                <svg class="services-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 5l7 7-7 7"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
+        <a href="legal_guides.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+          </svg>
+          Legal Guides
+        </a>
+        <a href="resources.html" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          Resources
+        </a>
         <a href="report_incident.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2152,7 +2020,8 @@
     <a href="monitoring.html" class="nav-link">Statistics</a>
     <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
-    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="legal_guides.html" class="nav-link">Legal Guides</a>
+    
     <a href="report_incident.html" class="nav-link">Report</a>
     <a href="about.html" class="nav-link">About</a>
     <a href="contact.html" class="nav-link">Contact</a>
@@ -2395,7 +2264,7 @@
       </div>
     </section>
 
-    <!-- Live Tracker & Australian Hate Crime News Section -->
+    <!-- Live Tracker Section -->
     <section class="live-tracker-section" id="liveTrackerSection">
       <div class="container">
         <div class="live-tracker-header">
@@ -2405,8 +2274,8 @@
             </svg>
           </div>
           <div class="live-tracker-title-group">
-            <h2 class="live-tracker-title">Live Tracker & Australian News</h2>
-            <p class="live-tracker-subtitle">Real-time incident activity and the latest Australian hate crime coverage</p>
+            <h2 class="live-tracker-title">Live Tracker</h2>
+            <p class="live-tracker-subtitle">Real-time incident activity</p>
           </div>
         </div>
 
@@ -2437,27 +2306,6 @@
             </a>
           </div>
 
-          <!-- Australian Hate Crime & Discrimination News -->
-          <div class="tracker-card">
-            <div class="tracker-card-header">
-              <div class="tracker-card-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
-                  <path d="M18 14h-8"></path>
-                  <path d="M15 18h-5"></path>
-                  <path d="M10 6h8v4h-8V6Z"></path>
-                </svg>
-                Australian Hate Crime & Discrimination News
-              </div>
-              <span class="news-au-badge">🇦🇺 Australia</span>
-            </div>
-            <div class="landing-news-feed" id="landingNewsFeed">
-              <div class="activity-loading-landing">
-                <div class="loading-spinner"></div>
-                <p>Fetching latest news...</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -3214,6 +3062,19 @@
             console.log(`Including ${communityData.count} approved community submissions in count`);
           }
 
+          // Also include NSW Police Force recorded hate crime offences
+          try {
+            const policeRes = await fetch('../data/nsw-police-hate-crimes.json');
+            const policeData = await policeRes.json();
+            const policeTotal = (policeData.suburbs || []).reduce((sum, s) => sum + (s.offences || 0), 0);
+            if (policeTotal > 0) {
+              incidentCount += policeTotal;
+              console.log(`Including ${policeTotal} NSW Police recorded offences in count`);
+            }
+          } catch (e) {
+            console.warn('Could not load police data for count:', e);
+          }
+
           animateCounter(incidentCountEl, incidentCount);
 
           // Parse headers
@@ -3360,14 +3221,8 @@
       }
     });
 
-    // ===== LIVE TRACKER & NEWS =====
+    // ===== LIVE TRACKER =====
     (function() {
-      const NEWS_RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      // Australian-focused feeds covering hate crime, discrimination, and LGBTIQ+ vilification
-      const NEWS_FEEDS = [
-        'https://www.starobserver.com.au/feed',
-        'https://www.abc.net.au/news/feed/2942460/rss.xml' // ABC News LGBTIQ
-      ];
 
       function landingTimeAgo(date) {
         if (!date) return '';
@@ -3423,92 +3278,8 @@
         }).join('');
       }
 
-      function loadLandingNewsFeed() {
-        const el = document.getElementById('landingNewsFeed');
-        if (!el) return;
-
-        const feedUrl = NEWS_RSS_API + encodeURIComponent(NEWS_FEEDS[0]);
-        fetch(feedUrl)
-          .then(res => res.json())
-          .then(data => {
-            if (data.status === 'ok' && data.items && data.items.length > 0) {
-              // Filter for hate crime / discrimination / vilification content
-              const keywords = ['hate', 'crime', 'attack', 'assault', 'discriminat', 'vilif', 'bash', 'murder', 'violence', 'harass', 'threat', 'abuse', 'transphob', 'homophob'];
-              let items = data.items;
-              const filtered = items.filter(item =>
-                keywords.some(kw => (item.title + ' ' + (item.description || '')).toLowerCase().includes(kw))
-              );
-              // Use filtered if we have enough, otherwise fall back to all items
-              const displayItems = (filtered.length >= 3 ? filtered : items).slice(0, 6);
-
-              el.innerHTML = displayItems.map(item => {
-                const pubDate = new Date(item.pubDate);
-                return `
-                  <a href="${item.link}" target="_blank" rel="noopener" class="landing-news-item">
-                    <div class="landing-news-source">${data.feed?.title || 'Australian LGBTIQ+ News'}</div>
-                    <div class="landing-news-title">${item.title}</div>
-                    <div class="landing-news-date">${landingTimeAgo(pubDate)}</div>
-                  </a>
-                `;
-              }).join('');
-            } else {
-              // Try second feed
-              const feedUrl2 = NEWS_RSS_API + encodeURIComponent(NEWS_FEEDS[1]);
-              return fetch(feedUrl2).then(res => res.json()).then(data2 => {
-                if (data2.status === 'ok' && data2.items && data2.items.length > 0) {
-                  const items = data2.items.slice(0, 6);
-                  el.innerHTML = items.map(item => {
-                    const pubDate = new Date(item.pubDate);
-                    return `
-                      <a href="${item.link}" target="_blank" rel="noopener" class="landing-news-item">
-                        <div class="landing-news-source">${data2.feed?.title || 'ABC News Australia'}</div>
-                        <div class="landing-news-title">${item.title}</div>
-                        <div class="landing-news-date">${landingTimeAgo(pubDate)}</div>
-                      </a>
-                    `;
-                  }).join('');
-                } else {
-                  showLandingFallbackNews();
-                }
-              });
-            }
-          })
-          .catch(() => showLandingFallbackNews());
-      }
-
-      function showLandingFallbackNews() {
-        const el = document.getElementById('landingNewsFeed');
-        if (!el) return;
-        el.innerHTML = `
-          <div class="landing-news-empty">
-            <p style="margin-bottom: var(--space-3);">Australian hate crime &amp; discrimination news:</p>
-            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-              <a href="https://www.starobserver.com.au/category/news/" target="_blank" rel="noopener" class="landing-news-item">
-                <div class="landing-news-source">Star Observer</div>
-                <div class="landing-news-title">Latest LGBTIQ+ News — Australia</div>
-              </a>
-              <a href="https://www.abc.net.au/news/topic/lgbtqi-content" target="_blank" rel="noopener" class="landing-news-item">
-                <div class="landing-news-source">ABC News Australia</div>
-                <div class="landing-news-title">LGBTQI Coverage</div>
-              </a>
-              <a href="https://humanrights.gov.au/our-work/lgbti" target="_blank" rel="noopener" class="landing-news-item">
-                <div class="landing-news-source">Australian Human Rights Commission</div>
-                <div class="landing-news-title">LGBTI Rights & Reports</div>
-              </a>
-              <a href="https://equalityaustralia.org.au/news/" target="_blank" rel="noopener" class="landing-news-item">
-                <div class="landing-news-source">Equality Australia</div>
-                <div class="landing-news-title">Advocacy News & Updates</div>
-              </a>
-            </div>
-          </div>
-        `;
-      }
-
       // Load activity stream data when DOM is ready
       document.addEventListener('DOMContentLoaded', () => {
-        // Load news feed immediately
-        loadLandingNewsFeed();
-
         // Load activity stream from CSV
         if (typeof Papa !== 'undefined') {
           Papa.parse('../data/incidents_in_progress.csv?v=' + Date.now(), {
@@ -4090,8 +3861,6 @@
     })();
   </script>
 
-  <!-- Resources Dropdown Script -->
-  <script src="resources-dropdown.js"></script>
   <!-- Shared Interactions -->
   <script src="interactions.js"></script>
 </body>

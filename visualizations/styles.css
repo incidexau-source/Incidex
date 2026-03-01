@@ -1837,6 +1837,7 @@ p:last-child {
   .main-nav {
     gap: var(--space-1);
     margin: 0 var(--space-2);
+    justify-content: flex-start;
   }
   
   .nav-link {
