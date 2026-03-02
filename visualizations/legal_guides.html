@@ -22,475 +22,427 @@
 
   <style>
     /* ===== LEGAL GUIDES PAGE SPECIFIC STYLES ===== */
-    
-    /* Main Container */
+
     .legal-guides-container {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 40px;
-      background: #FFFFFF;
     }
 
-    /* Page Header */
+    /* ── Hero Header ── */
     .page-header-section {
-      margin-bottom: 48px;
-      padding-bottom: 32px;
-      border-bottom: 2px solid #E0E0E0;
+      background: linear-gradient(135deg, #1a2e3d 0%, #1a8fa0 65%, #2db4c6 100%);
+      border-radius: 20px;
+      padding: 52px 48px;
+      margin-bottom: 32px;
+      border-bottom: none;
+      position: relative;
+      overflow: hidden;
     }
-
+    .page-header-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
     .page-header-section h1 {
-      font-size: 36px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-
-    .page-subtitle {
-      font-size: 18px;
-      color: #333333;
-      line-height: 1.6;
+      font-size: 38px;
+      font-weight: 800;
+      color: #fff;
       margin-bottom: 12px;
-      max-width: 800px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
     }
-
+    .page-subtitle {
+      font-size: 17px;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      max-width: 700px;
+    }
     .last-updated {
-      font-size: 14px;
-      color: #666666;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
       font-style: italic;
     }
 
-    /* State Selector */
-    .state-selector-section {
-      margin-bottom: 48px;
-    }
-
-    .state-selector-section h2 {
-      font-size: 24px;
-      font-weight: 600;
-      color: #1a1a1a;
+    /* ── Traffic Light Legend ── */
+    .traffic-legend {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 20px;
+      padding: 12px 18px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e9ecef;
     }
-
-    .state-btn-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin-bottom: 32px;
+    .traffic-legend-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-right: 4px;
     }
-
-    .state-btn {
-      height: 48px;
-      padding: 12px 16px;
-      background: #E0E0E0;
-      border: 2px solid transparent;
-      border-radius: 8px;
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 12px;
       font-weight: 600;
-      font-size: 14px;
-      color: #1a1a1a;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
     }
+    .legend-chip.green  { background:#e6f4ed; color:#1d7a4e; border:1px solid #a8d8bf; }
+    .legend-chip.amber  { background:#fef8e7; color:#8a5f00; border:1px solid #f0cc7a; }
+    .legend-chip.red    { background:#fef0f0; color:#8a1a1a; border:1px solid #f0a8a8; }
 
-    .state-btn:hover {
-      background: #D0D0D0;
-      transform: translateY(-1px);
-    }
-
-    .state-btn:focus {
-      outline: 3px solid #2db4c6;
-      outline-offset: 2px;
-    }
-
-    .state-btn.active {
-      background: #2db4c6;
-      color: white;
-      border-color: #2db4c6;
-    }
-
-    .state-btn[aria-pressed="true"] {
-      background: #2db4c6;
-      color: white;
-    }
-
-    /* State Content */
-    .state-content {
-      display: none;
-    }
-
-    .state-content.active {
-      display: block;
-    }
-
-    .state-header {
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid #E0E0E0;
-    }
-
-    .state-header h2 {
-      font-size: 32px;
+    /* ── State Selector ── */
+    .state-selector-section { margin-bottom: 36px; }
+    .state-selector-section h2 {
+      font-size: 18px;
       font-weight: 700;
       color: #1a1a1a;
-      margin-bottom: 8px;
-    }
-
-    .state-summary {
-      font-size: 18px;
-      color: #333333;
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
-    /* Content Sections */
-    .content-section {
-      margin-bottom: 32px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid #E0E0E0;
-    }
-
-    .content-section:last-child {
-      border-bottom: none;
-    }
-
-    .content-section h3 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 16px;
-    }
-
-    .protection-list,
-    .area-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .protection-list li,
-    .area-list li {
-      padding: 10px 0;
-      line-height: 1.6;
-      font-size: 16px;
-      color: #333333;
-    }
-
-    .protection-list li::before {
-      content: "✅ ";
-      margin-right: 8px;
-    }
-
-    .area-list li::before {
-      content: "• ";
-      margin-right: 8px;
-      font-weight: bold;
-      color: #2db4c6;
-    }
-
-    /* Limitations Box */
-    .limitations-box {
-      background: #FFF3CD;
-      border-left: 4px solid #f39c12;
-      padding: 20px;
-      margin: 24px 0;
-      border-radius: 4px;
-    }
-
-    .limitations-box h3 {
-      color: #856404;
       margin-bottom: 12px;
     }
+    .state-btn-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 10px;
+    }
+    .state-btn {
+      height: 52px;
+      padding: 8px 6px;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+      white-space: nowrap;
+      background: #f0f0f0;
+      color: #444;
+    }
+    .state-btn[data-rating="green"] { background:#e6f4ed; color:#1d7a4e; border-color:#a8d8bf; }
+    .state-btn[data-rating="amber"] { background:#fef8e7; color:#8a5f00; border-color:#f0cc7a; }
+    .state-btn[data-rating="red"]   { background:#fef0f0; color:#8a1a1a; border-color:#f0a8a8; }
+    .state-btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.12); }
+    .state-btn[data-rating="green"]:hover,
+    .state-btn[data-rating="green"].active { background:#2d9d6f; color:#fff; border-color:#2d9d6f; }
+    .state-btn[data-rating="amber"]:hover,
+    .state-btn[data-rating="amber"].active { background:#e8a020; color:#fff; border-color:#e8a020; }
+    .state-btn[data-rating="red"]:hover,
+    .state-btn[data-rating="red"].active   { background:#d9534f; color:#fff; border-color:#d9534f; }
+    .state-btn:focus { outline:3px solid #2db4c6; outline-offset:2px; }
 
-    .limitations-box ul {
-      list-style: none;
-      padding: 0;
+    /* ── State Content ── */
+    .state-content { display: none; }
+    .state-content.active { display: block; }
+
+    /* ── Rating Banner ── */
+    .rating-banner {
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .rating-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .rating-banner.rating-green   { background: linear-gradient(135deg, #155c38 0%, #2d9d6f 100%); }
+    .rating-banner.rating-amber   { background: linear-gradient(135deg, #7a4d00 0%, #c9891c 100%); }
+    .rating-banner.rating-red     { background: linear-gradient(135deg, #7a1212 0%, #c0362f 100%); }
+    .rating-banner.rating-pending { background: linear-gradient(135deg, #3a3a3a 0%, #6b6b6b 100%); }
+
+    .rating-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 13px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .rating-dot { width:7px; height:7px; background:#fff; border-radius:50%; }
+    .rating-state-name {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+    .rating-summary {
+      font-size: 15px;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.6;
+      max-width: 640px;
       margin: 0;
     }
 
-    .limitations-box li {
-      padding: 6px 0;
-      color: #856404;
+    /* ── Two-Column Grid ── */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
     }
 
-    .limitations-box li::before {
-      content: "⚠️ ";
-      margin-right: 8px;
+    /* ── Info Card ── */
+    .info-card {
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 14px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      margin: 0 0 14px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
     }
 
-    /* Expandable Section */
-    .expandable-section {
-      margin: 32px 0;
+    /* ── Protection Rows ── */
+    .protection-rows { display:flex; flex-direction:column; gap:9px; }
+    .protection-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
+    .protection-label { font-size:14px; color:#333; font-weight:500; flex:1; }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      max-width: 210px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chip-protected { background:#e6f4ed; color:#1d7a4e; border:1px solid #a8d8bf; }
+    .chip-partial   { background:#fef8e7; color:#8a5f00; border:1px solid #f0cc7a; }
+    .chip-absent    { background:#fef0f0; color:#8a1a1a; border:1px solid #f0a8a8; }
 
+    /* ── Areas Grid ── */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .area-card {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 11px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .area-card.area-full    { background:#e6f4ed; color:#1d7a4e; }
+    .area-card.area-limited { background:#fef8e7; color:#8a5f00; }
+    .area-card.area-absent  { background:#fef0f0; color:#8a1a1a; }
+    .area-icon { font-size:15px; flex-shrink:0; }
+
+    /* ── Limitations Card ── */
+    .limitations-card {
+      background: #fffbf0;
+      border: 1px solid #f0cc7a;
+      border-left: 4px solid #e8a020;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .limitations-card .card-title { color:#8a5f00; border-bottom-color:#f0cc7a; }
+    .limitations-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .limitations-list li {
+      font-size: 14px;
+      color: #7a5000;
+      line-height: 1.5;
+      display: flex;
+      gap: 8px;
+    }
+    .limitations-list li::before { content:"⚠️"; flex-shrink:0; }
+
+    /* ── Exemptions Card ── */
+    .exemptions-card {
+      background: #f6f8ff;
+      border: 1px solid #d0d8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .exemptions-card .card-title { color:#2a3a8a; border-bottom-color:#d0d8f0; }
+    .exemptions-text { font-size:14px; color:#2a3055; line-height:1.6; margin:0; }
+
+    /* ── Expandable Section ── */
+    .expandable-section { margin-bottom: 16px; }
     .expandable-btn {
       width: 100%;
-      background: transparent;
-      border: 2px solid #2db4c6;
-      color: #2db4c6;
-      padding: 14px 24px;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      color: #444;
+      padding: 13px 18px;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.3s ease;
+      border-radius: 10px;
+      transition: all 0.2s ease;
       text-align: left;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
-    .expandable-btn:hover {
-      background: #2db4c6;
-      color: white;
-    }
-
-    .expandable-btn:focus {
-      outline: 3px solid #2db4c6;
-      outline-offset: 2px;
-    }
-
-    .expandable-btn::after {
-      content: "▶";
-      margin-left: auto;
-      transition: transform 0.3s ease;
-    }
-
-    .expandable-btn[aria-expanded="true"]::after {
-      transform: rotate(90deg);
-    }
+    .expandable-btn:hover { background:#2db4c6; color:#fff; border-color:#2db4c6; }
+    .expandable-btn:focus { outline:3px solid #2db4c6; outline-offset:2px; }
+    .expandable-btn .chevron { transition:transform 0.25s ease; }
+    .expandable-btn[aria-expanded="true"] .chevron { transform:rotate(90deg); }
 
     #full-analysis {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.5s ease;
-      margin-top: 24px;
+      transition: max-height 0.45s ease;
+      margin-top: 10px;
     }
-
-    #full-analysis.open {
-      max-height: 10000px;
-    }
-
+    #full-analysis.open { max-height: 10000px; }
     .full-analysis-content {
       padding: 24px;
-      background: #F8F9FA;
-      border-radius: 6px;
-      border: 1px solid #E0E0E0;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
     }
-
     .full-analysis-content h4 {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
       color: #1a1a1a;
-      margin-top: 24px;
-      margin-bottom: 12px;
+      margin: 20px 0 8px;
     }
-
-    .full-analysis-content h4:first-child {
-      margin-top: 0;
-    }
-
+    .full-analysis-content h4:first-child { margin-top:0; }
     .full-analysis-content p {
       line-height: 1.6;
-      color: #333333;
-      margin-bottom: 12px;
-    }
-
-    .full-analysis-content ul {
-      margin: 12px 0;
-      padding-left: 24px;
-    }
-
-    .full-analysis-content li {
-      line-height: 1.6;
-      color: #333333;
+      color: #333;
       margin-bottom: 8px;
+      font-size: 14px;
     }
+    .full-analysis-content a { color:#2db4c6; text-decoration:underline; font-weight:500; }
 
-    .full-analysis-content a {
-      color: #2db4c6;
-      text-decoration: underline;
-      font-weight: 500;
+    /* ── Help / Contact Card ── */
+    .help-card {
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
-
-    .full-analysis-content a:hover {
-      text-decoration: none;
-      background-color: rgba(45, 180, 198, 0.1);
-      border-radius: 2px;
-      padding: 0 2px;
-    }
-
-    /* Action Buttons */
     .action-buttons {
       display: flex;
-      gap: 12px;
-      margin: 32px 0;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-bottom: 18px;
     }
-
     .action-btn {
-      padding: 12px 24px;
+      padding: 9px 18px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      min-height: 44px;
+      transition: all 0.18s ease;
+      min-height: 38px;
     }
+    .action-btn-primary   { background:#2db4c6; color:#fff; }
+    .action-btn-primary:hover { background:#1a8fa0; }
+    .action-btn-secondary { background:#e9ecef; color:#333; }
+    .action-btn-secondary:hover { background:#dee2e6; }
+    .action-btn:focus { outline:3px solid #2db4c6; outline-offset:2px; }
 
-    .action-btn-primary {
-      background: #2db4c6;
-      color: white;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
     }
-
-    .action-btn-primary:hover {
-      background: #25a0b0;
+    .contact-row { font-size:13px; color:#555; line-height:1.5; }
+    .contact-row strong {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+      margin-bottom: 2px;
     }
+    .contact-row a { color:#2db4c6; text-decoration:underline; }
 
-    .action-btn-secondary {
-      background: #E0E0E0;
-      color: #1a1a1a;
-    }
-
-    .action-btn-secondary:hover {
-      background: #D0D0D0;
-    }
-
-    .action-btn:focus {
-      outline: 3px solid #2db4c6;
-      outline-offset: 2px;
-    }
-
-    /* Contact Info */
-    .contact-info {
-      background: #F8F9FA;
-      padding: 20px;
-      border-radius: 6px;
-      margin-top: 24px;
-    }
-
-    .contact-info p {
-      margin: 8px 0;
-      color: #333333;
-    }
-
-    .contact-info strong {
-      color: #1a1a1a;
-    }
-
-    /* Navigation */
+    /* ── Navigation ── */
     .state-navigation {
       display: flex;
       justify-content: space-between;
-      margin: 48px 0;
-      padding-top: 32px;
-      border-top: 2px solid #E0E0E0;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
     }
-
     .nav-btn {
-      padding: 12px 24px;
-      background: #E0E0E0;
-      border: none;
-      border-radius: 6px;
+      padding: 10px 20px;
+      background: #f0f0f0;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      min-height: 44px;
+      transition: all 0.18s ease;
     }
+    .nav-btn:hover { background:#2db4c6; color:#fff; border-color:#2db4c6; }
+    .nav-btn:focus { outline:3px solid #2db4c6; outline-offset:2px; }
 
-    .nav-btn:hover {
-      background: #2db4c6;
-      color: white;
-    }
-
-    .nav-btn:focus {
-      outline: 3px solid #2db4c6;
-      outline-offset: 2px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1023px) {
-      .legal-guides-container {
-        padding: 24px;
-      }
-
-      .state-btn-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    @media (max-width: 767px) {
-      .legal-guides-container {
-        padding: 16px;
-      }
-
-      .page-header-section h1 {
-        font-size: 28px;
-      }
-
-      .state-btn-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-      }
-
-      .state-btn {
-        padding: 10px 12px;
-        font-size: 12px;
-        height: 44px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-      }
-
-      .action-btn {
-        width: 100%;
-      }
-
-      .state-navigation {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .nav-btn {
-        width: 100%;
-      }
-    }
-
-
-    .status-icon {
-      font-size: var(--text-lg);
-      margin-right: var(--space-2);
-    }
-
-    /* Rankings */
-    .rankings-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-    }
-
-
-    /* Legislation Citation Links */
+    /* ── Citation Links ── */
     .legislation-link {
       color: var(--color-accent);
       text-decoration: underline;
       font-weight: 500;
       font-size: 0.95em;
     }
-
     .legislation-link:hover {
       text-decoration: none;
-      background-color: rgba(45, 180, 198, 0.1);
+      background-color: rgba(45,180,198,0.1);
       border-radius: 2px;
       padding: 0 2px;
     }
-
-    .legislation-link:visited {
-      color: var(--color-accent);
-    }
-
+    .legislation-link:visited { color: var(--color-accent); }
     .citation {
       display: inline;
       font-size: 0.9em;
@@ -498,35 +450,36 @@
       font-style: italic;
     }
 
-    .citation-section {
-      margin-top: var(--space-2);
-      padding-left: var(--space-4);
-      border-left: 2px solid var(--color-border-light);
+    /* ── Responsive ── */
+    @media (max-width: 1023px) {
+      .legal-guides-container { padding: 24px; }
+      .state-btn-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .legal-guides-container { padding: 16px; }
+      .page-header-section { padding: 32px 24px; border-radius: 14px; }
+      .page-header-section h1 { font-size: 26px; }
+      .state-btn-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .state-btn { height: 46px; font-size: 12px; padding: 8px 4px; }
+      .two-col-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .action-buttons { flex-direction: column; }
+      .action-btn { width: 100%; }
+      .state-navigation { flex-direction: column; }
+      .nav-btn { width: 100%; }
+      .rating-banner { padding: 24px 20px; }
+      .rating-state-name { font-size: 28px; }
+      .traffic-legend { gap: 6px; }
     }
 
-    .citation-section p {
-      margin: var(--space-1) 0;
-      font-size: var(--text-sm);
-    }
-
-    /* Print Styles */
+    /* ── Print ── */
     @media print {
-      .state-btn-grid,
-      .expandable-btn,
-      .action-buttons {
-        display: none !important;
-      }
-
-      .state-content {
-        display: block !important;
-      }
-
-      #full-analysis {
-        max-height: none !important;
-        display: block !important;
-      }
+      .state-btn-grid, .expandable-btn, .action-buttons, .state-navigation { display:none !important; }
+      .state-content { display:block !important; }
+      #full-analysis { max-height:none !important; display:block !important; }
+      .rating-banner { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     }
-    </style>
+  </style>
 </head>
 <body>
     <!-- Header (Standardized) -->
@@ -606,7 +559,7 @@
     <a href="legal_cases.html" class="nav-link">Legal Cases</a>
     <a href="database.html" class="nav-link">Database</a>
     <a href="legal_guides.html" class="nav-link active">Legal Guides</a>
-    <a href="legal_guides.html" class="nav-link">Legal Guides</a>
+    <a href="resources.html" class="nav-link">Resources</a>
     
     <a href="report_incident.html" class="nav-link">Report an Incident</a>
     <a href="about.html" class="nav-link">About</a>
@@ -626,6 +579,12 @@
       <!-- State Selector -->
       <section class="state-selector-section" aria-label="Select your state or territory">
         <h2>Select Your State/Territory</h2>
+        <div class="traffic-legend" aria-label="Rating key">
+          <span class="traffic-legend-label">Key:</span>
+          <span class="legend-chip green">🟢 Strong Protections</span>
+          <span class="legend-chip amber">🟡 Moderate Protections</span>
+          <span class="legend-chip red">🔴 Weak Protections</span>
+        </div>
         <div class="state-btn-grid" role="group" aria-label="Jurisdiction selection">
           <button class="state-btn" data-state="tasmania" data-rating="green" aria-pressed="true">🟢 TAS</button>
           <button class="state-btn" data-state="act" data-rating="green" aria-pressed="false">🟢 ACT</button>
@@ -1530,90 +1489,126 @@
       const prevData = prevState ? jurisdictionData[prevState] : null;
       const nextData = nextState ? jurisdictionData[nextState] : null;
 
+      const ratingLabels = { green: 'Strong Protections', amber: 'Moderate Protections', red: 'Weak Protections', pending: 'Pending' };
+      const ratingLabel = ratingLabels[data.ratingClass] || data.ratingClass;
+
+      function chipClass(text) {
+        if (!text) return 'chip-absent';
+        if (text.startsWith('✅')) return 'chip-protected';
+        if (text.startsWith('❌') || text.startsWith('✖')) return 'chip-absent';
+        return 'chip-partial';
+      }
+      function areaClass(s) {
+        if (!s) return 'area-absent';
+        if (s.includes('✅')) return 'area-full';
+        if (s.includes('⚠')) return 'area-limited';
+        return 'area-absent';
+      }
+      function stripStatus(text) {
+        // remove leading status emoji + space
+        return (text || '').replace(/^[✅❌⚠️✖✔]\s*/u, '').trim();
+      }
+
+      const protectionItems = [
+        { label: 'Sexual Orientation',             text: data.protected.sexualOrientation.text },
+        { label: 'Gender Identity',                text: data.protected.genderIdentity.text },
+        { label: 'Intersex / Sex Characteristics', text: data.protected.intersex.text },
+        { label: 'Vilification Protections',       text: data.protected.vilification.text },
+        { label: 'Conversion Practices Ban',       text: data.protected.conversionPractices.text },
+      ];
+
+      const areaConfig = [
+        { label: 'Employment',       icon: '💼', status: data.areas.employment },
+        { label: 'Education',        icon: '🎓', status: data.areas.education },
+        { label: 'Housing',          icon: '🏠', status: data.areas.housing },
+        { label: 'Goods & Services', icon: '🛍️', status: data.areas.goodsServices },
+        { label: 'Clubs & Assoc.',   icon: '🤝', status: data.areas.clubs },
+      ];
+
+      const limitationsHtml = (data.limitations.length > 0 && !data.limitations[0].includes('None')) ? `
+        <div class="limitations-card">
+          <h3 class="card-title">⚠️ Important Limitations</h3>
+          <ul class="limitations-list">
+            ${data.limitations.map(lim => `<li>${lim}</li>`).join('')}
+          </ul>
+        </div>` : '';
+
+      const websiteHref = data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website;
+
       return `
         <article class="state-content active" id="state-${stateCode}">
-          <!-- State Header -->
-          <div class="state-header">
-            <h2>${data.name} ${data.rating}</h2>
-            <p class="state-summary">${data.summary}</p>
+
+          <div class="rating-banner rating-${data.ratingClass}">
+            <div class="rating-pill"><span class="rating-dot"></span><span>${ratingLabel}</span></div>
+            <h2 class="rating-state-name">${data.name}</h2>
+            <p class="rating-summary">${data.summary}</p>
           </div>
 
-          <!-- What's Protected -->
-          <section class="content-section">
-            <h3>What's Protected?</h3>
-            <ul class="protection-list">
-              <li>${data.protected.sexualOrientation.text}</li>
-              <li>${data.protected.genderIdentity.text}</li>
-              <li>${data.protected.intersex.text}</li>
-              <li>${data.protected.vilification.text}</li>
-            </ul>
-          </section>
-
-          <!-- Where You're Protected -->
-          <section class="content-section">
-            <h3>Where You're Protected</h3>
-            <ul class="area-list">
-              <li>Employment: ${data.areas.employment}</li>
-              <li>Education: ${data.areas.education}</li>
-              <li>Housing: ${data.areas.housing}</li>
-              <li>Goods & Services: ${data.areas.goodsServices}</li>
-              <li>Clubs & Associations: ${data.areas.clubs}</li>
-            </ul>
-          </section>
-
-          <!-- Important Limitations -->
-          ${data.limitations.length > 0 && !data.limitations[0].includes('None') ? `
-          <section class="content-section">
-            <div class="limitations-box">
-              <h3>⚠️ Important Limitations</h3>
-              <ul>
-                ${data.limitations.map(lim => `<li>${lim}</li>`).join('')}
-              </ul>
+          <div class="two-col-grid">
+            <div class="info-card">
+              <h3 class="card-title">Protected Attributes</h3>
+              <div class="protection-rows">
+                ${protectionItems.map(item => `
+                <div class="protection-row">
+                  <span class="protection-label">${item.label}</span>
+                  <span class="status-chip ${chipClass(item.text)}" title="${item.text}">${stripStatus(item.text) || item.text}</span>
+                </div>`).join('')}
+              </div>
             </div>
-          </section>
-          ` : ''}
+            <div class="info-card">
+              <h3 class="card-title">Areas of Protection</h3>
+              <div class="areas-grid">
+                ${areaConfig.map(a => `
+                <div class="area-card ${areaClass(a.status)}">
+                  <span class="area-icon">${a.icon}</span>
+                  <span>${a.label}</span>
+                </div>`).join('')}
+              </div>
+            </div>
+          </div>
 
-          <!-- Religious Exemptions -->
-          <section class="content-section">
-            <h3>Religious Exemptions</h3>
-            <p>${data.exemptions}</p>
-          </section>
+          ${limitationsHtml}
 
-          <!-- Expandable Full Analysis -->
-          <section class="expandable-section">
+          <div class="exemptions-card">
+            <h3 class="card-title">🏛️ Religious Exemptions</h3>
+            <p class="exemptions-text">${data.exemptions}</p>
+          </div>
+
+          <div class="expandable-section">
             <button class="expandable-btn" id="analysis-btn" onclick="toggleFullAnalysis()" aria-expanded="false" aria-controls="full-analysis">
-              <span>▶ READ FULL LEGAL DETAILS</span>
+              <span>📋 View Full Legal Details &amp; Citations</span>
+              <span class="chevron">▶</span>
             </button>
-            <div id="full-analysis" class="full-analysis-content">
-              ${generateFullAnalysis(data, citations)}
+            <div id="full-analysis">
+              <div class="full-analysis-content">
+                ${generateFullAnalysis(data, citations)}
+              </div>
             </div>
-          </section>
+          </div>
 
-          <!-- Action Buttons -->
-          <section class="content-section">
-            <h3>Need Help?</h3>
+          <div class="help-card">
+            <h3 class="card-title">Need Help?</h3>
             <div class="action-buttons">
-              <button class="action-btn action-btn-primary" onclick="window.open('mailto:${data.contact.email}?subject=Discrimination Report', '_blank')">Report Discrimination</button>
-              <button class="action-btn action-btn-secondary" onclick="window.open('${data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website}', '_blank')">Contact Support</button>
-              <button class="action-btn action-btn-secondary" onclick="window.print()">Print This Page</button>
+              <button class="action-btn action-btn-primary" onclick="window.open('mailto:${data.contact.email}?subject=Discrimination Report', '_blank')">📧 Report Discrimination</button>
+              <button class="action-btn action-btn-secondary" onclick="window.open('${websiteHref}', '_blank')">🌐 Contact Support</button>
+              <button class="action-btn action-btn-secondary" onclick="window.print()">🖨️ Print This Page</button>
             </div>
-            <div class="contact-info">
-              <p><strong>Complaint Body:</strong> ${data.contact.body}</p>
-              <p><strong>Phone:</strong> ${data.contact.phone}</p>
-              <p><strong>Email:</strong> <a href="mailto:${data.contact.email}">${data.contact.email}</a></p>
-              <p><strong>Website:</strong> <a href="${data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website}" target="_blank" rel="noopener">${data.contact.website}</a></p>
+            <div class="contact-grid">
+              <div class="contact-row"><strong>Complaint Body</strong>${data.contact.body}</div>
+              <div class="contact-row"><strong>Phone</strong>${data.contact.phone}</div>
+              <div class="contact-row"><strong>Email</strong><a href="mailto:${data.contact.email}">${data.contact.email}</a></div>
+              <div class="contact-row"><strong>Website</strong><a href="${websiteHref}" target="_blank" rel="noopener">${data.contact.website}</a></div>
             </div>
-          </section>
+          </div>
 
-          <!-- Navigation -->
           <nav class="state-navigation" aria-label="State navigation">
             ${prevState ? `<button class="nav-btn" onclick="loadState('${prevState}')">← ${prevData.name}</button>` : '<div></div>'}
             ${nextState ? `<button class="nav-btn" onclick="loadState('${nextState}')">${nextData.name} →</button>` : '<div></div>'}
           </nav>
+
         </article>
       `;
     }
-
     // Generate full analysis content
     function generateFullAnalysis(data, citations) {
       if (!citations) {
@@ -1627,7 +1622,7 @@
       return `
         <h4>Overview</h4>
         <p><strong>Rating:</strong> ${data.rating}</p>
-        <p><strong>Last Updated:</strong> 31 December 2025</p>
+        <p><strong>Last Updated:</strong> 1 March 2026</p>
         <p><strong>Legislation Reviewed:</strong> ${citations.primaryAct}${citations.otherActs ? '; ' + citations.otherActs.join('; ') : ''}</p>
         <p>${data.comprehensive}</p>
 
@@ -1705,25 +1700,18 @@
     // Toggle full analysis
     function toggleFullAnalysis() {
       const section = document.getElementById('full-analysis');
-      const button = document.getElementById('analysis-btn');
-      
+      const button  = document.getElementById('analysis-btn');
       if (!section || !button) return;
-
       const isOpen = section.classList.contains('open');
-      
       if (isOpen) {
         section.classList.remove('open');
         button.setAttribute('aria-expanded', 'false');
-        button.innerHTML = '<span>▶ READ FULL LEGAL DETAILS</span>';
       } else {
         section.classList.add('open');
         button.setAttribute('aria-expanded', 'true');
-        button.innerHTML = '<span>▼ HIDE FULL LEGAL DETAILS</span>';
-        // Smooth scroll to section
-        setTimeout(() => {
-          section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
+        setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
       }
+    }
     }
 
     </script>
