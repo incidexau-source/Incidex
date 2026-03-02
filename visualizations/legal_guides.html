@@ -227,30 +227,21 @@
     }
 
     /* ── Protection Rows ── */
-    .protection-rows { display:flex; flex-direction:column; gap:9px; }
+    .protection-rows { display:flex; flex-direction:column; gap:6px; }
     .protection-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.4;
     }
-    .protection-label { font-size:14px; color:#333; font-weight:500; flex:1; }
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      flex-shrink: 0;
-      max-width: 210px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .chip-protected { background:#e6f4ed; color:#1d7a4e; border:1px solid #a8d8bf; }
-    .chip-partial   { background:#fef8e7; color:#8a5f00; border:1px solid #f0cc7a; }
-    .chip-absent    { background:#fef0f0; color:#8a1a1a; border:1px solid #f0a8a8; }
+    .prot-protected { background:#e6f4ed; color:#1d5c38; }
+    .prot-partial   { background:#fef8e7; color:#7a5000; }
+    .prot-absent    { background:#fef0f0; color:#7a1212; }
+    .prot-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+    .prot-text { flex:1; font-weight:500; }
 
     /* ── Areas Grid ── */
     .areas-grid {
@@ -261,16 +252,67 @@
     .area-card {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       padding: 9px 11px;
       border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
     }
     .area-card.area-full    { background:#e6f4ed; color:#1d7a4e; }
     .area-card.area-limited { background:#fef8e7; color:#8a5f00; }
     .area-card.area-absent  { background:#fef0f0; color:#8a1a1a; }
     .area-icon { font-size:15px; flex-shrink:0; }
+    .area-info { display:flex; flex-direction:column; gap:1px; }
+    .area-name   { font-size:12px; font-weight:700; line-height:1.2; }
+    .area-status { font-size:11px; font-weight:500; opacity:0.85; }
+
+    /* ── Overview Card ── */
+    .overview-card {
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .overview-card p { font-size:14px; color:#333; line-height:1.7; margin:0; }
+
+    /* ── Federal Section ── */
+    .federal-section {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 2px dashed #e0e0e0;
+    }
+    .federal-section h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+    }
+    .federal-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 14px 18px;
+      background: #fef0f0;
+      border: 2px solid #f0a8a8;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s ease;
+      color: #8a1a1a;
+    }
+    .federal-btn:hover, .federal-btn.active {
+      background: #d9534f;
+      border-color: #d9534f;
+      color: #fff;
+    }
+    .federal-btn-icon  { font-size:22px; flex-shrink:0; }
+    .federal-btn-text  { display:flex; flex-direction:column; gap:3px; }
+    .federal-btn-title { font-size:14px; font-weight:700; }
+    .federal-btn-desc  { font-size:12px; opacity:0.85; }
+    .federal-btn:focus { outline:3px solid #2db4c6; outline-offset:2px; }
 
     /* ── Limitations Card ── */
     .limitations-card {
@@ -592,9 +634,21 @@
           <button class="state-btn" data-state="victoria" data-rating="green" aria-pressed="false">🟢 VIC</button>
           <button class="state-btn" data-state="nt" data-rating="amber" aria-pressed="false">🟡 NT</button>
           <button class="state-btn" data-state="sa" data-rating="amber" aria-pressed="false">🟡 SA</button>
-          <button class="state-btn" data-state="commonwealth" data-rating="red" aria-pressed="false">🔴 CWL</button>
           <button class="state-btn" data-state="wa" data-rating="red" aria-pressed="false">🔴 WA</button>
           <button class="state-btn" data-state="nsw" data-rating="red" aria-pressed="false">🔴 NSW</button>
+        </div>
+
+        <div class="federal-section">
+          <h2>Federal / Commonwealth Law</h2>
+          <button class="federal-btn" id="federal-btn"
+                  onclick="loadState('commonwealth')"
+                  aria-label="View Commonwealth law">
+            <span class="federal-btn-icon">🇦🇺</span>
+            <div class="federal-btn-text">
+              <span class="federal-btn-title">Commonwealth (Federal) Law</span>
+              <span class="federal-btn-desc">🔴 Weak baseline — no vilification law, no conversion practices ban, broad religious exemptions. Applies across all states &amp; territories.</span>
+            </div>
+          </button>
         </div>
       </section>
 
@@ -779,7 +833,6 @@
             'victoria': 'VIC',
             'nt': 'NT',
             'sa': 'SA',
-            'commonwealth': 'CWL',
             'wa': 'WA',
             'nsw': 'NSW'
           };
@@ -1419,7 +1472,7 @@
     ];
 
     // State order for navigation
-    const stateOrder = ['tasmania', 'act', 'queensland', 'victoria', 'nt', 'sa', 'commonwealth', 'wa', 'nsw'];
+    const stateOrder = ['tasmania', 'act', 'queensland', 'victoria', 'nt', 'sa', 'wa', 'nsw'];
 
     // Initialize
     document.addEventListener('DOMContentLoaded', async function() {
@@ -1472,6 +1525,8 @@
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-pressed', isActive);
       });
+      const fedBtn = document.getElementById('federal-btn');
+      if (fedBtn) fedBtn.classList.toggle('active', stateCode === 'commonwealth');
 
       // Generate state content
       const container = document.getElementById('state-content-container');
@@ -1489,54 +1544,72 @@
       const prevData = prevState ? jurisdictionData[prevState] : null;
       const nextData = nextState ? jurisdictionData[nextState] : null;
 
-      const ratingLabels = { green: 'Strong Protections', amber: 'Moderate Protections', red: 'Weak Protections', pending: 'Pending' };
+      const ratingLabels = { green:'Strong Protections', amber:'Moderate Protections', red:'Weak Protections', pending:'Pending' };
       const ratingLabel = ratingLabels[data.ratingClass] || data.ratingClass;
 
-      function chipClass(text) {
-        if (!text) return 'chip-absent';
-        if (text.startsWith('✅')) return 'chip-protected';
-        if (text.startsWith('❌') || text.startsWith('✖')) return 'chip-absent';
-        return 'chip-partial';
+      // Classify a protection text string
+      function protRowClass(text) {
+        if (!text) return 'prot-absent';
+        if (text.startsWith('\u2705')) return 'prot-protected';
+        if (text.startsWith('\u274c') || text.startsWith('\u2716')) return 'prot-absent';
+        return 'prot-partial';
+      }
+      // Pull leading status emoji from text
+      function splitIcon(text) {
+        const m = (text || '').match(/^([\u2705\u274c\u26a0\ufe0f\u2716\u2714\u2753]+)\s*/u);
+        if (m) return [m[1].trim(), text.slice(m[0].length).trim()];
+        return ['\u2022', text || ''];
       }
       function areaClass(s) {
         if (!s) return 'area-absent';
-        if (s.includes('✅')) return 'area-full';
-        if (s.includes('⚠')) return 'area-limited';
+        if (s.includes('\u2705')) return 'area-full';
+        if (s.includes('\u26a0')) return 'area-limited';
         return 'area-absent';
       }
-      function stripStatus(text) {
-        // remove leading status emoji + space
-        return (text || '').replace(/^[✅❌⚠️✖✔]\s*/u, '').trim();
+      function areaLabel(s) {
+        if (!s) return 'Not covered';
+        if (s.includes('Full'))     return 'Full coverage';
+        if (s.includes('Limited') || s.includes('\u26a0')) return 'Limited';
+        if (s.includes('\u2705'))   return 'Protected';
+        return 'Not covered';
       }
 
       const protectionItems = [
-        { label: 'Sexual Orientation',             text: data.protected.sexualOrientation.text },
-        { label: 'Gender Identity',                text: data.protected.genderIdentity.text },
-        { label: 'Intersex / Sex Characteristics', text: data.protected.intersex.text },
-        { label: 'Vilification Protections',       text: data.protected.vilification.text },
-        { label: 'Conversion Practices Ban',       text: data.protected.conversionPractices.text },
+        data.protected.sexualOrientation.text,
+        data.protected.genderIdentity.text,
+        data.protected.intersex.text,
+        data.protected.vilification.text,
+        data.protected.conversionPractices.text,
       ];
 
       const areaConfig = [
-        { label: 'Employment',       icon: '💼', status: data.areas.employment },
-        { label: 'Education',        icon: '🎓', status: data.areas.education },
-        { label: 'Housing',          icon: '🏠', status: data.areas.housing },
-        { label: 'Goods & Services', icon: '🛍️', status: data.areas.goodsServices },
-        { label: 'Clubs & Assoc.',   icon: '🤝', status: data.areas.clubs },
+        { label:'Employment',       icon:'\ud83d\udcbc', status:data.areas.employment },
+        { label:'Education',        icon:'\ud83c\udf93', status:data.areas.education },
+        { label:'Housing',          icon:'\ud83c\udfe0', status:data.areas.housing },
+        { label:'Goods & Services', icon:'\ud83d\udecd\ufe0f', status:data.areas.goodsServices },
+        { label:'Clubs & Assoc.',   icon:'\ud83e\udd1d', status:data.areas.clubs },
       ];
 
       const limitationsHtml = (data.limitations.length > 0 && !data.limitations[0].includes('None')) ? `
         <div class="limitations-card">
-          <h3 class="card-title">⚠️ Important Limitations</h3>
+          <h3 class="card-title">\u26a0\ufe0f Important Limitations</h3>
           <ul class="limitations-list">
             ${data.limitations.map(lim => `<li>${lim}</li>`).join('')}
           </ul>
+        </div>` : '';
+
+      const cwlBanner = stateCode === 'commonwealth' ? `
+        <div style="background:#fff8e1;border:1px solid #ffe082;border-left:4px solid #f9a825;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5f4200;line-height:1.6;">
+          <strong>\ud83c\udde6\ud83c\uddfa About Commonwealth Law</strong><br>
+          Commonwealth law applies across all states and territories as a minimum floor of protection. State and territory laws typically provide additional or stronger protections. Where a state law is stronger, the state law prevails for individuals in that state.
         </div>` : '';
 
       const websiteHref = data.contact.website.startsWith('http') ? data.contact.website : 'https://' + data.contact.website;
 
       return `
         <article class="state-content active" id="state-${stateCode}">
+
+          ${cwlBanner}
 
           <div class="rating-banner rating-${data.ratingClass}">
             <div class="rating-pill"><span class="rating-dot"></span><span>${ratingLabel}</span></div>
@@ -1548,11 +1621,13 @@
             <div class="info-card">
               <h3 class="card-title">Protected Attributes</h3>
               <div class="protection-rows">
-                ${protectionItems.map(item => `
-                <div class="protection-row">
-                  <span class="protection-label">${item.label}</span>
-                  <span class="status-chip ${chipClass(item.text)}" title="${item.text}">${stripStatus(item.text) || item.text}</span>
-                </div>`).join('')}
+                ${protectionItems.map(text => {
+                  const [icon, label] = splitIcon(text);
+                  return `<div class="protection-row ${protRowClass(text)}">
+                    <span class="prot-icon">${icon}</span>
+                    <span class="prot-text">${label || text}</span>
+                  </div>`;
+                }).join('')}
               </div>
             </div>
             <div class="info-card">
@@ -1561,23 +1636,31 @@
                 ${areaConfig.map(a => `
                 <div class="area-card ${areaClass(a.status)}">
                   <span class="area-icon">${a.icon}</span>
-                  <span>${a.label}</span>
+                  <div class="area-info">
+                    <span class="area-name">${a.label}</span>
+                    <span class="area-status">${areaLabel(a.status)}</span>
+                  </div>
                 </div>`).join('')}
               </div>
             </div>
           </div>
 
+          <div class="overview-card">
+            <h3 class="card-title">\ud83d\udccb Overview</h3>
+            <p>${data.comprehensive}</p>
+          </div>
+
           ${limitationsHtml}
 
           <div class="exemptions-card">
-            <h3 class="card-title">🏛️ Religious Exemptions</h3>
+            <h3 class="card-title">\ud83c\udfdb\ufe0f Religious Exemptions</h3>
             <p class="exemptions-text">${data.exemptions}</p>
           </div>
 
           <div class="expandable-section">
             <button class="expandable-btn" id="analysis-btn" onclick="toggleFullAnalysis()" aria-expanded="false" aria-controls="full-analysis">
-              <span>📋 View Full Legal Details &amp; Citations</span>
-              <span class="chevron">▶</span>
+              <span>\ud83d\udd0d Full Legal Details &amp; Legislative Citations</span>
+              <span class="chevron">\u25b6</span>
             </button>
             <div id="full-analysis">
               <div class="full-analysis-content">
@@ -1589,9 +1672,9 @@
           <div class="help-card">
             <h3 class="card-title">Need Help?</h3>
             <div class="action-buttons">
-              <button class="action-btn action-btn-primary" onclick="window.open('mailto:${data.contact.email}?subject=Discrimination Report', '_blank')">📧 Report Discrimination</button>
-              <button class="action-btn action-btn-secondary" onclick="window.open('${websiteHref}', '_blank')">🌐 Contact Support</button>
-              <button class="action-btn action-btn-secondary" onclick="window.print()">🖨️ Print This Page</button>
+              <button class="action-btn action-btn-primary" onclick="window.open('mailto:${data.contact.email}?subject=Discrimination Report', '_blank')">\ud83d\udce7 Report Discrimination</button>
+              <button class="action-btn action-btn-secondary" onclick="window.open('${websiteHref}', '_blank')">\ud83c\udf10 Contact Support</button>
+              <button class="action-btn action-btn-secondary" onclick="window.print()">\ud83d\udda8\ufe0f Print This Page</button>
             </div>
             <div class="contact-grid">
               <div class="contact-row"><strong>Complaint Body</strong>${data.contact.body}</div>
@@ -1602,8 +1685,8 @@
           </div>
 
           <nav class="state-navigation" aria-label="State navigation">
-            ${prevState ? `<button class="nav-btn" onclick="loadState('${prevState}')">← ${prevData.name}</button>` : '<div></div>'}
-            ${nextState ? `<button class="nav-btn" onclick="loadState('${nextState}')">${nextData.name} →</button>` : '<div></div>'}
+            ${prevState ? `<button class="nav-btn" onclick="loadState('${prevState}')">\u2190 ${prevData.name}</button>` : '<div></div>'}
+            ${nextState ? `<button class="nav-btn" onclick="loadState('${nextState}')">${nextData.name} \u2192</button>` : '<div></div>'}
           </nav>
 
         </article>
