@@ -295,19 +295,23 @@
       gap: 14px;
       width: 100%;
       padding: 14px 18px;
-      background: #fef0f0;
-      border: 2px solid #f0a8a8;
+      background: #fef8e7;
+      border: 2px solid #f0cc7a;
       border-radius: 12px;
       cursor: pointer;
       text-align: left;
       transition: all 0.18s ease;
-      color: #8a1a1a;
+      color: #8a5f00;
     }
     .federal-btn:hover, .federal-btn.active {
-      background: #d9534f;
-      border-color: #d9534f;
+      background: #e8a020;
+      border-color: #e8a020;
       color: #fff;
     }
+    .federal-btn.rating-green { background:#e6f4ed; border-color:#a8d8bf; color:#1d5c38; }
+    .federal-btn.rating-green:hover, .federal-btn.rating-green.active { background:#2d9d6f; border-color:#2d9d6f; color:#fff; }
+    .federal-btn.rating-red   { background:#fef0f0; border-color:#f0a8a8; color:#8a1a1a; }
+    .federal-btn.rating-red:hover, .federal-btn.rating-red.active { background:#d9534f; border-color:#d9534f; color:#fff; }
     .federal-btn-icon  { font-size:22px; flex-shrink:0; }
     .federal-btn-text  { display:flex; flex-direction:column; gap:3px; }
     .federal-btn-title { font-size:14px; font-weight:700; }
@@ -646,7 +650,7 @@
             <span class="federal-btn-icon">🇦🇺</span>
             <div class="federal-btn-text">
               <span class="federal-btn-title">Commonwealth (Federal) Law</span>
-              <span class="federal-btn-desc">🔴 Weak baseline — no vilification law, no conversion practices ban, broad religious exemptions. Applies across all states &amp; territories.</span>
+              <span class="federal-btn-desc">🟡 Moderate baseline — hate crime law &amp; employment protections exist, but no vilification law, no conversion practices ban, broad religious exemptions. Applies across all states &amp; territories.</span>
             </div>
           </button>
         </div>
@@ -840,6 +844,14 @@
           btn.textContent = `${emoji} ${code}`;
         }
       });
+
+      // Update federal button colour to match calculated rating
+      const fedBtn = document.getElementById('federal-btn');
+      const fedData = jurisdictionData['commonwealth'];
+      if (fedBtn && fedData) {
+        fedBtn.classList.remove('rating-green', 'rating-amber', 'rating-red');
+        fedBtn.classList.add(`rating-${fedData.ratingClass}`);
+      }
     }
 
     // Complete Jurisdiction Data
