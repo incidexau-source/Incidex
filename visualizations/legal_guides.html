@@ -1669,16 +1669,8 @@
             <p class="exemptions-text">${data.exemptions}</p>
           </div>
 
-          <div class="expandable-section">
-            <button class="expandable-btn" id="analysis-btn" onclick="toggleFullAnalysis()" aria-expanded="false" aria-controls="full-analysis">
-              <span>\ud83d\udd0d Full Legal Details &amp; Legislative Citations</span>
-              <span class="chevron">\u25b6</span>
-            </button>
-            <div id="full-analysis">
-              <div class="full-analysis-content">
-                ${generateFullAnalysis(data, citations)}
-              </div>
-            </div>
+          <div class="full-analysis-content">
+            ${generateFullAnalysis(data, citations)}
           </div>
 
           <div class="help-card">
@@ -1806,7 +1798,6 @@
         button.setAttribute('aria-expanded', 'true');
         setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
       }
-    }
     }
 
     </script>
