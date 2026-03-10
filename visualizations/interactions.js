@@ -234,6 +234,69 @@
   }
 
   // -----------------------------------------------------------------------
+  // Nav Scroll Hints (Mobile)
+  // -----------------------------------------------------------------------
+  function initNavScroll() {
+    const nav = document.querySelector('.main-nav');
+    if (!nav) return;
+
+    // Wrap nav in a scroll wrapper so we can overlay fade + buttons
+    const wrapper = document.createElement('div');
+    wrapper.className = 'nav-scroll-wrapper';
+    nav.parentNode.insertBefore(wrapper, nav);
+    wrapper.appendChild(nav);
+
+    // Left chevron button
+    const btnLeft = document.createElement('button');
+    btnLeft.className = 'nav-scroll-btn nav-scroll-btn--left';
+    btnLeft.setAttribute('aria-label', 'Scroll navigation left');
+    btnLeft.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+
+    // Right chevron button
+    const btnRight = document.createElement('button');
+    btnRight.className = 'nav-scroll-btn nav-scroll-btn--right';
+    btnRight.setAttribute('aria-label', 'Scroll navigation right');
+    btnRight.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
+    wrapper.appendChild(btnLeft);
+    wrapper.appendChild(btnRight);
+
+    const SCROLL_AMOUNT = 160;
+    btnLeft.addEventListener('click', () => nav.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' }));
+    btnRight.addEventListener('click', () => nav.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' }));
+
+    function updateScrollState() {
+      const atStart = nav.scrollLeft <= 2;
+      const atEnd = nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 2;
+      btnLeft.classList.toggle('visible', !atStart);
+      btnRight.classList.toggle('visible', !atEnd);
+      wrapper.classList.toggle('fade-left', !atStart);
+      wrapper.classList.toggle('fade-right', !atEnd);
+    }
+
+    nav.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState, { passive: true });
+
+    // On load: scroll active tab into center of nav, or to start if no active tab
+    requestAnimationFrame(() => {
+      const activeLink = nav.querySelector('.nav-link.active');
+      if (activeLink) {
+        const linkCenter = activeLink.offsetLeft + activeLink.offsetWidth / 2;
+        nav.scrollLeft = Math.max(0, linkCenter - nav.clientWidth / 2);
+      } else {
+        nav.scrollLeft = 0;
+      }
+      updateScrollState();
+
+      // Pulse the right chevron once on mobile to hint at scrollability
+      if (window.innerWidth <= 1024 && nav.scrollWidth > nav.clientWidth) {
+        btnRight.classList.add('nav-scroll-btn--hint');
+        setTimeout(() => btnRight.classList.remove('nav-scroll-btn--hint'), 1500);
+      }
+    });
+  }
+
+  // -----------------------------------------------------------------------
   // Init All
   // -----------------------------------------------------------------------
   function init() {
@@ -246,6 +309,7 @@
     initHeaderScroll();
     initTextReveal();
     initParallax();
+    initNavScroll();
   }
 
   if (document.readyState === 'loading') {

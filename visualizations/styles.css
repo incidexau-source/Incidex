@@ -764,6 +764,129 @@ p:last-child {
 }
 
 /* --------------------------------------------------------------------------
+   Nav Scroll Wrapper + Scroll Hint Buttons (Mobile)
+   -------------------------------------------------------------------------- */
+
+/* Wrapper takes the flex-1 role of .main-nav inside .header-inner */
+.nav-scroll-wrapper {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Allow dropdown menus to escape */
+  overflow: visible;
+}
+
+/* Fade gradients at edges (shown via JS class toggles) */
+.nav-scroll-wrapper::before,
+.nav-scroll-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.nav-scroll-wrapper.fade-left::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-bg-alt) 30%, transparent);
+  opacity: 1;
+}
+
+.nav-scroll-wrapper.fade-right::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-bg-alt) 30%, transparent);
+  opacity: 1;
+}
+
+[data-theme="dark"] .nav-scroll-wrapper.fade-left::before {
+  background: linear-gradient(to right, #1A1A1A 30%, transparent);
+}
+
+[data-theme="dark"] .nav-scroll-wrapper.fade-right::after {
+  background: linear-gradient(to left, #1A1A1A 30%, transparent);
+}
+
+/* Chevron scroll buttons — hidden on desktop, shown on tablet/mobile */
+.nav-scroll-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 22px;
+  height: 30px;
+  padding: 0;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease, background 150ms ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-scroll-btn svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.nav-scroll-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-accent);
+}
+
+.nav-scroll-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-scroll-btn--left {
+  left: 0;
+}
+
+.nav-scroll-btn--right {
+  right: 0;
+}
+
+/* Pulse animation to hint scrollability on first load */
+@keyframes nav-scroll-hint {
+  0%   { transform: translateY(-50%) scale(1); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.5); }
+  40%  { transform: translateY(-50%) scale(1.15); box-shadow: 0 0 0 6px rgba(20, 184, 166, 0); }
+  100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); }
+}
+
+.nav-scroll-btn--hint {
+  animation: nav-scroll-hint 0.6s ease 0.4s 2 forwards;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+@media (max-width: 1024px) {
+  .nav-scroll-btn {
+    display: flex;
+  }
+
+  /* Ensure .main-nav inside wrapper still fills the space correctly */
+  .nav-scroll-wrapper .main-nav {
+    flex: 1;
+    margin: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Buttons
    -------------------------------------------------------------------------- */
 

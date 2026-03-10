@@ -873,6 +873,76 @@
         </div>
       </div>
     </div>
+
+    <!-- NSW Police Data Section -->
+    <div class="charts-grid" id="policeSectionWrapper" style="display:none;">
+      <div class="chart-card full">
+        <div class="chart-header">
+          <div class="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            NSW Police Force Data — Official Reported Offences
+          </div>
+          <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+            <span style="font-size:var(--text-sm); color:var(--color-text-secondary);">
+              <strong id="policeTotalOffences">—</strong> total offences &nbsp;·&nbsp; <span id="policePeriodLabel">—</span>
+            </span>
+            <span style="background:#6366f1;color:#fff;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.5px;">NSW POLICE DATA</span>
+          </div>
+        </div>
+
+        <!-- Caveat Banner -->
+        <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-5);">
+          <p style="margin:0 0 var(--space-2);font-weight:var(--font-semibold);color:#6366f1;font-size:var(--text-sm);">
+            ⚠ Important Data Caveats — NSW Police Force Statistics
+          </p>
+          <ul style="margin:0;padding-left:var(--space-5);font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.7;">
+            <li><strong>Aggregate counts only.</strong> This data shows the total number of officially recorded hate crime offences per suburb. Individual incident details, victim identities, and perpetrator information are not publicly available.</li>
+            <li><strong>Significant underreporting.</strong> Research consistently shows LGBTIQ+ people are less likely to report hate crimes to police due to fear of discrimination, mistrust of law enforcement, or uncertainty about whether an incident meets legal thresholds. Actual incidence is likely far higher.</li>
+            <li><strong>NSW only.</strong> This dataset covers New South Wales exclusively. No equivalent suburb-level police data has been released for other Australian states or territories.</li>
+            <li><strong>Coverage period: January 2023 – October 2025.</strong> This data was released by NSW Police Force ahead of Sydney Mardi Gras 2026, as reported by ABC News (27 February 2026). It does not include incidents outside this window.</li>
+            <li><strong>Definition limitations.</strong> "Hate crime offence" as recorded by NSW Police may not capture all bias-motivated incidents, and classification may vary between Local Area Commands.</li>
+          </ul>
+          <p style="margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--color-text-muted);">
+            Source: NSW Police Force via ABC News — <a href="https://www.abc.net.au/news/2026-02-27/nsw-lgbt-hate-data-released-ahead-of-mardi-gras/106394004" target="_blank" rel="noopener" style="color:#6366f1;">abc.net.au, 27 February 2026</a>
+          </p>
+        </div>
+
+        <!-- Chart + Table side by side -->
+        <div style="display:grid;grid-template-columns:1fr 280px;gap:var(--space-6);align-items:start;">
+          <div>
+            <h4 style="margin:0 0 var(--space-3);font-size:var(--text-sm);color:var(--color-text-secondary);font-weight:var(--font-semibold);text-transform:uppercase;letter-spacing:0.05em;">Recorded Offences by Suburb</h4>
+            <div class="chart-container" style="height:320px;">
+              <canvas id="policeSuburbChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <h4 style="margin:0 0 var(--space-3);font-size:var(--text-sm);color:var(--color-text-secondary);font-weight:var(--font-semibold);text-transform:uppercase;letter-spacing:0.05em;">Suburb Breakdown</h4>
+            <div style="overflow-x:auto;">
+              <table class="state-table">
+                <thead>
+                  <tr>
+                    <th>Suburb</th>
+                    <th>Offences</th>
+                  </tr>
+                </thead>
+                <tbody id="policeSuburbTableBody">
+                  <tr><td colspan="2" style="text-align:center;color:var(--color-text-muted);">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile: stack table below chart -->
+        <style>
+          @media (max-width: 640px) {
+            #policeSectionWrapper .chart-card > div[style*="grid-template-columns"] {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        </style>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -963,6 +1033,7 @@
 
     // State
     let allData = [];
+    let policeData = null;
     let charts = {};
     let map = null;
     let markers = null;
@@ -1052,6 +1123,20 @@
       }
     }
 
+    // Load NSW Police aggregate data (loaded once, cached)
+    async function loadPoliceData() {
+      if (policeData) return policeData;
+      try {
+        const response = await fetch('../data/nsw-police-hate-crimes.json');
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        policeData = await response.json();
+        return policeData;
+      } catch (e) {
+        console.warn('Could not load NSW police data:', e);
+        return null;
+      }
+    }
+
     // Data Loading
     function loadData(isRefresh = false) {
       const dataPath = '../data/incidents_in_progress.csv?v=' + Date.now();
@@ -1070,6 +1155,11 @@
           if (communitySubmissions.length > 0) {
             console.log(`Including ${communitySubmissions.length} approved community submissions`);
             data = [...data, ...communitySubmissions];
+          }
+
+          // Load police data on first load (static, doesn't change on refresh)
+          if (!policeData) {
+            await loadPoliceData();
           }
 
           const newHash = hashData(data);
@@ -1133,9 +1223,11 @@
       });
       const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
 
-      // Update KPIs
-      document.getElementById('kpiTotal').textContent = data.length;
-      document.getElementById('kpiTotalDetail').textContent = 'All recorded incidents';
+      // Update KPIs — total aligns with the incident map by including NSW Police suburb records
+      const policeSuburbCount = policeData ? policeData.suburbs.length : 0;
+      const combinedTotal = data.length + policeSuburbCount;
+      document.getElementById('kpiTotal').textContent = combinedTotal;
+      document.getElementById('kpiTotalDetail').textContent = data.length + ' documented + ' + policeSuburbCount + ' NSW Police records';
       document.getElementById('kpiRecent').textContent = recent.length;
       document.getElementById('kpiRecentDetail').textContent = 'Since ' + oneYearAgo.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
       document.getElementById('kpiHigh').textContent = highSev.length;
@@ -1150,6 +1242,7 @@
         buildCharts(data, dated);
         buildMap(data);
         buildStateTable(dated);
+        if (policeData) buildPoliceSection(policeData);
       }
 
       // Footer date
@@ -1358,6 +1451,66 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function buildPoliceSection(pd) {
+      const section = document.getElementById('policeSectionWrapper');
+      if (!section) return;
+
+      const meta = pd.metadata;
+      const suburbs = pd.suburbs || [];
+
+      // Suburb bar chart
+      const ctx = document.getElementById('policeSuburbChart');
+      if (ctx && !charts.police) {
+        charts.police = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: suburbs.map(s => s.suburb),
+            datasets: [{
+              label: 'Recorded Offences',
+              data: suburbs.map(s => s.offences),
+              backgroundColor: 'rgba(99, 102, 241, 0.7)',
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: ctx => ' ' + ctx.raw + ' officially recorded offences'
+                }
+              }
+            },
+            scales: { x: { beginAtZero: true, ticks: { precision: 0 } } }
+          }
+        });
+      }
+
+      // Suburb table
+      const tbody = document.getElementById('policeSuburbTableBody');
+      if (tbody) {
+        tbody.innerHTML = '';
+        suburbs.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td><strong>${s.suburb}</strong></td><td>${s.offences}</td>`;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Show total
+      const totalEl = document.getElementById('policeTotalOffences');
+      if (totalEl) totalEl.textContent = meta.total_offences;
+
+      // Show period
+      const periodEl = document.getElementById('policePeriodLabel');
+      if (periodEl) periodEl.textContent = meta.data_period_label;
+
+      section.style.display = '';
     }
 
     // Initialize
