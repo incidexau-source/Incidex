@@ -1223,11 +1223,11 @@
       });
       const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
 
-      // Update KPIs — total aligns with the incident map by including NSW Police suburb records
-      const policeSuburbCount = policeData ? policeData.suburbs.length : 0;
-      const combinedTotal = data.length + policeSuburbCount;
+      // Update KPIs — total aligns with the landing page by summing all NSW Police offences
+      const policeTotalOffences = policeData ? (policeData.suburbs || []).reduce((sum, s) => sum + (s.offences || 0), 0) : 0;
+      const combinedTotal = data.length + policeTotalOffences;
       document.getElementById('kpiTotal').textContent = combinedTotal;
-      document.getElementById('kpiTotalDetail').textContent = data.length + ' documented + ' + policeSuburbCount + ' NSW Police records';
+      document.getElementById('kpiTotalDetail').textContent = data.length + ' documented + ' + policeTotalOffences + ' NSW Police offences';
       document.getElementById('kpiRecent').textContent = recent.length;
       document.getElementById('kpiRecentDetail').textContent = 'Since ' + oneYearAgo.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
       document.getElementById('kpiHigh').textContent = highSev.length;

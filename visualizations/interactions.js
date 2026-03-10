@@ -240,6 +240,9 @@
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
+    // Prevent the browser from restoring scroll position on this element
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
     // Wrap nav in a scroll wrapper so we can overlay fade + buttons
     const wrapper = document.createElement('div');
     wrapper.className = 'nav-scroll-wrapper';
@@ -277,8 +280,10 @@
     nav.addEventListener('scroll', updateScrollState, { passive: true });
     window.addEventListener('resize', updateScrollState, { passive: true });
 
-    // On load: scroll active tab into center of nav, or to start if no active tab
-    requestAnimationFrame(() => {
+    // On load: scroll active tab into center of nav, or to start if no active tab.
+    // We apply the position in both rAF and a setTimeout to override browser
+    // scroll-restoration which can fire after DOMContentLoaded.
+    function applyInitialScroll() {
       const activeLink = nav.querySelector('.nav-link.active');
       if (activeLink) {
         const linkCenter = activeLink.offsetLeft + activeLink.offsetWidth / 2;
@@ -287,13 +292,21 @@
         nav.scrollLeft = 0;
       }
       updateScrollState();
+    }
 
+    requestAnimationFrame(applyInitialScroll);
+
+    // Re-apply after browser scroll-restoration has had a chance to run,
+    // and again after fonts/layout fully settle.
+    setTimeout(applyInitialScroll, 50);
+    setTimeout(() => {
+      applyInitialScroll();
       // Pulse the right chevron once on mobile to hint at scrollability
       if (window.innerWidth <= 1024 && nav.scrollWidth > nav.clientWidth) {
         btnRight.classList.add('nav-scroll-btn--hint');
         setTimeout(() => btnRight.classList.remove('nav-scroll-btn--hint'), 1500);
       }
-    });
+    }, 200);
   }
 
   // -----------------------------------------------------------------------
