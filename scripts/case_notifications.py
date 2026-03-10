@@ -71,7 +71,7 @@ def save_alert_log(alert_log: Dict[str, Dict]):
     # Ensure all required columns exist
     required_columns = [
         'case_id', 'alert_type', 'alert_date', 'alert_content',
-        'discord_message_id', 'priority_level'
+        'notification_ref', 'priority_level'
     ]
     
     for col in required_columns:
@@ -97,18 +97,18 @@ def record_alert_sent(case_id: str, alert_type: str, alert_content: str,
     """Record that an alert has been sent."""
     if alert_log is None:
         alert_log = load_alert_log()
-    
+
     key = f"{case_id}_{alert_type}"
-    
+
     alert_log[key] = {
         'case_id': case_id,
         'alert_type': alert_type,
         'alert_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        'alert_content': alert_content[:500],  # Limit length
-        'discord_message_id': discord_message_id,
+        'alert_content': alert_content[:500],
+        'notification_ref': discord_message_id,  # kept for call-site compatibility
         'priority_level': priority_level
     }
-    
+
     return alert_log
 
 
