@@ -280,15 +280,20 @@
     nav.addEventListener('scroll', updateScrollState, { passive: true });
     window.addEventListener('resize', updateScrollState, { passive: true });
 
-    // On load: scroll active tab into center of nav, or to start if no active tab.
-    // We apply the position in both rAF and a setTimeout to override browser
-    // scroll-restoration which can fire after DOMContentLoaded.
+    // On load: scroll so the active tab is centred in the nav bar.
+    // Uses getBoundingClientRect() for reliable position in a flex container.
+    // Applied at multiple points to beat browser scroll-restoration.
     function applyInitialScroll() {
       const activeLink = nav.querySelector('.nav-link.active');
       if (activeLink) {
-        const linkCenter = activeLink.offsetLeft + activeLink.offsetWidth / 2;
-        nav.scrollLeft = Math.max(0, linkCenter - nav.clientWidth / 2);
+        const navRect = nav.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        // Convert link position to the nav's scrollable coordinate space
+        const linkLeftInScroll = nav.scrollLeft + (linkRect.left - navRect.left);
+        const linkCenterInScroll = linkLeftInScroll + linkRect.width / 2;
+        nav.scrollLeft = Math.max(0, linkCenterInScroll - nav.clientWidth / 2);
       } else {
+        // No active tab (landing page) — show Map, which is the first item
         nav.scrollLeft = 0;
       }
       updateScrollState();
@@ -296,8 +301,7 @@
 
     requestAnimationFrame(applyInitialScroll);
 
-    // Re-apply after browser scroll-restoration has had a chance to run,
-    // and again after fonts/layout fully settle.
+    // Re-apply after browser scroll-restoration and font/layout settling.
     setTimeout(applyInitialScroll, 50);
     setTimeout(() => {
       applyInitialScroll();
