@@ -10,6 +10,7 @@ build/
 
 # Virtual environments
 venv/
+.venv/
 env/
 ENV/
 
@@ -41,6 +42,68 @@ Thumbs.db
 # Keep log directory structure but ignore contents (except .gitkeep)
 logs/*
 !logs/.gitkeep
+
+# Generated operational/deployment markdown docs (not source content)
+CHANGES_SUMMARY.md
+COMMIT_CHECKLIST.md
+CONFLICT_REPORT_*.md
+DASHBOARD_UPDATE_INSTRUCTIONS.md
+DATA_INTEGRITY_ANALYSIS.md
+DEBUG_MODE_SUMMARY.md
+DEPLOYMENT_COMPLETE.md
+DEPLOYMENT_FINAL_REPORT.md
+DEPLOYMENT_STATUS.md
+DIAGNOSTIC_REPORT_*.md
+ERROR_ANALYSIS_REPORT.md
+FINAL_SYNC_*.md
+FIXES_APPLIED.md
+GIT_HISTORY_ANALYSIS_*.md
+HISTORICAL_SCRAPING_IMPLEMENTATION_SUMMARY.md
+HISTORICAL_SCRAPING_STATUS.md
+IMPLEMENTATION_COMPLETE.md
+INCIDEX_INTEGRATION_*.md
+INTEGRATION_*.md
+LEGAL_GUIDES_*.md
+MAINTENANCE_STATUS_REPORT.md
+MAP_TRAFFIC_LIGHT_VERIFICATION.md
+NSW_*.md
+OPERATIONAL_TEST_RESULTS.md
+PROJECT_COMPREHENSIVE_ANALYSIS.md
+PUSH_TO_GITHUB_INSTRUCTIONS.md
+QUICK_TEST.md
+SCORING_SYSTEM_SYNC_COMPLETE.md
+SCRAPER_REPORT_*.md
+SECTION_1_*.md
+SETUP_COMPLETE.md
+STATE_IMPLEMENTATION_STATUS.md
+SYNC_SUMMARY_REPORT.md
+SYSTEM_AUDIT_REPORT.md
+TEST_REPORT.md
+VERIFICATION_RESULTS.md
+WEEKLY_AUTOMATION_*.md
+data/cleaning_and_geocoding_summary.md
+data/data_quality_analysis_report.md
+data/historical_scraper_*.md
+data/integration_summary.md
+data/revert_summary.md
+scripts/Untitled-*.md
+
+# Review exports (contain PII-adjacent incident data)
+data/review/
+
+# Output files
+output/
+
+# Misc generated files
+commit_report.txt
+git_files.txt
+git_status.txt
+debug_output.txt
+missing_dates_report.txt
+discovery_summary.txt
+final_check.txt
+models.txt
+*.log
 
 
 
