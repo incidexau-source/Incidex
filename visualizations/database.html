@@ -935,6 +935,16 @@
           Contact
         </a>
       </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
       <button class="theme-toggle" id="themeToggle" title="Toggle theme">
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2">
@@ -949,6 +959,21 @@
       </button>
     </div>
   </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="map.html" class="nav-link">Map</a>
+    <a href="policy_landscape.html" class="nav-link">Policy and Legislation</a>
+    <a href="voting_records.html" class="nav-link">MP Voting</a>
+    <a href="monitoring.html" class="nav-link">Statistics</a>
+    <a href="legal_cases.html" class="nav-link">Legal Cases</a>
+    <a href="database.html" class="nav-link active">Database</a>
+    <a href="legal_guides.html" class="nav-link">Legal Guides</a>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="report_incident.html" class="nav-link">Report</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
 
   <main class="db-layout container">
     <!-- Sidebar Filters -->
@@ -1724,6 +1749,19 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+  </script>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileNav.classList.toggle('active');
+        const isOpen = mobileNav.classList.contains('active');
+        mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+      });
     }
   </script>
 </body>
