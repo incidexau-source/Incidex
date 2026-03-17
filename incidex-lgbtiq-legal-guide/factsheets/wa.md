@@ -1,6 +1,6 @@
 # Know Your Rights: LGBTIQ+ Discrimination & Vilification (Western Australia)
 
-**Last updated: 31 December 2025**
+**Last updated: 17 March 2026**
 
 ---
 
@@ -102,9 +102,22 @@ WA has weak LGBTIQ+ protections. The law uses binary terminology that does not c
 
 ---
 
+## Conversion Practices
+
+**Does WA have a ban on conversion practices?**
+⚠️ COMMITTED — NOT YET LAW
+
+WA currently has **no ban** on conversion practices. However, Attorney-General John Buti announced in January 2026 that the WA Government is committed to introducing a conversion practices ban before the end of the current 41st Parliament (due by 2029). As of March 2026, no bill has been introduced.
+
+**What this means for you now:** Conversion practices — including religious-based attempts to change or suppress a person's sexual orientation or gender identity — remain legal in WA. WA is now the only mainland Australian state without either a ban or an equivalent protection.
+
+**If you have experienced conversion practices:** Contact **Rainbow Futures** (WA LGBTIQA+ peer support) or **QLife** (1800 184 527) for support. For legal advice, contact **Sussex Street Community Law Service** or **Community Legal WA**.
+
+---
+
 ## Vilification Laws
 
-**Does WA have vilification laws for LGBTIQ+ people?**  
+**Does WA have vilification laws for LGBTIQ+ people?**
 ❌ NO
 
 WA only has vilification laws for **race**. There are no protections against hate speech or conduct that incites hatred against the LGBTIQ+ community.
@@ -139,4 +152,4 @@ WA is stuck with 40-year-old laws that have failed to keep pace with the rest of
 
 ---
 
-*This factsheet is based on the Equal Opportunity Act 1984 (WA) as at 31 December 2025. It provides general information only and is not legal advice.*
+*This factsheet is based on the Equal Opportunity Act 1984 (WA) as at 17 March 2026. It provides general information only and is not legal advice.*

@@ -1,6 +1,6 @@
 # Know Your Rights: LGBTIQ+ Discrimination & Vilification (Northern Territory)
 
-**Last updated: 31 December 2025**
+**Last updated: 17 March 2026**
 
 ---
 
@@ -108,10 +108,21 @@ The NT has good protections following major reforms in 2022 and 2023. Sexuality,
 
 ## Vilification Laws
 
-**Does the NT have vilification laws for LGBTIQ+ people?**  
-✅ YES
+**Does the NT have vilification laws for LGBTIQ+ people?**
+✅ YES — but **narrowed in October 2025**
 
-In late 2022, the NT added protections against conduct that "offends, insults, humiliates or intimidates" people based on their sexuality, gender identity, or sex characteristics. This provides a civil remedy for LGBTIQ+ victims of hate speech.
+The NT has vilification protections for LGBTIQ+ people, but their scope was **significantly narrowed** by the Anti-Discrimination Amendment Act 2025 (NT), which commenced in October 2025.
+
+**Before October 2025:** The NT protected against conduct that "offends, insults, humiliates or intimidates" people because of their sexuality, gender identity, or sex characteristics — a relatively broad, harm-based standard.
+
+**After October 2025:** The standard was narrowed to an **incitement-based model**. Protection now covers conduct that **incites hatred, serious contempt, or severe ridicule** — a higher threshold that aligns more closely with Queensland's model but is harder to satisfy. Conduct that merely offends or insults is no longer sufficient.
+
+**What this means in practice:**
+- A social media post that is hurtful or offensive toward LGBTIQ+ people may no longer be actionable.
+- A post that directly incites others to treat LGBTIQ+ people with serious contempt or threatens violence remains covered.
+- The change raises the bar for LGBTIQ+ Territorians to access a civil remedy for hate speech.
+
+**If you have experienced vilification:** Contact the **NT Anti-Discrimination Commission** — they can advise whether your situation meets the current threshold.
 
 ---
 
@@ -144,4 +155,4 @@ The NT has made massive strides recently, particularly in protecting LGBTIQ+ tea
 
 ---
 
-*This factsheet is based on the Anti-Discrimination Act 1992 (NT) as at 31 December 2025. It provides general information only and is not legal advice.*
+*This factsheet is based on the Anti-Discrimination Act 1992 (NT) as amended by the Anti-Discrimination Amendment Act 2025 (NT), as at 17 March 2026. It provides general information only and is not legal advice.*

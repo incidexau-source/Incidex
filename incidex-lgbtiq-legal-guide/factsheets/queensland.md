@@ -1,6 +1,6 @@
 # Know Your Rights: LGBTIQ+ Discrimination & Vilification (Queensland)
 
-**Last updated: 31 December 2025**
+**Last updated: 17 March 2026**
 
 ---
 
@@ -107,9 +107,27 @@ Queensland has good protections following major reforms in April 2024. Sexual or
 
 ---
 
+## Gender-Affirming Care for Minors
+
+**Does Queensland allow gender-affirming medical care for trans/gender diverse minors?**
+⚠️ RESTRICTED — BAN IN EFFECT UNTIL 2031
+
+Queensland has a **regulatory ban** on gender-affirming medical care (puberty blockers and hormone therapy) for minors who are new patients. The ban was originally introduced in 2023 as a temporary measure and was extended to **31 December 2031** by regulation in December 2025, following a review by Dr Cate Vine (the Vine Review, 2024).
+
+**What this means:**
+- New patients under 18 **cannot** commence puberty blockers or hormone therapy.
+- Existing patients who were already receiving treatment **may** continue with ministerial approval.
+- Surgical procedures (rare in minors) were not the subject of the ban.
+
+**Legal challenge underway:** LGBTI Legal Service Inc. has filed a legal challenge in QCAT arguing the ban is discriminatory and unlawful. This challenge is ongoing as of March 2026.
+
+**If you are a trans or gender diverse young person in Queensland:** Access peer support through **QLife** (1800 184 527) or **Brisbane Youth Service**. For legal information, contact **LGBTI Legal Service** (07 3124 7160).
+
+---
+
 ## Vilification Laws
 
-**Does Queensland have vilification laws for LGBTIQ+ people?**  
+**Does Queensland have vilification laws for LGBTIQ+ people?**
 ✅ YES
 
 Queensland has some of the best vilification protections in Australia. It is illegal to publicly incite hatred, serious contempt, or severe ridicule against someone because they are LGBTIQ+. This includes:
@@ -147,4 +165,4 @@ Queensland is currently one of the safest places for LGBTIQ+ students and reside
 
 ---
 
-*This factsheet is based on the Anti-Discrimination Act 1991 (Qld) as at 31 December 2025. It provides general information only and is not legal advice.*
+*This factsheet is based on the Anti-Discrimination Act 1991 (Qld) as at 17 March 2026. It provides general information only and is not legal advice.*

@@ -3,8 +3,8 @@
     "title": "Australian Federal MPs LGBTIQ+ Voting Records",
     "description": "Comprehensive voting records on LGBTIQ+ issues for all 151 federal electoral divisions",
     "version": "2.0",
-    "last_updated": "2026-02-25",
-    "data_period": "2017-2026",
+    "last_updated": "2026-03-17",
+    "data_period": "2013-2026",
     "total_divisions": 151,
     "sources": [
       {
@@ -109,6 +109,20 @@
       "description": "Simplifying gender marker changes on official documents",
       "pro_lgbtiq_vote": "Yes",
       "weight": 1
+    },
+    {
+      "id": "hanson_trans_inquiry_2025",
+      "name": "Hanson Senate Motion: Inquiry into Effects of Gender Transition on Minors",
+      "short_name": "Hanson Trans Inquiry Motion",
+      "year": 2025,
+      "date": "2025-02-10",
+      "outcome": "Defeated",
+      "house_vote": "Senate: Defeated 36-21",
+      "description": "Senator Pauline Hanson moved a motion in the Senate to establish an inquiry into the effects of gender transition on minors (puberty blockers, hormones and surgery). The motion was opposed by Labor, Greens, and most crossbench senators. Voting 'No' (against the motion) is the pro-LGBTIQ+ position, as the motion targeted trans youth healthcare.",
+      "pro_lgbtiq_vote": "No",
+      "weight": 2,
+      "chamber": "Senate",
+      "notes": "Senate-only vote on 10 February 2025. Division: 36 votes against, 21 in favour. Senators voting 'No' aligned with trans healthcare protections."
     }
   ],
   "party_summary": {
